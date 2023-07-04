@@ -1,6 +1,8 @@
 'use client';
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@/components/common/Button';
+import line from '@/assets/images/line.svg';
 
 function page() {
   return (
@@ -10,38 +12,64 @@ function page() {
           <Register>{'리픽 회원가입'}</Register>
           <Welcome>{'반가워요! 리픽에 오신 것을 환영해요'}</Welcome>
         </Title>
-        <Line />
-
+        <Line src={line.src} />
         <User>{'회원 정보'}</User>
         <Wrapper>
-          <Info>{'이름'}</Info>
+          <Info>
+            {'이름'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content />
         </Wrapper>
         <Wrapper>
-          <Info>{'전화번호'}</Info>
+          <Info>
+            {'전화번호'}
+            <div className="star">{'*'}</div>
+          </Info>
+          <Content />
+          <Confirm>{'본인인증'}</Confirm>
+        </Wrapper>
+        <Wrapper>
+          <Info>
+            {'이메일'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content />
         </Wrapper>
         <Wrapper>
-          <Info>{'이메일'}</Info>
-          <Content />
+          <Info>
+            {'주소'}
+            <div className="star">{'*'}</div>
+          </Info>
+          <Content className="address" placeholder="우편번호를 검색해주세요" />
+          <Confirm>{'우편번호'}</Confirm>
         </Wrapper>
         <Wrapper>
-          <Info>{'주소'}</Info>
-          <Content placeholder="우편번호를 검색해주세요" />
-        </Wrapper>
-        <Wrapper>
-          <Info>{'아이디'}</Info>
+          <Info>
+            {'아이디'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content placeholder="숫자, 영문 대소문자만 사용 가능합니다" />
         </Wrapper>
         <Wrapper>
-          <Info>{'비밀번호'}</Info>
+          <Info>
+            {'비밀번호'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다" />
         </Wrapper>
         <Wrapper>
-          <Info>{'비밀번호 확인'}</Info>
+          <Info>
+            {'비밀번호 확인'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다" />
         </Wrapper>
+        <Register></Register>
       </R>
+      <div className="button">
+        <Button content="가입하기" />
+      </div>
     </Container>
   );
 }
@@ -49,7 +77,14 @@ function page() {
 export default page;
 
 const Container = styled.div`
-  overflow: scroll;
+  .button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+    margin-bottom: 148px;
+  }
 `;
 const R = styled.div`
   margin-top: 120px;
@@ -66,16 +101,20 @@ const Welcome = styled.div`
   font-size: 20px;
   font-weight: 400;
 `;
-const Line = styled.div``;
 const Info = styled.div`
   font-size: 20px;
   width: 207px;
+  display: flex;
+
+  .star {
+    color: rgba(255, 61, 0, 1);
+  }
 `;
 const User = styled.div`
   font-size: 24px;
   font-weight: 600;
-  margin-top: 80px;
-  margin-bottm: 40px;
+  margin-top: 20px;
+  margin-bottom: 80px;
 `;
 const Content = styled.input`
   width: 460px;
@@ -85,12 +124,30 @@ const Content = styled.input`
   border: none;
   font-size: 20px;
   font-weight: 400;
-  color: rgba(180, 180, 180, 1);
+
   padding-left: 24px;
   outline: none;
+
+  &.address {
+    width: 322px;
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 18px;
+`;
+const Confirm = styled.button`
+  border-radius: 15px;
+  background: var(--3, #b4b4b4);
+  width: 104px;
+  height: 56px;
+  border: none;
+  padding: 18px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 24px;
+`;
+const Line = styled.img`
+  margin-top: 60px;
 `;
