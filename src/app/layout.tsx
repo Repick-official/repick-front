@@ -1,6 +1,7 @@
 'use client';
 import './globals.css';
 import Navigation from '@/components/common/Navigation';
+import Footer from '@/components/common/Footer';
 import { RecoilRoot } from 'recoil';
 
 export default function RootLayout({
@@ -16,7 +17,10 @@ export default function RootLayout({
       </head>
       <body>
         <Navigation />
-        <RecoilRoot>{children}</RecoilRoot>
+        <div className="content">
+          <RecoilRoot>{children}</RecoilRoot>
+        </div>
+        <Footer />
       </body>
     </html>
   );

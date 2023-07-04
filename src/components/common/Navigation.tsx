@@ -37,7 +37,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  height: 196px;
 `;
 const LogoWrapper = styled.div`
   margin-top: 55.65px;

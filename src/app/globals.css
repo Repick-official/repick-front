@@ -14,3 +14,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.content {
+  min-height: calc(100% - 560px);
+}
