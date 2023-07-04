@@ -1,9 +1,12 @@
+'use client';
 import React from 'react';
 import logo from '@/assets/images/loco.svg';
 import styled from 'styled-components';
 import SearchModal from './SearchModal';
+import { useRouter } from 'next/navigation';
 
 function Navigation() {
+  const router = useRouter();
   return (
     <Container>
       <MainWrapper>
@@ -13,7 +16,7 @@ function Navigation() {
         </LogoWrapper>
         <PageWrapper>
           <My>{'마이페이지'}</My>
-          <Login>{'로그인'}</Login>
+          <Login onClick={() => router.push('/login')}>{'로그인'}</Login>
         </PageWrapper>
       </MainWrapper>
       <SemiWrapper>
@@ -55,6 +58,7 @@ const My = styled.div`
 const Login = styled.div`
   font-size: 16px;
   width: 42px;
+  cursor: pointer;
 `;
 const MainWrapper = styled.div`
   display: flex;
