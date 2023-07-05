@@ -5,64 +5,75 @@ import styled from 'styled-components';
 function Footer() {
   return (
     <Container>
-      <Wrapper>
-        <Content>
-          <P>
-            <Bold>{'헬프 센터'}</Bold>
-            <Bold> {'운영 정책'}</Bold>
-            <Bold>{'ABOUT US'}</Bold>
-          </P>
-          <N>
-            <I>
-              <Info>{'공지 사항'}</Info>
-              <Info>{'자주 하는 질문'}</Info>
-              <Info>{'1:1 문의'}</Info>
-              <Info>{'고객 센터'}</Info>
-            </I>
-            <I>
-              <Info>{'이용 약관'}</Info>
-              <Info>{'개인정보 처리 방침'}</Info>
-            </I>
-            <I>
-              <Info>{'회사 소개'}</Info>
-              <Info>{'서비스 가이드'}</Info>
-              <Info>{'인재 채용'}</Info>
-            </I>
-          </N>
-        </Content>
-        <Logo src={logo.src} />
-        <Do>
-          {
-            '(주)Repick 대표: 이도현 사업자 등록 번호: 23579349109535 전화번호 23579-34910-9535(평일 9:00 - 17:00)'
-          }
-          <br />
-          {
-            '이메일: repick@naver.com 서울 마포구 홍익대학교 T동 창업지원실 (평일 9:00 - 17:00)'
-          }
-        </Do>
-        <CopyRight>
-          {'Copyright (c) 2023 Repick 리픽 All rights Reserved.'}
-        </CopyRight>
-      </Wrapper>
-      <App>
-        <Down>{'Repick 앱 다운로드'}</Down>
-        <W>
-          <A>{'IOS App Store'}</A>
-          <A>{'Android'}</A>
-        </W>
-      </App>
+      <Q>
+        <Wrapper>
+          <Content>
+            <P>
+              <Bold>{'헬프 센터'}</Bold>
+              <Bold> {'운영 정책'}</Bold>
+              <Bold>{'ABOUT US'}</Bold>
+            </P>
+            <N>
+              <I>
+                <Info>{'공지 사항'}</Info>
+                <Info>{'자주 하는 질문'}</Info>
+                <Info>{'1:1 문의'}</Info>
+                <Info>{'고객 센터'}</Info>
+              </I>
+              <I>
+                <Info>{'이용 약관'}</Info>
+                <Info>{'개인정보 처리 방침'}</Info>
+              </I>
+              <I>
+                <Info>{'회사 소개'}</Info>
+                <Info>{'서비스 가이드'}</Info>
+                <Info>{'인재 채용'}</Info>
+              </I>
+            </N>
+          </Content>
+          <Logo src={logo.src} />
+          <Do>
+            <span
+              style={{
+                fontWeight: '600',
+              }}
+            >
+              {'(주)Repick 대표: 이도현'}
+            </span>
+            {
+              ' 사업자 등록 번호: 23579349109535 전화번호 23579-34910-9535(평일 9:00 - 17:00)'
+            }
+            <br />
+            {
+              '이메일: repick@naver.com 서울 마포구 홍익대학교 T동 창업지원실 (평일 9:00 - 17:00)'
+            }
+          </Do>
+          <CopyRight>
+            {'Copyright (c) 2023 Repick 리픽 All rights Reserved.'}
+          </CopyRight>
+        </Wrapper>
+        <App>
+          <Down>{'Repick 앱 다운로드'}</Down>
+          <W>
+            <A>{'IOS App Store'}</A>
+            <A>{'Android'}</A>
+          </W>
+        </App>
+      </Q>
     </Container>
   );
 }
 
 export default Footer;
 
-const Container = styled.div`
+const Q = styled.div`
+  width: 100vw;
   display: flex;
   justify-content: center;
   background-color: rgba(246, 246, 246, 1);
   height: 364px;
 `;
+const Container = styled.div``;
 const Wrapper = styled.div`
   margin-top: 53px;
 `;

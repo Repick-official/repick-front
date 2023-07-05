@@ -52,7 +52,6 @@ function page() {
             {'주소'}
             <div className="star">{'*'}</div>
           </Info>
-
           <Content className="address" placeholder="우편번호를 검색해주세요" />
           <Confirm>{'우편번호'}</Confirm>
         </Wrapper>
@@ -107,7 +106,9 @@ const Container = styled.div`
 `;
 const R = styled.div`
   margin-top: 120px;
-  //margin-left: 352px
+  ::placeholder {
+    color: var(--3, #b4b4b4);
+  }
 `;
 const Title = styled.div`
   color: var(--1, #111);
@@ -136,19 +137,20 @@ const User = styled.div`
   margin-bottom: 80px;
 `;
 const Content = styled.input`
-  width: 460px;
+  width: 436px;
   height: 56px;
   background-color: rgba(232, 232, 232, 1);
   border-radius: 15px;
   border: none;
   font-size: 20px;
   font-weight: 400;
-
-  padding-left: 24px;
+  font-family: 'Pretendard';
+  color: rgba(180, 180, 180, 1);
+  padding: 0px 0px 0px 24px;
   outline: none;
 
   &.address {
-    width: 322px;
+    width: 308px;
   }
 
   &.detail-address {
@@ -167,7 +169,6 @@ const Confirm = styled.button`
   width: 104px;
   height: 56px;
   border: none;
-  padding: 18px;
   font-weight: 600;
   font-size: 16px;
   margin-left: 24px;

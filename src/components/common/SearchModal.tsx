@@ -35,6 +35,7 @@ const SearchInputWrapper = styled.div`
 const SearchBox = styled.input`
   width: 215px;
   height: 28px;
+  font-family: 'Pretendard';
   font-weight: 400;
   font-size: 20px;
   margin-right: 386px;
