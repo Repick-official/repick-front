@@ -1,10 +1,16 @@
 export const registerUser = async (
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    zipCode: string;
+  },
   email: string,
   name: string,
   nickname: string,
   password: string
 ) => {
   const data = {
+    address: address,
     email: email,
     name: name,
     nickname: nickname,

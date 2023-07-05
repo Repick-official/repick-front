@@ -11,10 +11,47 @@ function page() {
   const [name, setName] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [id, setId] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [mainAddress, setMainAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
+  const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handlePhoneNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNum(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setZipCode(e.target.value);
+  };
+  const handleMainAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMainAddress(e.target.value);
+  };
+  const handleDetailAddressChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDetailAddress(e.target.value);
+  };
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const handlePasswordConfirmChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPasswordConfirm(e.target.value);
+  };
 
   return (
     <Container>
@@ -30,14 +67,14 @@ function page() {
             {'이름'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content />
+          <Content value={name} onChange={handleNameChange} />
         </Wrapper>
         <Wrapper>
           <Info>
             {'전화번호'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content />
+          <Content value={phoneNum} onChange={handlePhoneNumChange} />
           <Confirm>{'본인인증'}</Confirm>
         </Wrapper>
         <Wrapper>
@@ -45,21 +82,28 @@ function page() {
             {'이메일'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content />
+          <Content value={email} onChange={handleEmailChange} />
         </Wrapper>
         <Wrapper>
           <Info>
             {'주소'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content className="address" placeholder="우편번호를 검색해주세요" />
+          <Content
+            className="address"
+            placeholder="우편번호를 검색해주세요"
+            value={zipCode}
+            onChange={handleZipCodeChange}
+          />
           <Confirm>{'우편번호'}</Confirm>
         </Wrapper>
         <Address>
-          <Content className="detail-address" />
+          <Content className="detail-address" value={mainAddress} />
           <Content
             className="detail-address"
             placeholder="상세 주소를 입력해주세요"
+            value={detailAddress}
+            onChange={handleDetailAddressChange}
           />
         </Address>
         <Wrapper>
@@ -67,21 +111,33 @@ function page() {
             {'아이디'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content placeholder="숫자, 영문 대소문자만 사용 가능합니다" />
+          <Content
+            placeholder="숫자, 영문 대소문자만 사용 가능합니다"
+            value={nickname}
+            onChange={handleNicknameChange}
+          />
         </Wrapper>
         <Wrapper>
           <Info>
             {'비밀번호'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다" />
+          <Content
+            placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다"
+            value={password}
+            onChange={handlePasswordChange}
+          />
         </Wrapper>
         <Wrapper>
           <Info>
             {'비밀번호 확인'}
             <div className="star">{'*'}</div>
           </Info>
-          <Content placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다" />
+          <Content
+            placeholder="숫자, 영문 대소문자, 특수부호만 사용 가능합니다"
+            value={passwordConfirm}
+            onChange={handlePasswordConfirmChange}
+          />
         </Wrapper>
         <Register></Register>
       </R>
