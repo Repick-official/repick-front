@@ -1,13 +1,13 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 html {
-  /* overflow-x: hidden;
-  overflow-y: hidden; */
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 body {
   height: 100vh;
-  width: 1920px;
+  width: 100vw;
   font-family: 'Pretendard';
   user-select: none;
   font-style: normal;

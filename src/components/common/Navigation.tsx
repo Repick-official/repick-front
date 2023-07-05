@@ -49,7 +49,7 @@ const Container = styled.div`
   //align-items: center;
   justify-content: center;
   height: 196px;
-  width: 1920px;
+  width: 100vw;
 `;
 const LogoWrapper = styled.div`
   margin-top: 55.65px;
