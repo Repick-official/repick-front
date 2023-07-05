@@ -18,12 +18,12 @@ function SearchModal() {
 export default SearchModal;
 
 const SearchWrapper = styled.div`
-  margin: 0px 108px 0px 65px;
+  margin: 0px 65px 0px 108px;
 `;
 const SearchInputWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 683px;
+  width: 659px;
   height: 56px;
   background: rgba(238, 238, 238, 1);
   border-radius: 15px;

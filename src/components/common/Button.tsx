@@ -21,4 +21,5 @@ const Show = styled.button`
   color: var(--4, #e8e8e8);
   font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
 `;

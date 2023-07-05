@@ -96,7 +96,6 @@ function page() {
 export default page;
 
 const Container = styled.div`
-  width: 1216px;
   .button {
     display: flex;
     flex-direction: column;
@@ -108,7 +107,7 @@ const Container = styled.div`
 `;
 const R = styled.div`
   margin-top: 120px;
-  //margin-left: 352px;
+  //margin-left: 352px
 `;
 const Title = styled.div`
   color: var(--1, #111);

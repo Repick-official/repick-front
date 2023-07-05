@@ -58,19 +58,20 @@ function Footer() {
 export default Footer;
 
 const Container = styled.div`
-  background-color: rgba(246, 246, 246, 1);
-  width: 100vw;
-  height: 364px;
   display: flex;
+  justify-content: center;
+  background-color: rgba(246, 246, 246, 1);
+  height: 364px;
 `;
 const Wrapper = styled.div`
   margin-top: 53px;
-  margin-left: 352px;
 `;
 const Content = styled.div`
   display: flex;
 `;
-const App = styled.div``;
+const App = styled.div`
+  margin-left: 262px;
+`;
 const Bold = styled.div`
   font-size: 16px;
   font-weight: 600;
