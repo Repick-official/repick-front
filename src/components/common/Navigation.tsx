@@ -45,11 +45,11 @@ const Logo = styled.img`
 const Container = styled.div`
   box-shadow: 0px 2px 8px 0px rgba(166, 166, 166, 0.25);
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   //align-items: center;
   justify-content: center;
   height: 196px;
-  width: 1216px;
+  width: 1920px;
 `;
 const LogoWrapper = styled.div`
   margin-top: 55.65px;
@@ -73,8 +73,8 @@ const MainWrapper = styled.div`
   display: flex;
 `;
 const SemiWrapper = styled.div`
-  margin-top: 48px;
   display: flex;
+  margin: 48px auto 0 auto;
 `;
 const Option = styled.div`
   font-size: 20px;
