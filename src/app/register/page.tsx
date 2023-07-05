@@ -1,10 +1,21 @@
 'use client';
 import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
+import { useRouter } from 'next/navigation';
 
 function page() {
+  const router = useRouter();
+  const [name, setName] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
   return (
     <Container>
       <R>
@@ -41,9 +52,17 @@ function page() {
             {'주소'}
             <div className="star">{'*'}</div>
           </Info>
+
           <Content className="address" placeholder="우편번호를 검색해주세요" />
           <Confirm>{'우편번호'}</Confirm>
         </Wrapper>
+        <Address>
+          <Content className="detail-address" />
+          <Content
+            className="detail-address"
+            placeholder="상세 주소를 입력해주세요"
+          />
+        </Address>
         <Wrapper>
           <Info>
             {'아이디'}
@@ -77,6 +96,7 @@ function page() {
 export default page;
 
 const Container = styled.div`
+  width: 1216px;
   .button {
     display: flex;
     flex-direction: column;
@@ -88,7 +108,7 @@ const Container = styled.div`
 `;
 const R = styled.div`
   margin-top: 120px;
-  margin-left: 352px;
+  //margin-left: 352px;
 `;
 const Title = styled.div`
   color: var(--1, #111);
@@ -131,6 +151,11 @@ const Content = styled.input`
   &.address {
     width: 322px;
   }
+
+  &.detail-address {
+    margin-bottom: 18px;
+    margin-left: 206px; //이게 맞나 모르겠다
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -150,4 +175,8 @@ const Confirm = styled.button`
 `;
 const Line = styled.img`
   margin-top: 60px;
+`;
+const Address = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
