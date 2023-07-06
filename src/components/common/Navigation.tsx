@@ -48,7 +48,7 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              <My>{'마이페이지'}</My>
+              <My onClick={() => router.push('/mypage')}>{'마이페이지'}</My>
               <Login onClick={() => router.push('/login')}>{'로그인'}</Login>
             </PageWrapper>
           </MainWrapper>
