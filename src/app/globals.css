@@ -19,4 +19,5 @@ body {
 
 .content {
   width: 1216px;
+  flex-grow: 1;
 }
