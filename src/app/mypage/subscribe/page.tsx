@@ -2,9 +2,38 @@
 import React from 'react';
 import styled from 'styled-components';
 import check_off from '@/assets/images/check/off.svg';
+import check_on from '@/assets/images/check/on.svg';
 import Button from '@/components/common/Button';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function page() {
+  const router = useRouter();
+
+  const [basic, setBasic] = useState(false);
+  const [pro, setPro] = useState(false);
+  const [selectPlan, setSelectPlan] = useState('');
+
+  const selectBasic = (e: any) => {
+    setBasic(true);
+    setPro(false);
+    setSelectPlan('Basic Plan');
+  };
+
+  const selectPro = (e: any) => {
+    setBasic(false);
+    setPro(true);
+    setSelectPlan('Pro Plan');
+  };
+
+  const changePage = () => {
+    if (selectPlan == 'Basic Plan') {
+      router.push('/mypage/subscribe/request1');
+    } else {
+      router.push('/mypage/subscribe/request2');
+    }
+  };
+
   return (
     <Container>
       <Title>{'리픽 멤버십 구독 플랜'}</Title>
@@ -13,10 +42,13 @@ function page() {
       </SemiTitle>
       <Wrapper>
         <Choice>
-          <Check src={check_off.src} />
+          <Check onClick={(e: any) => selectBasic(e)}>
+            {basic ? <On src={check_on.src} /> : <Off src={check_off.src} />}
+          </Check>
           <Box>
             <Content>
               <Plan>{'Basic Plan'}</Plan>
+
               <DiscountWrapper>
                 <Price>{'15,900원'}</Price>
                 <Line />
@@ -35,10 +67,13 @@ function page() {
           </Box>
         </Choice>
         <Choice>
-          <Check src={check_off.src} />
+          <Check onClick={(e: any) => selectPro(e)}>
+            {pro ? <On src={check_on.src} /> : <Off src={check_off.src} />}
+          </Check>
           <Box>
             <Content>
               <Plan>{'Pro Plan'}</Plan>
+
               <DiscountWrapper>
                 <Price>{'25,900원'}</Price>
                 <Line />
@@ -57,7 +92,7 @@ function page() {
           </Box>
         </Choice>
       </Wrapper>
-      <div className="button">
+      <div className="button" onClick={() => changePage()}>
         <Button content="구독하기" />
       </div>
     </Container>
@@ -90,7 +125,10 @@ const Choice = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const Check = styled.img`
+const Off = styled.img`
+  margin-bottom: 24px;
+`;
+const On = styled.img`
   margin-bottom: 24px;
 `;
 const Box = styled.div`
@@ -154,3 +192,4 @@ const Line = styled.div`
   background: var(--unnamed, #ff3d00);
   position: absolute;
 `;
+const Check = styled.div``;
