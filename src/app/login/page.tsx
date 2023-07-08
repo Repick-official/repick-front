@@ -65,7 +65,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height : calc(100vh-560px);
+  height : 100%;
 `
 
 const ContentWrapper = styled.div`
