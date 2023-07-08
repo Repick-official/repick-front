@@ -72,6 +72,7 @@ const Q = styled.div`
   justify-content: center;
   background-color: rgba(246, 246, 246, 1);
   height: 364px;
+  margin-top:auto;
 `;
 const Container = styled.div``;
 const Wrapper = styled.div`
