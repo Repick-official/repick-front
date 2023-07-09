@@ -5,8 +5,11 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import wardrobe_apply from '@/assets/images/wardrobe_apply.png';
 import wardrobe_arrange from '@/assets/images/wardrobe_arrange.png';
+import { useRouter } from 'next/navigation';
 
 function page() {
+  const router = useRouter();
+
   return (
     <Container>
       <TitleWrapper>
@@ -18,7 +21,10 @@ function page() {
       <Wrapper>
         <ContentWrapper>
           <Choice>
-            <Off src={check_off.src} />
+            <Off
+              src={check_off.src}
+              onClick={() => router.push('/wardrobe/register')}
+            />
             <Background>
               <ApplyImage src={wardrobe_apply.src} />
             </Background>
@@ -30,7 +36,10 @@ function page() {
             </InfoContent>
           </Choice>
           <Choice>
-            <Off src={check_off.src} />
+            <Off
+              src={check_off.src}
+              onClick={() => router.push('/wardrobe/current')}
+            />
             <Background>
               <ArrangeImage src={wardrobe_arrange.src} />
             </Background>

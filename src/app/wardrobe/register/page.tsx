@@ -6,8 +6,10 @@ import Button from '@/components/common/Button';
 import bag from '@/assets/images/bag.svg';
 import arrow7 from '@/assets/images/arrow7.svg';
 import arrow6 from '@/assets/images/arrow6.svg';
+import { useRouter } from 'next/navigation';
 
 function page() {
+  const router = useRouter();
   return (
     <Container>
       <TitleWrapper>
@@ -156,7 +158,10 @@ function page() {
           </BagContainer>
         </B>
       </A>
-      <div className="button">
+      <div
+        className="button"
+        onClick={() => router.push('/wardrobe/register/success')}
+      >
         <Button content="신청하기" />
       </div>
     </Container>
