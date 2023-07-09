@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 
 function page() {
   const menu = [
-    { name: '마이픽 현황', isActive: true, route: '', key: 1 },
-    { name: '홈피팅', isActive: false, route: '', key: 2 },
-    { name: '구매하기', isActive: false, route: '', key: 3 },
+    { name: '마이픽 현황', isActive: true, route: '/myPick', key: 1 },
+    { name: '홈피팅', isActive: false, route: '/myPick/homefitting', key: 2 },
+    { name: '구매하기', isActive: false, route: '/myPick/purchase', key: 3 },
     { name: '구매내역', isActive: false, route: '', key: 4 },
   ];
   const router = useRouter();
@@ -21,7 +21,7 @@ function page() {
         <Menu>
           {menu.map((page) => (
             <Section key={page.key}>
-              <Option key={page.key}>
+              <Option key={page.key} onClick={() => router.push(page.route)}>
                 {page.name}
                 {page.isActive && <SelectedPage />}
               </Option>
@@ -38,9 +38,9 @@ function page() {
 
         <Content>
           <ButtonWrapper>
-            {/* <div onClick={() => router.push('/mypick/success')}> */}
-            <Button content="홈피팅 신청하기" />
-            {/* </div> */}
+            <div onClick={() => router.push('/myPick/success')}>
+              <Button content="홈피팅 신청하기" />
+            </div>
             <Button content="구매하기" />
             {/* 디자인 나중에 바꾸기 */}
           </ButtonWrapper>
