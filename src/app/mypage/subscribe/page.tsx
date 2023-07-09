@@ -124,6 +124,8 @@ const Choice = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 40px;
+  margin-right: 40px;
 `;
 const Off = styled.img`
   margin-bottom: 24px;
@@ -140,7 +142,7 @@ const Box = styled.div`
 `;
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-top: 60px;
 `;
 const Content = styled.div`

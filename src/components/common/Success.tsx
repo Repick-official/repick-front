@@ -46,7 +46,9 @@ const Component = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-const SuccessWrapper = styled.div``;
+const SuccessWrapper = styled.div`
+  margin-bottom: 158px;
+`;
 const WelcomeWrapper = styled.div`
   margin-bottom: 70px;
 `;
