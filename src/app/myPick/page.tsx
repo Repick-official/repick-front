@@ -6,36 +6,11 @@ import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 
 function page() {
-  const menu = [
-    { name: '마이픽 현황', isActive: true, route: '/myPick', key: 1 },
-    { name: '홈피팅', isActive: false, route: '/myPick/homefitting', key: 2 },
-    { name: '구매하기', isActive: false, route: '/myPick/purchase', key: 3 },
-    { name: '구매내역', isActive: false, route: '', key: 4 },
-  ];
   const router = useRouter();
 
   return (
     <Container>
-      <Banner src={sub.src} />
       <SemiContainer>
-        <Menu>
-          {menu.map((page) => (
-            <Section key={page.key}>
-              <Option key={page.key} onClick={() => router.push(page.route)}>
-                {page.name}
-                {page.isActive && <SelectedPage />}
-              </Option>
-            </Section>
-          ))}
-        </Menu>
-        <Pick>
-          <Title>내가 픽한제품</Title>
-          <Filter>
-            <OnlyProduct>홈피팅 신청 중 제품만</OnlyProduct>
-            <Clear>전체 선택 해제</Clear>
-          </Filter>
-        </Pick>
-
         <Content>
           <ButtonWrapper>
             <div onClick={() => router.push('/myPick/success')}>
