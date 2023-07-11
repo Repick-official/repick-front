@@ -16,7 +16,9 @@ function page() {
             <div onClick={() => router.push('/myPick/success')}>
               <Button content="홈피팅 신청하기" />
             </div>
-            <Button content="구매하기" />
+            <div onClick={() => router.push('/myPick/purchase')}>
+              <Button content="구매하기" />
+            </div>
             {/* 디자인 나중에 바꾸기 */}
           </ButtonWrapper>
         </Content>

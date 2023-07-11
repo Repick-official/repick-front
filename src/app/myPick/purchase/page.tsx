@@ -7,8 +7,8 @@ function page() {
   const router = useRouter();
   return (
     <>
-      <div onClick={() => router.push('/myPick/purchase/enterInfo')}>
-        <Button content="구매하기" />
+      <div onClick={() => router.push('/myPick/purchase/success')}>
+        <Button content="결제하기" />
       </div>
     </>
   );

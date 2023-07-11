@@ -58,6 +58,7 @@ function MyPickNavigation() {
               onClick={() => {
                 setSelectedPage('구매내역');
                 router.push('/myPick/purchase');
+                //여기 url 못 찾음
               }}
               selected={selectedPage === '구매내역' ? true : false}
             >
