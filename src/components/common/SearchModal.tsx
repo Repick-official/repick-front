@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import search from '@/assets/images/search.svg';
+import { useState } from 'react';
+import Modal from '@/components/common/Search';
 
 function SearchModal() {
+  const [showModal, setShowModal] = useState(false);
+  const clickModal = () => setShowModal(!showModal);
+
   return (
     <Contatiner>
       <SearchWrapper>
         <SearchInputWrapper>
           <SearchBox placeholder="어떤 의류를 찾고 계신가요?"></SearchBox>
-          <ButtonWrapper src={search.src} />
+          <ButtonWrapper src={search.src} onClick={clickModal} />
+          {showModal && <Modal clickModal={clickModal} />}
         </SearchInputWrapper>
       </SearchWrapper>
     </Contatiner>
