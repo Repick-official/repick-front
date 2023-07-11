@@ -10,34 +10,6 @@ function Navigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState('서비스 가이드');
 
-  const menu = [
-    { name: '서비스 가이드', isActive: true, route: '/guide', key: 1 },
-    { name: '제품 보기', isActive: false, route: '/product', key: 2 },
-    { name: '마이픽', isActive: false, route: '/myPick', key: 3 },
-    { name: '옷장 수거', isActive: false, route: '/wardrobe', key: 4 },
-  ];
-
-  const [menuPages, setMenuPages] = useState<any[]>(menu);
-
-  const movePage = (page: any) => {
-    if (selectedPage === page.name) {
-      router.push(page.route);
-      console.log(page.isActive);
-      console.log(menuPages);
-    } else {
-      setSelectedPage(page.name);
-      setMenuPages((prevState) =>
-        prevState.map((selected) =>
-          selected.name === page.name
-            ? { ...selected, isActive: true }
-            : { ...selected, isActive: false }
-        )
-      );
-      router.push(page.route);
-      console.log(menuPages);
-    }
-  };
-
   return (
     <Container>
       <Q>
@@ -53,14 +25,56 @@ function Navigation() {
             </PageWrapper>
           </MainWrapper>
           <SemiWrapper>
-            {menu.map((page) => (
-              <Section key={page.key}>
-                <Option key={page.key} onClick={() => movePage(page)}>
-                  {page.name}
-                  {page.isActive && <SelectedPage />}
-                </Option>
-              </Section>
-            ))}
+            <Section>
+              <Option
+                onClick={() => {
+                  setSelectedPage('서비스 가이드');
+                  router.push('/guide');
+                }}
+                selected={selectedPage === '서비스 가이드' ? true : false}
+              >
+                서비스 가이드
+                {selectedPage === '서비스 가이드' ? <SelectedPage /> : <></>}
+              </Option>
+            </Section>
+            <Section>
+              <Option
+                onClick={() => {
+                  setSelectedPage('제품 보기');
+                  router.push('/product');
+                }}
+                selected={selectedPage === '제품 보기' ? true : false}
+              >
+                제품 보기
+                {selectedPage === '제품 보기' ? <SelectedPage /> : <></>}
+              </Option>
+            </Section>
+
+            <Section>
+              <Option
+                onClick={() => {
+                  setSelectedPage('마이픽');
+                  router.push('/myPick');
+                }}
+                selected={selectedPage === '마이픽' ? true : false}
+              >
+                마이픽
+                {selectedPage === '마이픽' ? <SelectedPage /> : <></>}
+              </Option>
+            </Section>
+
+            <Section>
+              <Option
+                onClick={() => {
+                  setSelectedPage('옷장 수거');
+                  router.push('/wardrobe');
+                }}
+                selected={selectedPage === '옷장 수거' ? true : false}
+              >
+                옷장 수거
+                {selectedPage === '옷장 수거' ? <SelectedPage /> : <></>}
+              </Option>
+            </Section>
           </SemiWrapper>
         </S>
       </Q>
@@ -116,8 +130,10 @@ const SemiWrapper = styled.div`
   display: flex;
   margin: 44px 0 0 0;
 `;
-const Option = styled.div`
+const Option = styled.div<{ selected: boolean }>`
   font-size: 20px;
-  margin-right: 144px;
+  margin-right: 83px;
   text-align: center;
+  width: 153px;
+  font-weight: ${(props) => (props.selected ? '600' : '400')};
 `;
