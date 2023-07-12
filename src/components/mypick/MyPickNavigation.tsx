@@ -69,13 +69,6 @@ function MyPickNavigation() {
             </Option>
           </Section>
         </Menu>
-        <Pick>
-          <Title>내가 픽한제품</Title>
-          <Filter>
-            <OnlyProduct>홈피팅 신청 중 제품만</OnlyProduct>
-            <Clear>전체 선택 해제</Clear>
-          </Filter>
-        </Pick>
       </Semicontainer>
     </Container>
   );
@@ -105,28 +98,6 @@ const SelectedPage = styled.div`
   height: 3px;
   background-color: var(--1, #111);
   margin-top: 22px;
-`;
-const Pick = styled.div`
-  width: 1216px;
-  margin-top: 81px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 60px;
-`;
-const Title = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-`;
-const Filter = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--2, #5f5f5f);
-  display: flex;
-`;
-const OnlyProduct = styled.div``;
-const Clear = styled.div`
-  margin-left: 54px;
 `;
 const Banner = styled.img`
   width: 1644px;
