@@ -6,11 +6,16 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import SubscribePlan from '@/components/mypage/SubscribePlan';
+import { selectedSubscribePlan } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function page() {
   const router = useRouter();
 
   const [select, setSelect] = useState(false);
+
+  const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
 
   const selectBasic = (e: any) => {
     setSelect(!select);
@@ -22,31 +27,20 @@ function page() {
       <SemiTitle>
         {'리픽 멤버십 구독을 통해 온라인 제품을 홈피팅 후 옷을 구매해보세요!'}
       </SemiTitle>
-      <Wrapper>
-        <Box>
-          <Content>
-            <Plan>{'Basic Plan'}</Plan>
 
-            <DiscountWrapper>
-              <Price>{'15,900원'}</Price>
-              <Line />
-
-              <PriceWrapper>
-                <Discount>{'월 9,540원'}</Discount>
-                <Tax>{'(부가세 포함)'}</Tax>
-              </PriceWrapper>
-            </DiscountWrapper>
-
-            <Info>
-              {'3벌의 의류를 선택가능합니다.*'}
-              <br />
-              {
-                ' 모든 가격은 부가가치세가 포함된 가격이며, 추가로 결제되는 금액은 없습니다.*'
-              }
-            </Info>
-          </Content>
-        </Box>
-      </Wrapper>
+      {selectPlan === 'Basic' ? (
+        <SubscribePlan
+          plan={'Basic Plan'}
+          price={'15,900원'}
+          discounted={'월 9,540원'}
+        />
+      ) : (
+        <SubscribePlan
+          plan={'Pro Plan'}
+          price={'25,900원'}
+          discounted={'월 15,540원'}
+        />
+      )}
 
       <Notice>
         <li>{'맴버십 구매에 따른 공지문입니다.'}</li>

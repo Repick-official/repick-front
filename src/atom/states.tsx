@@ -10,3 +10,8 @@ export const selectedNavPage = atom<string>({
   key: '서비스 가이드',
   default: '서비스 가이드',
 });
+
+export const selectedSubscribePlan = atom<string>({
+  key: 'Basic',
+  default: 'Basic',
+});
