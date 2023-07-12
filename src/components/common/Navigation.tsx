@@ -5,10 +5,12 @@ import styled from 'styled-components';
 import SearchModal from './SearchModal';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { selectedNavPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function Navigation() {
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState('서비스 가이드');
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
 
   return (
     <Container>
@@ -20,8 +22,22 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              <My onClick={() => router.push('/mypage')}>{'마이페이지'}</My>
-              <Login onClick={() => router.push('/login')}>{'로그인'}</Login>
+              <My
+                onClick={() => {
+                  setSelectedPage('');
+                  router.push('/mypage');
+                }}
+              >
+                {'마이페이지'}
+              </My>
+              <Login
+                onClick={() => {
+                  setSelectedPage('');
+                  router.push('/login');
+                }}
+              >
+                {'로그인'}
+              </Login>
             </PageWrapper>
           </MainWrapper>
           <SemiWrapper>

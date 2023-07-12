@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import sub from '@/assets/images/subscription.png';
+import { selectedMypickPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function MyPickNavigation() {
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState('마이픽 현황');
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
 
   return (
     <Container>

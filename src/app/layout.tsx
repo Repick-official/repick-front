@@ -16,11 +16,11 @@ export default function RootLayout({
         <link rel="icon" href="" />
       </head>
       <body>
-        <Navigation />
-        <div className="content">
-          <RecoilRoot>{children}</RecoilRoot>
-        </div>
-        <Footer />
+        <RecoilRoot>
+          <Navigation />
+          <div className="content">{children}</div>
+          <Footer />
+        </RecoilRoot>
       </body>
     </html>
   );

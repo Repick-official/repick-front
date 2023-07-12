@@ -4,19 +4,32 @@ import sub from '@/assets/images/subscription.png';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
+import { selectedMypickPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function page() {
   const router = useRouter();
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
 
   return (
     <Container>
       <SemiContainer>
         <Content>
           <ButtonWrapper>
-            <div onClick={() => router.push('/myPick/success')}>
+            <div
+              onClick={() => {
+                setSelectedPage('홈피팅');
+                router.push('/myPick/success');
+              }}
+            >
               <Button content="홈피팅 신청하기" />
             </div>
-            <div onClick={() => router.push('/myPick/purchase')}>
+            <div
+              onClick={() => {
+                setSelectedPage('구매하기');
+                router.push('/myPick/purchase');
+              }}
+            >
               <Button content="구매하기" />
             </div>
             {/* 디자인 나중에 바꾸기 */}

@@ -2,12 +2,21 @@
 import React from 'react';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
+import { selectedMypickPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function page() {
   const router = useRouter();
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
+
   return (
     <>
-      <div onClick={() => router.push('/myPick/purchase')}>
+      <div
+        onClick={() => {
+          setSelectedPage('구매하기');
+          router.push('/myPick/purchase');
+        }}
+      >
         <Button content="구매하기" />
       </div>
     </>

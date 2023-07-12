@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import registerCheck from '@/assets/images/check/register_check.svg';
+import { selectedMypickPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
+import { useRouter } from 'next/navigation';
+import { selectedNavPage } from '@/atom/states';
 
 function Success({
   mainText,
@@ -12,6 +16,11 @@ function Success({
   subText1: string;
   subText2: string;
 }) {
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
+  const [selectedNavigationPage, setSelectedNavigationPage] =
+    useRecoilState(selectedNavPage);
+
+  const router = useRouter();
   return (
     <Component>
       <SuccessWrapper>
@@ -29,7 +38,15 @@ function Success({
           </WelcomeMessageWrapper>
         </WelcomeWrapper>
         <ButtonWrapper>
-          <Button content="마이픽 현황 보기" />
+          <div
+            onClick={() => {
+              setSelectedPage('마이픽 현황');
+              setSelectedNavigationPage('마이픽');
+              router.push('/myPick');
+            }}
+          >
+            <Button content="마이픽 현황 보기" />
+          </div>
           <Button content="다른 제품 보러가기" />
         </ButtonWrapper>
       </SuccessWrapper>
