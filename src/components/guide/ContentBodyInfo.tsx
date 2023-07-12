@@ -9,6 +9,13 @@ interface ContentBodyInfoProps {
   itemInfo: string;
   price: number;
 }
+interface TagWrapperProps {
+  bgcolor: string;
+}
+
+interface TagNameProps {
+  textcolor: string;
+}
 
 const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   src,
@@ -38,8 +45,8 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
     <ImageWrapper>
       <Image src={src} alt="Picture of me" width={286} height={286} />
       <ImageBody>
-        <TagWrapper bgColor={tagColors[tagName]}>
-          <TagName textColor={tagNameColors[tagName]}>{tagName}</TagName>
+        <TagWrapper bgcolor={tagColors[tagName]}>
+          <TagName textcolor={tagNameColors[tagName]}>{tagName}</TagName>
         </TagWrapper>
         <ItemInfo>{itemInfo}</ItemInfo>
         <Price>{price.toLocaleString('en-US')}원</Price>
@@ -66,13 +73,6 @@ const ImageBody = styled.div`
   align-items: center;
 `;
 
-interface TagWrapperProps {
-  bgColor: string;
-}
-
-interface TagNameProps {
-  textColor: string;
-}
 const TagWrapper = styled.div<TagWrapperProps>`
   display: inline-flex;
   height: 22px;
@@ -80,11 +80,11 @@ const TagWrapper = styled.div<TagWrapperProps>`
   align-items: center;
   border-radius: 5px;
   background: ${(props) =>
-    props.bgColor ||
+    props.bgcolor ||
     '#E8E8E8'}; // bgColor props를 받아서 적용하거나, 값이 없을 경우 기본값으로 #5F5F5F를 사용
 `;
 const TagName = styled.p<TagNameProps>`
-  color: ${(props) => props.textColor || '#5F5F5F'};
+  color: ${(props) => props.textcolor || '#5F5F5F'};
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
