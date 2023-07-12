@@ -6,6 +6,11 @@ import logo from '@/assets/images/loco.svg';
 
 function page() {
   const router = useRouter();
+  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_API_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin&response_type=code`;
+
+  const loginHandler = () => {
+    window.location.href = link;
+  }
   return (
     <Container>
       <ContentWrapper>
@@ -45,7 +50,7 @@ function page() {
           </Menu>
         </MenuWrapper>
         <SnsWrapper>
-          <SnsLoginText>
+          <SnsLoginText onClick={loginHandler}>
             SNS 계정으로 로그인
           </SnsLoginText>
           <SnsIconWrapper>
