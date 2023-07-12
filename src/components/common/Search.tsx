@@ -18,7 +18,11 @@ function SearchModal({ clickModal }: any) {
               <Current>최근 검색어</Current>
               <Keywords>
                 <Key>추천키워드</Key>
-                <Word>오프숄더</Word>
+                <Words>
+                  <Word>오프숄더</Word>
+                  <Word>레인 부츠</Word>
+                  <Word>크롭 반팔티</Word>
+                </Words>
               </Keywords>
             </ContentWrapper>
           </Content>
@@ -35,17 +39,14 @@ const ModalBox = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
-  width: 1920px;
+  width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
 `;
 
 const SearchModalContent = styled.div`
-  width: 1920px;
-  height: 300px;
+  width: 100vw;
+  height: 600px;
   background-color: var(--5, #fff);
   display: flex;
   flex-direction: column;
@@ -62,7 +63,7 @@ const Remove = styled.img`
   width: 31px;
   height: 31px;
   margin-top: 67px;
-  margin-left: 1600px; //임시
+  margin-left: 1400px; //임시
 `;
 const SearchBox = styled.input`
   width: 780px;
@@ -85,7 +86,6 @@ const SearchWrapper = styled.div`
   height: 80px;
   font-weight: 400;
   border-radius: 15px;
-  //margin-right: 386px;
   border: none;
   background: var(--unnamed, #f6f6f6);
   outline: none;
@@ -93,13 +93,22 @@ const SearchWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
   display: flex;
+  margin-top: 40px;
 `;
 const Current = styled.div`
   font-size: 24px;
   font-weight: 600;
+  width: 425px;
 `;
-const Keywords = styled.div``;
-const Word = styled.div``;
+const Keywords = styled.div`
+  width: 425px;
+`;
+const Word = styled.div`
+  margin-bottom: 24px;
+`;
+const Words = styled.div`
+  margin-top: 20px;
+`;
 const Key = styled.div`
   font-size: 24px;
   font-weight: 600;
