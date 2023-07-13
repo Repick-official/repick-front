@@ -2,7 +2,7 @@
 import React from 'react';
 import logo from '@/assets/images/loco.svg';
 import styled from 'styled-components';
-import SearchModal from './SearchModal';
+import SearchModal from '@/components/Search/SearchModal';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { selectedNavPage } from '@/atom/states';

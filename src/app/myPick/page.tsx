@@ -100,7 +100,13 @@ function page() {
                 router.push('/myPick/homefitting/success');
               }}
             >
-              <Button content="홈피팅 신청하기" />
+              <Button
+                content="홈피팅 신청하기"
+                back="gray"
+                color="orange"
+                width="360"
+                height="60"
+              />
             </div>
             <div
               onClick={() => {
@@ -108,7 +114,13 @@ function page() {
                 router.push('/myPick/purchase');
               }}
             >
-              <Button content="구매하기" />
+              <Button
+                content="구매하기"
+                back="gray"
+                color="black"
+                width="360"
+                height="60"
+              />
             </div>
             {/* 디자인 나중에 바꾸기 */}
           </ButtonWrapper>

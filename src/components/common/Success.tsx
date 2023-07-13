@@ -45,9 +45,21 @@ function Success({
               router.push('/myPick');
             }}
           >
-            <Button content="마이픽 현황 보기" />
+            <Button
+              content="마이픽 현황 보기"
+              back="black"
+              color="white"
+              width="360"
+              height="60"
+            />
           </div>
-          <Button content="다른 제품 보러가기" />
+          <Button
+            content="다른 제품 보러가기"
+            back="black"
+            color="white"
+            width="360"
+            height="60"
+          />
         </ButtonWrapper>
       </SuccessWrapper>
     </Component>

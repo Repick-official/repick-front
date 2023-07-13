@@ -49,9 +49,20 @@ function page() {
             </Info>
           </ProductContent>
           <div className="button">
-            <Button content="마이픽에 담기" />
-            <Button content="구매하기" />
-            {/* 버튼 스타일링 다시 */}
+            <Button
+              content="마이픽에 담기"
+              back="gray"
+              color="orange"
+              width="517"
+              height="80"
+            />
+            <Button
+              content="구매하기"
+              back="gray"
+              color="black"
+              width="517"
+              height="80"
+            />
           </div>
         </DetailContent>
       </Content>
@@ -125,7 +136,7 @@ const Content = styled.div`
 const DetailContent = styled.div`
   margin-left: 106px;
   .button {
-    margin-top: 287px;
+    margin-top: 300px;
   }
 `;
 const Category = styled.div`

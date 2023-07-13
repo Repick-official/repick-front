@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import search from '@/assets/images/search.svg';
 import { useState } from 'react';
-import Modal from '@/components/common/Search';
+import Modal from '@/components/Search/Search';
 
 function SearchModal() {
   const [showModal, setShowModal] = useState(false);

@@ -8,7 +8,13 @@ function page() {
 
   return (
     <div onClick={() => router.push('/mypage/subscribe')}>
-      <Button content="멤버십 구독하러 가기" />
+      <Button
+        content="멤버십 구독하러 가기"
+        back="black"
+        color="white"
+        width="310"
+        height="60"
+      />
     </div>
   );
 }

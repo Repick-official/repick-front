@@ -138,7 +138,13 @@ function page() {
         onClick={() => router.push('/wardrobe/current/success')}
         className="button"
       >
-        <Button content="정산 요청하기" />
+        <Button
+          content="정산 요청하기"
+          back="black"
+          color="white"
+          width="360"
+          height="60"
+        />
       </div>
     </Container>
   );
