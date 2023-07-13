@@ -97,7 +97,7 @@ function page() {
             <div
               onClick={() => {
                 setSelectedPage('홈피팅');
-                router.push('/myPick/success');
+                router.push('/myPick/homefitting/success');
               }}
             >
               <Button content="홈피팅 신청하기" />

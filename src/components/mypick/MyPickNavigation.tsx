@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import sub from '@/assets/images/subscription.png';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
@@ -10,6 +10,25 @@ import { useRecoilState } from 'recoil';
 function MyPickNavigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
+
+  useEffect(() => {
+    let location = window.location.pathname;
+    let split = location.split('/');
+    switch (split[2]) {
+      case '':
+        setSelectedPage('마이픽 현황');
+        break;
+      case 'homefitting':
+        setSelectedPage('홈피팅');
+        break;
+      case 'purchase':
+        setSelectedPage('구매하기');
+        break;
+      case 'wardrobe':
+        setSelectedPage('옷장 수거');
+        break;
+    }
+  }, []);
 
   return (
     <Container>
@@ -46,7 +65,7 @@ function MyPickNavigation() {
             <Option
               onClick={() => {
                 setSelectedPage('구매하기');
-                router.push('');
+                router.push('/myPick/purchase');
               }}
               selected={selectedPage === '구매하기' ? true : false}
             >
@@ -59,7 +78,7 @@ function MyPickNavigation() {
             <Option
               onClick={() => {
                 setSelectedPage('구매내역');
-                router.push('/myPick/purchase');
+                router.push('');
                 //여기 url 못 찾음
               }}
               selected={selectedPage === '구매내역' ? true : false}
