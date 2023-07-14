@@ -1,5 +1,7 @@
 import React from 'react';
 import MyPickNavigation from '@/components/mypick/MyPickNavigation';
+import { styled } from 'styled-components';
+import '../globals.css';
 
 type Props = {
   children: React.ReactNode;
@@ -8,8 +10,10 @@ type Props = {
 function MyPickLayout({ children }: Props) {
   return (
     <div>
-      <MyPickNavigation />
-      <div>{children}</div>
+      <div className = "mypick_wrapper">
+        <MyPickNavigation />
+        <div className=  "content">{children}</div>
+      </div>
     </div>
   );
 }
