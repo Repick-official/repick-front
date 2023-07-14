@@ -19,7 +19,7 @@ function page() {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
 
   const [select, setSelect] = useState(false);
-
+  console.log("TEST");
   return (
     <Container>
       <SemiContainer>
