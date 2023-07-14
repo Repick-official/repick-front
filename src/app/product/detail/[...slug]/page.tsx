@@ -30,39 +30,31 @@ function page() {
           <ProductContent>
             <Info>
               <Tag>제품 이름</Tag>
-              <Sub bold={true}>부클 집업 가디건</Sub>
+              <Sub bold={'bold'}>부클 집업 가디건</Sub>
             </Info>
             <Info>
               <Tag>사이즈</Tag>
-              <Sub bold={false}>M, 55</Sub>
+              <Sub bold={'notBold'}>M, 55</Sub>
             </Info>
             <Info>
               <Tag>제품 성격</Tag>
-              <Sub bold={false}>
+              <Sub bold={'notBold'}>
                 본 제품은 손세탁을 권장합니다. <br />
                 강한 햇빛이나 조명에 의해 색이 변색될 수 있습니다.
               </Sub>
             </Info>
             <Info>
               <Tag>가격</Tag>
-              <Sub bold={true}>23,000원</Sub>
+              <Sub bold={'bold'}>23,000원</Sub>
             </Info>
           </ProductContent>
           <div className="button">
-            <Button
-              content="마이픽에 담기"
-              back="gray"
-              color="orange"
-              width="517"
-              height="80"
-            />
-            <Button
-              content="구매하기"
-              back="gray"
-              color="black"
-              width="517"
-              height="80"
-            />
+            <div className="btn">
+              <Button content="마이픽에 담기" num="1" />
+            </div>
+            <div className="btn">
+              <Button content="구매하기" num="2" />
+            </div>
           </div>
         </DetailContent>
       </Content>
@@ -138,6 +130,9 @@ const DetailContent = styled.div`
   .button {
     margin-top: 300px;
   }
+  .btn {
+    margin-top: 29px;
+  }
 `;
 const Category = styled.div`
   font-size: 16px;
@@ -156,10 +151,9 @@ const Tag = styled.div`
   font-weight: 400;
   width: 128px;
 `;
-const Sub = styled.div<{ bold: boolean }>`
-  font-weight: ${(props) => (props.bold ? '600' : '400')};
-  font-size: ${(props) => (props.bold ? '20px' : '16px')};
-  //margin-left: 68px;
+const Sub = styled.div<{ bold: string }>`
+  font-weight: ${(props) => (props.bold === 'bold' ? '600' : '400')};
+  font-size: ${(props) => (props.bold === 'bold' ? '20px' : '16px')};
 `;
 
 const Line = styled.img`

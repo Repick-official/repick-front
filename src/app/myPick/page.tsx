@@ -19,7 +19,7 @@ function page() {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
 
   const [select, setSelect] = useState(false);
-  console.log("TEST");
+  console.log('TEST');
   return (
     <Container>
       <SemiContainer>
@@ -100,13 +100,7 @@ function page() {
                 router.push('/myPick/homefitting/success');
               }}
             >
-              <Button
-                content="홈피팅 신청하기"
-                back="gray"
-                color="orange"
-                width="360"
-                height="60"
-              />
+              <Button content="홈피팅 신청하기" num="5" />
             </div>
             <div
               onClick={() => {
@@ -114,13 +108,7 @@ function page() {
                 router.push('/myPick/purchase');
               }}
             >
-              <Button
-                content="구매하기"
-                back="gray"
-                color="black"
-                width="360"
-                height="60"
-              />
+              <Button content="구매하기" num="6" />
             </div>
             {/* 디자인 나중에 바꾸기 */}
           </ButtonWrapper>
