@@ -13,10 +13,25 @@ function Navigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
 
+  const [isLogin, setIslogin] = useState('');
+  const [isUser, setIsUser] = useState('');
+  const [bold, setBold] = useState('');
+
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   console.log(userInfo);
-  console.log(userInfo.uesrNickname);
+
+  useEffect(() => {
+    if (userInfo.uesrNickname) {
+      setIsUser(userInfo.uesrNickname);
+      setIslogin('로그아웃');
+      setBold('bold');
+    } else {
+      setIsUser('마이페이지');
+      setIslogin('로그인');
+      setBold('notBold');
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     let location = window.location.pathname;
@@ -53,48 +68,23 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              {userInfo.uesrNickname ? (
-                <>
-                  <My
-                    login={true}
-                    onClick={() => {
-                      setSelectedPage('');
-                      router.push('/mypage');
-                    }}
-                  >
-                    {userInfo.uesrNickname}
-                    {'님'}
-                  </My>
-                  <Login
-                    onClick={() => {
-                      setSelectedPage('');
-                      router.push('/login');
-                    }}
-                  >
-                    {'로그아웃'}
-                  </Login>
-                </>
-              ) : (
-                <>
-                  <My
-                    login={false}
-                    onClick={() => {
-                      setSelectedPage('');
-                      router.push('/mypage');
-                    }}
-                  >
-                    {'마이페이지'}
-                  </My>
-                  <Login
-                    onClick={() => {
-                      setSelectedPage('');
-                      router.push('/login');
-                    }}
-                  >
-                    {'로그인'}
-                  </Login>
-                </>
-              )}
+              <My
+                login={bold}
+                onClick={() => {
+                  setSelectedPage('');
+                  router.push('/mypage');
+                }}
+              >
+                {isUser}
+              </My>
+              <Login
+                onClick={() => {
+                  setSelectedPage('');
+                  router.push('/login');
+                }}
+              >
+                {isLogin}
+              </Login>
             </PageWrapper>
           </MainWrapper>
           <SemiWrapper>
@@ -186,11 +176,11 @@ const PageWrapper = styled.div`
   margin-top: 30px;
   display: flex;
 `;
-const My = styled.div<{ login: boolean }>`
+const My = styled.div<{ login: string }>`
   width: 70px;
   font-size: 16px;
   margin-right: 39px;
-  font-weight: ${(props) => (props.login ? '600' : '400')};
+  font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
 `;
 const Login = styled.div`
   font-size: 16px;
