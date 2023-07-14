@@ -2,7 +2,7 @@
 import React from 'react';
 import logo from '@/assets/images/loco.svg';
 import styled from 'styled-components';
-import SearchModal from './SearchModal';
+import SearchModal from '@/components/Search/SearchModal';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { selectedNavPage } from '@/atom/states';
@@ -11,6 +11,31 @@ import { useRecoilState } from 'recoil';
 function Navigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+
+  useEffect(() => {
+    let location = window.location.pathname;
+    let split = location.split('/');
+    switch (split[1]) {
+      case 'guide':
+        setSelectedPage('서비스 가이드');
+        break;
+      case 'product':
+        setSelectedPage('제품 보기');
+        break;
+      case 'myPick':
+        setSelectedPage('마이픽');
+        break;
+      case 'wardrobe':
+        setSelectedPage('옷장 수거');
+        break;
+      case 'mypage':
+        setSelectedPage('');
+        break;
+      case 'login':
+        setSelectedPage('');
+        break;
+    }
+  }, []);
 
   return (
     <Container>

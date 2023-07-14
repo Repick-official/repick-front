@@ -8,7 +8,13 @@ function page() {
   return (
     <>
       <div onClick={() => router.push('/myPick/purchase/success')}>
-        <Button content="결제하기" />
+        <Button
+          content="결제하기"
+          back="black"
+          color="white"
+          width="391"
+          height="60"
+        />
       </div>
     </>
   );

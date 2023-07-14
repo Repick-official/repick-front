@@ -41,7 +41,13 @@ function page() {
         className="button"
         onClick={() => router.push('/mypage/subscribe/request')}
       >
-        <Button content="구독하기" />
+        <Button
+          content="구독하기"
+          back="black"
+          color="white"
+          width="360"
+          height="60"
+        />
       </div>
     </Container>
   );
