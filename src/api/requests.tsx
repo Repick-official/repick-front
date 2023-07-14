@@ -60,7 +60,6 @@ export const kakaoLogin = async (code : any) =>{
   });
   if (response.ok) {
     const data = await response.json();
-    console.log(data);
     return data;
   }
 };
