@@ -7,10 +7,31 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
+import { userInfoState } from '@/atom/states';
 
 function Navigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+
+  const [isLogin, setIslogin] = useState('');
+  const [isUser, setIsUser] = useState('');
+  const [bold, setBold] = useState('');
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  console.log(userInfo);
+
+  useEffect(() => {
+    if (userInfo.uesrNickname) {
+      setIsUser(userInfo.uesrNickname);
+      setIslogin('로그아웃');
+      setBold('bold');
+    } else {
+      setIsUser('마이페이지');
+      setIslogin('로그인');
+      setBold('notBold');
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     let location = window.location.pathname;
@@ -48,12 +69,13 @@ function Navigation() {
             </LogoWrapper>
             <PageWrapper>
               <My
+                login={bold}
                 onClick={() => {
                   setSelectedPage('');
                   router.push('/mypage');
                 }}
               >
-                {'마이페이지'}
+                {isUser}
               </My>
               <Login
                 onClick={() => {
@@ -61,7 +83,7 @@ function Navigation() {
                   router.push('/login');
                 }}
               >
-                {'로그인'}
+                {isLogin}
               </Login>
             </PageWrapper>
           </MainWrapper>
@@ -154,14 +176,15 @@ const PageWrapper = styled.div`
   margin-top: 30px;
   display: flex;
 `;
-const My = styled.div`
+const My = styled.div<{ login: string }>`
   width: 70px;
   font-size: 16px;
   margin-right: 39px;
+  font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
 `;
 const Login = styled.div`
   font-size: 16px;
-  width: 42px;
+  width: 56px;
   cursor: pointer;
 `;
 const MainWrapper = styled.div`

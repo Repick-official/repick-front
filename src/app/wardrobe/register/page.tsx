@@ -162,13 +162,7 @@ function page() {
         className="button"
         onClick={() => router.push('/wardrobe/register/success')}
       >
-        <Button
-          content="신청하기"
-          back="black"
-          color="white"
-          width="360"
-          height="60"
-        />
+        <Button content="신청하기" num="4" />
       </div>
     </Container>
   );

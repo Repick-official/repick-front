@@ -77,13 +77,7 @@ function page() {
         <Register></Register>
       </R>
       <div className="button">
-        <Button
-          content="가입하기"
-          back="black"
-          color="white"
-          width="360"
-          height="60"
-        />
+        <Button content="가입하기" num="4" />
       </div>
     </Container>
   );

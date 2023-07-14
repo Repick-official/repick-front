@@ -56,21 +56,9 @@ function page() {
       </Agree>
       <div className="button">
         <div onClick={() => router.push('/mypage/subscribe')}>
-          <Button
-            content="뒤로 가기"
-            back="black"
-            color="white"
-            width="360"
-            height="60"
-          />
+          <Button content="뒤로 가기" num="4" />
         </div>
-        <Button
-          content="결제 하기"
-          back="black"
-          color="white"
-          width="360"
-          height="60"
-        />
+        <Button content="결제 하기" num="4" />
       </div>
     </Container>
   );
