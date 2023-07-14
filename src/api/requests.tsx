@@ -33,11 +33,11 @@ export const registerUser = async (
   }
 };
 
-export const refreshAccessToken = async (refresh : any) =>{
+export const refreshAccessToken = async (refresh: any) => {
   const data = {
     refresh: refresh,
   };
-  const response = await fetch(process.env.API_URL + '/sign/oauth/kakao?code=', {
+  const response = await fetch(process.env.API_URL + '/oauth/kakao?code=', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,14 +50,17 @@ export const refreshAccessToken = async (refresh : any) =>{
   }
 };
 
-export const kakaoLogin = async (code : any) =>{
-  console.log(process.env.API_URL+`/oauth/kakao?code=${code}`);
-  const response = await fetch(process.env.API_URL+`/oauth/kakao?code=${code}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+export const kakaoLogin = async (code: any) => {
+  console.log(process.env.API_URL + `/oauth/kakao?code=${code}`);
+  const response = await fetch(
+    process.env.API_URL + `/oauth/kakao?code=${code}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   if (response.ok) {
     const data = await response.json();
     return data;
