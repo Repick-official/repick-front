@@ -6,7 +6,8 @@ import ItemHeartInfo from '@/components/guide/ItemHeartInfo';
 interface ContentBodyInfoProps {
   src: string;
   tagName: string;
-  itemInfo: string;
+  size: string;
+  name: string;
   price: number;
 }
 interface TagWrapperProps {
@@ -20,7 +21,8 @@ interface TagNameProps {
 const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   src,
   tagName,
-  itemInfo,
+  size,
+  name,
   price,
 }) => {
   const tagColors: { [key: string]: string } = {
@@ -48,7 +50,11 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
         <TagWrapper bgcolor={tagColors[tagName]}>
           <TagName textcolor={tagNameColors[tagName]}>{tagName}</TagName>
         </TagWrapper>
-        <ItemInfo>{itemInfo}</ItemInfo>
+        <ItemInfoWrapper>
+          <ItemInfo>{size}</ItemInfo>
+          {'/'}
+          <ItemInfo>{name}</ItemInfo>
+        </ItemInfoWrapper>
         <Price>{price.toLocaleString('en-US')}원</Price>
         <IconWrapper>
           <ItemHeartInfo heart={0} seeing={0} />
@@ -110,3 +116,7 @@ const Price = styled.p`
 `;
 
 const IconWrapper = styled.div``;
+const ItemInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
