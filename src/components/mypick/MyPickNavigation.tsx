@@ -119,7 +119,7 @@ const SelectedPage = styled.div`
   margin-top: 22px;
 `;
 const Banner = styled.img`
-  width: 1644px;
+  width: 100vw;
   height: 134px;
   border-radius: 15px;
   margin-top: 62px;
