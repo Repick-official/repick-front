@@ -1,11 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
 import { styled } from 'styled-components';
 import ContentBodyImage from '@/components/guide/ContentBodyImage';
 import ImageDivision from '@/components/guide/ImageDivision';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
+import { useRouter } from 'next/navigation';
 
 import guide_first from '@/assets/images/guide/guide_first.png';
 import guide_second from '@/assets/images/guide/guide_second.png';
@@ -13,11 +14,28 @@ import guide_third from '@/assets/images/guide/guide_third.png';
 import guide_fourth from '@/assets/images/guide/guide_fourth.png';
 import guide_fifth from '@/assets/images/guide/guide_fifth.png';
 
-import info_1 from '@/assets/images/guide/info_1.png';
-import info_2 from '@/assets/images/guide/info_2.png';
-import info_3 from '@/assets/images/guide/info_3.png';
-import info_4 from '@/assets/images/guide/info_4.png';
+import { getMainPageProducts } from '@/api/requests';
+
 function page() {
+  const router = useRouter();
+
+  const [products, setProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const get = async () => {
+      const response = await getMainPageProducts();
+
+      const clothes = response.map((item: any) => {
+        return item;
+      });
+      setProducts(clothes);
+    };
+
+    get();
+  }, []);
+
+  console.log(products);
+
   return (
     <Content>
       <BannerWrapper>
@@ -73,30 +91,23 @@ function page() {
               {'리픽에 다양한 제품들이 기다리고 있어요!'}
             </ContentWaitingInfoHeader>
             <ContentWaitingInfoItemWrapper>
-              <ContentBodyInfo
-                src={info_1.src}
-                tagName={'나이키 에센셜'}
-                itemInfo={'M, 55 / 워싱 반바지'}
-                price={25000}
-              />
-              <ContentBodyInfo
-                src={info_2.src}
-                tagName={'NO BRAND'}
-                itemInfo={'Free / 데님 롱 스커트'}
-                price={13000}
-              />
-              <ContentBodyInfo
-                src={info_3.src}
-                tagName={'꼼데가르송'}
-                itemInfo={'M, 55 / 반팔티셔츠'}
-                price={55000}
-              />
-              <ContentBodyInfo
-                src={info_4.src}
-                tagName={'미쏘'}
-                itemInfo={'Free / 스퀘어넥 플라워 미니 원피스'}
-                price={25000}
-              />
+              {products.map((item) => (
+                <div
+                  onClick={() =>
+                    router.push(`/product/detail/${item.productId}`)
+                  }
+                  key={item.productId}
+                >
+                  <ContentBodyInfo
+                    key={item.productId}
+                    src={item.mainImageFile.imagePath}
+                    tagName={item.brand}
+                    size={item.size}
+                    name={item.name}
+                    price={item.price}
+                  />
+                </div>
+              ))}
             </ContentWaitingInfoItemWrapper>
           </ContentWaitingInfoWrapper>
         </ContentWaiting>
