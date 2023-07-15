@@ -21,10 +21,13 @@ function page() {
       <Wrapper>
         <ContentWrapper>
           <Choice>
-            <Off
-              src={check_off.src}
-              onClick={() => router.push('/wardrobe/register')}
-            />
+            <Check>
+              <Off src={check_off.src} />
+              <On
+                src={check_on.src}
+                onClick={() => router.push('/wardrobe/register')}
+              />
+            </Check>
             <Background>
               <ApplyImage src={wardrobe_apply.src} />
             </Background>
@@ -36,10 +39,13 @@ function page() {
             </InfoContent>
           </Choice>
           <Choice>
-            <Off
-              src={check_off.src}
-              onClick={() => router.push('/wardrobe/current')}
-            />
+            <Check>
+              <Off src={check_off.src} />
+              <On
+                src={check_on.src}
+                onClick={() => router.push('/wardrobe/current')}
+              />
+            </Check>
             <Background>
               <ArrangeImage src={wardrobe_arrange.src} />
             </Background>
@@ -79,10 +85,25 @@ const Choice = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const Check = styled.div`
+  position: relative;
+`;
 const Off = styled.img`
   width: 40px;
   height: 40px;
   margin-bottom: 20px;
+`;
+const On = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: none;
+  ${Check}:hover & {
+    display: block;
+  }
 `;
 const ApplyImage = styled.img`
   width: 376px;
