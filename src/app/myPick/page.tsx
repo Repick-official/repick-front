@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import sub from '@/assets/images/subscription.png';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
@@ -14,12 +14,40 @@ import cloth_4 from '@/assets/images/mypick/cloth_4.png';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 
+import { getMainPageProducts } from '@/api/requests'; //임시 api
+
 function page() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
 
-  const [select, setSelect] = useState(false);
-  console.log('TEST');
+  const [imageSrc, setImageSrc] = useState(check_off.src);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    if (isClicked) {
+      setImageSrc(check_off.src);
+      setIsClicked(false);
+    } else {
+      setImageSrc(check_on.src);
+      setIsClicked(true);
+    }
+  };
+
+  const [products, setProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const get = async () => {
+      const response = await getMainPageProducts();
+
+      const clothes = response.map((item: any) => {
+        return item;
+      });
+      setProducts(clothes);
+    };
+
+    get();
+  }, []); //임시 api
+
   return (
     <Container>
       <SemiContainer>
@@ -31,68 +59,27 @@ function page() {
               <Clear>전체 선택 해제</Clear>
             </Filter>
           </Pick>
+
           <Products>
-            <Product>
-              <Check onClick={() => setSelect(!select)}>
-                {select ? (
-                  <On src={check_on.src} />
-                ) : (
-                  <Off src={check_off.src} />
-                )}
-              </Check>
-              <ContentBodyInfo
-                src={cloth_1.src}
-                tagName={'MM6'}
-                itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-                price={355000}
-              />
-            </Product>
-            <Product>
-              <Check onClick={() => setSelect(!select)}>
-                {select ? (
-                  <On src={check_on.src} />
-                ) : (
-                  <Off src={check_off.src} />
-                )}
-              </Check>
-              <ContentBodyInfo
-                src={cloth_2.src}
-                tagName={'마뗑킴'}
-                itemInfo={'Free / 볼레로 숏패딩 점퍼'}
-                price={85000}
-              />
-            </Product>
-            <Product>
-              <Check onClick={() => setSelect(!select)}>
-                {select ? (
-                  <On src={check_on.src} />
-                ) : (
-                  <Off src={check_off.src} />
-                )}
-              </Check>
-              <ContentBodyInfo
-                src={cloth_3.src}
-                tagName={'스파오'}
-                itemInfo={'Fress / 부클 집업 가디건'}
-                price={15000}
-              />
-            </Product>
-            <Product>
-              <Check onClick={() => setSelect(!select)}>
-                {select ? (
-                  <On src={check_on.src} />
-                ) : (
-                  <Off src={check_off.src} />
-                )}
-              </Check>
-              <ContentBodyInfo
-                src={cloth_4.src}
-                tagName={'NO BRAND'}
-                itemInfo={'S / 핀턱 플리츠 미니 스커트'}
-                price={10000}
-              />
-            </Product>
+            {products.map((item) => (
+              <Product>
+                <Check onClick={() => handleClick()}>
+                  <Off src={imageSrc} />
+                </Check>
+                <div key={item.productId}>
+                  <ContentBodyInfo
+                    key={item.productId}
+                    src={item.mainImageFile.imagePath}
+                    tagName={item.brand}
+                    size={item.size}
+                    name={item.name}
+                    price={item.price}
+                  />
+                </div>
+              </Product>
+            ))}
           </Products>
+
           <ButtonWrapper>
             <div
               onClick={() => {
