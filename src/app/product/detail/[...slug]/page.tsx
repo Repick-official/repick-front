@@ -1,19 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import detail from '@/assets/images/detail/detail.png';
-import cut1 from '@/assets/images/detail/cut1.png';
-import cut2 from '@/assets/images/detail/cut2.png';
-import cut3 from '@/assets/images/detail/cut3.png';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
-import cloth_1 from '@/assets/images/mypick/cloth_1.png';
-import cloth_2 from '@/assets/images/mypick/cloth_2.png';
-import cloth_3 from '@/assets/images/mypick/cloth_3.png';
-import cloth_4 from '@/assets/images/mypick/cloth_4.png';
-import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import Image from 'next/image';
-
 import { getDetailPageProducts } from '@/api/requests';
 
 function page() {
@@ -42,7 +32,6 @@ function page() {
     };
     get();
   }, []);
-  console.log(products);
 
   return (
     <Container>

@@ -46,6 +46,21 @@ export const getDetailPageProducts = async (productId: any) => {
   }
 };
 
+export const subscribePlan = async (access: any) => {
+  const response = await fetch(process.env.API_URL + '/subscribe/request', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access}`,
+    },
+  });
+  if (response.ok) {
+    return { success: true };
+  } else {
+    return { success: false };
+  }
+};
+
 export const refreshAccessToken = async (refresh: any) => {
   const data = {
     refresh: refresh,

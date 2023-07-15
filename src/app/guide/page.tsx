@@ -34,8 +34,6 @@ function page() {
     get();
   }, []);
 
-  console.log(products);
-
   return (
     <Content>
       <BannerWrapper>

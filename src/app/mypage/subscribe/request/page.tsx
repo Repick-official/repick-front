@@ -9,6 +9,9 @@ import { useRouter } from 'next/navigation';
 import SubscribePlan from '@/components/mypage/SubscribePlan';
 import { selectedSubscribePlan } from '@/atom/states';
 import { useRecoilState } from 'recoil';
+import { subscribePlan } from '@/api/requests';
+import { useCookies } from 'react-cookie';
+import getAccessToken from '@/util/getAccessToken';
 
 function page() {
   const router = useRouter();
@@ -19,6 +22,16 @@ function page() {
 
   const selectBasic = (e: any) => {
     setSelect(!select);
+  };
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const subscribeHandler = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await subscribePlan(accessToken);
+    if (response.success) {
+      router.push('/mypage/success');
+    }
   };
 
   return (
@@ -58,7 +71,9 @@ function page() {
         <div onClick={() => router.push('/mypage/subscribe')}>
           <Button content="뒤로 가기" num="4" />
         </div>
-        <Button content="결제 하기" num="4" />
+        <div onClick={() => subscribeHandler()}>
+          <Button content="결제 하기" num="4" />
+        </div>
       </div>
     </Container>
   );
