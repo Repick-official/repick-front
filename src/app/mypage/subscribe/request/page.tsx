@@ -28,7 +28,6 @@ function page() {
 
   const subscribeHandler = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
-    console.log(accessToken);
     const response = await subscribePlan(accessToken, selectPlan);
     if (response.success) {
       router.push('/mypage/success');

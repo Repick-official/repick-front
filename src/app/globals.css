@@ -1,5 +1,5 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import url('./reset.css');
+/* @import url('./reset.css'); */
 
 html {
   overflow-x: hidden;
@@ -23,8 +23,8 @@ body {
   flex-grow: 1;
 }
 
-.mypick_wrapper{
-  display:Flex;
+.mypick_wrapper {
+  display: Flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;

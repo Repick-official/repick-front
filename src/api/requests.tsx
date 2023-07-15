@@ -112,8 +112,8 @@ export const pickupWardrobe = async (
     mainAddress: string;
     zipCode: string;
   },
-  bagQuantity: 0,
-  productQuantity: 0,
+  bagQuantity: number,
+  productQuantity: number,
   requestDetail: string,
   returnDate: string
 ) => {

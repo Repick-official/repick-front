@@ -7,17 +7,132 @@ import bag from '@/assets/images/bag.svg';
 import arrow7 from '@/assets/images/arrow7.svg';
 import arrow6 from '@/assets/images/arrow6.svg';
 import { useRouter } from 'next/navigation';
+import { pickupWardrobe } from '@/api/requests';
+import getAccessToken from '@/util/getAccessToken';
+import { useCookies } from 'react-cookie';
 
 function page() {
   const router = useRouter();
 
   const [name, setName] = useState('');
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [email, setEmail] = useState('');
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [selectedPart, setSelectedPart] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
+  const [mainAddress, setMainAddress] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [bagQuantity, setBagQuantity] = useState('');
+  const [productQuantity, setProductQuantity] = useState('');
+  const [requestDetail, setRequestDetail] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [hour, setHour] = useState('');
+  const [min, setMin] = useState('');
+
+  const BagQuantity = Number(bagQuantity);
+  const ProductQuantity = Number(productQuantity);
+
+  const [bank, setBank] = useState({
+    bankName: '',
+    accountNumber: '',
+  });
+  const [address, setAddress] = useState({
+    detailAddress: '',
+    mainAddress: '',
+    zipCode: '',
+  });
+
+  const isAllFieldsFilled = !!(
+    name.trim() &&
+    phoneNumber.trim() &&
+    bankName.trim() &&
+    accountNumber.trim() &&
+    detailAddress.trim() &&
+    mainAddress.trim() &&
+    zipCode.trim() &&
+    bagQuantity.trim() &&
+    productQuantity.trim() &&
+    requestDetail.trim() &&
+    returnDate.trim()
+  );
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value);
+  };
+  const handleBankNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBankName(e.target.value);
+    setBank((prevState) => {
+      return { ...prevState, bankName: e.target.value };
+    });
+  };
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAccountNumber(e.target.value);
+    setBank((prevState) => {
+      return { ...prevState, accountNumber: e.target.value };
+    });
+  };
+  const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setZipCode(e.target.value);
+    setAddress((prevState) => {
+      return { ...prevState, zipCode: e.target.value };
+    });
+  };
+  const handleMainAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMainAddress(e.target.value);
+    setAddress((prevState) => {
+      return { ...prevState, mainAddress: e.target.value };
+    });
+  };
+  const handleDetailAddressChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDetailAddress(e.target.value);
+    setAddress((prevState) => {
+      return { ...prevState, detailAddress: e.target.value };
+    });
+  };
+  const handleProductQuantityChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProductQuantity(e.target.value);
+  };
+  const handleBagQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBagQuantity(e.target.value);
+  };
+  const handleRequestDetailChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRequestDetail(e.target.value);
+  };
+  const handleReturnDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReturnDate(e.target.value);
+  };
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const registerHandler = async () => {
+    if (isAllFieldsFilled) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await pickupWardrobe(
+        accessToken,
+        name,
+        phoneNumber,
+        bank,
+        address,
+        BagQuantity,
+        ProductQuantity,
+        requestDetail,
+        returnDate
+      );
+      if (response.success) {
+        router.push('/wardrobe/register/success');
+      }
+    }
+  };
 
   return (
     <Container>
@@ -34,14 +149,14 @@ function page() {
           {'이름'}
           <div className="star">{'*'}</div>
         </Info>
-        <Content />
+        <Content value={name} onChange={handleNameChange} />
       </Wrapper>
       <Wrapper>
         <Info>
           {'전화번호'}
           <div className="star">{'*'}</div>
         </Info>
-        <Content />
+        <Content value={phoneNumber} onChange={handlePhoneNumberChange} />
       </Wrapper>
       <Wrapper>
         <Info>
@@ -50,9 +165,17 @@ function page() {
         </Info>
         <Account>
           <AccountDetail>은행</AccountDetail>
-          <Content className="bank" />
+          <Content
+            className="bank"
+            value={bankName}
+            onChange={handleBankNameChange}
+          />
           <AccountDetail>계좌번호</AccountDetail>
-          <Content className="account" />
+          <Content
+            className="account"
+            value={accountNumber}
+            onChange={handleAccountNumberChange}
+          />
         </Account>
       </Wrapper>
       <Line src={line.src} />
@@ -66,13 +189,23 @@ function page() {
               <div className="star">{'*'}</div>
             </Info>
             <Count>
-              <Content className="cloth" placeholder="예상 수량" />
+              <Content
+                className="cloth"
+                placeholder="예상 수량"
+                value={productQuantity}
+                onChange={handleProductQuantityChange}
+              />
               <Text>벌</Text>
               <Info className="bag">
                 {'필요한 리픽백 수'}
                 <div className="star">{'*'}</div>
               </Info>
-              <Content className="cloth" placeholder="예상 개수" />
+              <Content
+                className="cloth"
+                placeholder="예상 개수"
+                value={bagQuantity}
+                onChange={handleBagQuantityChange}
+              />
               <Text>개가 필요해요</Text>
             </Count>
           </Wrapper>
@@ -91,16 +224,24 @@ function page() {
           </Wrapper>
           <Address>
             <AddressWrapper>
-              <Content className="address" />
+              <Content
+                className="address"
+                value={zipCode}
+                onChange={handleZipCodeChange}
+              />
               <Confirm>{'우편번호'}</Confirm>
             </AddressWrapper>
             <Content
               className="detail-address"
               placeholder="상세 주소를 입력해주세요"
+              value={mainAddress}
+              onChange={handleMainAddressChange}
             />
             <Content
               className="detail-address"
               placeholder="상세 주소를 입력해주세요"
+              value={detailAddress}
+              onChange={handleDetailAddressChange}
             />
           </Address>
 
@@ -109,7 +250,11 @@ function page() {
               {'원하는 수거 날짜 시간'}
               <div className="star">{'*'}</div>
             </Info>
-            <Content placeholder="2023-06-23" />
+            <Content
+              placeholder="2023-06-23"
+              value={returnDate}
+              onChange={handleReturnDateChange}
+            />
           </Wrapper>
           <DateWrapper>
             <CheckWrapper>
@@ -138,7 +283,10 @@ function page() {
 
           <Wrapper>
             <Info>{'수거 시 기타 요청 사항'}</Info>
-            <Content />
+            <Content
+              value={requestDetail}
+              onChange={handleRequestDetailChange}
+            />
           </Wrapper>
         </S>
         <B>
@@ -167,10 +315,7 @@ function page() {
           </BagContainer>
         </B>
       </A>
-      <div
-        className="button"
-        onClick={() => router.push('/wardrobe/register/success')}
-      >
+      <div className="button" onClick={() => registerHandler()}>
         <Button content="신청하기" num="4" />
       </div>
     </Container>
@@ -350,7 +495,7 @@ const DateWrapper = styled.div`
   margin-left: 206px;
   color: var(--2, #5f5f5f);
 `;
-const Date = styled.div`
+const Date = styled.input`
   width: 56px;
   height: 56px;
   border-radius: 15px;
