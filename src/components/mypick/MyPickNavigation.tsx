@@ -32,7 +32,6 @@ function MyPickNavigation() {
 
   return (
     <Container>
-      <Banner src={sub.src} />
       <Semicontainer>
         <Menu>
           <Section>
@@ -117,13 +116,6 @@ const SelectedPage = styled.div`
   height: 3px;
   background-color: var(--1, #111);
   margin-top: 22px;
-`;
-const Banner = styled.img`
-  width: 100vw;
-  height: 134px;
-  border-radius: 15px;
-  margin-top: 62px;
-  margin-bottom: 25px;
 `;
 
 const Semicontainer = styled.div`
