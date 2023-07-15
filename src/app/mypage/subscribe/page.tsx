@@ -20,7 +20,7 @@ function page() {
       <Wrapper>
         <Choice>
           <SelectPlan
-            check={'Basic'}
+            check={'BASIC'}
             plan={'Basic Plan'}
             price={'15,900원'}
             percent={'40%'}
@@ -29,7 +29,7 @@ function page() {
         </Choice>
         <Choice>
           <SelectPlan
-            check={'Pro'}
+            check={'PRO'}
             plan={'Pro Plan'}
             price={'25,900원'}
             percent={'60%'}

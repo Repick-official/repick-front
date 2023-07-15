@@ -46,13 +46,17 @@ export const getDetailPageProducts = async (productId: any) => {
   }
 };
 
-export const subscribePlan = async (access: any) => {
+export const subscribePlan = async (access: any, plan: string) => {
+  const data = {
+    subscribeType: plan,
+  };
   const response = await fetch(process.env.API_URL + '/subscribe/request', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${access}`,
     },
+    body: JSON.stringify(data),
   });
   if (response.ok) {
     return { success: true };
@@ -92,5 +96,49 @@ export const kakaoLogin = async (code: any) => {
   if (response.ok) {
     const data = await response.json();
     return data;
+  }
+};
+
+export const pickupWardrobe = async (
+  access: any,
+  name: string,
+  phoneNumber: string,
+  bank: {
+    accountNumber: string;
+    bankName: string;
+  },
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    zipCode: string;
+  },
+  bagQuantity: 0,
+  productQuantity: 0,
+  requestDetail: string,
+  returnDate: string
+) => {
+  const data = {
+    name: name,
+    phoneNumber: phoneNumber,
+    bank: bank,
+    address: address,
+    bagQuantity: bagQuantity,
+    productQuantity: productQuantity,
+    requestDetail: requestDetail,
+    returnDate: returnDate,
+  };
+
+  const response = await fetch(process.env.API_URL + '/sell', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    return { success: true };
+  } else {
+    return { success: false };
   }
 };

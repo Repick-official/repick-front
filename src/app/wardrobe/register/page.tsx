@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import line from '@/assets/images/line.svg';
 import Button from '@/components/common/Button';
@@ -10,6 +10,15 @@ import { useRouter } from 'next/navigation';
 
 function page() {
   const router = useRouter();
+
+  const [name, setName] = useState('');
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [email, setEmail] = useState('');
+  const [selectedTeam, setSelectedTeam] = useState('');
+  const [selectedPart, setSelectedPart] = useState('');
+
   return (
     <Container>
       <TitleWrapper>

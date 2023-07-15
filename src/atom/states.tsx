@@ -14,16 +14,16 @@ export const selectedNavPage = atom<string>({
 });
 
 export const selectedSubscribePlan = atom<string>({
-  key: 'Basic',
-  default: 'Basic',
+  key: 'BASIC',
+  default: 'BASIC',
 });
 
 export const userInfoState = atom({
-  key : 'userInfo',
-  default : {
-    id : 0,
-    userEmail : '',
-    userNickname: ''
+  key: 'userInfo',
+  default: {
+    id: 0,
+    userEmail: '',
+    userNickname: '',
   },
   effects_UNSTABLE: [persistAtom],
-})
+});

@@ -28,7 +28,8 @@ function page() {
 
   const subscribeHandler = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await subscribePlan(accessToken);
+    console.log(accessToken);
+    const response = await subscribePlan(accessToken, selectPlan);
     if (response.success) {
       router.push('/mypage/success');
     }
@@ -41,7 +42,7 @@ function page() {
         {'리픽 멤버십 구독을 통해 온라인 제품을 홈피팅 후 옷을 구매해보세요!'}
       </SemiTitle>
 
-      {selectPlan === 'Basic' ? (
+      {selectPlan === 'BASIC' ? (
         <SubscribePlan
           plan={'Basic Plan'}
           price={'15,900원'}
