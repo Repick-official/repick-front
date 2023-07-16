@@ -633,4 +633,5 @@ const PurchaseP = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
-`;
+`
+
