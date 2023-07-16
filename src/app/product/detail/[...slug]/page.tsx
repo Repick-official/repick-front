@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
 import Image from 'next/image';
-import { getDetailPageProducts, getMainPageProducts } from '@/api/requests';
+import {
+  getDetailPageProducts,
+  getMainPageProducts,
+  getCategories,
+} from '@/api/requests';
 import { useRouter } from 'next/navigation';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 
@@ -35,6 +39,8 @@ function page() {
     get();
   }, []);
 
+  console.log(products);
+
   const [recommends, setRecommends] = useState<any[]>([]);
 
   useEffect(() => {
@@ -50,6 +56,24 @@ function page() {
     get();
   }, []);
 
+  const [categories, setCategories] = useState([
+    {
+      id: 0,
+      name: '',
+    },
+  ]);
+
+  useEffect(() => {
+    const get = async () => {
+      const response = await getCategories();
+      setCategories(response);
+    };
+
+    get();
+  }, []);
+
+  console.log(categories);
+
   return (
     <Container>
       <Content>
@@ -64,10 +88,14 @@ function page() {
               />
             </div>
           </MainImage>
-          <DetailImage>
-            <Cut>
-              {products.detailImageFiles.map((item, idx) => (
-                <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+
+          <Cut>
+            {products.detailImageFiles.map((item, idx) => (
+              <DetailImage>
+                <div
+                  style={{ borderRadius: '15px', overflow: 'hidden' }}
+                  key={idx}
+                >
                   <Image
                     alt="image"
                     key={idx}
@@ -76,9 +104,9 @@ function page() {
                     height={182}
                   />
                 </div>
-              ))}
-            </Cut>
-          </DetailImage>
+              </DetailImage>
+            ))}
+          </Cut>
         </Cloth>
         <DetailContent>
           <Category>{'제품 카테고리 > 하의 > 팬츠'}</Category>
@@ -140,13 +168,13 @@ const Container = styled.div`
 const Cloth = styled.div``;
 const MainImage = styled.div``;
 const DetailImage = styled.div`
-  display: flex;
-  width: 592px;
-  justify-content: space-between;
-  margin-top: 24px;
+  margin-right: 23.5px;
 `;
 const Cut = styled.div`
   display: flex;
+  width: 592px;
+  margin-top: 24px;
+  overflow-x: scroll;
 `;
 const Content = styled.div`
   display: flex;
