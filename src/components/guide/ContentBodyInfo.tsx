@@ -45,7 +45,9 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   };
   return (
     <ImageWrapper>
-      <Image src={src} alt="Picture of me" width={286} height={286} />
+      <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+        <Image src={src} alt="Picture of me" width={286} height={286} />
+      </div>
       <ImageBody>
         <TagWrapper bgcolor={tagColors[tagName]}>
           <TagName textcolor={tagNameColors[tagName]}>{tagName}</TagName>

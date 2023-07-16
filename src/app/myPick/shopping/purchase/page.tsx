@@ -24,6 +24,7 @@ function page() {
     }
   };
   return (
+<<<<<<< HEAD:src/app/myPick/purchase/page.tsx
     <Container>
       <OrderGuideP1>주문 상품 정보</OrderGuideP1>
       <OrderGuideP2>회원님이 구매할 제품들이에요</OrderGuideP2>
@@ -120,6 +121,13 @@ function page() {
         </FinalInfo>
       </OrderInfoWrapper>
     </Container>
+=======
+    <>
+      <div onClick={() => router.push('/myPick/shopping/purchase/success')}>
+        <Button content="결제하기" num="7" />
+      </div>
+    </>
+>>>>>>> 9642a4799c63918d3593c231e5b2e2f3c0d6c9b2:src/app/myPick/shopping/purchase/page.tsx
   );
 }
 

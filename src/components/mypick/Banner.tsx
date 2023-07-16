@@ -17,7 +17,6 @@ const BannerWrapper = styled.img`
   height: 134px;
   border-radius: 15px;
   margin-top: 62px;
-  margin-bottom: 25px;
 `;
 const Container = styled.div`
   display: flex;

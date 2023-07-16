@@ -55,7 +55,6 @@ function page() {
           <Pick>
             <Title>내가 픽한제품</Title>
             <Filter>
-              <OnlyProduct>홈피팅 신청 중 제품만</OnlyProduct>
               <Clear>전체 선택 해제</Clear>
             </Filter>
           </Pick>
@@ -84,7 +83,7 @@ function page() {
             <div
               onClick={() => {
                 setSelectedPage('홈피팅');
-                router.push('/myPick/homefitting/success');
+                router.push('/myPick/home/homefitting/success');
               }}
             >
               <Button content="홈피팅 신청하기" num="5" />
@@ -92,7 +91,7 @@ function page() {
             <div
               onClick={() => {
                 setSelectedPage('구매하기');
-                router.push('/myPick/purchase');
+                router.push('/myPick/shopping/purchase');
               }}
             >
               <Button content="구매하기" num="6" />
@@ -118,7 +117,7 @@ const SemiContainer = styled.div`
 
 const Pick = styled.div`
   width: 1216px;
-  margin-top: 81px;
+  margin-top: 104px;
   display: flex;
   align-items: center;
   justify-content: space-between;

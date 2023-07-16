@@ -14,7 +14,7 @@ function MyPickNavigation() {
   useEffect(() => {
     let location = window.location.pathname;
     let split = location.split('/');
-    switch (split[2]) {
+    switch (split[3]) {
       case '':
         setSelectedPage('마이픽 현황');
         break;
@@ -24,9 +24,9 @@ function MyPickNavigation() {
       case 'purchase':
         setSelectedPage('구매하기');
         break;
-      case 'wardrobe':
-        setSelectedPage('옷장 수거');
-        break;
+      // case 'wardrobe':
+      //   setSelectedPage('구매내역');
+      //   break;
     }
   }, []);
 
@@ -38,7 +38,7 @@ function MyPickNavigation() {
             <Option
               onClick={() => {
                 setSelectedPage('마이픽 현황');
-                router.push('/myPick');
+                router.push('/myPick/home');
               }}
               selected={selectedPage === '마이픽 현황' ? true : false}
             >
@@ -51,7 +51,7 @@ function MyPickNavigation() {
             <Option
               onClick={() => {
                 setSelectedPage('홈피팅');
-                router.push('/myPick/homefitting');
+                router.push('/myPick/home/homefitting');
               }}
               selected={selectedPage === '홈피팅' ? true : false}
             >
@@ -64,7 +64,7 @@ function MyPickNavigation() {
             <Option
               onClick={() => {
                 setSelectedPage('구매하기');
-                router.push('/myPick/purchase');
+                router.push('/myPick/shopping/purchase');
               }}
               selected={selectedPage === '구매하기' ? true : false}
             >
@@ -87,6 +87,7 @@ function MyPickNavigation() {
             </Option>
           </Section>
         </Menu>
+        <GrayBar />
       </Semicontainer>
     </Container>
   );
@@ -99,6 +100,7 @@ const Menu = styled.div`
   justify-content: space-between;
   padding-left: 125px;
   padding-right: 117px;
+  position: relative;
 `;
 const Section = styled.div``;
 const Option = styled.div<{ selected: boolean }>`
@@ -125,4 +127,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const GrayBar = styled.div`
+  width: 1216px;
+  height: 3px;
+  background-color: var(--4, #e8e8e8);
+  position: absoulte;
 `;

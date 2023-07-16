@@ -23,10 +23,12 @@ function Navigation() {
 
   useEffect(() => {
     if (userInfo.uesrNickname) {
+      setSelectedPage('서비스 가이드');
       setIsUser(userInfo.uesrNickname);
       setIslogin('로그아웃');
       setBold('bold');
     } else {
+      setSelectedPage('서비스 가이드');
       setIsUser('마이페이지');
       setIslogin('로그인');
       setBold('notBold');
@@ -58,6 +60,15 @@ function Navigation() {
     }
   }, []);
 
+  const logoutHandler = async () => {
+    localStorage.removeItem('recoil-persist');
+    alert('로그아웃 되었습니다.');
+    setIsUser('마이페이지');
+    setIslogin('로그인');
+    setBold('notBold');
+    setSelectedPage('서비스 가이드');
+  };
+
   return (
     <Container>
       <Q>
@@ -83,7 +94,11 @@ function Navigation() {
                   router.push('/login');
                 }}
               >
-                {isLogin}
+                {isLogin == '로그아웃' ? (
+                  <div onClick={logoutHandler}>{isLogin}</div>
+                ) : (
+                  <div>{isLogin}</div>
+                )}
               </Login>
             </PageWrapper>
           </MainWrapper>
@@ -117,7 +132,7 @@ function Navigation() {
               <Option
                 onClick={() => {
                   setSelectedPage('마이픽');
-                  router.push('/myPick');
+                  router.push('/myPick/home');
                 }}
                 selected={selectedPage === '마이픽' ? true : false}
               >

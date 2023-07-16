@@ -11,10 +11,12 @@ function Success({
   mainText,
   subText1,
   subText2,
+  ishome,
 }: {
   mainText: string;
   subText1: string;
   subText2: string;
+  ishome: boolean;
 }) {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
   const [selectedNavigationPage, setSelectedNavigationPage] =
@@ -41,13 +43,30 @@ function Success({
           <div
             onClick={() => {
               setSelectedPage('마이픽 현황');
-              setSelectedNavigationPage('마이픽');
-              router.push('/myPick');
+              // setSelectedNavigationPage('마이픽');
+              router.push('/myPick/home');
             }}
           >
             <Button content="마이픽 현황 보기" num="4" />
           </div>
-          <Button content="다른 제품 보러가기" num="4" />
+          {ishome ? (
+            <div
+              onClick={() => {
+                router.push('/myPick/home/homefitting');
+              }}
+            >
+              <Button content="홈피팅 현황보기" num="4" />
+            </div>
+          ) : (
+            <div
+              onClick={() => {
+                setSelectedNavigationPage('제품 보기');
+                router.push('/product');
+              }}
+            >
+              <Button content="다른 제품 보러가기" num="4" />
+            </div>
+          )}
         </ButtonWrapper>
       </SuccessWrapper>
     </Component>
@@ -76,7 +95,8 @@ const IconWrapper = styled.div`
   margin-top: 120px;
 `;
 const CheckIcon = styled.img`
-  width: 60px;
+  width: 108px;
+  height: 108px;
 `;
 const WelcomeMessageWrapper = styled.div``;
 

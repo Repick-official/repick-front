@@ -23,10 +23,8 @@ function page() {
   const [zipCode, setZipCode] = useState('');
   const [bagQuantity, setBagQuantity] = useState('');
   const [productQuantity, setProductQuantity] = useState('');
-  const [requestDetail, setRequestDetail] = useState('');
   const [returnDate, setReturnDate] = useState('');
-  const [hour, setHour] = useState('');
-  const [min, setMin] = useState('');
+  const [date, setDate] = useState('');
 
   const BagQuantity = Number(bagQuantity);
   const ProductQuantity = Number(productQuantity);
@@ -41,6 +39,8 @@ function page() {
     zipCode: '',
   });
 
+  const [errorphoneNumber, setErrorPhoneNumber] = useState(false);
+
   const isAllFieldsFilled = !!(
     name.trim() &&
     phoneNumber.trim() &&
@@ -51,8 +51,7 @@ function page() {
     zipCode.trim() &&
     bagQuantity.trim() &&
     productQuantity.trim() &&
-    requestDetail.trim() &&
-    returnDate.trim()
+    date.trim()
   );
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,13 +102,9 @@ function page() {
   const handleBagQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBagQuantity(e.target.value);
   };
-  const handleRequestDetailChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRequestDetail(e.target.value);
-  };
-  const handleReturnDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReturnDate(e.target.value);
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
   };
 
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -117,6 +112,17 @@ function page() {
   const registerHandler = async () => {
     if (isAllFieldsFilled) {
       let accessToken = await getAccessToken(cookies, setCookie);
+
+      // if (isNaN(Number(phoneNumber)) ) {
+      //   setErrorPhoneNumber(true);
+      //   return;
+      // }
+
+      // if (isNaN(Number(phoneNumber)) || isNaN(Number(accountNumber)) || isNaN(Number(date))) {
+      //   alert("시간을 올바르게 입력해주세요.");
+      //   return;
+      // }
+
       const response = await pickupWardrobe(
         accessToken,
         name,
@@ -125,11 +131,11 @@ function page() {
         address,
         BagQuantity,
         ProductQuantity,
-        requestDetail,
-        returnDate
+        new Date(date).toISOString()
       );
       if (response.success) {
         router.push('/wardrobe/register/success');
+      } else {
       }
     }
   };
@@ -252,40 +258,8 @@ function page() {
             </Info>
             <Content
               placeholder="2023-06-23"
-              value={returnDate}
-              onChange={handleReturnDateChange}
-            />
-          </Wrapper>
-          <DateWrapper>
-            <CheckWrapper>
-              <Check />
-              <AddressApply>시간은 딱히 상관없어요</AddressApply>
-            </CheckWrapper>
-            <CheckWrapper className="date">
-              <Check />
-              <AddressApply className="am">오전</AddressApply>
-              <Check />
-              <AddressApply>오후</AddressApply>
-              <Date />
-              <AddressApply>시</AddressApply>
-              <Date />
-              <AddressApply>분 이후</AddressApply>
-            </CheckWrapper>
-            <DateInfoWrapper>
-              <div className="star">{'*'}</div>
-              <DateInfo>
-                이 시간 전까지 리픽 수거백에 의류를 담아 문 앞에 놓으면 수거
-                시간에 리픽이 옷을 수거할 <br /> 예정이에요. 신청하신 시간까지
-                수거를 완료해주세요!
-              </DateInfo>
-            </DateInfoWrapper>
-          </DateWrapper>
-
-          <Wrapper>
-            <Info>{'수거 시 기타 요청 사항'}</Info>
-            <Content
-              value={requestDetail}
-              onChange={handleRequestDetailChange}
+              value={date}
+              onChange={handleDateChange}
             />
           </Wrapper>
         </S>
@@ -495,7 +469,7 @@ const DateWrapper = styled.div`
   margin-left: 206px;
   color: var(--2, #5f5f5f);
 `;
-const Date = styled.input`
+const Dates = styled.input`
   width: 56px;
   height: 56px;
   border-radius: 15px;

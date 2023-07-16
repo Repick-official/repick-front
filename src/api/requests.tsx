@@ -11,7 +11,14 @@ export const getMainPageProducts = async () => {
     );
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
@@ -114,7 +121,6 @@ export const pickupWardrobe = async (
   },
   bagQuantity: number,
   productQuantity: number,
-  requestDetail: string,
   returnDate: string
 ) => {
   const data = {
@@ -124,7 +130,6 @@ export const pickupWardrobe = async (
     address: address,
     bagQuantity: bagQuantity,
     productQuantity: productQuantity,
-    requestDetail: requestDetail,
     returnDate: returnDate,
   };
 
@@ -140,5 +145,26 @@ export const pickupWardrobe = async (
     return { success: true };
   } else {
     return { success: false };
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const response = await fetch(process.env.API_URL + '/products/category', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
   }
 };
