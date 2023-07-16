@@ -87,6 +87,7 @@ function MyPickNavigation() {
             </Option>
           </Section>
         </Menu>
+        <GrayBar />
       </Semicontainer>
     </Container>
   );
@@ -99,6 +100,7 @@ const Menu = styled.div`
   justify-content: space-between;
   padding-left: 125px;
   padding-right: 117px;
+  position: relative;
 `;
 const Section = styled.div``;
 const Option = styled.div<{ selected: boolean }>`
@@ -125,4 +127,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const GrayBar = styled.div`
+  width: 1216px;
+  height: 3px;
+  background-color: var(--4, #e8e8e8);
+  position: absoulte;
 `;
