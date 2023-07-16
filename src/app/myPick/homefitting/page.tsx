@@ -700,3 +700,4 @@ const PurchaseP = styled.p`
   font-weight: 600;
   line-height: 140%;
 `
+
