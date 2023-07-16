@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import logo from '@/assets/images/loco.svg';
+import kakao from '@/assets/images/kakao.png';
+import Button from '@/components/common/Button';
 
 function page() {
   const router = useRouter();
@@ -10,7 +12,7 @@ function page() {
 
   const loginHandler = () => {
     window.location.href = link;
-  }
+  };
   return (
     <Container>
       <ContentWrapper>
@@ -18,46 +20,34 @@ function page() {
           <Logo src={logo.src} />
         </LogoWrapper>
         <InputWrapper>
-          <Content
-            placeholder="아이디"
-          />
-          <Content
-            placeholder="비밀번호"
-          />
+          <Content placeholder="아이디" />
+          <Content placeholder="비밀번호" />
         </InputWrapper>
         <IdSaveWrapper>
-          <RadioButton
-            type="radio"
-          />
-          <IdSaveText>
-            아이디 저장
-          </IdSaveText>
+          <RadioButton type="radio" />
+          <IdSaveText>아이디 저장</IdSaveText>
         </IdSaveWrapper>
         <LoginWrapper>
-          <LoginButton>로그인</LoginButton>
+          <div className="button">
+            <Button content="로그인" num="4" />
+          </div>
         </LoginWrapper>
         <MenuWrapper>
-          <Menu>
-            아이디 찾기
-          </Menu>
+          <Menu>아이디 찾기</Menu>
           <MenuBar className="left">|</MenuBar>
-          <Menu>
-            비밀번호 찾기
-          </Menu>
+          <Menu>비밀번호 찾기</Menu>
           <MenuBar className="right">|</MenuBar>
-          <Menu>
-            회원가입
-          </Menu>
+          <Menu onClick={() => router.push('/register')}>회원가입</Menu>
         </MenuWrapper>
         <SnsWrapper>
-          <SnsLoginText onClick={loginHandler}>
-            SNS 계정으로 로그인
-          </SnsLoginText>
+          <SnsLoginText>SNS 계정으로 로그인</SnsLoginText>
+
           <SnsIconWrapper>
-              
-          </SnsIconWrapper>          
+            <KaKao src={kakao.src} onClick={loginHandler} />
+            <Icon />
+            <Icon />
+          </SnsIconWrapper>
         </SnsWrapper>
-        {/* <Register onClick={() => router.push('/register')}>{'회원가입'}</Register> */}
       </ContentWrapper>
     </Container>
   );
@@ -66,44 +56,51 @@ function page() {
 export default page;
 
 const Container = styled.div`
-  display : flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height : 100%;
-`
+  height: 100%;
+
+  .button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 const ContentWrapper = styled.div`
-`
-const Register = styled.div`
-  cursor: pointer;
+  ::placeholder {
+    color: var(--3, #b4b4b4);
+  }
 `;
 
 const InputWrapper = styled.div`
-  display : flex;
+  display: flex;
   flex-direction: column;
-  gap : 18px;
+  gap: 18px;
   margin-bottom: 24px;
-`
+`;
 const Content = styled.input`
   width: 438px;
   height: 60px;
   background-color: rgba(232, 232, 232, 1);
   border-radius: 15px;
   border: none;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
-  font-family: 'Pretendard';
   color: rgba(180, 180, 180, 1);
   padding: 0px 0px 0px 24px;
   outline: none;
 `;
 
 const LogoWrapper = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom : 50px;
+  margin-bottom: 50px;
+  margin-top: 167px;
 `;
 
 const Logo = styled.img`
@@ -112,85 +109,80 @@ const Logo = styled.img`
 `;
 
 const IdSaveWrapper = styled.div`
-  display : flex;
-  margin-bottom :24px;
-`
+  display: flex;
+  margin-bottom: 24px;
+`;
 
-
-const RadioButton = styled.input`
-  
-`
+const RadioButton = styled.input``;
 
 const IdSaveText = styled.p`
-  
-`
+  font-size: 16px;
+  font-weight: 400;
+`;
 
 const LoginWrapper = styled.div`
-  margin-bottom : 39px;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const LoginButton = styled.button`
+  margin-bottom: 39px;
   display: flex;
-  width: 360px;
-  height: 60px;
-  padding: 24px 40px;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  border-radius: 15px;
-  background: #111;
-  color : #fff;
-`
+  justify-content: center;
+`;
 
 const MenuWrapper = styled.div`
-  display : flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const Menu = styled.p`
-  width:87px;
+  width: 87px;
   font-size: 16px;
   font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-
-`
+`;
 const MenuBar = styled.p`
   &.left {
-    margin-left : 27px;
-    margin-right : 60px;
+    margin-left: 27px;
+    margin-right: 60px;
   }
   &.right {
-    margin-left : 60px;
-    margin-right : 27px;
+    margin-left: 60px;
+    margin-right: 27px;
   }
-  
-`
+`;
 const SnsWrapper = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  
-`
+  flex-direction: column;
+`;
 
 const SnsLoginText = styled.p`
-  color: #111;
-  /* Body2 16pt rg */
+  color: var(--3, #b4b4b4);
   font-size: 16px;
   font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-`
+`;
 
 const SnsIconWrapper = styled.div`
-  
+  display: flex;
+  width: 228px;
+  justify-content: space-between;
+  margin-bottom: 148px;
+`;
 
-`
+const Icon = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  background: var(--4, #e8e8e8);
+`;
+
+const KaKao = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+`;
