@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
 import Image from 'next/image';
-import { getDetailPageProducts } from '@/api/requests';
+import { getDetailPageProducts, getMainPageProducts } from '@/api/requests';
+import { useRouter } from 'next/navigation';
+import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 
 function page() {
   const [products, setProducts] = useState({
@@ -33,28 +35,47 @@ function page() {
     get();
   }, []);
 
+  const [recommends, setRecommends] = useState<any[]>([]);
+
+  useEffect(() => {
+    const get = async () => {
+      const response = await getMainPageProducts();
+
+      const clothes = response.map((item: any) => {
+        return item;
+      });
+      setRecommends(clothes);
+    };
+
+    get();
+  }, []);
+
   return (
     <Container>
       <Content>
         <Cloth>
           <MainImage>
-            <Image
-              alt="detail"
-              src={products.mainImageFile.imagePath}
-              width={592}
-              height={542}
-            />
+            <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+              <Image
+                alt="detail"
+                src={products.mainImageFile.imagePath}
+                width={592}
+                height={542}
+              />
+            </div>
           </MainImage>
           <DetailImage>
             <Cut>
               {products.detailImageFiles.map((item, idx) => (
-                <Image
-                  alt="image"
-                  key={idx}
-                  src={item.imagePath}
-                  width={183}
-                  height={182}
-                />
+                <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                  <Image
+                    alt="image"
+                    key={idx}
+                    src={item.imagePath}
+                    width={183}
+                    height={182}
+                  />
+                </div>
               ))}
             </Cut>
           </DetailImage>
@@ -76,7 +97,9 @@ function page() {
             </Info>
             <Info>
               <Tag>가격</Tag>
-              <Sub bold={'bold'}>{products.price}</Sub>
+              <Sub bold={'bold'}>
+                {products.price.toLocaleString('en-US')}원
+              </Sub>
             </Info>
           </ProductContent>
           <div className="button">
@@ -92,38 +115,18 @@ function page() {
       <Line src={line.src} />
       <Recommend>이런 제품은 어떠세요?</Recommend>
       <Products>
-        {/* <Product>
-          <ContentBodyInfo
-            src={cloth_1.src}
-            tagName={'MM6'}
-            itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-            price={355000}
-          />
-        </Product>
-        <Product>
-          <ContentBodyInfo
-            src={cloth_2.src}
-            tagName={'마뗑킴'}
-            itemInfo={'Free / 볼레로 숏패딩 점퍼'}
-            price={85000}
-          />
-        </Product>
-        <Product>
-          <ContentBodyInfo
-            src={cloth_3.src}
-            tagName={'스파오'}
-            itemInfo={'Fress / 부클 집업 가디건'}
-            price={15000}
-          />
-        </Product>
-        <Product>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
-            price={10000}
-          />
-        </Product> */}
+        {recommends.map((item) => (
+          <div key={item.productId}>
+            <ContentBodyInfo
+              key={item.productId}
+              src={item.mainImageFile.imagePath}
+              tagName={item.brand}
+              size={item.size}
+              name={item.name}
+              price={item.price}
+            />
+          </div>
+        ))}
       </Products>
     </Container>
   );
@@ -194,11 +197,6 @@ const Recommend = styled.div`
   margin-bottom: 40px;
 `;
 
-const Product = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 const Products = styled.div`
   width: 1216px;
   display: flex;

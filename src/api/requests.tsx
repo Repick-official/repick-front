@@ -11,7 +11,14 @@ export const getMainPageProducts = async () => {
     );
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
