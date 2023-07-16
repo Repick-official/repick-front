@@ -121,7 +121,6 @@ export const pickupWardrobe = async (
   },
   bagQuantity: number,
   productQuantity: number,
-  requestDetail: string,
   returnDate: string
 ) => {
   const data = {
@@ -131,7 +130,6 @@ export const pickupWardrobe = async (
     address: address,
     bagQuantity: bagQuantity,
     productQuantity: productQuantity,
-    requestDetail: requestDetail,
     returnDate: returnDate,
   };
 
