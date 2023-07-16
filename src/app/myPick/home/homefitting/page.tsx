@@ -633,9 +633,5 @@ const PurchaseP = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
-<<<<<<< HEAD:src/app/myPick/homefitting/page.tsx
 `
 
-=======
-`;
->>>>>>> 9642a4799c63918d3593c231e5b2e2f3c0d6c9b2:src/app/myPick/home/homefitting/page.tsx
