@@ -42,7 +42,7 @@ function Success({
             onClick={() => {
               setSelectedPage('마이픽 현황');
               setSelectedNavigationPage('마이픽');
-              router.push('/myPick');
+              router.push('/myPick/home');
             }}
           >
             <Button content="마이픽 현황 보기" num="4" />

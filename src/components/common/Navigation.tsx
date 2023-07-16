@@ -117,7 +117,7 @@ function Navigation() {
               <Option
                 onClick={() => {
                   setSelectedPage('마이픽');
-                  router.push('/myPick');
+                  router.push('/myPick/home');
                 }}
                 selected={selectedPage === '마이픽' ? true : false}
               >
