@@ -445,6 +445,7 @@ const CheckWrapper = styled.div`
 `;
 const DeliveredItemInfo = styled.div`
   display: flex;
+  align-items : center;
   flex-grow: 644;
   gap: 64px;
   color: var(--1, #111);

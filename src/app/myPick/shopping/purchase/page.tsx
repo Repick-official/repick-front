@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import '../../reset.css';
+import '../../../reset.css';
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
@@ -8,10 +8,10 @@ import sample from '@/assets/images/homefitting/sample.png'
 import line from '@/assets/images/line.svg';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import OrderItem from '@/components/homefitting/OrderItem';
 function page() {
   const router = useRouter();
   const [imageSrc, setImageSrc] = useState(check_off.src);
-  
   const [isClicked, setIsClicked] = useState(false);
   const userName = "도현";
   const handleClick = () => {
@@ -24,7 +24,6 @@ function page() {
     }
   };
   return (
-<<<<<<< HEAD:src/app/myPick/purchase/page.tsx
     <Container>
       <OrderGuideP1>주문 상품 정보</OrderGuideP1>
       <OrderGuideP2>회원님이 구매할 제품들이에요</OrderGuideP2>
@@ -89,45 +88,132 @@ function page() {
           <Line src={line.src} />
           <DestinationWrapper>
             <User>배송자 정보 입력</User>
-            <Wrapper>
-              <Info>
-                {'배송 주소'}
-                <div className="star">{'*'}</div>
-              </Info>
-              <CheckWrapper>
-                <Check onClick={() => handleClick()}>
-                  <Off src={imageSrc} />
-                </Check>
-                <CheckP>
-                  등록 정보로 배송 받기
-                </CheckP>
-              </CheckWrapper>
-            </Wrapper>
-            <Address>
-              <ConfirmWrapper>
-                <Content className="address" placeholder="우편번호를 검색해주세요" />
-                <Confirm>{'우편번호'}</Confirm>
-              </ConfirmWrapper>
-              <Content className="detail-address" />
-              <Content
-                className="detail-address"
-                placeholder="상세 주소를 입력해주세요"
-              />
-            </Address>
+            <AddressWrapper>    
+              <Wrapper>
+                <Info>
+                  {'배송 주소'}
+                  <div className="star">{'*'}</div>
+                </Info>
+                <CheckWrapper>
+                  <Check onClick={() => handleClick()}>
+                    <Off src={imageSrc} />
+                  </Check>
+                  <CheckP>
+                    등록 정보로 배송 받기
+                  </CheckP>
+                </CheckWrapper>
+              </Wrapper>
+              <Address>
+                <ConfirmWrapper>
+                  <Content className="address" placeholder="우편번호를 검색해주세요" />
+                  <Confirm>{'우편번호'}</Confirm>
+                </ConfirmWrapper>
+                <Content className="detail-address" />
+                <Content
+                  className="detail-address"
+                  placeholder="상세 주소를 입력해주세요"
+                />
+              </Address>
+            </AddressWrapper>
+            <Request>
+              <InfoP>
+                {'배송 시 기타 요청 사항'}
+              </InfoP>
+              <Content/>
+            </Request>
           </DestinationWrapper>
+          <Method>
+            {'결제 수단'}
+            <div className="star">{'*'}</div>
+          </Method>
+          <CheckMethodWrapper>
+            <CheckWrapper>
+              <Check onClick={() => handleClick()}>
+                <Off src={imageSrc} />
+              </Check>
+              <CheckP>
+                무통장입금
+              </CheckP>
+            </CheckWrapper>
+            <CheckWrapper>
+              <Check onClick={() => handleClick()}>
+                <Off src={imageSrc} />
+              </Check>
+              <CheckP>
+                무통장입금
+              </CheckP>
+            </CheckWrapper>
+            <CheckWrapper>
+              <Check onClick={() => handleClick()}>
+                <Off src={imageSrc} />
+              </Check>
+              <CheckP>
+                무통장입금
+              </CheckP>
+            </CheckWrapper>
+          </CheckMethodWrapper>
         </OrderInfo>
         <FinalInfo>
-
+          <Line src={line.src} />
+          <User>최종 결제 금액 확인</User>
+          <PayInfo>
+            <MoneyAllWrapper>
+              <All>총금액</All>
+              <Money>원</Money>
+            </MoneyAllWrapper>
+            <LineMoney src={line.src} />
+            <MoneyDetail>
+              <MoneyWrapper>
+                <All>상품 금액</All>
+                <Money>원</Money>
+              </MoneyWrapper>
+              <MoneyWrapper>
+                <All>배송비</All>
+                <Money>원</Money>
+              </MoneyWrapper>
+              <MoneyWrapper>
+                <All>할인된 금액</All>
+                <Money>원</Money>
+              </MoneyWrapper>
+            </MoneyDetail>
+          </PayInfo>
+          <AllPrice>주문상품</AllPrice>
+          <OrderPrice>
+            <OrderItem
+              src = {sample.src}
+              tagName = {"꼼데가르송"}
+              size = {"M, 55"}
+              name = {"반팔티셔츠"}
+              price = {55000}
+            />
+            <OrderItem
+              src = {sample.src}
+              tagName = {"꼼데가르송"}
+              size = {"M, 55"}
+              name = {"반팔티셔츠"}
+              price = {55000}
+            />
+          </OrderPrice>
+          <AllPrice>결제수단</AllPrice>
+          <MethodNotSelected>결제 수단 미선택 상태</MethodNotSelected>
+          <Accept>*주문할 상품의 상품명, 상품 가격, 배송 정보를 다시 한 번 
+확인해주세요. 구매에 동의하시겠습니까?
+          </Accept>
+          <AcceptWrapper>
+            <Check onClick={() => handleClick()}>
+              <Off src={imageSrc} />
+            </Check>
+            <AcceptP>
+              {'동의합니다.'}
+              <div className="star">{'*'}</div>
+            </AcceptP>
+          </AcceptWrapper>
+          <PurchaseButton>
+            <PurchaseP>결제하기</PurchaseP>
+          </PurchaseButton>
         </FinalInfo>
       </OrderInfoWrapper>
     </Container>
-=======
-    <>
-      <div onClick={() => router.push('/myPick/shopping/purchase/success')}>
-        <Button content="결제하기" num="7" />
-      </div>
-    </>
->>>>>>> 9642a4799c63918d3593c231e5b2e2f3c0d6c9b2:src/app/myPick/shopping/purchase/page.tsx
   );
 }
 
@@ -166,6 +252,7 @@ const OrderInfoWrapper = styled.div`
   width : 100%;
   display:flex;
   justify-content: space-between;
+  margin-bottom : 148px;
 `
 
 const OrderInfo = styled.div`
@@ -244,14 +331,17 @@ const CheckWrapper = styled.div`
 
 const CheckP = styled.p`
   color: var(--2, #5F5F5F);
-
   /* Header4 20pt sb */
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+  .star {
+    color: rgba(255, 61, 0, 1);
+  }
 `
+
 
 const SenderWrapper = styled.div`
   display:flex;
@@ -267,6 +357,7 @@ const Address = styled.div`
 `;
 
 const DestinationWrapper = styled.div`
+  margin-bottom : 100px;
 `
 
 const Confirm = styled.button`
@@ -282,4 +373,186 @@ const Confirm = styled.button`
 
 const ConfirmWrapper = styled.div`
   display:flex;
+`
+
+const AddressWrapper = styled.div`
+  margin-bottom : 22px;
+`
+
+const Request = styled.div`
+  display:flex;
+  align-items : center;
+  justify-content: space-between;
+  width: 100%;
+`
+
+const InfoP = styled.p`
+  color: var(--2, #5F5F5F);
+
+  /* Header4 20pt sb */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+
+`
+
+
+
+const OrderMethodP = styled.p`
+  
+`
+const Method = styled.p`
+  width : 100%;
+  color: #111;
+  display: flex;
+  margin-bottom : 40px;
+
+  /* Header3 24pt sb */
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+
+  .star {
+    color: rgba(255, 61, 0, 1);
+  }
+`;
+
+const CheckMethodWrapper = styled.div`
+  display:flex;
+  gap : 60px;
+`
+
+const PayInfo = styled.div`
+  padding : 40px;
+  margin-bottom : 40px;
+`
+
+const All = styled.p`
+`
+
+const AllPrice = styled.p`
+  color: var(--1, #111);
+
+  /* Header4 20pt sb */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  margin-bottom : 18px;
+`
+const Money = styled.p`
+`
+const MoneyAllWrapper = styled.div`
+  display:flex;
+  justify-content : space-between;
+  color: var(--1, #111);
+
+  /* Header4 20pt sb */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+`
+
+const LineMoney = styled.img`
+  width: 100%;
+  margin-top : 40px;
+  margin-bottom : 40px;
+`
+
+const MoneyDetail = styled.div`
+  display:flex;
+  flex-direction : column;
+  gap : 24px;
+`
+
+const OrderPrice = styled.div`
+  display:flex;
+  flex-direction : column;
+  gap  :18px;
+  margin-bottom : 40px;
+
+`
+
+const MoneyWrapper =styled.div`
+  display:flex;
+  justify-content: space-between;
+  color: var(--1, #111);
+  height:34px;
+
+  /* Header4 20pt rg */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`
+const MethodNotSelected = styled.p`
+  margin-top : 18px;
+  margin-bottom : 60px;
+  color: var(--2, #5F5F5F);
+  /* Header4 20pt rg */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`
+const Accept = styled.p`
+  margin-bottom :24px;
+  color: var(--2, #5F5F5F);
+
+  /* Body1 16pt sb */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+`
+
+const AcceptWrapper= styled.div`
+  display:flex;
+  gap : 10px;
+  margin-bottom : 40px;
+  align-items : center;
+`
+
+const PurchaseButton = styled.div`
+  height: 60px;
+  border-radius: 15px;
+  background: var(--1, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+const PurchaseP = styled.p`
+  color: var(--4, #e8e8e8);
+  text-align: center;
+
+  /* Body1 16pt sb */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+`
+
+const AcceptP = styled.div`
+  display:flex;
+  align-items: center;
+  color: #111;
+
+  /* Header4 20pt sb */
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
 `
