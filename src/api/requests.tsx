@@ -222,3 +222,50 @@ export const inquiryMypick = async (access: any) => {
     throw error;
   }
 };
+
+export const applyHomeFitting = async (access: any, cartProductId: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + `/home-fitting/${cartProductId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+
+export const checkSubscribe = async (access: any) => {
+  try {
+    const response = await fetch(process.env.API_URL + '/subscribe/check', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
