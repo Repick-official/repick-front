@@ -88,12 +88,12 @@ function page() {
         <Cloth>
           <MainImage>
             <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
-              <Image
+              {products.mainImageFile.imagePath && <Image
                 alt="detail"
                 src={products.mainImageFile.imagePath}
                 width={592}
                 height={542}
-              />
+              />}
             </div>
           </MainImage>
 
@@ -102,18 +102,17 @@ function page() {
             <RightArrow src={rightArrow.src} />
             <P>
               {products.detailImageFiles.map((item, idx) => (
-                <DetailImage>
+                <DetailImage key={idx}>
                   <div
                     style={{ borderRadius: '15px', overflow: 'hidden' }}
-                    key={idx}
                   >
-                    <Image
+                    {item.imagePath && <Image
                       alt="image"
                       key={idx}
                       src={item.imagePath}
                       width={164.81}
                       height={164.81}
-                    />
+                    />}
                   </div>
                 </DetailImage>
               ))}
