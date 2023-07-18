@@ -26,7 +26,7 @@ function page() {
       setIsClicked(true);
     }
   };
-  const handleSubscribeClick = (num) => {
+  const handleSubscribeClick = (num: React.SetStateAction<number>) => {
     setSubscribeInfo(num);
   }
   return (

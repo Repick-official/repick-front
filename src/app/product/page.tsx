@@ -102,7 +102,8 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size={'3, 55'}
+                  name = {'코튼 점퍼 자켓'}
                   price={355000}
                 />
               </Product>
@@ -113,7 +114,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -124,7 +127,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -135,53 +140,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-                  price={355000}
-                />
-              </Product>
-            </Products>
-          </ProductWrapper>
-          <ProductWrapper>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -194,7 +155,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -205,7 +168,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -216,7 +181,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -227,7 +194,63 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
+                  price={355000}
+                />
+              </Product>
+            </Products>
+          </ProductWrapper>
+          <ProductWrapper>
+            <Products>
+              <Product onClick={() => router.push(`/product/detail/${1}`)}>
+                {/* 임의로 경로 1 설정 */}
+                <ContentBodyInfo
+                  src={cloth_1.src}
+                  tagName={'MM6'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
+                  price={355000}
+                />
+              </Product>
+            </Products>
+            <Products>
+              <Product onClick={() => router.push(`/product/detail/${1}`)}>
+                {/* 임의로 경로 1 설정 */}
+                <ContentBodyInfo
+                  src={cloth_1.src}
+                  tagName={'MM6'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
+                  price={355000}
+                />
+              </Product>
+            </Products>
+            <Products>
+              <Product onClick={() => router.push(`/product/detail/${1}`)}>
+                {/* 임의로 경로 1 설정 */}
+                <ContentBodyInfo
+                  src={cloth_1.src}
+                  tagName={'MM6'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
+                  price={355000}
+                />
+              </Product>
+            </Products>
+            <Products>
+              <Product onClick={() => router.push(`/product/detail/${1}`)}>
+                {/* 임의로 경로 1 설정 */}
+                <ContentBodyInfo
+                  src={cloth_1.src}
+                  tagName={'MM6'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -241,7 +264,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -252,7 +277,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -263,7 +290,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>
@@ -274,7 +303,9 @@ function page() {
                 <ContentBodyInfo
                   src={cloth_1.src}
                   tagName={'MM6'}
-                  itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+                  size = {'3,55'}
+                  name = {'코튼 점퍼 자켓'}
+
                   price={355000}
                 />
               </Product>

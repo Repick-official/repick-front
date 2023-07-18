@@ -10,10 +10,11 @@ function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const router = useRouter();
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code');
+  
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const checkKakaoLogin = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
     const response = await kakaoLogin(code);
     if (response) {
       console.log(response);

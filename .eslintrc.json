@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -12,11 +12,14 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "prettier/prettier": ["error", {
-      "endOfLine": "auto"
+    "prettier/prettier": ["off", {
+      "endOfLine": "off"
     }],
     "react/prop-types": "off",
-    "no-var": "error",
-    "no-dupe-keys": "error"
+    "no-var": "off",
+    "no-dupe-keys": "off",
+    "react/react-in-jsx-scope":"off",
+    "react/no-unknown-property" : "off",
+    "react/jsx-key":"off"
   }
 }

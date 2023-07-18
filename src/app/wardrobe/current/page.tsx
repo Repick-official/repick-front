@@ -40,7 +40,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_1.src}
             tagName={'MM6'}
-            itemInfo={'3, 55 / 코튼 점퍼 자켓'}
+            size = {'3, 55'}
+            name = {'코튼 점퍼 자켓'}
             price={355000}
           />
         </Product>
@@ -51,7 +52,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_2.src}
             tagName={'마뗑킴'}
-            itemInfo={'Free / 볼레로 숏패딩 점퍼'}
+            size = {'Free'}
+            name = {'볼레로 숏패딩 점퍼'}
             price={85000}
           />
         </Product>
@@ -62,7 +64,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_3.src}
             tagName={'스파오'}
-            itemInfo={'Fress / 부클 집업 가디건'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={15000}
           />
         </Product>
@@ -73,7 +76,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_4.src}
             tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={10000}
           />
         </Product>
@@ -84,7 +88,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_4.src}
             tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={10000}
           />
         </Product>
@@ -95,7 +100,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_4.src}
             tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={10000}
           />
         </Product>
@@ -106,7 +112,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_4.src}
             tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={10000}
           />
         </Product>
@@ -117,7 +124,8 @@ function page() {
           <ContentBodyInfo
             src={cloth_4.src}
             tagName={'NO BRAND'}
-            itemInfo={'S / 핀턱 플리츠 미니 스커트'}
+            size={'Free'}
+            name = {'부클 집업 가디건'}
             price={10000}
           />
         </Product>
