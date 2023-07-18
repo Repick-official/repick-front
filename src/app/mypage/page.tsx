@@ -1,8 +1,7 @@
 'use client';
-'use client';
 import '../reset.css';
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
@@ -11,12 +10,51 @@ import lineSelected from '@/assets/images/LineSelected.svg';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import { useRouter } from 'next/navigation';
-
+import { FieldErrors, useForm } from "react-hook-form";
+import getAccessToken from '@/util/getAccessToken';
+import {useCookies} from 'react-cookie';
+import { getUserInfo, updateUserInfo } from '@/api/requests';
+interface HookFormTypes {
+  name: string;
+  id: string;
+  phone: string;
+  bankName: string;
+  bankNumber: string;
+  address : string;
+  email : string;
+}
 function page() {
+  const { register, handleSubmit,formState: { errors }, setValue } = useForm<HookFormTypes>();
   const router = useRouter();
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
   const [subscribeInfo, setSubscribeInfo] =useState(1);
+  const [cookies,setCookie,removeCookie] = useCookies();
+  useEffect(() => {
+    const checkUserInfo = async () => {
+      let accessToken = await getAccessToken(cookies,setCookie);
+      const response = await getUserInfo(accessToken);
+      console.log(response);
+      if (response) {
+        setValue('name', response.nickname || '');
+        setValue('phone', response.phoneNumber || '');
+        setValue('bankName', response.bank || '');
+        setValue('bankNumber', '');
+        setValue('address', response.address || '');
+        setValue('id', ''); 
+        setValue('email', response.email || '');
+      }
+    };
+    checkUserInfo();
+  }, []);
+  const onValid = async (data:HookFormTypes) => {
+    let accessToken = await getAccessToken(cookies,setCookie);
+    const response = await updateUserInfo(accessToken,data);
+    if(response.success){
+      alert("회원정보를 수정하였습니다");
+      router.push("/");
+    }
+  }
   const handleClick = () => {
     if (isClicked) {
       setImageSrc(check_off.src);
@@ -31,68 +69,76 @@ function page() {
   }
   return (
     <Container>
-      <R>
-        <Title>
-          <Register>{'마이페이지'}</Register>
-        </Title>
-        <Line src={line.src} />
-        <User>{'회원 정보'}</User>
-        <Wrapper>
-          <Info>
-            {'이름'}
-            <div className="star">{'*'}</div>
-          </Info>
-          <Content />
-        </Wrapper>
-        <Wrapper>
-          <Info>
-            {'전화번호'}
-            <div className="star">{'*'}</div>
-          </Info>
-          <Content />
-        </Wrapper>
-        <Wrapper>
-          <Info>
-            {'등록계좌'}
-          </Info>
-          <Contents>
-            <ContentWrapper>
-              <InfoBank>
-                은행
-              </InfoBank>
-              <ContentBank />
-            </ContentWrapper>
-            <ContentWrapper>
-              <InfoBank>
-                계좌번호
-              </InfoBank>
-              <ContentBanks />
-            </ContentWrapper>
-          </Contents>
-        </Wrapper>
-        <Wrapper>
-          <Info>
-            {'등록주소'}
-          </Info>
-          <Content/>
-        </Wrapper>
-        <Wrapper>
-          <Info>
-            {'아이디'}
-          </Info>
-          <Content placeholder="숫자, 영문 대소문자만 사용 가능합니다" />
-        </Wrapper>
-        <Wrapper>
-          <Info>
-            {'이메일'}
-            <div className="star">{'*'}</div>
-          </Info>
-          <Content />
-        </Wrapper>
-      </R>
-      <InfoEditButton>
-        <Button content="멤버십 구독하러 가기" num="3" />
-      </InfoEditButton>
+      <form onSubmit={handleSubmit(onValid)}>
+        <R>
+          <Title>
+            <Register>{'마이페이지'}</Register>
+          </Title>
+          <Line src={line.src} />
+          <User>{'회원 정보'}</User>
+            <Wrapper>
+              <Info>
+                {'이름'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <Content {...register('name', { required: "이름을 입력해주세요." })} />
+              {errors.name && <p>{errors.name.message}</p>}
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'전화번호'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <Content {...register('phone', { required: "핸드폰 번호를 입력해주세요." })} />
+              {errors.phone && <p>{errors.phone.message}</p>}
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'등록계좌'}
+              </Info>
+              <Contents>
+                <ContentWrapper>
+                  <InfoBank>
+                    은행
+                  </InfoBank>
+                  <ContentBank {...register('bankName', { required: "은행이름을 입력해주세요." })} />
+                </ContentWrapper>
+                <ContentWrapper>
+                  <InfoBank>
+                    계좌번호
+                  </InfoBank>
+                  <ContentBanks {...register('bankNumber', { required: "은행 번호를 입력해주세요." })} />
+              {errors.bankNumber && errors.bankName && <p>{'은행 정보를 입력해주세요'}</p>}
+                </ContentWrapper>
+              </Contents>
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'등록주소'}
+              </Info>
+              <Content {...register('address', { required: "주소를 입력해주세요." })} />
+              {errors.address && <p>{errors.address.message}</p>}
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'아이디'}
+              </Info>
+              <Content placeholder="숫자, 영문 대소문자만 사용 가능합니다" {...register('id', { required: "아이디를 입력해주세요." })} />
+              {errors.id && <p>{errors.id.message}</p>}
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'이메일'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <Content {...register('email', { required: "이메일을 입력해주세요." })} />
+              {errors.email && <p>{errors.email.message}</p>}
+            </Wrapper>
+        </R>
+        <InfoEditButton>
+          <Button type="submit" content="회원정보 수정" num="3" />
+        </InfoEditButton>
+      </form>
       <Line src={line.src} />
       <MarketP>{'마케팅 정보 수신'}</MarketP>
       <CheckWrapper>
@@ -243,10 +289,14 @@ const Content = styled.input`
   background-color: rgba(232, 232, 232, 1);
   border-radius: 15px;
   border: none;
+  color: var(--2, #5F5F5F);
+
+  /* Header4 20pt sb */
+  font-family: Pretendard;
   font-size: 20px;
-  font-weight: 400;
-  font-family: 'Pretendard';
-  color: rgba(180, 180, 180, 1);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
   padding: 0px 0px 0px 24px;
   outline: none;
 

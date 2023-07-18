@@ -185,4 +185,5 @@ const KaKao = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 15px;
+  cursor : pointer;
 `;

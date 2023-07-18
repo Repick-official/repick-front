@@ -36,7 +36,7 @@ function page() {
         return { ...item, isClicked: false };
       });
       setProducts(clothes);
-
+      console.log("E",clothes);
       const check = await checkSubscribe(accessToken); //구독 여부 체크
       console.log(check);
       setIsCheckedSubscribe(check);
