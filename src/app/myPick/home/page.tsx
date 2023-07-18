@@ -20,14 +20,15 @@ function page() {
   useEffect(() => {
     const get = async () => {
       const response = await getMainPageProducts();
+      console.log()
       const clothes = response.map((item: any) => {
         return {...item, isClicked: false};
-      });
+      }); 
       setProducts(clothes);
     };
     get();
   }, []);
-
+  console.log(products);
   const handleClick = (productId: number) => {
     setProducts(prevProducts =>
       prevProducts.map(product =>
@@ -51,11 +52,11 @@ function page() {
 
           <Products>
             {products.map((item) => (
-              <Product>
+              <Product key={item.productId}>
                 <Check onClick={() => handleClick(item.productId)}>
                   <Off src={item.isClicked ? check_on.src : check_off.src} />
                 </Check>
-                <div key={item.productId}>
+                <div>
                   <ContentBodyInfo
                     key={item.productId}
                     src={item.mainImageFile.imagePath}
@@ -68,6 +69,7 @@ function page() {
               </Product>
             ))}
           </Products>
+
 
           <ButtonWrapper>
             <div
