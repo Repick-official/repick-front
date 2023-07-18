@@ -11,7 +11,11 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 
-import { inquiryMypick } from '@/api/requests';
+import {
+  inquiryMypick,
+  applyHomeFitting,
+  checkSubscribe,
+} from '@/api/requests';
 
 function page() {
   const router = useRouter();
@@ -20,6 +24,8 @@ function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const [products, setProducts] = useState<any[]>([]);
+
+  const [isCheckedSubscribe, setIsCheckedSubscribe] = useState(''); //리코일 사용 예정
 
   useEffect(() => {
     const get = async () => {
@@ -30,12 +36,18 @@ function page() {
         return { ...item, isClicked: false };
       });
       setProducts(clothes);
+
+      const check = await checkSubscribe(accessToken); //구독 여부 체크
+      console.log(check);
+      setIsCheckedSubscribe(check);
     };
     get();
   }, []);
   console.log(products);
+  console.log(isCheckedSubscribe);
 
   const handleClick = (productId: number) => {
+    //상품 클릭
     setProducts((prevProducts) =>
       prevProducts.map((item) =>
         item.product.productId === productId
@@ -45,6 +57,16 @@ function page() {
     );
 
     console.log(products);
+  };
+
+  const handleApply = () => {
+    //홈피팅 신청 클릭
+    if (isCheckedSubscribe == 'NONE') {
+      alert('구독 여부 확인 필요');
+    } else {
+      setSelectedPage('홈피팅');
+      router.push('/myPick/home/homefitting/success');
+    }
   };
 
   return (
@@ -79,12 +101,7 @@ function page() {
           </Products>
 
           <ButtonWrapper>
-            <div
-              onClick={() => {
-                setSelectedPage('홈피팅');
-                router.push('/myPick/home/homefitting/success');
-              }}
-            >
+            <div onClick={() => handleApply()}>
               <Button content="홈피팅 신청하기" num="5" />
             </div>
             <div
