@@ -14,6 +14,10 @@ export default function RootLayout({
       <head>
         <title>Repick</title>
         <link rel="icon" href="" />
+        <meta 
+        httpEquiv="Content-Security-Policy" 
+        content="upgrade-insecure-requests" 
+      />
       </head>
       <body>
         <RecoilRoot>
