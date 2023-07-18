@@ -3,8 +3,8 @@ const getAccessToken = async (cookies : any,setCookie : any) => {
   if (!cookies.access) {
     const response = await refreshAccessToken(cookies.refresh);
     const expiresDate = new Date();
-    expiresDate.setTime(expiresDate.getTime() + 5 * 60 * 1000);
-    setCookie('access',response.access,{expires : expiresDate});
+    expiresDate.setTime(expiresDate.getDate() + 1);
+    setCookie('access',response.access,{expires : expiresDate,path : '/'});
     return response.access;
   }
   else{

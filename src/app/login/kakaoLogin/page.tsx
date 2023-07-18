@@ -22,6 +22,7 @@ function page() {
       expiresDate1.setDate(expiresDate1.getDate() + 1);
       setCookie('access', response.accessToken, {
         expires: expiresDate1,
+        path : '/'
       });
       setUserInfo({
         id: response.id,

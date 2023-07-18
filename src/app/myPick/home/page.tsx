@@ -1,16 +1,11 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import sub from '@/assets/images/subscription.png';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import cloth_1 from '@/assets/images/mypick/cloth_1.png';
-import cloth_2 from '@/assets/images/mypick/cloth_2.png';
-import cloth_3 from '@/assets/images/mypick/cloth_3.png';
-import cloth_4 from '@/assets/images/mypick/cloth_4.png';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 
@@ -19,34 +14,29 @@ import { getMainPageProducts } from '@/api/requests'; //임시 api
 function page() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
-
-  const [imageSrc, setImageSrc] = useState(check_off.src);
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = () => {
-    if (isClicked) {
-      setImageSrc(check_off.src);
-      setIsClicked(false);
-    } else {
-      setImageSrc(check_on.src);
-      setIsClicked(true);
-    }
-  };
-
+  
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     const get = async () => {
       const response = await getMainPageProducts();
-
       const clothes = response.map((item: any) => {
-        return item;
+        return {...item, isClicked: false};
       });
       setProducts(clothes);
     };
-
     get();
-  }, []); //임시 api
+  }, []);
+
+  const handleClick = (productId: number) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.productId === productId
+          ? {...product, isClicked: !product.isClicked}
+          : product
+      )
+    );
+  };
 
   return (
     <Container>
@@ -62,8 +52,8 @@ function page() {
           <Products>
             {products.map((item) => (
               <Product>
-                <Check onClick={() => handleClick()}>
-                  <Off src={imageSrc} />
+                <Check onClick={() => handleClick(item.productId)}>
+                  <Off src={item.isClicked ? check_on.src : check_off.src} />
                 </Check>
                 <div key={item.productId}>
                   <ContentBodyInfo
