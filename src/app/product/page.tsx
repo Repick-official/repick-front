@@ -32,7 +32,7 @@ function page() {
   const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
   const fetchItem = async () => {
-    let response;
+    let response: Product[];
     switch(order) {
       case 'latest':
         response = await getItemLatest(cursorId, categoryId);
