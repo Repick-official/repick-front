@@ -11,11 +11,7 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 
-import {
-  inquiryMypick,
-  applyHomeFitting,
-  checkSubscribe,
-} from '@/api/requests';
+import { inquiryMypick, applyHomeFitting } from '@/api/requests';
 
 function page() {
   const router = useRouter();
@@ -24,8 +20,6 @@ function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const [products, setProducts] = useState<any[]>([]);
-
-  const [isCheckedSubscribe, setIsCheckedSubscribe] = useState(''); //리코일 사용 예정
 
   useEffect(() => {
     const get = async () => {
@@ -36,15 +30,14 @@ function page() {
         return { ...item, isClicked: false };
       });
       setProducts(clothes);
-      console.log("E",clothes);
-      const check = await checkSubscribe(accessToken); //구독 여부 체크
-      console.log(check);
-      setIsCheckedSubscribe(check);
+      // console.log('E', clothes);
+      // const check = await checkSubscribe(accessToken); //구독 여부 체크
+      // console.log(check);
+      // setIsCheckedSubscribe(check);
     };
     get();
   }, []);
   console.log(products);
-  console.log(isCheckedSubscribe);
 
   const handleClick = (productId: number) => {
     //상품 클릭
@@ -60,13 +53,17 @@ function page() {
   };
 
   const handleApply = () => {
-    //홈피팅 신청 클릭
-    if (isCheckedSubscribe == 'NONE') {
-      alert('구독 여부 확인 필요');
-    } else {
-      setSelectedPage('홈피팅');
-      router.push('/myPick/home/homefitting/success');
-    }
+    products.map((item) => {
+      item.isClicked ? handleHomeFitting(item.cartProductId) : item;
+    });
+  };
+
+  const handleHomeFitting = async (Id: any) => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await applyHomeFitting(accessToken, Id);
+
+    router.push('/myPick/home/homefitting/success');
+    console.log(response); //홈피팅 신청한 상품들 삭제하지 않은 상태
   };
 
   return (
@@ -112,7 +109,6 @@ function page() {
             >
               <Button content="구매하기" num="6" />
             </div>
-            {/* 디자인 나중에 바꾸기 */}
           </ButtonWrapper>
         </Content>
       </SemiContainer>
