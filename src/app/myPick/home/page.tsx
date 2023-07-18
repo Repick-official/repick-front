@@ -8,35 +8,43 @@ import { useRecoilState } from 'recoil';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import getAccessToken from '@/util/getAccessToken';
+import { useCookies } from 'react-cookie';
 
-import { getMainPageProducts } from '@/api/requests'; //임시 api
+import { inquiryMypick } from '@/api/requests'; //임시 api
 
 function page() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
-  
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     const get = async () => {
-      const response = await getMainPageProducts();
-      console.log()
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await inquiryMypick(accessToken);
+      console.log();
       const clothes = response.map((item: any) => {
-        return {...item, isClicked: false};
-      }); 
+        return { ...item, isClicked: false };
+      });
       setProducts(clothes);
     };
     get();
   }, []);
   console.log(products);
+
   const handleClick = (productId: number) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product.productId === productId
-          ? {...product, isClicked: !product.isClicked}
-          : product
+    setProducts((prevProducts) =>
+      prevProducts.map((item) =>
+        item.product.productId === productId
+          ? { ...item, isClicked: !item.isClicked }
+          : item
       )
     );
+
+    console.log(products);
   };
 
   return (
@@ -52,24 +60,23 @@ function page() {
 
           <Products>
             {products.map((item) => (
-              <Product key={item.productId}>
-                <Check onClick={() => handleClick(item.productId)}>
+              <Product key={item.product.productId}>
+                <Check onClick={() => handleClick(item.product.productId)}>
                   <Off src={item.isClicked ? check_on.src : check_off.src} />
                 </Check>
                 <div>
                   <ContentBodyInfo
                     key={item.productId}
-                    src={item.mainImageFile.imagePath}
-                    tagName={item.brand}
-                    size={item.size}
-                    name={item.name}
-                    price={item.price}
+                    src={item.product.mainImageFile.imagePath}
+                    tagName={item.product.brand}
+                    size={item.product.size}
+                    name={item.product.name}
+                    price={item.product.price}
                   />
                 </div>
               </Product>
             ))}
           </Products>
-
 
           <ButtonWrapper>
             <div

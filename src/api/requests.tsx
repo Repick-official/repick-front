@@ -193,3 +193,25 @@ export const putMypick = async (access: any, productId: any) => {
     throw error;
   }
 };
+
+export const inquiryMypick = async (access: any) => {
+  try {
+    const response = await fetch(process.env.API_URL + `/cart/my-pick`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
