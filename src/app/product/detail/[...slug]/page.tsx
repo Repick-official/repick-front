@@ -14,6 +14,8 @@ import { useRouter } from 'next/navigation';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
+import leftArrow from '@/assets/images/product/leftArrow.svg';
+import rightArrow from '@/assets/images/product/rightArrow.svg';
 
 function page() {
   //제품 디테일 api
@@ -22,6 +24,7 @@ function page() {
     name: '',
     size: '',
     detail: '',
+    brand: '',
     price: 0,
     mainImageFile: {
       imagePath: '',
@@ -29,6 +32,12 @@ function page() {
     detailImageFiles: [
       {
         imagePath: '',
+      },
+    ],
+    categoryInfoList: [
+      {
+        parentCategoryName: '',
+        categoryName: '',
       },
     ],
   });
@@ -61,25 +70,6 @@ function page() {
     get();
   }, []);
 
-  //카테고리 api
-  const [categories, setCategories] = useState([
-    {
-      id: 0,
-      name: '',
-    },
-  ]);
-
-  useEffect(() => {
-    const get = async () => {
-      const response = await getCategories();
-      setCategories(response);
-    };
-
-    get();
-  }, []);
-
-  console.log(categories);
-
   //마이픽 담기 api
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -108,29 +98,37 @@ function page() {
           </MainImage>
 
           <Cut>
-            {products.detailImageFiles.map((item, idx) => (
-              <DetailImage>
-                <div
-                  style={{ borderRadius: '15px', overflow: 'hidden' }}
-                  key={idx}
-                >
-                  <Image
-                    alt="image"
+            <LeftArrow src={leftArrow.src} />
+            <RightArrow src={rightArrow.src} />
+            <P>
+              {products.detailImageFiles.map((item, idx) => (
+                <DetailImage>
+                  <div
+                    style={{ borderRadius: '15px', overflow: 'hidden' }}
                     key={idx}
-                    src={item.imagePath}
-                    width={183}
-                    height={182}
-                  />
-                </div>
-              </DetailImage>
-            ))}
+                  >
+                    <Image
+                      alt="image"
+                      key={idx}
+                      src={item.imagePath}
+                      width={164.81}
+                      height={164.81}
+                    />
+                  </div>
+                </DetailImage>
+              ))}
+            </P>
           </Cut>
         </Cloth>
         <DetailContent>
-          <Category>{'제품 카테고리 > 하의 > 팬츠'}</Category>
+          <Category>{`제품 카테고리 > ${products.categoryInfoList[0].parentCategoryName} > ${products.categoryInfoList[0].categoryName}`}</Category>
           <ProductContent>
             <Info>
-              <Tag>제품 이름</Tag>
+              <Tag>브랜드</Tag>
+              <Brand>{products.brand}</Brand>
+            </Info>
+            <Info>
+              <Tag>제품명</Tag>
               <Sub bold={'bold'}>{products.name}</Sub>
             </Info>
             <Info>
@@ -186,13 +184,12 @@ const Container = styled.div`
 const Cloth = styled.div``;
 const MainImage = styled.div``;
 const DetailImage = styled.div`
-  margin-right: 23.5px;
+  margin-right: 21.56px;
 `;
 const Cut = styled.div`
   display: flex;
   width: 592px;
   margin-top: 24px;
-  overflow-x: scroll;
 `;
 const Content = styled.div`
   display: flex;
@@ -204,7 +201,7 @@ const Content = styled.div`
 const DetailContent = styled.div`
   margin-left: 106px;
   .button {
-    margin-top: 300px;
+    margin-top: 244px;
   }
   .btn {
     margin-top: 29px;
@@ -232,6 +229,13 @@ const Sub = styled.div<{ bold: string }>`
   font-weight: ${(props) => (props.bold === 'bold' ? '600' : '400')};
   font-size: ${(props) => (props.bold === 'bold' ? '20px' : '16px')};
 `;
+const Brand = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  padding: 2px 24px;
+`;
 
 const Line = styled.img`
   margin-top: 127px;
@@ -248,4 +252,15 @@ const Products = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 148px;
+`;
+
+const LeftArrow = styled.img``;
+const RightArrow = styled.img`
+  position: relative;
+  left: 565px;
+`;
+const P = styled.div`
+  width: 537.55px;
+  overflow: hidden;
+  display: flex;
 `;

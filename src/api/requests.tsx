@@ -42,7 +42,11 @@ export const getDetailPageProducts = async (productId: any) => {
     );
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      if (data.brand == null) {
+        data.brand = 'NO BRAND';
+        return data;
+      } else return data;
     } else {
       throw new Error('Error fetching poll types');
     }
