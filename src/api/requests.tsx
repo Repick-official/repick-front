@@ -205,7 +205,14 @@ export const inquiryMypick = async (access: any) => {
     });
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.product.brand == null) {
+          item.product.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }

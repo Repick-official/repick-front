@@ -11,7 +11,7 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 
-import { inquiryMypick } from '@/api/requests'; //임시 api
+import { inquiryMypick } from '@/api/requests';
 
 function page() {
   const router = useRouter();
@@ -120,7 +120,7 @@ const Pick = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `;
 const Title = styled.div`
   font-size: 24px;
@@ -151,6 +151,7 @@ const Product = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 `;
 const Check = styled.div`
   margin-bottom: 20px;
@@ -160,6 +161,7 @@ const Off = styled.img``;
 const Products = styled.div`
   width: 1216px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 70px;
 `;
