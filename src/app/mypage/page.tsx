@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { FieldErrors, useForm } from "react-hook-form";
 import getAccessToken from '@/util/getAccessToken';
 import {useCookies} from 'react-cookie';
-import { getUserInfo, updateUserInfo } from '@/api/requests';
+import { getUserInfo, getIsSubscribe,updateUserInfo } from '@/api/requests';
 interface HookFormTypes {
   name: string;
   id: string;
@@ -30,11 +30,11 @@ function page() {
   const [isClicked, setIsClicked] = useState(false);
   const [subscribeInfo, setSubscribeInfo] =useState(1);
   const [cookies,setCookie,removeCookie] = useCookies();
+  const [isSubscribed, setIsSubscribed] = useState(false);
   useEffect(() => {
     const checkUserInfo = async () => {
       let accessToken = await getAccessToken(cookies,setCookie);
       const response = await getUserInfo(accessToken);
-      console.log(response);
       if (response) {
         setValue('name', response.nickname || '');
         setValue('phone', response.phoneNumber || '');
@@ -45,7 +45,13 @@ function page() {
         setValue('email', response.email || '');
       }
     };
+    const checkIsSubscribe = async () => {
+      let accessToken = await getAccessToken(cookies,setCookie);
+      const response = await getIsSubscribe(accessToken);
+      setIsSubscribed(response !== 'NONE');
+    };
     checkUserInfo();
+    checkIsSubscribe();
   }, []);
   const onValid = async (data:HookFormTypes) => {
     let accessToken = await getAccessToken(cookies,setCookie);
@@ -199,36 +205,39 @@ function page() {
         </MembershipMenu>
       </MembershipCategory>
       <LineNM src={line.src} />
-      {/* 멤버쉽 정보가 없을 때 */}
-      {/* <MembershipInfo>
-        <InfoWrapper>
-          <NoMembership>
-            구독 내역이 없어요
-          </NoMembership>
-          <MembershipAddButton>
-            <Button content="멤버쉽 구독하러 가기" num="3" />
-          </MembershipAddButton>
-        </InfoWrapper>
-      </MembershipInfo> */}
-      <MembershipInfo>
-        <MembershipInfoWrapper>
-          <MembershipInfoMenu>
-            구독중
-          </MembershipInfoMenu>
-          <MembershipInfoMenu>
-            리픽 Basic 구독
-          </MembershipInfoMenu>
-          <MembershipInfoMenu>
-            2023. 06. 28. 23:25
-          </MembershipInfoMenu>
-          <MembershipInfoMenu>
-            2023. 07. 28. 23:25
-          </MembershipInfoMenu>
-          <MembershipInfoMenu>
-            9,540 원
-          </MembershipInfoMenu>
-        </MembershipInfoWrapper>
-      </MembershipInfo>
+      {isSubscribed ? (
+        <MembershipInfo>
+          <MembershipInfoWrapper>
+            <MembershipInfoMenu>
+              구독중
+            </MembershipInfoMenu>
+            <MembershipInfoMenu>
+              리픽 Basic 구독
+            </MembershipInfoMenu>
+            <MembershipInfoMenu>
+              2023. 06. 28. 23:25
+            </MembershipInfoMenu>
+            <MembershipInfoMenu>
+              2023. 07. 28. 23:25
+            </MembershipInfoMenu>
+            <MembershipInfoMenu>
+              9,540 원
+            </MembershipInfoMenu>
+          </MembershipInfoWrapper>
+        </MembershipInfo>
+      ) : (
+        <MembershipInfo>
+          <InfoWrapper>
+            <NoMembership>
+              구독 내역이 없어요
+            </NoMembership>
+            <MembershipAddButton>
+              <Button content="멤버쉽 구독하러 가기" num="3" />
+            </MembershipAddButton>
+          </InfoWrapper>
+        </MembershipInfo>
+      )}
+
 
 
       <LineNM src={line.src} />

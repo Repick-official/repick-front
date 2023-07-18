@@ -43,6 +43,7 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
     스파오: '#111',
     // 필요한 만큼 추가
   };
+  console.log(src);
   return (
     <ImageWrapper>
       <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
