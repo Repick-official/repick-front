@@ -273,3 +273,126 @@ export const checkSubscribe = async (access: any) => {
     throw error;
   }
 };
+export const getUserInfo = async (access: any) => {
+  try {
+    const response = await fetch(process.env.API_URL + '/sign/userInfo', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+  export const getIsSubscribe = async (access: any) => {
+    try {
+      const response = await fetch(process.env.API_URL + '/subscribe/check', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.text();
+        console.log(data);
+        return data;
+      } else {
+        throw new Error('Error fetching poll types');
+      }
+    } catch (error) {
+      // 에러 처리
+      console.error(error);
+      throw error;
+    }
+  };
+
+export const updateUserInfo = async (
+  access: any,
+  userInfo : any
+) => {
+  const data = {
+    email : userInfo.email,
+    name : userInfo.name,
+    nickname : userInfo.name,
+    password : '',
+    phoneNumber :userInfo.phone,
+    mainAddress: userInfo.address,
+    detailAddress: userInfo.address,
+    zipCode:'',
+  };
+
+  const response = await fetch(process.env.API_URL + '/sign/update', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    return { success: true };
+  } else {
+    return { success: false };
+  }
+};
+
+export const getCategory = async () => {
+  try {
+    const response = await fetch(process.env.API_URL + '/products/category', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+export const getItemLatest = async (cursorId: number = 0, categoryId: number = 0, pageSize: number = 16): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    categoryId: categoryId !== 0 ? categoryId.toString() : '',
+    pageSize: pageSize.toString(),
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/products/latest?${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+

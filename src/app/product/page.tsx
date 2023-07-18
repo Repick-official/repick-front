@@ -8,11 +8,54 @@ import { useRouter } from 'next/navigation';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
 import Image from 'next/image';
 import Banner from '@/components/common/Banner';
+import { getCategory,getItemLatest } from '@/api/requests';
+interface Product {
+  brand: string;
+  detail: string;
+  discountRate: number;
+  mainImageFile: {
+    imagePath: string;
+    imageKey: string;
+    isMainImage: boolean;
+  };
+  name: string;
+  price: number;
+  productId: number;
+  productState: string;
+  size: string;
+}
 function page() {
   const router = useRouter();
+  const [categoryData, setCategoryData] = useState<any>({});
+  const [cursorId , setCursorId] = useState<number>(0);
+  const [categoryId, setCategoryId] = useState<number>(0);
+  const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
-    
-  }, []);
+    const fetchCategory = async () => {
+      const response: any = await getCategory();
+      const categoryMap = response.reduce((map: any, item: any) => {
+        if (item.parentId === null) {
+          return map;
+        }
+
+        if (!map[item.parentId]) {
+          map[item.parentId] = [];
+        }
+        map[item.parentId].push(item);
+        return map;
+      }, {});
+      setCategoryData(categoryMap);
+    };
+
+    const fetchItemLatest = async () => {
+      const response = await getItemLatest(cursorId, categoryId);
+      setProducts(response);
+    }
+
+    fetchCategory();
+    fetchItemLatest();
+  }, [cursorId, categoryId]);
+
   return (
     <>
       <BannerWrapper>
@@ -52,265 +95,47 @@ function page() {
           </SelectOrder>
         </Header>
         <OptionWrapper>
-          <OptionList>
-            <OptionP>
-              상의
-            </OptionP>
-            <OptionDetail>
-              <Option>
-                티셔츠
-              </Option>
-              <Option>
-                블라우스/셔츠
-              </Option>
-              <Option>
-                후드/스웨트 셔츠
-              </Option>
-              <Option>
-                재킷/블레이저
-              </Option>
-              <Option>
-                드레스/원피스
-              </Option>
-            </OptionDetail>
-          </OptionList>
-          <OptionReset>
+          {Object.keys(categoryData).map(parentId => (
+            <OptionList key={parentId}>
+              <OptionP>
+                {categoryData[parentId][0]?.parentName}
+              </OptionP>
+              <OptionDetail>
+                {categoryData[parentId].map(({ id, name }) => (
+                  <Option key={id} onClick={() => setCategoryId(id)}>
+                    {name}
+                  </Option>
+                ))}
+              </OptionDetail>
+            </OptionList>
+          ))}
+          <OptionReset onClick = {() => setCategoryId(0)}>
             초기화
           </OptionReset>
-          <OptionList>
-            <OptionP>
-              하의
-            </OptionP>
-            <OptionDetail>
-              <Option>
-                팬츠
-              </Option>
-              <Option>
-                스커트
-              </Option>
-              <Option>
-                쇼츠
-              </Option>
-            </OptionDetail>
-          </OptionList>
         </OptionWrapper>
         <ProductsWrapper>
-          <ProductWrapper>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size={'3, 55'}
-                  name = {'코튼 점퍼 자켓'}
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-          </ProductWrapper>
-          <ProductWrapper>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-          </ProductWrapper>
-          <ProductWrapper>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-          </ProductWrapper>
-          <Banner/>
-          <ProductWrapper>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-            <Products>
-              <Product onClick={() => router.push(`/product/detail/${1}`)}>
-                {/* 임의로 경로 1 설정 */}
-                <ContentBodyInfo
-                  src={cloth_1.src}
-                  tagName={'MM6'}
-                  size = {'3,55'}
-                  name = {'코튼 점퍼 자켓'}
-
-                  price={355000}
-                />
-              </Product>
-            </Products>
-          </ProductWrapper>
+          {products.map((product, index) => {
+            if (index % 4 === 0) {
+              return (
+                <ProductWrapper key={product.productId}>
+                  {products.slice(index, index + 4).map((product, innerIndex) => (
+                    <Products key={`${product.productId}_${innerIndex}`}>
+                      <Product onClick={() => router.push(`/product/detail/${product.productId}`)}>
+                        <ContentBodyInfo
+                          src={product.mainImageFile.imagePath}
+                          tagName={product.brand}
+                          size={product.size}
+                          name={product.name}
+                          price={product.price}
+                        />
+                      </Product>
+                    </Products>
+                  ))}
+                </ProductWrapper>
+              );
+            }
+            return null;
+          })}
         </ProductsWrapper>
         <ShowMoreItems>
           <ShowP>
