@@ -395,4 +395,88 @@ export const getItemLatest = async (cursorId: number = 0, categoryId: number = 0
     throw error;
   }
 };
+export const getItemLowest = async (cursorId: number = 0, categoryId: number = 0, pageSize: number = 16): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    categoryId: categoryId !== 0 ? categoryId.toString() : '',
+    pageSize: pageSize.toString(),
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/products/price-lowest?${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const getItemHighest = async (cursorId: number = 0, categoryId: number = 0, pageSize: number = 16): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    categoryId: categoryId !== 0 ? categoryId.toString() : '',
+    pageSize: pageSize.toString(),
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/products/price-highest?${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const getItemSeen = async (cursorId: number = 0, categoryId: number = 0, pageSize: number = 16): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    categoryId: categoryId !== 0 ? categoryId.toString() : '',
+    pageSize: pageSize.toString(),
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(`${process.env.API_URL}/products/seen?${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 

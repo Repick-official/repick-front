@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
 import Image from 'next/image';
 import Banner from '@/components/common/Banner';
-import { getCategory,getItemLatest } from '@/api/requests';
+import { getCategory,getItemLatest,getItemLowest,getItemHighest,getItemSeen } from '@/api/requests';
 interface Product {
   brand: string;
   detail: string;
@@ -29,7 +29,32 @@ function page() {
   const [categoryData, setCategoryData] = useState<any>({});
   const [cursorId , setCursorId] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
+  const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
+  const fetchItem = async () => {
+    let response;
+    switch(order) {
+      case 'latest':
+        response = await getItemLatest(cursorId, categoryId);
+        break;
+      case 'lowest':
+        response = await getItemLowest(cursorId, categoryId);
+        break;
+      case 'highest':
+        response = await getItemHighest(cursorId, categoryId);
+        break;
+      case 'seen':
+        response = await getItemSeen(cursorId, categoryId);
+        break;
+      default:
+        response = await getItemLatest(cursorId, categoryId);
+    }
+    setProducts(prevProducts => [...prevProducts, ...response]);
+    if (response.length > 0) {
+      const lastProductId = response[response.length - 1].productId;
+      setCursorId(lastProductId);
+    }
+  };
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
@@ -46,16 +71,19 @@ function page() {
       }, {});
       setCategoryData(categoryMap);
     };
-
-    const fetchItemLatest = async () => {
-      const response = await getItemLatest(cursorId, categoryId);
-      setProducts(response);
-    }
-
     fetchCategory();
-    fetchItemLatest();
-  }, [cursorId, categoryId]);
+    setProducts([]);
+    fetchItem();
+  }, [categoryId, order]);
 
+  const loadMoreItems = () => {
+    fetchItem();
+  };
+  const handleOrderChange = (newOrder: string) => {
+    setOrder(newOrder);
+    setCursorId(0);
+    setProducts([]);
+  };
   return (
     <>
       <BannerWrapper>
@@ -72,23 +100,23 @@ function page() {
             인기 상품을 추천해드려요 
           </Comment>
           <SelectOrder>
-            <WrapMenu>
-              <OrderMenu>
+            <WrapMenu isselected={(order === 'latest').toString()} onClick={() => handleOrderChange('latest')}>
+              <OrderMenu isselected={(order === 'latest').toString()}>
                 최신순
               </OrderMenu>
             </WrapMenu>
-            <WrapMenu>
-              <OrderMenu>
+            <WrapMenu isselected={(order === 'seen').toString()} onClick={() => handleOrderChange('seen')}>
+              <OrderMenu isselected={(order === 'seen').toString()}>
                 조회순
               </OrderMenu>
             </WrapMenu>
-            <WrapMenu>
-              <OrderMenu>
+            <WrapMenu isselected={(order === 'highest').toString()} onClick={() => handleOrderChange('highest')}>
+              <OrderMenu isselected={(order === 'highest').toString()}>
                 높은 가격순
               </OrderMenu>
             </WrapMenu>
-            <WrapMenu>
-              <OrderMenu>
+            <WrapMenu isselected={(order === 'lowest').toString()} onClick={() => handleOrderChange('lowest')}>
+              <OrderMenu isselected={(order === 'lowest').toString()}>
                 낮은 가격순
               </OrderMenu>
             </WrapMenu>
@@ -101,15 +129,18 @@ function page() {
                 {categoryData[parentId][0]?.parentName}
               </OptionP>
               <OptionDetail>
-                {categoryData[parentId].map(({ id, name }) => (
-                  <Option key={id} onClick={() => setCategoryId(id)}>
+                {categoryData[parentId].map(({ id, name } : {id : number, name : string}) => (
+                  <Option key={id} onClick={() => {
+                    setCategoryId(id);
+                    setCursorId(0);
+                  }}>
                     {name}
                   </Option>
-                ))}
+                  ))}
               </OptionDetail>
             </OptionList>
           ))}
-          <OptionReset onClick = {() => setCategoryId(0)}>
+          <OptionReset onClick = {() => {setCategoryId(0);setCursorId(0)}}>
             초기화
           </OptionReset>
         </OptionWrapper>
@@ -137,7 +168,7 @@ function page() {
             return null;
           })}
         </ProductsWrapper>
-        <ShowMoreItems>
+        <ShowMoreItems onClick={loadMoreItems}>
           <ShowP>
             상품 더보기
           </ShowP>
@@ -205,26 +236,27 @@ const SelectOrder = styled.div`
   background: var(--4, #E8E8E8);
 `
 
-const WrapMenu = styled.div`
+const WrapMenu = styled.div<{isselected: string}>`
   display: inline-flex;
   padding: 8px 23px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   border-radius: 12px;
-  background: var(--1, #111);
-  cursor : pointer;
-`
+  background: ${props => props.isselected==="true" ? 'var(--1, #111)' : 'var(--4, #E8E8E8)'};
+  cursor: pointer;
+`;
 
-const OrderMenu = styled.p`
-  color: var(--4, #E8E8E8);
+const OrderMenu = styled.p<{isselected: string}>`
+  color: ${props => props.isselected==="true" ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
   text-align: center;
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 22.4px */
-`
+`;
+
 
 const OptionWrapper = styled.div`
   display:flex;
