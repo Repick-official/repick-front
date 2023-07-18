@@ -8,11 +8,15 @@ import {
   getDetailPageProducts,
   getMainPageProducts,
   getCategories,
+  putMypick,
 } from '@/api/requests';
 import { useRouter } from 'next/navigation';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
+import getAccessToken from '@/util/getAccessToken';
+import { useCookies } from 'react-cookie';
 
 function page() {
+  //제품 디테일 api
   const [products, setProducts] = useState({
     productId: 0,
     name: '',
@@ -41,6 +45,7 @@ function page() {
 
   console.log(products);
 
+  //추천 상품 api
   const [recommends, setRecommends] = useState<any[]>([]);
 
   useEffect(() => {
@@ -56,6 +61,7 @@ function page() {
     get();
   }, []);
 
+  //카테고리 api
   const [categories, setCategories] = useState([
     {
       id: 0,
@@ -73,6 +79,18 @@ function page() {
   }, []);
 
   console.log(categories);
+
+  //마이픽 담기 api
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const putMypickCart = async () => {
+    let location = window.location.pathname;
+    let split = location.split('/');
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await putMypick(accessToken, split[3]);
+
+    console.log(response);
+  };
 
   return (
     <Container>
@@ -131,7 +149,7 @@ function page() {
             </Info>
           </ProductContent>
           <div className="button">
-            <div className="btn">
+            <div className="btn" onClick={() => putMypickCart()}>
               <Button content="마이픽에 담기" num="1" />
             </div>
             <div className="btn">
