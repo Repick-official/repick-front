@@ -1,6 +1,6 @@
 'use client';
 // import '../../reset.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import sample from '@/assets/images/homefitting/sample.png';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,10 @@ import Image from 'next/image';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import DeliveryItem from '@/components/homefitting/DeliveryItem';
+import getAccessToken from '@/util/getAccessToken';
+
+import { inquiryHomeFitting } from '@/api/requests';
+import { useCookies } from 'react-cookie';
 
 function page() {
   const router = useRouter();
@@ -18,6 +22,7 @@ function page() {
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
   const userName = '도현';
+
   const handleClick = () => {
     if (isClicked) {
       setImageSrc(check_off.src);
@@ -27,6 +32,26 @@ function page() {
       setIsClicked(true);
     }
   };
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const [products, setProducts] = useState({});
+
+
+  useEffect(() => {
+    const get = async () => {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await inquiryHomeFitting(accessToken);
+
+      console.log('냠',response);
+      setProducts(response)
+    };
+    get();
+  }, []);
+
+  console.log('아',products)
+
+
   return (
     <Container>
       <DeliveryInfoWrapper>
