@@ -117,7 +117,9 @@ const SelectedPage = styled.div`
   width: 133.5px;
   height: 3px;
   background-color: var(--1, #111);
-  margin-top: 22px;
+  margin-top: 38px;
+  position: absolute;
+  z-index: 1;
 `;
 
 const Semicontainer = styled.div`
@@ -132,5 +134,6 @@ const GrayBar = styled.div`
   width: 1216px;
   height: 3px;
   background-color: var(--4, #e8e8e8);
-  position: absoulte;
+  position: relative;
+  margin-top: 22px;
 `;
