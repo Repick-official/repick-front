@@ -52,7 +52,6 @@ function page() {
     get();
   }, []);
 
-  console.log(products);
 
   //추천 상품 api
   const [recommends, setRecommends] = useState<any[]>([]);

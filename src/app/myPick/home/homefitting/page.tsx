@@ -73,7 +73,6 @@ function page(){
         ...product,
         isChecked: false
       }));
-      console.log(productsWithCheckStatus);
       setProducts(productsWithCheckStatus);
       setUnselectedProducts(productsWithCheckStatus); 
     };

@@ -65,7 +65,6 @@ function page() {
     //   router.push('/wardrobe/register/success');
     // } else {
     // }
-    console.log(data);
   };
 
   return (

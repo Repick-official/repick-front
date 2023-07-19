@@ -17,7 +17,6 @@ function page() {
     const code = urlParams.get('code');
     const response = await kakaoLogin(code);
     if (response) {
-      console.log(response);
       const expiresDate1 = new Date();
       expiresDate1.setDate(expiresDate1.getDate() + 1);
       setCookie('access', response.accessToken, {

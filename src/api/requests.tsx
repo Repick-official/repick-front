@@ -94,7 +94,6 @@ export const refreshAccessToken = async (refresh: any) => {
 };
 
 export const kakaoLogin = async (code: any) => {
-  console.log(process.env.API_URL + `/oauth/kakao?code=${code}`);
   const response = await fetch(
     process.env.API_URL + `/oauth/kakao?code=${code}`,
     {
@@ -305,7 +304,6 @@ export const getIsSubscribe = async (access: any) => {
     });
     if (response.ok) {
       const data = await response.text();
-      console.log(data);
       return data;
     } else {
       throw new Error('Error fetching poll types');

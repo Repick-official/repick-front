@@ -19,7 +19,6 @@ function Navigation() {
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo.uesrNickname) {

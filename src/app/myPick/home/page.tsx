@@ -25,19 +25,13 @@ function page() {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryMypick(accessToken);
-      console.log();
       const clothes = response.map((item: any) => {
         return { ...item, isClicked: false };
       });
       setProducts(clothes);
-      // console.log('E', clothes);
-      // const check = await checkSubscribe(accessToken); //구독 여부 체크
-      // console.log(check);
-      // setIsCheckedSubscribe(check);
     };
     get();
   }, []);
-  console.log(products);
 
   const handleClick = (productId: number) => {
     //상품 클릭
@@ -49,7 +43,6 @@ function page() {
       )
     );
 
-    console.log(products);
   };
 
   const handleApply = () => {
@@ -63,7 +56,6 @@ function page() {
     const response = await applyHomeFitting(accessToken, Id);
 
     router.push('/myPick/home/homefitting/success');
-    console.log(response); //홈피팅 신청한 상품들 삭제하지 않은 상태
   };
 
   return (
