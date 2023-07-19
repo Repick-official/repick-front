@@ -251,7 +251,7 @@ function page() {
           </B>
         </A>
         <div className="button">
-          <Button type="submit" content="신청하기" num="4" />
+        <InputButton type = "submit" value="신청하기"></InputButton>
         </div>
       </form>
     </Container>
@@ -509,3 +509,26 @@ const More = styled.div`
   text-align: center;
   margin-top: 3px;
 `;
+
+const InputButton = styled.input`
+  display: flex;
+  width: 360px;
+  height: 60px;
+  padding: 24px 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: var(--1, #111);
+  color: var(--4, #E8E8E8);
+  text-align: center;
+
+  /* Body1 16pt sb */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
+`

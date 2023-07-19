@@ -514,7 +514,6 @@ const MembershipWithDraw = styled.p`
   line-height: 140%;
 `;
 
-
 const InputButton = styled.input`
   display: flex;
   width: 310px;
