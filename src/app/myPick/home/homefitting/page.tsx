@@ -1,12 +1,11 @@
-'use client';
 // import '../../reset.css';
+'use client';
 import React, { useEffect, useState } from 'react';
-import Button from '@/components/common/Button';
 import sample from '@/assets/images/homefitting/sample.png';
 import { useRouter } from 'next/navigation';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import Image from 'next/image';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
@@ -15,6 +14,7 @@ import getAccessToken from '@/util/getAccessToken';
 
 import { inquiryHomeFitting } from '@/api/requests';
 import { useCookies } from 'react-cookie';
+
 interface Product {
   homeFittingId: number;
   product: {
@@ -30,22 +30,36 @@ interface Product {
   isChecked: boolean;
 }
 
-function page() {
+function page(){
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
-  const [imageSrc, setImageSrc] = useState(check_off.src);
-  const [isClicked, setIsClicked] = useState(false);
+  const [imageSrc, setImageSrc] = useState<string>(check_off.src);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [unselectedProducts, setUnselectedProducts] = useState<Product[]>([]);
+  const [selectedCount, setSelectedCount] = useState<number>(0);
+  const [selectedTotalPrice, setSelectedTotalPrice] = useState<number>(0);
+  const deliveryFee = 0; //
+
   const userName = '도현';
 
   const handleClick = () => {
-    if (isClicked) {
-      setImageSrc(check_off.src);
-      setIsClicked(false);
-    } else {
-      setImageSrc(check_on.src);
-      setIsClicked(true);
-    }
+      const updatedProducts = products.map((product: Product): Product => {
+        return { ...product, isChecked: !isClicked };
+      });
+
+      if (!isClicked) {
+        setSelectedCount(updatedProducts.length);
+        setSelectedTotalPrice(updatedProducts.reduce((acc, curr) => acc + curr.product.price, 0));
+      } else {
+        setSelectedCount(0);
+        setSelectedTotalPrice(0);
+      }
+
+      setIsClicked(!isClicked);
+      setProducts(updatedProducts);
   };
+
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -61,18 +75,39 @@ function page() {
       }));
       console.log(productsWithCheckStatus);
       setProducts(productsWithCheckStatus);
+      setUnselectedProducts(productsWithCheckStatus); 
     };
     get();
   }, []);
-  
-  const handleCheck = (id: number) => { // Specify id type as number
-    const updatedProducts = products.map(product =>
-      product.homeFittingId === id
-        ? { ...product, isChecked: !product.isChecked }
-        : product
-    );
+  const handleCheck = (id: number) => {
+    const updatedProducts = products.map((product: Product): Product => {
+      if (product.homeFittingId === id) {
+        const newProduct = { ...product, isChecked: !product.isChecked };
+
+        if (newProduct.isChecked) {
+          setSelectedCount(prev => prev + 1);
+          setSelectedTotalPrice(prev => prev + newProduct.product.price);
+          setSelectedProducts(prev => [...prev, newProduct]);
+          setUnselectedProducts(prev => prev.filter(prod => prod.homeFittingId !== id));
+        } else {
+          setSelectedCount(prev => prev - 1);
+          setSelectedTotalPrice(prev => prev - newProduct.product.price);
+          setSelectedProducts(prev => prev.filter(prod => prod.homeFittingId !== id));
+          setUnselectedProducts(prev => [...prev, newProduct]);
+        }
+
+        return newProduct;
+      }
+      
+      return product;
+    });
+
     setProducts(updatedProducts);
   };
+  const handlePurchase = () => {
+    console.log('Selected products:', selectedProducts);
+    console.log('Unselected products:', unselectedProducts);
+  }
   
 
   return (
@@ -151,25 +186,38 @@ function page() {
             <ReturnFee>수거비</ReturnFee>
           </DeliveredItemCategory>
           <DeliveredItemList>
-            {products.map((product, index) => (
-              <DeliveredItem key={index}>
-                <CheckWrapper>
-                  <Check onClick={() => handleCheck(product.homeFittingId)}>
-                    <Image src={product.isChecked ? check_on.src : check_off.src} alt="checkbox" width={50} height={50} />
-                  </Check>
-                </CheckWrapper>
-                <DeliveredItemInfo>
-                  <Image src={product.product.mainImageFile.imagePath} alt={product.product.name} width={166} height={166} />
-                  <DeliveredItemP>
-                    <ItemBrand>브랜드 : {product.product.brand}</ItemBrand>
-                    <ItemExplain>의류 설명 : {product.product.detail}</ItemExplain>
-                    <ItemSize>사이즈 : {product.product.size}</ItemSize>
-                  </DeliveredItemP>
-                </DeliveredItemInfo>
-                <DeliveredItemPrice>{product.product.price}원</DeliveredItemPrice>
-                <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
-              </DeliveredItem>
-            ))}
+          {products.flatMap((product, index) => [
+            <DeliveredItem key={index}>
+              <CheckWrapper>
+                <Check onClick={() => handleCheck(product.homeFittingId)}>
+                  <Image src={product.isChecked ? check_on.src : check_off.src} alt="checkbox" width={50} height={50} />
+                </Check>
+              </CheckWrapper>
+              <DeliveredItemInfo>
+                <Image src={product.product.mainImageFile.imagePath} alt={product.product.name} width={166} height={166} />
+                <DeliveredItemP>
+                  <ItemBrand>브랜드 : {product.product.brand}</ItemBrand>
+                  <ItemExplain>의류 설명 : {product.product.detail}</ItemExplain>
+                  <ItemSize>사이즈 : {product.product.size}</ItemSize>
+                </DeliveredItemP>
+              </DeliveredItemInfo>
+              <DeliveredItemPrice>{product.product.price}원</DeliveredItemPrice>
+              <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
+            </DeliveredItem>,
+            index < products.length - 1 ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1216"
+                height="2"
+                viewBox="0 0 1216 2"
+                fill="none"
+                key={`svg${index}`}
+              >
+                <path d="M0 1L1216 1.00011" stroke="#B4B4B4" strokeDasharray="5 5" />
+              </svg>
+            ) : null
+          ])}
+
           </DeliveredItemList>
         </DeliveredItemWrapper>
       </DeliveredInfoWrapper>
@@ -177,20 +225,20 @@ function page() {
         <OrderInfo>
           <OrderCount>
             <OrderP>주문수량</OrderP>
-            <OrderNum>2</OrderNum>
+            <OrderNum>{selectedCount}</OrderNum>
           </OrderCount>
           <ReturnCount>
             <ReturnP>반품수량</ReturnP>
-            <ReturnNum>1</ReturnNum>
+            <ReturnNum>{products.length - selectedCount}</ReturnNum>
           </ReturnCount>
         </OrderInfo>
         <AllPrice>
           <PriceP>합계 가격</PriceP>
-          <PriceNum>55,000원</PriceNum>
+          <PriceNum>{selectedTotalPrice + deliveryFee}원</PriceNum>
         </AllPrice>
       </OrderInfoWrapper>
       <WarnInfo>*선택하지 않은 수량은 자동으로 반품으로 처리됩니다.</WarnInfo>
-      <PurchaseButton>
+      <PurchaseButton onClick={handlePurchase}>
         <PurchaseP>구매하기</PurchaseP>
       </PurchaseButton>
     </Container>
@@ -392,7 +440,7 @@ const SelectAll = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-grow: 183;
+  width:200px;
 `;
 const Check = styled.div`
   margin-right: 14px;
@@ -403,16 +451,18 @@ const SelectP = styled.p``;
 
 const ItemInfo = styled.p`
   text-align: center;
-  flex-grow: 644;
+  width:700px;
 `;
 
 const ItemPrice = styled.p`
   text-align: center;
-  flex-grow: 182;
+  width:170px;
+  flex-wrap: wrap;
 `;
 const ReturnFee = styled.p`
   text-align: center;
-  flex-grow: 172;
+  width:170px;
+  flex-wrap: wrap;
 `;
 
 const DeliveredItemList = styled.div`
@@ -427,7 +477,7 @@ const DeliveredItem = styled.div`
 `;
 
 const CheckWrapper = styled.div`
-  flex-grow: 183;
+  width:200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -436,7 +486,7 @@ const CheckWrapper = styled.div`
 const DeliveredItemInfo = styled.div`
   display: flex;
   align-items : center;
-  flex-grow: 644;
+  width:700px;
   gap: 64px;
   color: var(--1, #111);
 
@@ -458,9 +508,9 @@ const ItemExplain = styled.p``;
 const ItemSize = styled.p``;
 
 const DeliveredItemPrice = styled.p`
-  flex-grow: 182;
+  width:170px;
   color: var(--1, #111);
-
+  text-align : center;
   /* Header3 24pt sb */
   font-family: Pretendard;
   font-size: 24px;
@@ -470,8 +520,9 @@ const DeliveredItemPrice = styled.p`
 `;
 
 const DeliveredItemReturnFee = styled.p`
-  flex-grow: 182;
+  width:170px;
   color: var(--1, #111);
+  text-align : center;
 
   /* Header4 20pt sb */
   font-family: Pretendard;
