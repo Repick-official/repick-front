@@ -515,7 +515,7 @@ export const inquiryHomeFitting = async (access: any) => {
       },
     });
     if (response.ok) {
-      const data = await response.text();
+      const data = await response.json();
       return data;
     } else {
       throw new Error('Error fetching poll types');

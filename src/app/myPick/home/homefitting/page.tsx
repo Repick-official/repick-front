@@ -15,6 +15,20 @@ import getAccessToken from '@/util/getAccessToken';
 
 import { inquiryHomeFitting } from '@/api/requests';
 import { useCookies } from 'react-cookie';
+interface Product {
+  homeFittingId: number;
+  product: {
+    brand: string;
+    detail: string;
+    size: string;
+    price: number;
+    name: string;
+    mainImageFile: {
+      imagePath: string;
+    };
+  };
+  isChecked: boolean;
+}
 
 function page() {
   const router = useRouter();
@@ -35,22 +49,31 @@ function page() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [products, setProducts] = useState({});
-
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryHomeFitting(accessToken);
-
-      console.log('냠',response);
-      setProducts(response)
+      const productsWithCheckStatus = response.map((product: any) => ({
+        ...product,
+        isChecked: false
+      }));
+      console.log(productsWithCheckStatus);
+      setProducts(productsWithCheckStatus);
     };
     get();
   }, []);
-
-  console.log('아',products)
-
+  
+  const handleCheck = (id: number) => { // Specify id type as number
+    const updatedProducts = products.map(product =>
+      product.homeFittingId === id
+        ? { ...product, isChecked: !product.isChecked }
+        : product
+    );
+    setProducts(updatedProducts);
+  };
+  
 
   return (
     <Container>
@@ -101,7 +124,7 @@ function page() {
         viewBox="0 0 1216 2"
         fill="none"
       >
-        <path d="M0 1L1216 1.00011" stroke="#B4B4B4" stroke-dasharray="5 5" />
+        <path d="M0 1L1216 1.00011" stroke="#B4B4B4" strokeDasharray="5 5" />
       </svg>
       <DeliveredInfoWrapper>
         <DeliveryNowP1>{'구매를 기다리고 있어요!'}</DeliveryNowP1>
@@ -128,83 +151,25 @@ function page() {
             <ReturnFee>수거비</ReturnFee>
           </DeliveredItemCategory>
           <DeliveredItemList>
-            <DeliveredItem>
-              <CheckWrapper>
-                <Check>
-                  <Off src={imageSrc} />
-                </Check>
-              </CheckWrapper>
-              <DeliveredItemInfo>
-                <Image src={sample.src} alt="Sample" width={166} height={166} />
-                <DeliveredItemP>
-                  <ItemBrand>브랜드 : 스파오</ItemBrand>
-                  <ItemExplain>의류 설명 : 케이블 반팔니트</ItemExplain>
-                  <ItemSize>사이즈 : S</ItemSize>
-                </DeliveredItemP>
-              </DeliveredItemInfo>
-              <DeliveredItemPrice>5,000원</DeliveredItemPrice>
-              <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
-            </DeliveredItem>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1134"
-              height="2"
-              viewBox="0 0 1216 2"
-              fill="none"
-            >
-              <path
-                d="M0 1L1216 1.00011"
-                stroke="#B4B4B4"
-                stroke-dasharray="5 5"
-              />
-            </svg>
-            <DeliveredItem>
-              <CheckWrapper>
-                <Check>
-                  <Off src={imageSrc} />
-                </Check>
-              </CheckWrapper>
-              <DeliveredItemInfo>
-                <Image src={sample.src} alt="Sample" width={166} height={166} />
-                <DeliveredItemP>
-                  <ItemBrand>브랜드 : 스파오</ItemBrand>
-                  <ItemExplain>의류 설명 : 케이블 반팔니트</ItemExplain>
-                  <ItemSize>사이즈 : S</ItemSize>
-                </DeliveredItemP>
-              </DeliveredItemInfo>
-              <DeliveredItemPrice>5,000원</DeliveredItemPrice>
-              <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
-            </DeliveredItem>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1134"
-              height="2"
-              viewBox="0 0 1216 2"
-              fill="none"
-            >
-              <path
-                d="M0 1L1216 1.00011"
-                stroke="#B4B4B4"
-                stroke-dasharray="5 5"
-              />
-            </svg>
-            <DeliveredItem>
-              <CheckWrapper>
-                <Check>
-                  <Off src={imageSrc} />
-                </Check>
-              </CheckWrapper>
-              <DeliveredItemInfo>
-                <Image src={sample.src} alt="Sample" width={166} height={166} />
-                <DeliveredItemP>
-                  <ItemBrand>브랜드 : 스파오</ItemBrand>
-                  <ItemExplain>의류 설명 : 케이블 반팔니트</ItemExplain>
-                  <ItemSize>사이즈 : S</ItemSize>
-                </DeliveredItemP>
-              </DeliveredItemInfo>
-              <DeliveredItemPrice>5,000원</DeliveredItemPrice>
-              <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
-            </DeliveredItem>
+            {products.map((product, index) => (
+              <DeliveredItem key={index}>
+                <CheckWrapper>
+                  <Check onClick={() => handleCheck(product.homeFittingId)}>
+                    <Image src={product.isChecked ? check_on.src : check_off.src} alt="checkbox" width={50} height={50} />
+                  </Check>
+                </CheckWrapper>
+                <DeliveredItemInfo>
+                  <Image src={product.product.mainImageFile.imagePath} alt={product.product.name} width={166} height={166} />
+                  <DeliveredItemP>
+                    <ItemBrand>브랜드 : {product.product.brand}</ItemBrand>
+                    <ItemExplain>의류 설명 : {product.product.detail}</ItemExplain>
+                    <ItemSize>사이즈 : {product.product.size}</ItemSize>
+                  </DeliveredItemP>
+                </DeliveredItemInfo>
+                <DeliveredItemPrice>{product.product.price}원</DeliveredItemPrice>
+                <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
+              </DeliveredItem>
+            ))}
           </DeliveredItemList>
         </DeliveredItemWrapper>
       </DeliveredInfoWrapper>
