@@ -72,6 +72,7 @@ function page() {
 
   //마이픽 담기 api
   const [cookies, setCookie, removeCookie] = useCookies();
+  const router = useRouter();
 
   const putMypickCart = async () => {
     let location = window.location.pathname;
@@ -79,7 +80,7 @@ function page() {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await putMypick(accessToken, split[3]);
 
-    console.log(response);
+    router.push('/myPick/home');
   };
 
   return (
@@ -88,12 +89,14 @@ function page() {
         <Cloth>
           <MainImage>
             <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
-              {products.mainImageFile.imagePath && <Image
-                alt="detail"
-                src={products.mainImageFile.imagePath}
-                width={592}
-                height={542}
-              />}
+              {products.mainImageFile.imagePath && (
+                <Image
+                  alt="detail"
+                  src={products.mainImageFile.imagePath}
+                  width={592}
+                  height={542}
+                />
+              )}
             </div>
           </MainImage>
 
@@ -103,16 +106,16 @@ function page() {
             <P>
               {products.detailImageFiles.map((item, idx) => (
                 <DetailImage key={idx}>
-                  <div
-                    style={{ borderRadius: '15px', overflow: 'hidden' }}
-                  >
-                    {item.imagePath && <Image
-                      alt="image"
-                      key={idx}
-                      src={item.imagePath}
-                      width={164.81}
-                      height={164.81}
-                    />}
+                  <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                    {item.imagePath && (
+                      <Image
+                        alt="image"
+                        key={idx}
+                        src={item.imagePath}
+                        width={164.81}
+                        height={164.81}
+                      />
+                    )}
                   </div>
                 </DetailImage>
               ))}
