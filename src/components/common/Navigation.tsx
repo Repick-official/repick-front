@@ -167,7 +167,7 @@ const SelectedPage = styled.div`
   width: 153px;
   height: 5px;
   background-color: var(--serve-color, #ff8a00);
-  margin-top: 3px;
+  margin-top: 8px;
 `;
 const S = styled.div``;
 const Logo = styled.img`
@@ -192,14 +192,12 @@ const PageWrapper = styled.div`
   display: flex;
 `;
 const My = styled.div<{ login: string }>`
-  width: 70px;
   font-size: 16px;
   margin-right: 39px;
   font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
 `;
 const Login = styled.div`
   font-size: 16px;
-  width: 56px;
   cursor: pointer;
 `;
 const MainWrapper = styled.div`
