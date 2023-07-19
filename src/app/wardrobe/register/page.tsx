@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import line from '@/assets/images/line.svg';
 import Button from '@/components/common/Button';
 import bag from '@/assets/images/bag.svg';
@@ -10,134 +10,62 @@ import { useRouter } from 'next/navigation';
 import { pickupWardrobe } from '@/api/requests';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
+import { FieldErrors, useForm } from 'react-hook-form';
+interface HookFormTypes {
+  access: any;
+  name: string;
+  phoneNumber: string;
+  bank: {
+    accountNumber: string;
+    bankName: string;
+  };
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    zipCode: string;
+  };
+  bagQuantity: number;
+  productQuantity: number;
+  returnDate: string;
+}
 
 function page() {
   const router = useRouter();
-
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
-  const [mainAddress, setMainAddress] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [bagQuantity, setBagQuantity] = useState('');
-  const [productQuantity, setProductQuantity] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [date, setDate] = useState('');
-
-  const BagQuantity = Number(bagQuantity);
-  const ProductQuantity = Number(productQuantity);
-
-  const [bank, setBank] = useState({
-    bankName: '',
-    accountNumber: '',
-  });
-  const [address, setAddress] = useState({
-    detailAddress: '',
-    mainAddress: '',
-    zipCode: '',
-  });
-
-  const [errorphoneNumber, setErrorPhoneNumber] = useState(false);
-
-  const isAllFieldsFilled = !!(
-    name.trim() &&
-    phoneNumber.trim() &&
-    bankName.trim() &&
-    accountNumber.trim() &&
-    detailAddress.trim() &&
-    mainAddress.trim() &&
-    zipCode.trim() &&
-    bagQuantity.trim() &&
-    productQuantity.trim() &&
-    date.trim()
-  );
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
-  };
-  const handleBankNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBankName(e.target.value);
-    setBank((prevState) => {
-      return { ...prevState, bankName: e.target.value };
-    });
-  };
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAccountNumber(e.target.value);
-    setBank((prevState) => {
-      return { ...prevState, accountNumber: e.target.value };
-    });
-  };
-  const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setZipCode(e.target.value);
-    setAddress((prevState) => {
-      return { ...prevState, zipCode: e.target.value };
-    });
-  };
-  const handleMainAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMainAddress(e.target.value);
-    setAddress((prevState) => {
-      return { ...prevState, mainAddress: e.target.value };
-    });
-  };
-  const handleDetailAddressChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDetailAddress(e.target.value);
-    setAddress((prevState) => {
-      return { ...prevState, detailAddress: e.target.value };
-    });
-  };
-  const handleProductQuantityChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setProductQuantity(e.target.value);
-  };
-  const handleBagQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBagQuantity(e.target.value);
-  };
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
-  };
-
+  //new Date(date).toISOString(); returnDate 줄 때 이 형식으로 줘야함
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const registerHandler = async () => {
-    if (isAllFieldsFilled) {
-      let accessToken = await getAccessToken(cookies, setCookie);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<HookFormTypes>({
+    defaultValues: {
+      access: '',
+      name: '',
+      phoneNumber: '',
+      bank: {
+        accountNumber: '',
+        bankName: '',
+      },
+      address: {
+        detailAddress: '',
+        mainAddress: '',
+        zipCode: '',
+      },
+      bagQuantity: 1,
+      productQuantity: 2,
+      returnDate: '',
+    },
+  });
 
-      // if (isNaN(Number(phoneNumber)) ) {
-      //   setErrorPhoneNumber(true);
-      //   return;
-      // }
-
-      // if (isNaN(Number(phoneNumber)) || isNaN(Number(accountNumber)) || isNaN(Number(date))) {
-      //   alert("시간을 올바르게 입력해주세요.");
-      //   return;
-      // }
-
-      const response = await pickupWardrobe(
-        accessToken,
-        name,
-        phoneNumber,
-        bank,
-        address,
-        BagQuantity,
-        ProductQuantity,
-        new Date(date).toISOString()
-      );
-      if (response.success) {
-        router.push('/wardrobe/register/success');
-      } else {
-      }
-    }
+  const registerHandler = async (data: HookFormTypes) => {
+    // let accessToken = await getAccessToken(cookies, setCookie);
+    // const response = await pickupWardrobe(accessToken, data);
+    // if (response.success) {
+    //   router.push('/wardrobe/register/success');
+    // } else {
+    // }
+    console.log(data);
   };
 
   return (
@@ -149,149 +77,183 @@ function page() {
         </SemiTitle>
       </TitleWrapper>
       <Line src={line.src} />
-      <User>{'회원 정보'}</User>
-      <Wrapper>
-        <Info>
-          {'이름'}
-          <div className="star">{'*'}</div>
-        </Info>
-        <Content value={name} onChange={handleNameChange} />
-      </Wrapper>
-      <Wrapper>
-        <Info>
-          {'전화번호'}
-          <div className="star">{'*'}</div>
-        </Info>
-        <Content value={phoneNumber} onChange={handlePhoneNumberChange} />
-      </Wrapper>
-      <Wrapper>
-        <Info>
-          {'계좌번호'}
-          <div className="star">{'*'}</div>
-        </Info>
-        <Account>
-          <AccountDetail>은행</AccountDetail>
+      <form onSubmit={handleSubmit(registerHandler)}>
+        <User>{'회원 정보'}</User>
+        <Wrapper>
+          <Info>
+            {'이름'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content
-            className="bank"
-            value={bankName}
-            onChange={handleBankNameChange}
+            {...register('name', {
+              required: '이름을 입력해주세요.',
+            })}
           />
-          <AccountDetail>계좌번호</AccountDetail>
+          {errors.name && <p>{errors.name.message}</p>}
+        </Wrapper>
+        <Wrapper>
+          <Info>
+            {'전화번호'}
+            <div className="star">{'*'}</div>
+          </Info>
           <Content
-            className="account"
-            value={accountNumber}
-            onChange={handleAccountNumberChange}
+            {...register('phoneNumber', {
+              required: '핸드폰 번호를 입력해주세요.',
+            })}
           />
-        </Account>
-      </Wrapper>
-      <Line src={line.src} />
-      <User>{'수거 지역 정보 입력하기'}</User>
-
-      <A>
-        <S>
-          <Wrapper>
-            <Info>
-              {'수거 의류 예상 수량'}
-              <div className="star">{'*'}</div>
-            </Info>
-            <Count>
+          {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+        </Wrapper>
+        <Wrapper>
+          <Info>
+            {'계좌번호'}
+            <div className="star">{'*'}</div>
+          </Info>
+          <Account>
+            <AccountDetail>은행</AccountDetail>
+            <Content
+              className="bank"
+              {...register('bank.bankName', {
+                required: '은행을 입력해주세요.',
+              })}
+            />
+            {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
+            <AccountDetail>계좌번호</AccountDetail>
+            <Content
+              className="account"
+              {...register('bank.accountNumber', {
+                required: '계좌 번호를 입력해주세요.',
+              })}
+            />
+            {errors.bank?.accountNumber && (
+              <p>{errors.bank?.accountNumber.message}</p>
+            )}
+          </Account>
+        </Wrapper>
+        <Line src={line.src} />
+        <User>{'수거 지역 정보 입력하기'}</User>
+        <A>
+          <S>
+            <Wrapper>
+              <Info>
+                {'수거 의류 예상 수량'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <Count>
+                <Content
+                  className="cloth"
+                  placeholder="예상 수량"
+                  {...register('bagQuantity', {
+                    required: '수량을 입력해주세요.',
+                  })}
+                />
+                {errors.bagQuantity && <p>{errors.bagQuantity.message}</p>}
+                <Text>벌</Text>
+                <Info className="bag">
+                  {'필요한 리픽백 수'}
+                  <div className="star">{'*'}</div>
+                </Info>
+                <Content
+                  className="cloth"
+                  placeholder="예상 개수"
+                  {...register('productQuantity', {
+                    required: '수량을 입력해주세요.',
+                  })}
+                />
+                {errors.productQuantity && (
+                  <p>{errors.productQuantity.message}</p>
+                )}
+                <Text>개가 필요해요</Text>
+              </Count>
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'수거 주소'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <ApplyWrapper>
+                <CheckWrapper>
+                  <Check />
+                  <AddressApply>등록 주소로 수거 신청하기</AddressApply>
+                </CheckWrapper>
+              </ApplyWrapper>
+            </Wrapper>
+            <Address>
+              <AddressWrapper>
+                <Content
+                  className="address"
+                  {...register('address.zipCode', {
+                    required: '우편번호를 입력해주세요.',
+                  })}
+                />
+                {errors.address?.zipCode && (
+                  <p>{errors.address?.zipCode.message}</p>
+                )}
+                <Confirm>{'우편번호'}</Confirm>
+              </AddressWrapper>
               <Content
-                className="cloth"
-                placeholder="예상 수량"
-                value={productQuantity}
-                onChange={handleProductQuantityChange}
+                className="detail-address"
+                placeholder="상세 주소를 입력해주세요"
+                {...register('address.mainAddress', {
+                  required: '상세 주소를 입력해주세요.',
+                })}
               />
-              <Text>벌</Text>
-              <Info className="bag">
-                {'필요한 리픽백 수'}
+              {errors.address?.mainAddress && (
+                <p>{errors.address?.mainAddress.message}</p>
+              )}
+              <Content
+                className="detail-address"
+                placeholder="상세 주소를 입력해주세요"
+                {...register('address.detailAddress', {
+                  required: '상세 주소를 입력해주세요.',
+                })}
+              />
+              {errors.address?.detailAddress && (
+                <p>{errors.address?.detailAddress.message}</p>
+              )}
+            </Address>
+            <Wrapper>
+              <Info>
+                {'원하는 수거 날짜 시간'}
                 <div className="star">{'*'}</div>
               </Info>
               <Content
-                className="cloth"
-                placeholder="예상 개수"
-                value={bagQuantity}
-                onChange={handleBagQuantityChange}
+                placeholder="2023-06-23"
+                {...register('returnDate', {
+                  required: '수량을 입력해주세요.',
+                })}
               />
-              <Text>개가 필요해요</Text>
-            </Count>
-          </Wrapper>
-
-          <Wrapper>
-            <Info>
-              {'수거 주소'}
-              <div className="star">{'*'}</div>
-            </Info>
-            <ApplyWrapper>
-              <CheckWrapper>
-                <Check />
-                <AddressApply>등록 주소로 수거 신청하기</AddressApply>
-              </CheckWrapper>
-            </ApplyWrapper>
-          </Wrapper>
-          <Address>
-            <AddressWrapper>
-              <Content
-                className="address"
-                value={zipCode}
-                onChange={handleZipCodeChange}
-              />
-              <Confirm>{'우편번호'}</Confirm>
-            </AddressWrapper>
-            <Content
-              className="detail-address"
-              placeholder="상세 주소를 입력해주세요"
-              value={mainAddress}
-              onChange={handleMainAddressChange}
-            />
-            <Content
-              className="detail-address"
-              placeholder="상세 주소를 입력해주세요"
-              value={detailAddress}
-              onChange={handleDetailAddressChange}
-            />
-          </Address>
-
-          <Wrapper>
-            <Info>
-              {'원하는 수거 날짜 시간'}
-              <div className="star">{'*'}</div>
-            </Info>
-            <Content
-              placeholder="2023-06-23"
-              value={date}
-              onChange={handleDateChange}
-            />
-          </Wrapper>
-        </S>
-        <B>
-          <BagConfirm>
-            <Check>
-              <Question>?</Question>
-            </Check>
-            <BagText>리픽백 크기 확인하기</BagText>
-          </BagConfirm>
-
-          <BagContainer>
-            <BagWrapper>
-              <BagHeight>
-                <CM7>70cm</CM7>
-                <Arrow7 src={arrow7.src} />
-                <Bag src={bag.src} />
-              </BagHeight>
-              <BagWidth>
-                <Arrow6 src={arrow6.src} />
-                <CM6>60cm</CM6>
-                <More>
-                  리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
-                </More>
-              </BagWidth>
-            </BagWrapper>
-          </BagContainer>
-        </B>
-      </A>
-      <div className="button" onClick={() => registerHandler()}>
-        <Button content="신청하기" num="4" />
-      </div>
+              {errors.returnDate && <p>{errors.returnDate.message}</p>}
+            </Wrapper>
+          </S>
+          <B>
+            <BagConfirm>
+              <Check>
+                <Question>?</Question>
+              </Check>
+              <BagText>리픽백 크기 확인하기</BagText>
+            </BagConfirm>
+            <BagContainer>
+              <BagWrapper>
+                <BagHeight>
+                  <CM7>70cm</CM7>
+                  <Arrow7 src={arrow7.src} />
+                  <Bag src={bag.src} />
+                </BagHeight>
+                <BagWidth>
+                  <Arrow6 src={arrow6.src} />
+                  <CM6>60cm</CM6>
+                  <More>
+                    리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
+                  </More>
+                </BagWidth>
+              </BagWrapper>
+            </BagContainer>
+          </B>
+        </A>
+        <div className="button">
+          <Button type="submit" content="신청하기" num="4" />
+        </div>
+      </form>
     </Container>
   );
 }
