@@ -95,7 +95,8 @@ export const refreshAccessToken = async (refresh: any) => {
 
 export const kakaoLogin = async (code: any) => {
   const response = await fetch(
-    process.env.API_URL + `/oauth/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin`,
+    process.env.API_URL +
+      `/oauth/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin`,
     {
       method: 'GET',
       headers: {
@@ -388,15 +389,24 @@ export const getItemLatest = async (
 
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
+    // 에러 처리
     console.error(error);
     throw error;
   }
 };
+
 export const getItemLowest = async (
   cursorId: number = 0,
   categoryId: number = 0,
@@ -423,11 +433,19 @@ export const getItemLowest = async (
 
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
+    // 에러 처리
     console.error(error);
     throw error;
   }
@@ -458,15 +476,24 @@ export const getItemHighest = async (
 
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
+    // 에러 처리
     console.error(error);
     throw error;
   }
 };
+
 export const getItemSeen = async (
   cursorId: number = 0,
   categoryId: number = 0,
@@ -512,9 +539,17 @@ export const inquiryHomeFitting = async (access: any) => {
         Authorization: `Bearer ${access}`,
       },
     });
+
     if (response.ok) {
       const data = await response.json();
-      return data;
+
+      const clothes = data.map((item: any) => {
+        if (item.product.brand == null) {
+          item.product.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
     } else {
       throw new Error('Error fetching poll types');
     }
