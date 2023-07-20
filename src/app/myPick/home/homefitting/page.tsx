@@ -198,18 +198,25 @@ function page() {
                     <Image
                       src={product.isChecked ? check_on.src : check_off.src}
                       alt="checkbox"
-                      width={50}
-                      height={50}
+                      width={28}
+                      height={28}
                     />
                   </Check>
                 </CheckWrapper>
                 <DeliveredItemInfo>
-                  <Image
-                    src={product.product.mainImageFile.imagePath}
-                    alt={product.product.name}
-                    width={166}
-                    height={166}
-                  />
+                  <ImageDiv
+                    style={{
+                      borderRadius: '15px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Image
+                      src={product.product.mainImageFile.imagePath}
+                      alt={product.product.name}
+                      width={166}
+                      height={166}
+                    />
+                  </ImageDiv>
                   <DeliveredItemP>
                     <ItemBrand>브랜드 : {product.product.brand}</ItemBrand>
                     <ItemExplain>
@@ -219,7 +226,7 @@ function page() {
                   </DeliveredItemP>
                 </DeliveredItemInfo>
                 <DeliveredItemPrice>
-                  {product.product.price}원
+                  {product.product.price.toLocaleString('en-US')}원
                 </DeliveredItemPrice>
                 <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
               </DeliveredItem>,
@@ -256,7 +263,9 @@ function page() {
         </OrderInfo>
         <AllPrice>
           <PriceP>합계 가격</PriceP>
-          <PriceNum>{selectedTotalPrice + deliveryFee}원</PriceNum>
+          <PriceNum>
+            {(selectedTotalPrice + deliveryFee).toLocaleString('en-US')}원
+          </PriceNum>
         </AllPrice>
       </OrderInfoWrapper>
       <WarnInfo>*선택하지 않은 수량은 자동으로 반품으로 처리됩니다.</WarnInfo>
@@ -378,6 +387,7 @@ const DeliveryInfoWrapP = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+  width: 330px;
 `;
 
 const DeliveredInfoWrapper = styled.div`
@@ -450,40 +460,42 @@ const DeliveredItemCategory = styled.div`
   align-items: center;
   color: var(--1, #111);
 
-  /* Header4 20pt rg */
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%;
 `;
 
 const SelectAll = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
+  width: 110px;
+  margin-left: 51px;
 `;
 const Check = styled.div`
   margin-right: 14px;
   cursor: pointer;
 `;
 
-const SelectP = styled.p``;
+const SelectP = styled.p`
+  width: 70px;
+`;
 
 const ItemInfo = styled.p`
   text-align: center;
-  width: 700px;
+  margin-left: 377px;
 `;
 
 const ItemPrice = styled.p`
   text-align: center;
-  width: 170px;
+  margin-left: 236px;
   flex-wrap: wrap;
 `;
 const ReturnFee = styled.p`
   text-align: center;
-  width: 170px;
+  margin-left: 146px;
+  margin-right: 105px;
   flex-wrap: wrap;
 `;
 
@@ -499,7 +511,7 @@ const DeliveredItem = styled.div`
 `;
 
 const CheckWrapper = styled.div`
-  width: 200px;
+  width: 183px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -508,8 +520,6 @@ const CheckWrapper = styled.div`
 const DeliveredItemInfo = styled.div`
   display: flex;
   align-items: center;
-  width: 700px;
-  gap: 64px;
   color: var(--1, #111);
 
   /* Header4 20pt rg */
@@ -523,14 +533,17 @@ const DeliveredItemP = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 330px;
+  margin-left: 64px;
+  margin-right: 84px;
+  height: 166px;
 `;
 
-const ItemBrand = styled.p``;
-const ItemExplain = styled.p``;
-const ItemSize = styled.p``;
+const ItemBrand = styled.div``;
+const ItemExplain = styled.div``;
+const ItemSize = styled.div``;
 
 const DeliveredItemPrice = styled.p`
-  width: 170px;
   color: var(--1, #111);
   text-align: center;
   /* Header3 24pt sb */
@@ -542,9 +555,9 @@ const DeliveredItemPrice = styled.p`
 `;
 
 const DeliveredItemReturnFee = styled.p`
-  width: 170px;
   color: var(--1, #111);
   text-align: center;
+  margin-left: 150px;
 
   /* Header4 20pt sb */
   font-family: Pretendard;
@@ -697,4 +710,9 @@ const PurchaseP = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+`;
+
+const ImageDiv = styled.div`
+  width: 166px;
+  height: 166px;
 `;

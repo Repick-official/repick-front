@@ -2,18 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-function ContentBodyImage({ src, content }: { src : string ,content: string }) {
+function ContentBodyImage({
+  src,
+  content,
+  w,
+  h,
+}: {
+  src: string;
+  content: string;
+  w: number;
+  h: number;
+}) {
   return (
     <ImageWrapper>
-      <Image
-        src={src}
-        alt="Picture of me"
-        width={200}  
-        height={200}  
-      />
-      <ImageBody>
-        {content}
-      </ImageBody>
+      <Image src={src} alt="Picture of me" width={w} height={h} />
+      <ImageBody>{content}</ImageBody>
     </ImageWrapper>
   );
 }
@@ -25,8 +28,8 @@ const ImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 const ImageBody = styled.div`
-  margin-top : 24px;
-  width:288px;
-`
+  margin-top: 24px;
+  width: 288px;
+`;

@@ -40,7 +40,7 @@ function page() {
         <Image
           src={logo_guide}
           alt="Picture of me"
-          style={{ width: '100vw', height: '657px' }}
+          style={{ width: '100%', height: '657px' }}
           placeholder="blur" // Optional blur-up while loading
         />
       </BannerWrapper>
@@ -51,11 +51,15 @@ function page() {
           <ContentBodyImageWrapper>
             <ContentBodyImage
               src={guide_first.src}
+              w={307.523}
+              h={266}
               content={'중고의류 수거 신청을 합니다.'}
             />
             <ImageDivision />
             <ContentBodyImage
               src={guide_second.src}
+              w={373.193}
+              h={277}
               content={'리픽은 의류를 수거하여 위탁 판매합니다.'}
             />
           </ContentBodyImageWrapper>
@@ -65,11 +69,15 @@ function page() {
           <ContentBodyImageWrapper>
             <ContentBodyImage
               src={guide_third.src}
+              w={344}
+              h={202.549}
               content={'마음에 드는 옷을 합리적인 가격으로 선택합니다.'}
             />
             <ImageDivision />
             <ContentBodyImage
               src={guide_fourth.src}
+              w={304}
+              h={163}
               content={
                 '마이픽을 통해 선택 현황을 보고 구매를 확정하면 옷을 받아 볼 수 있습니다'
               }
@@ -77,6 +85,8 @@ function page() {
             <ImageDivision />
             <ContentBodyImage
               src={guide_fifth.src}
+              w={316}
+              h={192.294}
               content={
                 '홈피팅 후 구매할 옷은 입금을 통해 구매하고 구매하지 않을 옷은 반품 신청을 합니다'
               }

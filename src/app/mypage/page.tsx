@@ -53,6 +53,7 @@ function page() {
     const checkIsSubscribe = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await getIsSubscribe(accessToken);
+      console.log(response);
       setIsSubscribed(response !== 'NONE');
     };
     checkUserInfo();
@@ -215,7 +216,7 @@ function page() {
       {isSubscribed ? (
         <MembershipInfo>
           <MembershipInfoWrapper>
-            <MembershipInfoMenu>구독중</MembershipInfoMenu>
+            <MembershipInfoMenu>구독 중</MembershipInfoMenu>
             <MembershipInfoMenu>리픽 Basic 구독</MembershipInfoMenu>
             <MembershipInfoMenu>2023. 06. 28. 23:25</MembershipInfoMenu>
             <MembershipInfoMenu>2023. 07. 28. 23:25</MembershipInfoMenu>
@@ -436,6 +437,8 @@ const SubscribeMenu = styled.p`
   width: 135px;
   text-align: center;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
 `;
 
 const NavSubscribed = styled.div`
@@ -456,7 +459,7 @@ const MenuWrapper = styled.div`
   width: 134px;
 `;
 const LineNM = styled.img`
-  margin-top: 30px;
+  margin-top: 24px;
 `;
 const MembershipCategory = styled.div`
   width: 100%;
@@ -467,6 +470,8 @@ const MembershipCategory = styled.div`
 const MembershipMenu = styled.p`
   width: 140px;
   text-align: center;
+  font-size: 16px;
+  font-weight: 600;
 `;
 
 const MembershipInfo = styled.div`
@@ -474,7 +479,10 @@ const MembershipInfo = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 207px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--2, #5f5f5f);
+  margin-top: 24px;
 `;
 const NoMembership = styled.p`
   color: var(--2, #5f5f5f);
