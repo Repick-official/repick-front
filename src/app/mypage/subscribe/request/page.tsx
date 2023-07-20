@@ -20,17 +20,30 @@ function page() {
 
   const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
 
-  const selectBasic = (e: any) => {
-    setSelect(!select);
+  const [imageSrc, setImageSrc] = useState(check_off.src);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    if (isClicked) {
+      setImageSrc(check_off.src);
+      setIsClicked(false);
+    } else {
+      setImageSrc(check_on.src);
+      setIsClicked(true);
+    }
   };
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const subscribeHandler = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await subscribePlan(accessToken, selectPlan);
-    if (response.success) {
-      router.push('/mypage/success');
+    if (isClicked) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await subscribePlan(accessToken, selectPlan);
+      if (response.success) {
+        router.push('/mypage/success');
+      }
+    } else {
+      alert('결제에 동의 해주세요');
     }
   };
 
@@ -62,8 +75,8 @@ function page() {
       </Notice>
 
       <Agree>
-        <Check onClick={(e: any) => selectBasic(e)}>
-          {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
+        <Check onClick={() => handleClick()}>
+          <Off src={imageSrc} />
         </Check>
         <div className="agree">{'매월 정기 결제에 동의합니다.'}</div>
       </Agree>

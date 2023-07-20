@@ -9,7 +9,6 @@ import { useRecoilState } from 'recoil';
 
 function page() {
   const router = useRouter();
-  const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
 
   return (
     <Container>
