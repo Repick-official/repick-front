@@ -488,7 +488,9 @@ const NoMembership = styled.p`
   margin-bottom: 24px;
 `;
 const InfoWrapper = styled.div``;
-const MembershipAddButton = styled.div``;
+const MembershipAddButton = styled.div`
+  cursor : pointer;
+`;
 
 const MembershipInfoWrapper = styled.div`
   display: flex;
@@ -527,6 +529,7 @@ const InputButton = styled.input`
   background: var(--1, #111);
   color: var(--4, #E8E8E8);
   text-align: center;
+  cursor : pointer;
 
   /* Body1 16pt sb */
   font-family: Pretendard;

@@ -214,6 +214,7 @@ const My = styled.div<{ login: string }>`
   font-size: 16px;
   margin-right: 39px;
   font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
+  cursor : pointer;
 `;
 const Login = styled.div`
   font-size: 16px;
@@ -232,4 +233,5 @@ const Option = styled.div<{ selected: boolean }>`
   text-align: center;
   width: 153px;
   font-weight: ${(props) => (props.selected ? '600' : '400')};
+  cursor:pointer;
 `;

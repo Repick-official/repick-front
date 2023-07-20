@@ -45,9 +45,9 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   };
   return (
     <ImageWrapper>
-      <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+      <ImageDiv style={{ borderRadius: '15px', overflow: 'hidden' }}>
         <Image src={src} alt="Picture of me" width={286} height={286} />
-      </div>
+      </ImageDiv>
       <ImageBody>
         <TagWrapper bgcolor={tagColors[tagName]}>
           <TagName textcolor={tagNameColors[tagName]}>{tagName}</TagName>
@@ -74,11 +74,21 @@ const ImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const ImageDiv = styled.div`
+  transition: transform .2s; 
+  cursor:pointer;
+  &:hover{
+    transform: scale(1.1);
+  }
+`
+
 const ImageBody = styled.div`
   margin-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor:pointer;
 `;
 
 const TagWrapper = styled.div<TagWrapperProps>`
