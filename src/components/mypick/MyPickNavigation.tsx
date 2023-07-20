@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import sub from '@/assets/images/subscription.png';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
+import getAccessToken from '@/util/getAccessToken';
+import { useCookies } from 'react-cookie';
+import { getIsSubscribe } from '@/api/requests';
 
 function MyPickNavigation() {
   const router = useRouter();
@@ -30,6 +33,42 @@ function MyPickNavigation() {
     }
   }, []);
 
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const checkUserHomeFitting = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    if (response == 'NONE') {
+      alert('구독이 필요한 서비스입니다.');
+    } else {
+      setSelectedPage('홈피팅');
+      router.push('/myPick/home/homefitting');
+    }
+  };
+
+  const checkUserPurchase = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    if (response == 'NONE') {
+      alert('구독이 필요한 서비스입니다.');
+    } else {
+      setSelectedPage('구매하기');
+      router.push('/myPick/shopping/purchase');
+    }
+  };
+
+  const checkUserPurchaseHistory = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    if (response == 'NONE') {
+      alert('구독이 필요한 서비스입니다.');
+    } else {
+      setSelectedPage('구매내역');
+      router.push('');
+      //여기 url 못 찾음
+    }
+  };
+
   return (
     <Container>
       <Semicontainer>
@@ -49,10 +88,7 @@ function MyPickNavigation() {
 
           <Section>
             <Option
-              onClick={() => {
-                setSelectedPage('홈피팅');
-                router.push('/myPick/home/homefitting');
-              }}
+              onClick={() => checkUserHomeFitting()}
               selected={selectedPage === '홈피팅' ? true : false}
             >
               홈피팅
@@ -62,10 +98,7 @@ function MyPickNavigation() {
 
           <Section>
             <Option
-              onClick={() => {
-                setSelectedPage('구매하기');
-                router.push('/myPick/shopping/purchase');
-              }}
+              onClick={() => checkUserPurchase()}
               selected={selectedPage === '구매하기' ? true : false}
             >
               구매하기
@@ -75,11 +108,7 @@ function MyPickNavigation() {
 
           <Section>
             <Option
-              onClick={() => {
-                setSelectedPage('구매내역');
-                router.push('');
-                //여기 url 못 찾음
-              }}
+              onClick={() => checkUserPurchaseHistory()}
               selected={selectedPage === '구매내역' ? true : false}
             >
               구매내역

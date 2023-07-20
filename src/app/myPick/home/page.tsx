@@ -11,7 +11,12 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 
-import { inquiryMypick, applyHomeFitting } from '@/api/requests';
+import {
+  inquiryMypick,
+  applyHomeFitting,
+  getIsSubscribe,
+} from '@/api/requests';
+import { NONAME } from 'dns';
 
 function page() {
   const router = useRouter();
@@ -46,12 +51,18 @@ function page() {
     );
   };
 
-  const handleApply = () => {
-    products.map((item) => {
-      item.isClicked
-        ? handleHomeFitting(item.cartProductId)
-        : alert('신청할 제품을 선택해주세요.');
-    });
+  const handleApply = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    if (response == 'NONE') {
+      alert('구독이 필요한 서비스입니다.');
+    } else {
+      products.map((item) => {
+        item.isClicked
+          ? handleHomeFitting(item.cartProductId)
+          : alert('신청할 제품을 선택해주세요.');
+      });
+    }
   };
 
   const handleHomeFitting = async (Id: any) => {

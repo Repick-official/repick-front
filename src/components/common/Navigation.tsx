@@ -19,7 +19,6 @@ function Navigation() {
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-
   useEffect(() => {
     if (userInfo.uesrNickname) {
       setSelectedPage('서비스 가이드');
@@ -68,6 +67,39 @@ function Navigation() {
     setSelectedPage('서비스 가이드');
   };
 
+  const checkUserMypick = () => {
+    if (userInfo.uesrNickname) {
+      setSelectedPage('마이픽');
+      router.push('/myPick/home');
+    } else {
+      alert('로그인이 필요한 서비스입니다.');
+      router.push('/login');
+      setSelectedPage('');
+    }
+  };
+
+  const checkUserWardrobe = () => {
+    if (userInfo.uesrNickname) {
+      setSelectedPage('옷장 수거');
+      router.push('/wardrobe');
+    } else {
+      alert('로그인이 필요한 서비스입니다.');
+      router.push('/login');
+      setSelectedPage('');
+    }
+  };
+
+  const checkUserMypage = () => {
+    if (userInfo.uesrNickname) {
+      setSelectedPage('');
+      router.push('/mypage');
+    } else {
+      alert('로그인이 필요한 서비스입니다.');
+      router.push('/login');
+      setSelectedPage('');
+    }
+  };
+
   return (
     <Container>
       <Q>
@@ -78,13 +110,7 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              <My
-                login={bold}
-                onClick={() => {
-                  setSelectedPage('');
-                  router.push('/mypage');
-                }}
-              >
+              <My login={bold} onClick={() => checkUserMypage()}>
                 {isUser}
               </My>
               <Login
@@ -129,10 +155,7 @@ function Navigation() {
 
             <Section>
               <Option
-                onClick={() => {
-                  setSelectedPage('마이픽');
-                  router.push('/myPick/home');
-                }}
+                onClick={() => checkUserMypick()}
                 selected={selectedPage === '마이픽' ? true : false}
               >
                 마이픽
@@ -142,10 +165,7 @@ function Navigation() {
 
             <Section>
               <Option
-                onClick={() => {
-                  setSelectedPage('옷장 수거');
-                  router.push('/wardrobe');
-                }}
+                onClick={() => checkUserWardrobe()}
                 selected={selectedPage === '옷장 수거' ? true : false}
               >
                 옷장 수거

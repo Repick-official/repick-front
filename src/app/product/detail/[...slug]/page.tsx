@@ -16,6 +16,9 @@ import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import leftArrow from '@/assets/images/product/leftArrow.svg';
 import rightArrow from '@/assets/images/product/rightArrow.svg';
+import { userInfoState } from '@/atom/states';
+import { useRecoilState } from 'recoil';
+import { selectedNavPage } from '@/atom/states';
 
 function page() {
   //제품 디테일 api
@@ -52,7 +55,6 @@ function page() {
     get();
   }, []);
 
-
   //추천 상품 api
   const [recommends, setRecommends] = useState<any[]>([]);
 
@@ -72,14 +74,22 @@ function page() {
   //마이픽 담기 api
   const [cookies, setCookie, removeCookie] = useCookies();
   const router = useRouter();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
 
   const putMypickCart = async () => {
-    let location = window.location.pathname;
-    let split = location.split('/');
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await putMypick(accessToken, split[3]);
+    if (userInfo.uesrNickname) {
+      let location = window.location.pathname;
+      let split = location.split('/');
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await putMypick(accessToken, split[3]);
 
-    router.push('/myPick/home');
+      alert('선택하신 제품을 마이픽에 담았습니다.');
+    } else {
+      alert('로그인이 필요한 서비스입니다.');
+      router.push('/login');
+      setSelectedPage('');
+    }
   };
 
   return (
