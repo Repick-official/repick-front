@@ -63,9 +63,8 @@ function MyPickNavigation() {
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
     } else {
-      setSelectedPage('구매내역');
-      router.push('');
-      //여기 url 못 찾음
+      // setSelectedPage('구매내역'); 나중에 살리기
+      alert('현재 이용 불가능한 서비스입니다.');
     }
   };
 
@@ -141,7 +140,7 @@ const Option = styled.div<{ selected: boolean }>`
   flex-direction: column;
   align-items: center;
   width: 133.5px;
-  cursor : pointer;
+  cursor: pointer;
 `;
 const SelectedPage = styled.div`
   width: 133.5px;

@@ -100,13 +100,18 @@ function Navigation() {
     }
   };
 
+  const goHome = () => {
+    router.push('/guide');
+    setSelectedPage('서비스 가이드');
+  };
+
   return (
     <Container>
       <Q>
         <S>
           <MainWrapper>
             <LogoWrapper>
-              <Logo src={logo.src} />
+              <Logo src={logo.src} onClick={() => goHome()} />
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
@@ -214,7 +219,7 @@ const My = styled.div<{ login: string }>`
   font-size: 16px;
   margin-right: 39px;
   font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
-  cursor : pointer;
+  cursor: pointer;
 `;
 const Login = styled.div`
   font-size: 16px;
@@ -233,5 +238,5 @@ const Option = styled.div<{ selected: boolean }>`
   text-align: center;
   width: 153px;
   font-weight: ${(props) => (props.selected ? '600' : '400')};
-  cursor:pointer;
+  cursor: pointer;
 `;
