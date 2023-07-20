@@ -6,9 +6,27 @@ import { useRouter } from 'next/navigation';
 import SelectPlan from '@/components/mypage/SelectPlan';
 import { selectedSubscribePlan } from '@/atom/states';
 import { useRecoilState } from 'recoil';
+import getAccessToken from '@/util/getAccessToken';
+import { getIsSubscribe } from '@/api/requests';
+import { useCookies } from 'react-cookie';
 
 function page() {
   const router = useRouter();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
+
+  console.log(selectPlan);
+
+  const checkIsSubscribe = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+
+    if (response == selectPlan) {
+      alert('현재 구독 중인 플랜입니다.');
+    } else {
+      router.push('/mypage/subscribe/request');
+    }
+  };
 
   return (
     <Container>
@@ -36,10 +54,7 @@ function page() {
           />
         </Choice>
       </Wrapper>
-      <div
-        className="button"
-        onClick={() => router.push('/mypage/subscribe/request')}
-      >
+      <div className="button" onClick={() => checkIsSubscribe()}>
         <Button content="구독하기" num="4" />
       </div>
     </Container>
