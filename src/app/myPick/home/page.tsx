@@ -65,11 +65,28 @@ function page() {
     }
   };
 
+  const handlePurchase = async () => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    if (response == 'NONE') {
+      alert('구독이 필요한 서비스입니다.');
+    } else {
+      products.map((item) => {
+        item.isClicked ? goPurchase() : alert('구매할 제품을 선택해주세요.');
+      });
+    }
+  };
+
   const handleHomeFitting = async (Id: any) => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await applyHomeFitting(accessToken, Id);
 
     router.push('/myPick/home/homefitting/success');
+  };
+
+  const goPurchase = async () => {
+    setSelectedPage('구매하기');
+    router.push('/myPick/shopping/purchase');
   };
 
   const handleClickAll = () => {
@@ -121,12 +138,7 @@ function page() {
             <div onClick={() => handleApply()}>
               <Button content="홈피팅 신청하기" num="5" />
             </div>
-            <div
-              onClick={() => {
-                setSelectedPage('구매하기');
-                router.push('/myPick/shopping/purchase');
-              }}
-            >
+            <div onClick={() => handlePurchase()}>
               <Button content="구매하기" num="6" />
             </div>
           </ButtonWrapper>

@@ -77,6 +77,7 @@ function page() {
   };
   const handleSubscribeClick = (num: React.SetStateAction<number>) => {
     setSubscribeInfo(num);
+    alert('현재 이용 불가능한 서비스입니다.');
   };
   return (
     <Container>
@@ -160,7 +161,7 @@ function page() {
           </Wrapper>
         </R>
         <InfoEditButton>
-          <InputButton type = "submit" value="회원정보 수정"></InputButton>
+          <InputButton type="submit" value="회원정보 수정"></InputButton>
         </InfoEditButton>
       </form>
       <Line src={line.src} />
@@ -173,7 +174,7 @@ function page() {
       </CheckWrapper>
       <Line src={line.src} />
       <SubscribeCategory>
-        <SubscribeMenu onClick={() => handleSubscribeClick(1)}>
+        <SubscribeMenu onClick={() => setSubscribeInfo(1)}>
           구독 내역
         </SubscribeMenu>
         <SubscribeMenu onClick={() => handleSubscribeClick(2)}>
@@ -488,7 +489,9 @@ const NoMembership = styled.p`
   margin-bottom: 24px;
 `;
 const InfoWrapper = styled.div``;
-const MembershipAddButton = styled.div``;
+const MembershipAddButton = styled.div`
+  cursor: pointer;
+`;
 
 const MembershipInfoWrapper = styled.div`
   display: flex;
@@ -525,8 +528,9 @@ const InputButton = styled.input`
   gap: 10px;
   border-radius: 15px;
   background: var(--1, #111);
-  color: var(--4, #E8E8E8);
+  color: var(--4, #e8e8e8);
   text-align: center;
+  cursor: pointer;
 
   /* Body1 16pt sb */
   font-family: Pretendard;
@@ -534,4 +538,4 @@ const InputButton = styled.input`
   font-style: normal;
   font-weight: 600;
   line-height: 140%; /* 22.4px */
-`
+`;

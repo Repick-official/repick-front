@@ -46,16 +46,25 @@ function page() {
           <IdSaveText>아이디 저장</IdSaveText>
         </IdSaveWrapper>
         <LoginWrapper>
-          <div className="button">
+          <div
+            className="button"
+            onClick={() => alert('SNS 로그인을 이용해주세요.')}
+          >
             <Button content="로그인" num="4" />
           </div>
         </LoginWrapper>
         <MenuWrapper>
-          <Menu>아이디 찾기</Menu>
+          <Menu onClick={() => alert('사용 불가능한 서비스입니다.')}>
+            아이디 찾기
+          </Menu>
           <MenuBar className="left">|</MenuBar>
-          <Menu>비밀번호 찾기</Menu>
+          <Menu onClick={() => alert('사용 불가능한 서비스입니다.')}>
+            비밀번호 찾기
+          </Menu>
           <MenuBar className="right">|</MenuBar>
-          <Menu onClick={() => router.push('/register')}>회원가입</Menu>
+          <Menu onClick={() => alert('사용 불가능한 서비스입니다.')}>
+            회원가입
+          </Menu>
         </MenuWrapper>
         <SnsWrapper>
           <SnsLoginText>SNS 계정으로 로그인</SnsLoginText>
