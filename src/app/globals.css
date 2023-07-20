@@ -18,6 +18,14 @@ body {
   overflow: scroll;
 }
 
+body {
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .content {
   /* width: 1216px; */
   flex-grow: 1;
