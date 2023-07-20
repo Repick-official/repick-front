@@ -21,6 +21,8 @@ function page() {
 
   const [products, setProducts] = useState<any[]>([]);
 
+  const [selectAll, setSelectAll] = useState('전체 선택');
+
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -42,7 +44,6 @@ function page() {
           : item
       )
     );
-
   };
 
   const handleApply = () => {
@@ -58,14 +59,28 @@ function page() {
     router.push('/myPick/home/homefitting/success');
   };
 
+  const handleClickAll = () => {
+    const updatedProducts = products.map((product) => {
+      return { ...product, isClicked: !product.isClicked };
+    });
+    setProducts(updatedProducts);
+
+    if (selectAll == '전체 선택') {
+      setSelectAll('전체 선택 해체');
+    } else {
+      setSelectAll('전체 선택');
+    }
+    console.log(products);
+  };
+
   return (
     <Container>
       <SemiContainer>
         <Content>
           <Pick>
             <Title>내가 픽한제품</Title>
-            <Filter>
-              <Clear>전체 선택 해제</Clear>
+            <Filter onClick={() => handleClickAll()}>
+              <Clear>{selectAll}</Clear>
             </Filter>
           </Pick>
 
