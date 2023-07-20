@@ -48,7 +48,9 @@ function page() {
 
   const handleApply = () => {
     products.map((item) => {
-      item.isClicked ? handleHomeFitting(item.cartProductId) : item;
+      item.isClicked
+        ? handleHomeFitting(item.cartProductId)
+        : alert('신청할 제품을 선택해주세요.');
     });
   };
 

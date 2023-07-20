@@ -1,18 +1,34 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import logo from '@/assets/images/loco.svg';
 import kakao from '@/assets/images/kakao.png';
 import Button from '@/components/common/Button';
+import check_off from '@/assets/images/check/off.svg';
+import check_on from '@/assets/images/check/on.svg';
 
 function page() {
   const router = useRouter();
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_API_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin&response_type=code`;
-  
+
   const loginHandler = () => {
     window.location.href = link;
   };
+
+  const [imageSrc, setImageSrc] = useState<string>(check_off.src);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    if (isClicked) {
+      setImageSrc(check_off.src);
+      setIsClicked(false);
+    } else {
+      setImageSrc(check_on.src);
+      setIsClicked(true);
+    }
+  };
+
   return (
     <Container>
       <ContentWrapper>
@@ -24,7 +40,9 @@ function page() {
           <Content placeholder="비밀번호" />
         </InputWrapper>
         <IdSaveWrapper>
-          <RadioButton type="radio" />
+          <Check onClick={() => handleClick()}>
+            <Off src={imageSrc} />
+          </Check>
           <IdSaveText>아이디 저장</IdSaveText>
         </IdSaveWrapper>
         <LoginWrapper>
@@ -111,9 +129,14 @@ const Logo = styled.img`
 const IdSaveWrapper = styled.div`
   display: flex;
   margin-bottom: 24px;
+  align-items: center;
 `;
 
-const RadioButton = styled.input``;
+const Off = styled.img``;
+const Check = styled.div`
+  margin-right: 14px;
+  cursor: pointer;
+`;
 
 const IdSaveText = styled.p`
   font-size: 16px;
@@ -185,5 +208,5 @@ const KaKao = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 15px;
-  cursor : pointer;
+  cursor: pointer;
 `;
