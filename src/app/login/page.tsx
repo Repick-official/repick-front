@@ -9,7 +9,7 @@ import Button from '@/components/common/Button';
 function page() {
   const router = useRouter();
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_API_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin&response_type=code`;
-
+  
   const loginHandler = () => {
     window.location.href = link;
   };

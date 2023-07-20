@@ -95,7 +95,7 @@ export const refreshAccessToken = async (refresh: any) => {
 
 export const kakaoLogin = async (code: any) => {
   const response = await fetch(
-    process.env.API_URL + `/oauth/kakao?code=${code}`,
+    process.env.API_URL + `/oauth/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}`,
     {
       method: 'GET',
       headers: {
