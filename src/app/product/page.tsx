@@ -45,7 +45,7 @@ function page() {
         break;
       case 'seen':
         // response = await getItemSeen(cursorId, categoryId);
-        response = '';
+        response = await getItemLatest(cursorId, categoryId);
         alert("조회순은 아직 없습니다~");
         break;
       default:
