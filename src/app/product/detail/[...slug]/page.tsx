@@ -92,6 +92,17 @@ function page() {
     }
   };
 
+  const purchase = async () => {
+    if (userInfo.uesrNickname) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      alert('성준쓰 어떻게 할거야');
+    } else {
+      alert('로그인이 필요한 서비스입니다.');
+      router.push('/login');
+      setSelectedPage('');
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -161,7 +172,7 @@ function page() {
             <div className="btn" onClick={() => putMypickCart()}>
               <Button content="마이픽에 담기" num="1" />
             </div>
-            <div className="btn">
+            <div className="btn" onClick={() => purchase()}>
               <Button content="구매하기" num="2" />
             </div>
           </div>

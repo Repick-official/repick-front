@@ -43,7 +43,7 @@ function Success({
           <div
             onClick={() => {
               setSelectedPage('마이픽 현황');
-              // setSelectedNavigationPage('마이픽');
+              setSelectedNavigationPage('마이픽');
               router.push('/myPick/home');
             }}
           >
