@@ -44,7 +44,9 @@ function page() {
         response = await getItemHighest(cursorId, categoryId);
         break;
       case 'seen':
-        response = await getItemSeen(cursorId, categoryId);
+        // response = await getItemSeen(cursorId, categoryId);
+        response = '';
+        alert("조회순은 아직 없습니다~");
         break;
       default:
         response = await getItemLatest(cursorId, categoryId);
@@ -130,7 +132,7 @@ function page() {
               </OptionP>
               <OptionDetail>
                 {categoryData[parentId].map(({ id, name } : {id : number, name : string}) => (
-                  <Option key={id} onClick={() => {
+                  <Option isselected={(id ===categoryId).toString()} key={id} onClick={() => {
                     setCategoryId(id);
                     setCursorId(0);
                   }}>
@@ -261,10 +263,11 @@ const OrderMenu = styled.p<{isselected: string}>`
 const OptionWrapper = styled.div`
   display:flex;
   flex-direction: column;
-  width : 829px;
+  width : 925px;
   padding : 28px 103px 28px 103px;
   margin : 0 auto;
   margin-bottom :60px;
+  gap : 16px;
   margin-top : 60px;
 `
 
@@ -272,6 +275,7 @@ const OptionList = styled.div`
   width : 100%;
   display:flex;
   gap : 103px;
+  margin
 `
 const OptionP = styled.p`
   color: var(--1, #111);
@@ -288,21 +292,28 @@ const OptionP = styled.p`
 const OptionDetail = styled.div`
   display:flex;
   gap : 33px;
+  align-items: center;
 `
-const Option = styled.p`
-  color: var(--1, #111);
+const Option = styled.p<{isselected: string}>`
+  color: ${props => props.isselected==="true" ? 'var(--4, #FFF)' : 'var(--1, #111)'};
+  cursor:pointer;
   text-align: center;
-
+  padding: 5px 10px;
+  border-radius : 12px;
+  background: ${props => props.isselected==="true" ? 'var(--1, #111)' : 'var(--4, #FFF)'};
+  
   /* Body2 16pt rg */
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 22.4px */
+
 `
 const OptionReset = styled.p`
   width:100%;
   text-align : end;
+  cursor:pointer;
 `
 
 const ProductWrapper =styled.div`

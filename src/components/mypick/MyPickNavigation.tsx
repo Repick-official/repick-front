@@ -141,6 +141,7 @@ const Option = styled.div<{ selected: boolean }>`
   flex-direction: column;
   align-items: center;
   width: 133.5px;
+  cursor : pointer;
 `;
 const SelectedPage = styled.div`
   width: 133.5px;
