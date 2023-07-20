@@ -559,3 +559,47 @@ export const inquiryHomeFitting = async (access: any) => {
     throw error;
   }
 };
+
+export const searchItem = async (
+  cursorId: number = 0,
+  pageSize: number = 16,
+  keyword: string
+): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    pageSize: pageSize !== 0 ? pageSize.toString() : '',
+    keyword: keyword,
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(
+      `${process.env.API_URL}/api/products/keyword?${queryString}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};

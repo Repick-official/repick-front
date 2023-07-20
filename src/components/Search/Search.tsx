@@ -1,9 +1,50 @@
-import React from 'react';
 import styled from 'styled-components';
 import X from '@/assets/images/x.svg';
 import search_dark from '@/assets/images/search_dark.svg';
+import React, { useEffect, useState } from 'react';
+import { searchItem } from '@/api/requests';
+
+interface Product {
+  brand: string;
+  detail: string;
+  discountRate: number;
+  mainImageFile: {
+    imagePath: string;
+    imageKey: string;
+    isMainImage: boolean;
+  };
+  name: string;
+  price: number;
+  productId: number;
+  productState: string;
+  size: string;
+}
 
 function SearchModal({ clickModal }: any) {
+  const [inputText, setInputText] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cursorId, setCursorId] = useState<number>(0);
+  const [keyword, setKeyword] = useState('');
+  const pageSize = 16;
+
+  const handleChange = async (e: { target: { value: any } }) => {
+    setInputText(e.target.value);
+  };
+
+  const search = async () => {
+    if (inputText !== '') {
+      setKeyword(inputText);
+      const response = await searchItem(cursorId, pageSize, keyword);
+      setProducts((prevProducts) => [...prevProducts, ...response]);
+      if (response.length > 0) {
+        const lastProductId = response[response.length - 1].productId;
+        setCursorId(lastProductId);
+      }
+      console.log('r', response);
+    }
+    console.log('p', products);
+  };
+
   return (
     <>
       <ModalBox onClick={clickModal}>
@@ -11,8 +52,8 @@ function SearchModal({ clickModal }: any) {
           <Remove onClick={clickModal} src={X.src}></Remove>
           <Content>
             <SearchWrapper>
-              <SearchBox />
-              <ButtonWrapper src={search_dark.src} />
+              <SearchBox value={inputText} onChange={handleChange} />
+              <ButtonWrapper src={search_dark.src} onClick={() => search()} />
             </SearchWrapper>
             <ContentWrapper>
               <Current>최근 검색어</Current>
