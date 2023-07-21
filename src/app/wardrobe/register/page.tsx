@@ -59,12 +59,12 @@ function page() {
   });
 
   const registerHandler = async (data: HookFormTypes) => {
-    // let accessToken = await getAccessToken(cookies, setCookie);
-    // const response = await pickupWardrobe(accessToken, data);
-    // if (response.success) {
-    //   router.push('/wardrobe/register/success');
-    // } else {
-    // }
+    //  let accessToken = await getAccessToken(cookies, setCookie);
+    //  const response = await pickupWardrobe(accessToken, data);
+    //  if (response.success) {
+    //    router.push('/wardrobe/register/success');
+    //  } else {
+    //  }
   };
 
   return (
@@ -250,7 +250,7 @@ function page() {
           </B>
         </A>
         <div className="button">
-        <InputButton type = "submit" value="신청하기"></InputButton>
+          <InputButton type="submit" value="신청하기"></InputButton>
         </div>
       </form>
     </Container>
@@ -521,7 +521,7 @@ const InputButton = styled.input`
   flex-shrink: 0;
   border-radius: 15px;
   background: var(--1, #111);
-  color: var(--4, #E8E8E8);
+  color: var(--4, #e8e8e8);
   text-align: center;
 
   /* Body1 16pt sb */
@@ -530,4 +530,4 @@ const InputButton = styled.input`
   font-style: normal;
   font-weight: 600;
   line-height: 140%; /* 22.4px */
-`
+`;

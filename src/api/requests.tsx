@@ -645,3 +645,40 @@ export const inquirySubscribeLatest = async (access: any) => {
     throw error;
   }
 };
+
+export const orderProducts = async (
+  access: any,
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    zipCode: string;
+  },
+  memberId: number,
+  personName: string,
+  phoneNumber: string,
+  productIds: [],
+  requestDetail: string
+) => {
+  const data = {
+    address: address,
+    memberId: memberId,
+    personName: personName,
+    phoneNumber: phoneNumber,
+    productIds: productIds,
+    requestDetail: requestDetail,
+  };
+
+  const response = await fetch(process.env.API_URL + '/order/products', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    return { success: true };
+  } else {
+    return { success: false };
+  }
+};

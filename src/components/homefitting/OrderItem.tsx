@@ -45,12 +45,7 @@ const OrderItem: React.FC<OrderItemInfoProps> = ({
   return (
     <OrderItemWrapper>
       <ImageWrapper>
-        <Image
-          src={src}
-          alt="Picture of me"
-          width={80}  
-          height={80}  
-        />
+        <Image src={src} alt="Picture of me" width={80} height={80} />
       </ImageWrapper>
       <OrderItemBody>
         <TagWrapper bgcolor={tagColors[tagName]}>
@@ -64,34 +59,32 @@ const OrderItem: React.FC<OrderItemInfoProps> = ({
           </ItemInfoWrapper>
           <PriceWrapperP>
             <Price>{price.toLocaleString('en-US')}원</Price>
-
           </PriceWrapperP>
         </PriceWrapper>
       </OrderItemBody>
     </OrderItemWrapper>
-
   );
-}
+};
 
 export default OrderItem;
 
 const OrderItemWrapper = styled.div`
   display: flex;
-  align-items : center;
-  gap : 24px;
-`
+  align-items: center;
+  gap: 24px;
+`;
 
 const ImageWrapper = styled.div`
   border-radius: 15px;
-  overflow : hidden;
-`
+  overflow: hidden;
+`;
 const OrderItemBody = styled.div`
-  flex-grow : 1;
-`
+  flex-grow: 1;
+`;
 
 const TagWrapper = styled.div<TagWrapperProps>`
   display: inline-flex;
-  width : auto;
+  width: auto;
   height: 22px;
   padding: 2px 24px;
   align-items: center;
@@ -127,13 +120,17 @@ const Price = styled.p`
 `;
 const ItemInfoWrapper = styled.div`
   display: flex;
-  align-items : center;
+  align-items: center;
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
-const PriceWrapperP= styled.div`
-  display:flex;
-  align-items : center;
-`
+const PriceWrapperP = styled.div`
+  display: flex;
+  align-items: center;
+`;
 const PriceWrapper = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
-`
+`;
