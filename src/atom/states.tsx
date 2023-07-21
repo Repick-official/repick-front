@@ -27,3 +27,45 @@ export const userInfoState = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+interface Product {
+  homeFittingId: number;
+  product: {
+    brand: string;
+    detail: string;
+    size: string;
+    price: number;
+    name: string;
+    mainImageFile: {
+      imagePath: string;
+    };
+  };
+  isChecked: boolean;
+}
+
+export const requestProducts = atom<Product[]>({
+  key: 'products',
+  default: [
+    {
+      homeFittingId: 0,
+      product: {
+        brand: '',
+        detail: '',
+        size: '',
+        price: 0,
+        name: '',
+        mainImageFile: {
+          imagePath: '',
+        },
+      },
+      isChecked: false,
+    },
+  ],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const totalPrice = atom<number>({
+  key: 'totalPrice',
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});

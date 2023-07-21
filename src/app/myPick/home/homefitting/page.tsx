@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import sample from '@/assets/images/homefitting/sample.png';
 import { useRouter } from 'next/navigation';
-import { selectedMypickPage } from '@/atom/states';
+import { selectedMypickPage, requestProducts, totalPrice } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -36,9 +36,11 @@ function page() {
   const [imageSrc, setImageSrc] = useState<string>(check_off.src);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [unselectedProducts, setUnselectedProducts] = useState<Product[]>([]);
+  // const [unselectedProducts, setUnselectedProducts] = useState<Product[]>([]);
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedTotalPrice, setSelectedTotalPrice] = useState<number>(0);
+  const [total, setTotal] = useRecoilState<number>(totalPrice);
   const deliveryFee = 0; //
 
   const userName = '도현';
@@ -77,7 +79,7 @@ function page() {
         isChecked: false,
       }));
       setProducts(productsWithCheckStatus);
-      setUnselectedProducts(productsWithCheckStatus);
+      // setUnselectedProducts(productsWithCheckStatus);
     };
     get();
   }, []);
@@ -90,16 +92,16 @@ function page() {
           setSelectedCount((prev) => prev + 1);
           setSelectedTotalPrice((prev) => prev + newProduct.product.price);
           setSelectedProducts((prev) => [...prev, newProduct]);
-          setUnselectedProducts((prev) =>
-            prev.filter((prod) => prod.homeFittingId !== id)
-          );
+          // setUnselectedProducts((prev) =>
+          //   prev.filter((prod) => prod.homeFittingId !== id)
+          // );
         } else {
           setSelectedCount((prev) => prev - 1);
           setSelectedTotalPrice((prev) => prev - newProduct.product.price);
           setSelectedProducts((prev) =>
             prev.filter((prod) => prod.homeFittingId !== id)
           );
-          setUnselectedProducts((prev) => [...prev, newProduct]);
+          // setUnselectedProducts((prev) => [...prev, newProduct]);
         }
 
         return newProduct;
@@ -111,8 +113,14 @@ function page() {
     setProducts(updatedProducts);
   };
   const handlePurchase = () => {
-    console.log('Selected products:', selectedProducts);
-    console.log('Unselected products:', unselectedProducts);
+    selectedProducts.length === 0 ? alert('제품을 선택하세요') : goPurchase();
+  };
+
+  const goPurchase = () => {
+    setFinalProducts(selectedProducts);
+    setTotal(selectedTotalPrice + deliveryFee);
+    console.log(total);
+    router.push('/myPick/shopping/purchase');
   };
 
   return (
