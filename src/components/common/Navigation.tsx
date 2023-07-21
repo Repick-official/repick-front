@@ -61,7 +61,7 @@ function Navigation() {
   const logoutHandler = async () => {
     localStorage.removeItem('recoil-persist');
     alert('로그아웃 되었습니다.');
-    document.cookie = "access=; expires=0; path=/;";
+    document.cookie = 'access=; expires=0; path=/;';
     setIsUser('마이페이지');
     setIslogin('로그인');
     setBold('notBold');
@@ -113,6 +113,7 @@ function Navigation() {
           <MainWrapper>
             <LogoWrapper>
               <Logo src={logo.src} onClick={() => goHome()} />
+
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
@@ -198,6 +199,7 @@ const S = styled.div``;
 const Logo = styled.img`
   width: 195px;
   height: 64px;
+  cursor: pointer;
 `;
 const Container = styled.div``;
 const Q = styled.div`

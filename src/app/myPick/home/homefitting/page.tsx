@@ -87,7 +87,7 @@ function page() {
     const updatedProducts = products.map((product: Product): Product => {
       if (product.homeFittingId === id) {
         const newProduct = { ...product, isChecked: !product.isChecked };
-  
+
         if (newProduct.isChecked) {
           setSelectedCount((prev) => prev + 1);
           setSelectedTotalPrice((prev) => prev + newProduct.product.price);
@@ -103,18 +103,18 @@ function page() {
           );
           // setUnselectedProducts((prev) => [...prev, newProduct]);
         }
-  
+
         return newProduct;
       }
-  
+
       return product;
     });
-  
+
     setProducts(updatedProducts);
-  
+
     // Check if all items are selected or not
     const allChecked = updatedProducts.every((product) => product.isChecked);
-  
+
     if (allChecked) {
       setImageSrc(check_on.src);
       setIsClicked(true);
@@ -123,7 +123,7 @@ function page() {
       setIsClicked(false);
     }
   };
-  
+
   const handlePurchase = () => {
     selectedProducts.length === 0 ? alert('제품을 선택하세요') : goPurchase();
   };
@@ -169,7 +169,11 @@ function page() {
                     />
                   </DeliveryInfoItemList>
                   <DeliveryInfoItemButton>
-                    <DeliveryInfoWrapP>배송현황 보러가기</DeliveryInfoWrapP>
+                    <DeliveryInfoWrapP
+                      onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+                    >
+                      배송현황 보러가기
+                    </DeliveryInfoWrapP>
                   </DeliveryInfoItemButton>
                 </DeliveryInfoItemStateWrapper>
               </DeliveryInfoItemWrapper>

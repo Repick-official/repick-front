@@ -197,16 +197,16 @@ function page() {
       </CheckWrapper>
       <Line src={line.src} />
       <SubscribeCategory>
-        <SubscribeMenu onClick={() => setSubscribeInfo(1)}>
+        <SubscribeMenu bold={'bold'} onClick={() => setSubscribeInfo(1)}>
           구독 내역
         </SubscribeMenu>
-        <SubscribeMenu onClick={() => handleSubscribeClick(2)}>
+        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(2)}>
           구매 내역
         </SubscribeMenu>
-        <SubscribeMenu onClick={() => handleSubscribeClick(3)}>
+        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(3)}>
           옷장 수거 내역
         </SubscribeMenu>
-        <SubscribeMenu onClick={() => handleSubscribeClick(4)}>
+        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(4)}>
           정산 내역
         </SubscribeMenu>
       </SubscribeCategory>
@@ -258,24 +258,8 @@ function page() {
                   <MembershipInfoMenu>
                     리픽 {item.subscribeType} 구독
                   </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    {item.createdDate.substr(0, 4)}
-                    {'. '}
-                    {item.createdDate.substr(5, 2)}
-                    {'. '}
-                    {item.createdDate.substr(8, 2)}
-                    {'. '}
-                    {item.createdDate.substr(11, 5)}
-                  </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    {item.expireDate.substr(0, 4)}
-                    {'. '}
-                    {item.expireDate.substr(5, 2)}
-                    {'. '}
-                    {item.expireDate.substr(8, 2)}
-                    {'. '}
-                    {item.expireDate.substr(11, 5)}
-                  </MembershipInfoMenu>
+                  <MembershipInfoMenu>{item.createdDate}</MembershipInfoMenu>
+                  <MembershipInfoMenu>{item.expireDate}</MembershipInfoMenu>
                   <MembershipInfoMenu>
                     {item.subscribeType == 'BASIC' ? '9,540 원' : '15,540 원'}
                   </MembershipInfoMenu>
@@ -297,10 +281,16 @@ function page() {
         </MembershipInfo>
       )}
 
-      <LineNM src={line.src} />
-      <MembershipWithDraw onClick={() => router.push('/mypage/subscribe')}>
-        구독제 변경하기
-      </MembershipWithDraw>
+      {isSubscribed ? (
+        <>
+          <LineNM src={line.src} />
+          <MembershipWithDraw onClick={() => router.push('/mypage/subscribe')}>
+            구독제 변경하기
+          </MembershipWithDraw>
+        </>
+      ) : (
+        <LineB src={line.src} />
+      )}
     </Container>
   );
 }
@@ -512,12 +502,13 @@ const SubscribeCategory = styled.div`
   margin-bottom: 24px;
   justify-content: space-evenly;
 `;
-const SubscribeMenu = styled.p`
+const SubscribeMenu = styled.p<{ bold: string }>`
   width: 135px;
   text-align: center;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: ${(props) => (props.bold == 'bold' ? '600' : '400')};
+  color: ${(props) => (props.bold == 'bold' ? '#111' : '#5F5F5F')};
 `;
 
 const NavSubscribed = styled.div`
@@ -539,6 +530,9 @@ const MenuWrapper = styled.div`
 `;
 const LineNM = styled.img`
   margin-top: 24px;
+`;
+const LineB = styled.img`
+  margin-bottom: 194px;
 `;
 const MembershipCategory = styled.div`
   width: 100%;
@@ -576,7 +570,9 @@ const NoMembership = styled.p`
   margin-bottom: 24px;
 `;
 const InfoWrapper = styled.div``;
-const MembershipAddButton = styled.div``;
+const MembershipAddButton = styled.div`
+  margin-bottom: 61px;
+`;
 
 const MembershipInfoWrapper = styled.div`
   display: flex;

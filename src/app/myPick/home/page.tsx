@@ -27,7 +27,7 @@ function page() {
   const [products, setProducts] = useState<any[]>([]);
 
   const [selectAll, setSelectAll] = useState('전체 선택');
-  
+
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -38,8 +38,8 @@ function page() {
       setProducts(clothes);
     };
     get();
-    const areAllSelected = products.every(product => product.isClicked);
-    setSelectAll(areAllSelected ? '전체 선택 해제' : '전체 선택');
+    const areAllSelected = products.every((product) => product.isClicked);
+    setSelectAll(areAllSelected ? '전체 선택' : '전체 선택 해제');
   }, []);
 
   const handleClick = (productId: number) => {
@@ -55,7 +55,7 @@ function page() {
         (product) => product.isClicked
       );
       setSelectAll(areAllProductsSelected ? '전체 선택 해제' : '전체 선택');
-  
+
       return updatedProducts;
     });
   };
@@ -94,12 +94,15 @@ function page() {
   };
 
   const goPurchase = async () => {
-    setSelectedPage('구매하기');
-    router.push('/myPick/shopping/purchase');
+    alert('현재 이용 불가능한 서비스입니다. 홈피팅 신청 먼저 해주세요.');
+    // setSelectedPage('구매하기');
+    // router.push('/myPick/shopping/purchase');
   };
 
   const handleClickAll = () => {
-    const areAllProductsSelected = products.every((product) => product.isClicked);
+    const areAllProductsSelected = products.every(
+      (product) => product.isClicked
+    );
 
     const updatedProducts = products.map((product) => {
       return { ...product, isClicked: !areAllProductsSelected };
@@ -127,9 +130,15 @@ function page() {
                 <Check onClick={() => handleClick(item.product.productId)}>
                   <Off src={item.isClicked ? check_on.src : check_off.src} />
                 </Check>
-                <div>
+                <div
+                  key={item.product.productId}
+                  onClick={() =>
+                    router.push(`/product/detail/${item.product.productId}`)
+                  }
+                >
+                  {/* 여기 왜 이동이 안 되는거지? */}
                   <ContentBodyInfo
-                    key={item.productId}
+                    key={item.product.productId}
                     src={item.product.mainImageFile.imagePath}
                     tagName={item.product.brand}
                     size={item.product.size}
@@ -214,6 +223,7 @@ const Products = styled.div`
   width: 1216px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-bottom: 70px;
+  gap: 18px;
 `;

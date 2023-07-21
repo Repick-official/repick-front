@@ -54,7 +54,7 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
         </TagWrapper>
         <ItemInfoWrapper>
           <ItemInfo>{size}</ItemInfo>
-          {'/'}
+          {' / '}
           <ItemInfo>{name}</ItemInfo>
         </ItemInfoWrapper>
         <Price>{price.toLocaleString('en-US')}원</Price>
@@ -76,24 +76,24 @@ const ImageWrapper = styled.div`
 `;
 
 const ImageDiv = styled.div`
-  transition: transform .2s; 
-  cursor:pointer;
-  &:hover{
+  transition: transform 0.2s;
+  cursor: pointer;
+  &:hover {
     transform: scale(1.1);
   }
-`
+`;
 
 const ImageBody = styled.div`
   margin-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const TagWrapper = styled.div<TagWrapperProps>`
   display: inline-flex;
-  height: 22px;
+  height: 26px;
   padding: 2px 24px;
   align-items: center;
   border-radius: 5px;
@@ -105,7 +105,7 @@ const TagName = styled.p<TagNameProps>`
   color: ${(props) => props.textcolor || '#5F5F5F'};
   text-align: center;
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   margin: 0;
 `;

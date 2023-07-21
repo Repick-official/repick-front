@@ -212,17 +212,21 @@ function page() {
                 </Check>
                 <CheckP>무통장입금</CheckP>
               </CheckWrapper>
-              <CheckWrapper>
-                <Check onClick={() => handleClick()}>
+              <CheckWrapper
+                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+              >
+                <Check>
                   <Off src={imageSrc} />
                 </Check>
-                <CheckP>무통장입금</CheckP>
+                <CheckP>페이북</CheckP>
               </CheckWrapper>
-              <CheckWrapper>
-                <Check onClick={() => handleClick()}>
+              <CheckWrapper
+                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+              >
+                <Check>
                   <Off src={imageSrc} />
                 </Check>
-                <CheckP>무통장입금</CheckP>
+                <CheckP>신용 카드</CheckP>
               </CheckWrapper>
             </CheckMethodWrapper>
           </OrderInfo>

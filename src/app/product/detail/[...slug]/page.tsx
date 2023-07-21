@@ -83,11 +83,10 @@ function page() {
       let split = location.split('/');
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await putMypick(accessToken, split[3]);
-      if(response.success){
-        alert("이미 마이픽에 있는 제품입니다.");
-        return ;
-      }
-      else{
+      if (response.success) {
+        alert('이미 마이픽 또는 홈피팅에 있는 제품입니다.');
+        return;
+      } else {
         alert('선택하신 제품을 마이픽에 담았습니다.');
         router.push('/product');
       }
@@ -101,7 +100,7 @@ function page() {
   const purchase = async () => {
     if (userInfo.uesrNickname) {
       let accessToken = await getAccessToken(cookies, setCookie);
-      alert('성준쓰 어떻게 할거야');
+      alert('현재 이용 불가능한 서비스입니다. 마이픽에 먼저 담아주세요~');
     } else {
       alert('로그인이 필요한 서비스입니다.');
       router.push('/login');
@@ -188,7 +187,10 @@ function page() {
       <Recommend>이런 제품은 어떠세요?</Recommend>
       <Products>
         {recommends.map((item) => (
-          <div key={item.productId}>
+          <div
+            key={item.productId}
+            onClick={() => router.push(`/product/detail/${item.productId}`)}
+          >
             <ContentBodyInfo
               key={item.productId}
               src={item.mainImageFile.imagePath}

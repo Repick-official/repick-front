@@ -49,38 +49,47 @@ function page() {
         <ContentBody>
           <ContentBodyP>{'<판매자>'}</ContentBodyP>
           <ContentBodyImageWrapper>
-            <ContentBodyImage
-              src={guide_first.src}
-              content={'중고의류 수거 신청을 합니다.'}
-            />
+            <Wrap>
+              <ContentBodyImage src={guide_first.src} />
+              <Text>{'중고의류 수거 신청을 합니다.'}</Text>
+            </Wrap>
+
             <ImageDivision />
-            <ContentBodyImage
-              src={guide_second.src}
-              content={'리픽은 의류를 수거하여 위탁 판매합니다.'}
-            />
+            <Wrap>
+              <ContentBodyImage src={guide_second.src} />
+              <Text>{'리픽은 의류를 수거하여 위탁 판매합니다.'}</Text>
+            </Wrap>
           </ContentBodyImageWrapper>
         </ContentBody>
         <ContentBody>
           <ContentBodyP>{'<구매자>'}</ContentBodyP>
           <ContentBodyImageWrapper>
-            <ContentBodyImage
-              src={guide_third.src}
-              content={'마음에 드는 옷을 합리적인 가격으로 선택합니다.'}
-            />
+            <Wrap>
+              <ContentBodyImage src={guide_third.src} />
+              <Text>
+                {'마음에 드는 옷을 합리적인 가격으로'}
+                <br />
+                {'선택합니다.'}
+              </Text>
+            </Wrap>
+
             <ImageDivision />
-            <ContentBodyImage
-              src={guide_fourth.src}
-              content={
-                '마이픽을 통해 선택 현황을 보고 구매를 확정하면 옷을 받아 볼 수 있습니다'
-              }
-            />
+            <Wrap>
+              <ContentBodyImage src={guide_fourth.src} />
+              <Text>
+                {'마이픽을 통해 선택 현황을 보고 '}
+                <br /> {'구매를 확정하면 옷을 받아 볼 수 있습니다'}
+              </Text>
+            </Wrap>
+
             <ImageDivision />
-            <ContentBodyImage
-              src={guide_fifth.src}
-              content={
-                '홈피팅 후 구매할 옷은 입금을 통해 구매하고 구매하지 않을 옷은 반품 신청을 합니다'
-              }
-            />
+            <Wrap>
+              <ContentBodyImage src={guide_fifth.src} />
+              <Text>
+                {'홈피팅 후 구매할 옷은 입금을 통해 구매하고'} <br />{' '}
+                {'구매하지 않을 옷은 반품 신청을 합니다'}
+              </Text>
+            </Wrap>
           </ContentBodyImageWrapper>
         </ContentBody>
         <ContentWaiting>
@@ -115,6 +124,18 @@ function page() {
 }
 
 export default page;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Text = styled.div`
+  margin-top: 24px;
+  width: 288px;
+`;
 const Content = styled.div`
   display: flex;
   flex-direction: column;
