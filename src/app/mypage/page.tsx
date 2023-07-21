@@ -20,6 +20,7 @@ import {
   getIsSubscribe,
   updateUserInfo,
   inquirySubscribe,
+  inquirySubscribeLatest,
 } from '@/api/requests';
 interface HookFormTypes {
   name: string;
@@ -44,8 +45,8 @@ function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const [approvedHistory, setApprovedHistory] = useState<any[]>([]);
-  const [expiredHistory, setExpiredHistory] = useState<any[]>([]);
+  const [history, setHistory] = useState<any[]>([]);
+
   useEffect(() => {
     const checkUserInfo = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -67,25 +68,18 @@ function page() {
     };
     const showSubscribeInfo = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
-      const approved = await inquirySubscribe(accessToken, 'approved');
-      const expired = await inquirySubscribe(accessToken, 'expired');
+      const latest = await inquirySubscribeLatest(accessToken);
 
-      const approvedPlan = approved.map((item: any) => {
+      console.log('la', latest);
+      const Plan = latest.map((item: any) => {
         return item;
       });
-      setApprovedHistory(approvedPlan);
-      const expiredPlan = expired.map((item: any) => {
-        return item;
-      });
-      setExpiredHistory(expiredPlan);
+      setHistory(Plan);
     };
     checkUserInfo();
     checkIsSubscribe();
     showSubscribeInfo();
   }, []);
-
-  console.log('approved', approvedHistory);
-  console.log('expired', expiredHistory);
 
   const onValid = async (data: HookFormTypes) => {
     let accessToken = await getAccessToken(cookies, setCookie);
@@ -244,51 +238,21 @@ function page() {
       {isSubscribed ? (
         <div>
           <div>
-            {approvedHistory.map((item) => (
+            {history.map((item) => (
               <MembershipInfo key={item.id}>
                 <MembershipInfoWrapper>
                   <MembershipInfoMenu>
                     <S>
-                      <Sub>구독 중</Sub>
-                      <Point src={approved.src} />
-                    </S>
-                  </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    리픽 {item.subscribeType} 구독
-                  </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    {item.createdDate.substr(0, 4)}
-                    {'. '}
-                    {item.createdDate.substr(5, 2)}
-                    {'. '}
-                    {item.createdDate.substr(8, 2)}
-                    {'. '}
-                    {item.createdDate.substr(11, 5)}
-                  </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    {item.expireDate.substr(0, 4)}
-                    {'. '}
-                    {item.expireDate.substr(5, 2)}
-                    {'. '}
-                    {item.expireDate.substr(8, 2)}
-                    {'. '}
-                    {item.expireDate.substr(11, 5)}
-                  </MembershipInfoMenu>
-                  <MembershipInfoMenu>
-                    {item.subscribeType == 'BASIC' ? '9,540 원' : '15,540 원'}
-                  </MembershipInfoMenu>
-                </MembershipInfoWrapper>
-              </MembershipInfo>
-            ))}
-          </div>
-          <div>
-            {expiredHistory.map((item) => (
-              <MembershipInfo key={item.id}>
-                <MembershipInfoWrapper>
-                  <MembershipInfoMenu>
-                    <S>
-                      <Ex>만료됨</Ex>
-                      <Point src={expired.src} />
+                      <Sub>
+                        {item.subscribeState == 'APPROVED'
+                          ? '구독 중'
+                          : '만료됨'}
+                      </Sub>
+                      {item.subscribeState == 'APPROVED' ? (
+                        <Point src={approved.src} />
+                      ) : (
+                        <Point src={expired.src} />
+                      )}
                     </S>
                   </MembershipInfoMenu>
                   <MembershipInfoMenu>
