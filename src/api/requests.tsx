@@ -192,9 +192,7 @@ export const putMypick = async (access: any, productId: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
-    throw error;
+    return {success : true};
   }
 };
 

@@ -83,8 +83,14 @@ function page() {
       let split = location.split('/');
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await putMypick(accessToken, split[3]);
-
-      alert('선택하신 제품을 마이픽에 담았습니다.');
+      if(response.success){
+        alert("이미 마이픽에 있는 제품입니다.");
+        return ;
+      }
+      else{
+        alert('선택하신 제품을 마이픽에 담았습니다.');
+        router.push('/product');
+      }
     } else {
       alert('로그인이 필요한 서비스입니다.');
       router.push('/login');
