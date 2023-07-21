@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
+import approved from '@/assets/images/mypage/approved.svg';
+import expired from '@/assets/images/mypage/expired.svg';
 import lineStraight from '@/assets/images/LineStraight.svg';
 import lineSelected from '@/assets/images/LineSelected.svg';
 import check_off from '@/assets/images/check/off.svg';
@@ -13,7 +15,13 @@ import { useRouter } from 'next/navigation';
 import { FieldErrors, useForm } from 'react-hook-form';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
-import { getUserInfo, getIsSubscribe, updateUserInfo } from '@/api/requests';
+import {
+  getUserInfo,
+  getIsSubscribe,
+  updateUserInfo,
+  inquirySubscribe,
+  inquirySubscribeLatest,
+} from '@/api/requests';
 interface HookFormTypes {
   name: string;
   id: string;
@@ -36,6 +44,9 @@ function page() {
   const [subscribeInfo, setSubscribeInfo] = useState(1);
   const [cookies, setCookie, removeCookie] = useCookies();
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const [history, setHistory] = useState<any[]>([]);
+
   useEffect(() => {
     const checkUserInfo = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -53,12 +64,23 @@ function page() {
     const checkIsSubscribe = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await getIsSubscribe(accessToken);
-      console.log(response);
       setIsSubscribed(response !== 'NONE');
+    };
+    const showSubscribeInfo = async () => {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const latest = await inquirySubscribeLatest(accessToken);
+
+      console.log('la', latest);
+      const Plan = latest.map((item: any) => {
+        return item;
+      });
+      setHistory(Plan);
     };
     checkUserInfo();
     checkIsSubscribe();
+    showSubscribeInfo();
   }, []);
+
   const onValid = async (data: HookFormTypes) => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await updateUserInfo(accessToken, data);
@@ -214,15 +236,54 @@ function page() {
       </MembershipCategory>
       <LineNM src={line.src} />
       {isSubscribed ? (
-        <MembershipInfo>
-          <MembershipInfoWrapper>
-            <MembershipInfoMenu>구독 중</MembershipInfoMenu>
-            <MembershipInfoMenu>리픽 Basic 구독</MembershipInfoMenu>
-            <MembershipInfoMenu>2023. 06. 28. 23:25</MembershipInfoMenu>
-            <MembershipInfoMenu>2023. 07. 28. 23:25</MembershipInfoMenu>
-            <MembershipInfoMenu>9,540 원</MembershipInfoMenu>
-          </MembershipInfoWrapper>
-        </MembershipInfo>
+        <div>
+          <div>
+            {history.map((item) => (
+              <MembershipInfo key={item.id}>
+                <MembershipInfoWrapper>
+                  <MembershipInfoMenu>
+                    <S>
+                      <Sub>
+                        {item.subscribeState == 'APPROVED'
+                          ? '구독 중'
+                          : '만료됨'}
+                      </Sub>
+                      {item.subscribeState == 'APPROVED' ? (
+                        <Point src={approved.src} />
+                      ) : (
+                        <Point src={expired.src} />
+                      )}
+                    </S>
+                  </MembershipInfoMenu>
+                  <MembershipInfoMenu>
+                    리픽 {item.subscribeType} 구독
+                  </MembershipInfoMenu>
+                  <MembershipInfoMenu>
+                    {item.createdDate.substr(0, 4)}
+                    {'. '}
+                    {item.createdDate.substr(5, 2)}
+                    {'. '}
+                    {item.createdDate.substr(8, 2)}
+                    {'. '}
+                    {item.createdDate.substr(11, 5)}
+                  </MembershipInfoMenu>
+                  <MembershipInfoMenu>
+                    {item.expireDate.substr(0, 4)}
+                    {'. '}
+                    {item.expireDate.substr(5, 2)}
+                    {'. '}
+                    {item.expireDate.substr(8, 2)}
+                    {'. '}
+                    {item.expireDate.substr(11, 5)}
+                  </MembershipInfoMenu>
+                  <MembershipInfoMenu>
+                    {item.subscribeType == 'BASIC' ? '9,540 원' : '15,540 원'}
+                  </MembershipInfoMenu>
+                </MembershipInfoWrapper>
+              </MembershipInfo>
+            ))}
+          </div>
+        </div>
       ) : (
         <MembershipInfo>
           <InfoWrapper>
@@ -238,13 +299,31 @@ function page() {
 
       <LineNM src={line.src} />
       <MembershipWithDraw onClick={() => router.push('/mypage/subscribe')}>
-        구독제 변경 및 해지하기
+        구독제 변경하기
       </MembershipWithDraw>
     </Container>
   );
 }
 
 export default page;
+
+const Sub = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+`;
+const Ex = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--2, #5f5f5f);
+`;
+
+const Point = styled.img`
+  margin-left: 4px;
+`;
+const S = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const Container = styled.div`
   .button {
@@ -504,7 +583,7 @@ const MembershipInfoWrapper = styled.div`
   justify-content: space-around;
   width: 100%;
 `;
-const MembershipInfoMenu = styled.p`
+const MembershipInfoMenu = styled.div`
   width: 140px;
   text-align: center;
 `;

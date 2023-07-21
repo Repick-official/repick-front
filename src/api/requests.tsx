@@ -601,3 +601,49 @@ export const searchItem = async (
     throw error;
   }
 };
+export const inquirySubscribe = async (access: any, state: string) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + `/subscribe/history/${state}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+export const inquirySubscribeLatest = async (access: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + '/subscribe/history/all',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
