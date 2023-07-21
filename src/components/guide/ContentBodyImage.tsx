@@ -2,20 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-function ContentBodyImage({
-  src,
-  content,
-  w,
-  h,
-}: {
-  src: string;
-  content: string;
-  w: number;
-  h: number;
-}) {
+function ContentBodyImage({ src, content }: { src: string; content: string }) {
   return (
     <ImageWrapper>
-      <Image src={src} alt="Picture of me" width={w} height={h} />
+      <Image src={src} alt="Picture of me" width={308} height={308} />
       <ImageBody>{content}</ImageBody>
     </ImageWrapper>
   );
