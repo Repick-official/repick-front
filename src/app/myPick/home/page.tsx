@@ -27,7 +27,7 @@ function page() {
   const [products, setProducts] = useState<any[]>([]);
 
   const [selectAll, setSelectAll] = useState('전체 선택');
-
+  
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -38,17 +38,26 @@ function page() {
       setProducts(clothes);
     };
     get();
+    const areAllSelected = products.every(product => product.isClicked);
+    setSelectAll(areAllSelected ? '전체 선택 해제' : '전체 선택');
   }, []);
 
   const handleClick = (productId: number) => {
     //상품 클릭
-    setProducts((prevProducts) =>
-      prevProducts.map((item) =>
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((item) =>
         item.product.productId === productId
           ? { ...item, isClicked: !item.isClicked }
           : item
-      )
-    );
+      );
+
+      const areAllProductsSelected = updatedProducts.every(
+        (product) => product.isClicked
+      );
+      setSelectAll(areAllProductsSelected ? '전체 선택 해제' : '전체 선택');
+  
+      return updatedProducts;
+    });
   };
 
   const handleApply = async () => {
@@ -90,17 +99,15 @@ function page() {
   };
 
   const handleClickAll = () => {
+    const areAllProductsSelected = products.every((product) => product.isClicked);
+
     const updatedProducts = products.map((product) => {
-      return { ...product, isClicked: !product.isClicked };
+      return { ...product, isClicked: !areAllProductsSelected };
     });
+
     setProducts(updatedProducts);
 
-    if (selectAll == '전체 선택') {
-      setSelectAll('전체 선택 해체');
-    } else {
-      setSelectAll('전체 선택');
-    }
-    console.log(products);
+    setSelectAll(!areAllProductsSelected ? '전체 선택 해제' : '전체 선택');
   };
 
   return (

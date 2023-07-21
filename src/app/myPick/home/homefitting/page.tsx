@@ -85,7 +85,7 @@ function page() {
     const updatedProducts = products.map((product: Product): Product => {
       if (product.homeFittingId === id) {
         const newProduct = { ...product, isChecked: !product.isChecked };
-
+  
         if (newProduct.isChecked) {
           setSelectedCount((prev) => prev + 1);
           setSelectedTotalPrice((prev) => prev + newProduct.product.price);
@@ -101,15 +101,27 @@ function page() {
           );
           setUnselectedProducts((prev) => [...prev, newProduct]);
         }
-
+  
         return newProduct;
       }
-
+  
       return product;
     });
-
+  
     setProducts(updatedProducts);
+  
+    // Check if all items are selected or not
+    const allChecked = updatedProducts.every((product) => product.isChecked);
+  
+    if (allChecked) {
+      setImageSrc(check_on.src);
+      setIsClicked(true);
+    } else {
+      setImageSrc(check_off.src);
+      setIsClicked(false);
+    }
   };
+  
   const handlePurchase = () => {
     console.log('Selected products:', selectedProducts);
     console.log('Unselected products:', unselectedProducts);
@@ -474,7 +486,7 @@ const SelectAll = styled.div`
   margin-left: 51px;
 `;
 const Check = styled.div`
-  margin-right: 14px;
+  margin-right: 12px;
   cursor: pointer;
 `;
 
