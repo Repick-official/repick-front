@@ -78,7 +78,7 @@ function page() {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
 
   const putMypickCart = async () => {
-    if (userInfo.uesrNickname) {
+    if (cookies.access) {
       let location = window.location.pathname;
       let split = location.split('/');
       let accessToken = await getAccessToken(cookies, setCookie);

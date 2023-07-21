@@ -61,6 +61,7 @@ function Navigation() {
   const logoutHandler = async () => {
     localStorage.removeItem('recoil-persist');
     alert('로그아웃 되었습니다.');
+    document.cookie = "access=; expires=0; path=/;";
     setIsUser('마이페이지');
     setIslogin('로그인');
     setBold('notBold');
