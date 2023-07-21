@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import X from '@/assets/images/x.svg';
 import search_dark from '@/assets/images/search_dark.svg';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { searchItem } from '@/api/requests';
+import {useRouter,redirect} from 'next/navigation';
 
 interface Product {
   brand: string;
@@ -21,6 +22,8 @@ interface Product {
 }
 
 function SearchModal({ clickModal }: any) {
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>();
   const [inputText, setInputText] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [cursorId, setCursorId] = useState<number>(0);
@@ -30,21 +33,30 @@ function SearchModal({ clickModal }: any) {
   const handleChange = async (e: { target: { value: any } }) => {
     setInputText(e.target.value);
   };
-
-  const search = async () => {
-    if (inputText !== '') {
-      setKeyword(inputText);
-      const response = await searchItem(cursorId, pageSize, keyword);
-      setProducts((prevProducts) => [...prevProducts, ...response]);
-      if (response.length > 0) {
-        const lastProductId = response[response.length - 1].productId;
-        setCursorId(lastProductId);
-      }
-      console.log('r', response);
+  const handleOnKeyPress = (e: { key: string; }) => {
+    if (e.key === 'Enter') {
+      search();
     }
-    console.log('p', products);
+
+  };
+  const search = async () => {
+    if (inputText.trim() !== '') {
+      const response = await searchItem(cursorId, pageSize, inputText);
+      if(response.length>0){
+        const lastProductId = response[response.length - 1].productId;
+        sessionStorage.setItem('items', JSON.stringify(response));
+        clickModal();
+        window.location.href = '/product';
+      }
+      else{
+        alert("검색결과가 없습니다");
+      }
+    }
   };
 
+  useEffect(() => {
+    inputRef?.current?.focus();
+  }, []);
   return (
     <>
       <ModalBox onClick={clickModal}>
@@ -52,7 +64,7 @@ function SearchModal({ clickModal }: any) {
           <Remove onClick={clickModal} src={X.src}></Remove>
           <Content>
             <SearchWrapper>
-              <SearchBox value={inputText} onChange={handleChange} />
+              <SearchBox ref={inputRef} value={inputText} onChange={handleChange} onKeyPress={handleOnKeyPress}/>
               <ButtonWrapper src={search_dark.src} onClick={() => search()} />
             </SearchWrapper>
             <ContentWrapper>
@@ -83,6 +95,8 @@ const ModalBox = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+
+  cursor : default;
 `;
 
 const SearchModalContent = styled.div`

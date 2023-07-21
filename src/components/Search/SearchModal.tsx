@@ -11,9 +11,9 @@ function SearchModal() {
   return (
     <Contatiner>
       <SearchWrapper>
-        <SearchInputWrapper>
-          <SearchBox placeholder="어떤 의류를 찾고 계신가요?"></SearchBox>
-          <ButtonWrapper src={search.src} onClick={clickModal} />
+        <SearchInputWrapper onClick={clickModal}>
+          <SearchBox placeholder="어떤 의류를 찾고 계신가요?" onClick={clickModal}></SearchBox>
+          <ButtonWrapper src={search.src}  onClick={clickModal}/>
           {showModal && <Modal clickModal={clickModal} />}
         </SearchInputWrapper>
       </SearchWrapper>
@@ -37,6 +37,7 @@ const SearchInputWrapper = styled.div`
   ::placeholder {
     color: var(--3, #b4b4b4);
   }
+  cursor : text;
 `;
 const SearchBox = styled.input`
   width: 215px;

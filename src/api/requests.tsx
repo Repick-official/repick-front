@@ -567,15 +567,14 @@ export const searchItem = async (
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
-    pageSize: pageSize !== 0 ? pageSize.toString() : '',
+    pageSize: pageSize !== 0 ? pageSize.toString() : '16',
     keyword: keyword,
   };
 
   const queryString = new URLSearchParams(params).toString();
-
   try {
     const response = await fetch(
-      `${process.env.API_URL}/api/products/keyword?${queryString}`,
+      `${process.env.API_URL}/products/keyword?${queryString}`,
       {
         method: 'GET',
         headers: {
@@ -583,10 +582,9 @@ export const searchItem = async (
         },
       }
     );
-
     if (response.ok) {
       const data = await response.json();
-
+      console.log("TEST",data);
       const clothes = data.map((item: any) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';

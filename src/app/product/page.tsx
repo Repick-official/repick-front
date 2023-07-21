@@ -31,6 +31,7 @@ function page() {
   const [categoryId, setCategoryId] = useState<number>(0);
   const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
+  const [isSearchedItem, setIsSearchedItem] = useState<boolean>(false);
   const fetchItem = async () => {
     let response: Product[];
     switch(order) {
@@ -51,6 +52,7 @@ function page() {
       default:
         response = await getItemLatest(cursorId, categoryId);
     }
+    
     setProducts(prevProducts => [...prevProducts, ...response]);
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;
@@ -74,8 +76,20 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    setProducts([]);
-    fetchItem();
+    const item = sessionStorage.getItem('items');
+    const searchedItem = item ? JSON.parse(item) : null;
+    
+    console.log(searchedItem);
+    if(searchedItem){
+      setProducts(searchedItem);
+      setCursorId(searchedItem[searchedItem.length - 1].productId);
+      sessionStorage.clear();
+      setIsSearchedItem(true);
+    }
+    else{
+      setProducts([]);
+      fetchItem();
+    }
   }, [categoryId, order]);
 
   const loadMoreItems = () => {
@@ -83,8 +97,8 @@ function page() {
   };
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
-    setCursorId(0);
-    setProducts([]);
+    // setCursorId(0);
+    // setProducts([]);
   };
   return (
     <>
@@ -275,7 +289,6 @@ const OptionList = styled.div`
   width : 100%;
   display:flex;
   gap : 103px;
-  margin
 `
 const OptionP = styled.p`
   color: var(--1, #111);
