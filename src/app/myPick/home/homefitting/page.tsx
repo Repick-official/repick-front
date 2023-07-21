@@ -125,6 +125,7 @@ function page() {
   };
 
   const handlePurchase = () => {
+    console.log(selectedProducts.length);
     selectedProducts.length === 0 ? alert('제품을 선택하세요') : goPurchase();
   };
 

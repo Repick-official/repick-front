@@ -52,8 +52,8 @@ function page() {
         mainAddress: '',
         zipCode: '',
       },
-      bagQuantity: 1,
-      productQuantity: 2,
+      bagQuantity: 0,
+      productQuantity: 0,
       returnDate: '',
     },
   });
@@ -85,7 +85,7 @@ function page() {
           </Info>
           <Content
             {...register('name', {
-              required: '이름을 입력해주세요.',
+              required: '필수',
             })}
           />
           {errors.name && <p>{errors.name.message}</p>}
@@ -97,7 +97,7 @@ function page() {
           </Info>
           <Content
             {...register('phoneNumber', {
-              required: '핸드폰 번호를 입력해주세요.',
+              required: '필수',
             })}
           />
           {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
@@ -112,7 +112,7 @@ function page() {
             <Content
               className="bank"
               {...register('bank.bankName', {
-                required: '은행을 입력해주세요.',
+                required: '필수',
               })}
             />
             {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
@@ -120,7 +120,7 @@ function page() {
             <Content
               className="account"
               {...register('bank.accountNumber', {
-                required: '계좌 번호를 입력해주세요.',
+                required: '필수',
               })}
             />
             {errors.bank?.accountNumber && (
@@ -142,7 +142,7 @@ function page() {
                   className="cloth"
                   placeholder="예상 수량"
                   {...register('bagQuantity', {
-                    required: '수량을 입력해주세요.',
+                    required: '필수',
                   })}
                 />
                 {errors.bagQuantity && <p>{errors.bagQuantity.message}</p>}
@@ -155,7 +155,7 @@ function page() {
                   className="cloth"
                   placeholder="예상 개수"
                   {...register('productQuantity', {
-                    required: '수량을 입력해주세요.',
+                    required: '필수',
                   })}
                 />
                 {errors.productQuantity && (
@@ -181,7 +181,7 @@ function page() {
                 <Content
                   className="address"
                   {...register('address.zipCode', {
-                    required: '우편번호를 입력해주세요.',
+                    required: '필수',
                   })}
                 />
                 {errors.address?.zipCode && (
@@ -193,7 +193,7 @@ function page() {
                 className="detail-address"
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.mainAddress', {
-                  required: '상세 주소를 입력해주세요.',
+                  required: '필수',
                 })}
               />
               {errors.address?.mainAddress && (
@@ -203,7 +203,7 @@ function page() {
                 className="detail-address"
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.detailAddress', {
-                  required: '상세 주소를 입력해주세요.',
+                  required: '필수',
                 })}
               />
               {errors.address?.detailAddress && (
@@ -218,7 +218,7 @@ function page() {
               <Content
                 placeholder="2023-06-23"
                 {...register('returnDate', {
-                  required: '수량을 입력해주세요.',
+                  required: '필수',
                 })}
               />
               {errors.returnDate && <p>{errors.returnDate.message}</p>}

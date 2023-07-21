@@ -125,7 +125,7 @@ function page() {
                 <Content
                   placeholder="김회원"
                   {...register('personName', {
-                    required: '이름을 입력해주세요.',
+                    required: '필수',
                   })}
                 />
                 {errors.personName && <p>{errors.personName.message}</p>}
@@ -134,7 +134,7 @@ function page() {
                 <Info>전화번호</Info>
                 <Content
                   {...register('phoneNumber', {
-                    required: '핸드폰 번호를 입력해주세요.',
+                    required: '필수',
                   })}
                 />
                 {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
@@ -165,7 +165,7 @@ function page() {
                     <Content
                       className="address"
                       {...register('address.zipCode', {
-                        required: '우편번호를 입력해주세요.',
+                        required: '필수',
                       })}
                     />
                     {errors.address?.zipCode && (
@@ -177,7 +177,7 @@ function page() {
                     className="detail-address"
                     placeholder="상세 주소를 입력해주세요"
                     {...register('address.mainAddress', {
-                      required: '상세 주소를 입력해주세요.',
+                      required: '필수',
                     })}
                   />
                   {errors.address?.mainAddress && (
@@ -187,7 +187,7 @@ function page() {
                     className="detail-address"
                     placeholder="상세 주소를 입력해주세요"
                     {...register('address.mainAddress', {
-                      required: '상세 주소를 입력해주세요.',
+                      required: '필수',
                     })}
                   />
                   {errors.address?.detailAddress && (
