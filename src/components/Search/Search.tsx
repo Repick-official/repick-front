@@ -23,7 +23,7 @@ interface Product {
 
 function SearchModal({ clickModal }: any) {
   const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef();
   const [inputText, setInputText] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [cursorId, setCursorId] = useState<number>(0);
