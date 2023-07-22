@@ -11,6 +11,7 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import DeliveryItem from '@/components/homefitting/DeliveryItem';
 import getAccessToken from '@/util/getAccessToken';
+import { userInfoState } from '@/atom/states';
 
 import { inquiryHomeFitting } from '@/api/requests';
 import { useCookies } from 'react-cookie';
@@ -44,8 +45,13 @@ function page() {
   const [total, setTotal] = useRecoilState<number>(totalPrice);
   const deliveryFee = 0; //
 
-  const userName = '도현';
-  console.log(selectedProducts);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    setUser(userInfo.uesrNickname);
+  }, []);
 
   const handleClick = () => {
     const updatedProducts = products.map((product: Product): Product => {
@@ -147,7 +153,7 @@ function page() {
       <DeliveryInfoWrapper>
         <DeliveryNowP1>{'홈피팅 배송 현황'}</DeliveryNowP1>
         <DeliveryNowP2>
-          {userName}님의 홈피팅을 위해 현재 리픽이 안전하게 배송 중이에요!
+          {user}님의 홈피팅을 위해 현재 리픽이 안전하게 배송 중이에요!
         </DeliveryNowP2>
         <DeliveryInfo>
           <DeliveryInfoContent>
@@ -207,7 +213,7 @@ function page() {
           <DeliveredDate>6/20(화) 도착</DeliveredDate>
         </DeliveredInfo>
         <DeliveredOrderDate>
-          김회원님이 6월 19일날 주문하신 의류입니다.
+          {user}님이 6월 19일날 주문하신 의류입니다.
         </DeliveredOrderDate>
         <DeliveredItemWrapper>
           <DeliveredItemCategory>
