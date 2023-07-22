@@ -144,7 +144,6 @@ function page() {
   const goPurchase = () => {
     setFinalProducts(selectedProducts);
     setTotal(selectedTotalPrice + deliveryFee);
-    console.log(total);
     router.push('/myPick/shopping/purchase');
   };
 

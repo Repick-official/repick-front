@@ -77,10 +77,9 @@ function page() {
 
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [total, setTotal] = useRecoilState<number>(totalPrice);
-  console.log(finalProducts);
-  console.log(total);
 
   useEffect(() => {
+    console.log(finalProducts.length);
     const clothes = finalProducts.map((item: any) => {
       return item;
     });
@@ -108,14 +107,12 @@ function page() {
       ...data,
       productIds: productIds
     };
-  
-    // 출력 원하는 데이터
-    console.log(updatedData);
     
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await orderProducts(accessToken,updatedData);
     if (response.success) {
-      router.push('/myPick/home/shopping/purchase/success');
+      router.push('/myPick/shopping/purchase/success');
+      setFinalProducts([]);
     } else {
     }
   };
@@ -311,10 +308,9 @@ function page() {
                 <div className="star">{'*'}</div>
               </AcceptP>
             </AcceptWrapper>
-
-            <div className="button" type="submit">
-              <Button content="결제하기" num="3" />
-            </div>
+            <InfoEditButton>
+              <InputButton type="submit" value="결제하기"></InputButton>
+            </InfoEditButton>
           </FinalInfo>
         </OrderInfoWrapper>
       </form>
@@ -662,4 +658,34 @@ const AcceptP = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+`;
+
+const InfoEditButton = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 52px;
+  margin-bottom: 30px;
+`;
+
+const InputButton = styled.input`
+  display: flex;
+  width: 310px;
+  height: 60px;
+  padding: 24px 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 15px;
+  background: var(--1, #111);
+  color: var(--4, #e8e8e8);
+  text-align: center;
+  cursor : pointer;
+
+  /* Body1 16pt sb */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
 `;
