@@ -79,8 +79,8 @@ function page() {
   const [total, setTotal] = useRecoilState<number>(totalPrice);
 
   useEffect(() => {
-    if(finalProducts.length === 0 ){
-      alert("구매할 제품이 없습니다.");
+    if (finalProducts.length === 0) {
+      alert('구매할 제품이 없습니다.');
       router.push('/myPick/home/homefitting');
     }
     const clothes = finalProducts.map((item: any) => {
@@ -104,22 +104,21 @@ function page() {
   const registerHandler = async (data: HookFormTypes) => {
     // finalProducts에서 각 아이템의 productId를 추출
     const productIds = finalProducts.map((item) => item.product.productId);
-    
+
     // 새로운 변수 생성
     let updatedData: HookFormTypes = {
       ...data,
-      productIds: productIds
+      productIds: productIds,
     };
-    
+
     let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await orderProducts(accessToken,updatedData);
+    const response = await orderProducts(accessToken, updatedData);
     if (response.success) {
       router.push('/myPick/shopping/purchase/success');
       setFinalProducts([]);
     } else {
     }
   };
-  
 
   return (
     <Container>
@@ -156,19 +155,14 @@ function page() {
                 <Info>이름</Info>
                 <Content
                   placeholder="김회원"
-                  {...register('personName', {
-                    
-                  })}
+                  {...register('personName', {})}
+                  required
                 />
                 {errors.personName && <p>{errors.personName.message}</p>}
               </Wrapper>
               <Wrapper>
                 <Info>전화번호</Info>
-                <Content
-                  {...register('phoneNumber', {
-                    
-                  })}
-                />
+                <Content {...register('phoneNumber', {})} required />
                 {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
               </Wrapper>
               <Wrapper>
@@ -185,20 +179,21 @@ function page() {
                     {'배송 주소'}
                     <div className="star">{'*'}</div>
                   </Info>
-                    <CheckWrapper>
-                      <Check onClick={handleUseRegisteredAddrClick}>
-                        <Off src={useRegisteredAddr ? check_on.src : check_off.src} />
-                      </Check>
-                      <CheckP>등록 정보로 배송 받기</CheckP>
-                    </CheckWrapper>
+                  <CheckWrapper>
+                    <Check onClick={handleUseRegisteredAddrClick}>
+                      <Off
+                        src={useRegisteredAddr ? check_on.src : check_off.src}
+                      />
+                    </Check>
+                    <CheckP>등록 정보로 배송 받기</CheckP>
+                  </CheckWrapper>
                 </Wrapper>
                 <Address>
                   <ConfirmWrapper>
                     <Content
                       className="address"
-                      {...register('address.zipCode', {
-                        
-                      })}
+                      {...register('address.zipCode', {})}
+                      required
                     />
                     {errors.address?.zipCode && (
                       <p>{errors.address?.zipCode.message}</p>
@@ -208,9 +203,8 @@ function page() {
                   <Content
                     className="detail-address"
                     placeholder="상세 주소를 입력해주세요"
-                    {...register('address.mainAddress', {
-                      
-                    })}
+                    {...register('address.mainAddress', {})}
+                    required
                   />
                   {errors.address?.mainAddress && (
                     <p>{errors.address?.mainAddress.message}</p>
@@ -230,7 +224,9 @@ function page() {
             <CheckMethodWrapper>
               <CheckWrapper onClick={() => handlePaymentMethodClick(1)}>
                 <Check>
-                  <Off src={paymentMethod === 1 ? check_on.src : check_off.src} />
+                  <Off
+                    src={paymentMethod === 1 ? check_on.src : check_off.src}
+                  />
                 </Check>
                 <CheckP>무통장입금</CheckP>
               </CheckWrapper>
@@ -241,7 +237,9 @@ function page() {
                 }}
               >
                 <Check>
-                  <Off src={paymentMethod === 2 ? check_on.src : check_off.src} />
+                  <Off
+                    src={paymentMethod === 2 ? check_on.src : check_off.src}
+                  />
                 </Check>
                 <CheckP>페이북</CheckP>
               </CheckWrapper>
@@ -252,7 +250,9 @@ function page() {
                 }}
               >
                 <Check>
-                  <Off src={paymentMethod === 3 ? check_on.src : check_off.src} />
+                  <Off
+                    src={paymentMethod === 3 ? check_on.src : check_off.src}
+                  />
                 </Check>
                 <CheckP>신용 카드</CheckP>
               </CheckWrapper>
@@ -350,7 +350,7 @@ const OrderItemWrapper = styled.div`
   display: flex;
   margin-top: 60px;
   gap: 18px;
-  overflow-x : scroll;
+  overflow-y: hidden;
 `;
 
 const OrderInfoWrapper = styled.div`
@@ -683,7 +683,7 @@ const InputButton = styled.input`
   background: var(--1, #111);
   color: var(--4, #e8e8e8);
   text-align: center;
-  cursor : pointer;
+  cursor: pointer;
 
   /* Body1 16pt sb */
   font-family: Pretendard;
