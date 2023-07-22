@@ -79,7 +79,10 @@ function page() {
   const [total, setTotal] = useRecoilState<number>(totalPrice);
 
   useEffect(() => {
-    console.log(finalProducts.length);
+    if(finalProducts.length === 0 ){
+      alert("구매할 제품이 없습니다.");
+      router.push('/myPick/home/homefitting');
+    }
     const clothes = finalProducts.map((item: any) => {
       return item;
     });
