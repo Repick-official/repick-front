@@ -87,6 +87,7 @@ function page() {
             {...register('name', {
               required: '필수',
             })}
+            required
           />
           {errors.name && <p>{errors.name.message}</p>}
         </Wrapper>
@@ -99,6 +100,7 @@ function page() {
             {...register('phoneNumber', {
               required: '필수',
             })}
+            required
           />
           {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
         </Wrapper>
@@ -114,6 +116,7 @@ function page() {
               {...register('bank.bankName', {
                 required: '필수',
               })}
+              required
             />
             {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
             <AccountDetail>계좌번호</AccountDetail>
@@ -122,6 +125,7 @@ function page() {
               {...register('bank.accountNumber', {
                 required: '필수',
               })}
+              required
             />
             {errors.bank?.accountNumber && (
               <p>{errors.bank?.accountNumber.message}</p>
@@ -144,6 +148,7 @@ function page() {
                   {...register('bagQuantity', {
                     required: '필수',
                   })}
+                  required
                 />
                 {errors.bagQuantity && <p>{errors.bagQuantity.message}</p>}
                 <Text>벌</Text>
@@ -157,6 +162,7 @@ function page() {
                   {...register('productQuantity', {
                     required: '필수',
                   })}
+                  required
                 />
                 {errors.productQuantity && (
                   <p>{errors.productQuantity.message}</p>
@@ -183,6 +189,7 @@ function page() {
                   {...register('address.zipCode', {
                     required: '필수',
                   })}
+                  required
                 />
                 {errors.address?.zipCode && (
                   <p>{errors.address?.zipCode.message}</p>
@@ -195,6 +202,7 @@ function page() {
                 {...register('address.mainAddress', {
                   required: '필수',
                 })}
+                required
               />
               {errors.address?.mainAddress && (
                 <p>{errors.address?.mainAddress.message}</p>
@@ -205,6 +213,7 @@ function page() {
                 {...register('address.detailAddress', {
                   required: '필수',
                 })}
+                required
               />
               {errors.address?.detailAddress && (
                 <p>{errors.address?.detailAddress.message}</p>
@@ -220,6 +229,7 @@ function page() {
                 {...register('returnDate', {
                   required: '필수',
                 })}
+                required
               />
               {errors.returnDate && <p>{errors.returnDate.message}</p>}
             </Wrapper>
