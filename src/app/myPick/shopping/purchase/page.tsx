@@ -15,6 +15,7 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { orderProducts } from '@/api/requests';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
+import Button from '@/components/common/Button';
 
 interface HookFormTypes {
   access: any;
@@ -284,8 +285,8 @@ function page() {
               </AcceptP>
             </AcceptWrapper>
 
-            <div className="button">
-              <PurchaseP type="submit" value="결제하기"></PurchaseP>
+            <div className="button" type="submit">
+              <Button content="결제하기" num="3" />
             </div>
           </FinalInfo>
         </OrderInfoWrapper>
