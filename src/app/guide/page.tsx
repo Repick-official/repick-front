@@ -40,7 +40,7 @@ function page() {
         <Image
           src={logo_guide}
           alt="Picture of me"
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100vw', height: 'auto' }}
           placeholder="blur" // Optional blur-up while loading
         />
       </BannerWrapper>
