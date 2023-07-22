@@ -27,7 +27,7 @@ interface Product {
     mainImageFile: {
       imagePath: string;
     };
-    productId : number,
+    productId: number;
   };
   isChecked: boolean;
 }
@@ -57,7 +57,7 @@ function page() {
     const updatedProducts = products.map((product: Product): Product => {
       return { ...product, isChecked: !isClicked };
     });
-  
+
     if (!isClicked) {
       setSelectedCount(updatedProducts.length);
       setSelectedTotalPrice(
@@ -71,12 +71,10 @@ function page() {
       setSelectedProducts([]);
       setImageSrc(check_off.src);
     }
-  
+
     setIsClicked(!isClicked);
     setProducts(updatedProducts);
   };
-  
-  
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -141,7 +139,7 @@ function page() {
     selectedProducts.length === 0 ? alert('제품을 선택하세요') : goPurchase();
   };
 
-  const goPurchase = () => {
+  const goPurchase = async () => {
     setFinalProducts(selectedProducts);
     setTotal(selectedTotalPrice + deliveryFee);
     router.push('/myPick/shopping/purchase');

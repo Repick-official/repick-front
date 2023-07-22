@@ -235,7 +235,11 @@ function page() {
 
 export default page;
 
-const S = styled.div``;
+const S = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
 const Product = styled.div`
   display: flex;
@@ -311,7 +315,7 @@ const OrderMenu = styled.div<{ isselected: string }>`
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: ${(props) => (props.isselected === 'true' ? '700' : '400')};
   line-height: 140%; /* 22.4px */
 `;
 
@@ -328,6 +332,7 @@ const OptionWrapper = styled.div`
 
 const OptionList = styled.div`
   width: 794px;
+  height: 28px;
   display: flex;
   gap: 103px;
   align-items: center;

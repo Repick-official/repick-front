@@ -123,6 +123,7 @@ function page() {
             </Info>
             <Content
               {...register('name', { required: '이름을 입력해주세요.' })}
+              required
             />
             {errors.name && <p>{errors.name.message}</p>}
           </Wrapper>
@@ -135,6 +136,7 @@ function page() {
               {...register('phoneNumber', {
                 required: '핸드폰 번호를 입력해주세요.',
               })}
+              required
             />
             {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
           </Wrapper>
@@ -147,6 +149,7 @@ function page() {
                   {...register('bank.bankName', {
                     required: '은행이름을 입력해주세요.',
                   })}
+                  required
                 />
                 {errors.bank?.bankName && errors.bank?.bankName && (
                   <p>{'은행 정보를 입력해주세요'}</p>
@@ -158,6 +161,7 @@ function page() {
                   {...register('bank.accountNumber', {
                     required: '은행 번호를 입력해주세요.',
                   })}
+                  required
                 />
                 {errors.bank?.accountNumber && errors.bank?.accountNumber && (
                   <p>{'은행 정보를 입력해주세요'}</p>
@@ -171,6 +175,7 @@ function page() {
               {...register('address.mainAddress', {
                 required: '주소를 입력해주세요.',
               })}
+              required
             />
             {errors.address?.mainAddress && (
               <p>{errors.address?.mainAddress.message}</p>
@@ -181,6 +186,7 @@ function page() {
             <Content
               placeholder="숫자, 영문 대소문자만 사용 가능합니다"
               {...register('nickname', { required: '아이디를 입력해주세요.' })}
+              required
             />
             {errors.nickname && <p>{errors.nickname.message}</p>}
           </Wrapper>
@@ -191,6 +197,7 @@ function page() {
             </Info>
             <Content
               {...register('email', { required: '이메일을 입력해주세요.' })}
+              required
             />
             {errors.email && <p>{errors.email.message}</p>}
           </Wrapper>
@@ -476,6 +483,7 @@ const Check = styled.div`
 `;
 const CheckWrapper = styled.div`
   display: flex;
+  align-items: center;
   margin-bottom: 20px;
 `;
 

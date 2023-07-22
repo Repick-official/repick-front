@@ -95,7 +95,7 @@ function page() {
   const handleHomeFitting = async (Id: any) => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await applyHomeFitting(accessToken, Id);
-
+    setSelectedPage('홈피팅');
     router.push('/myPick/home/homefitting/success');
   };
 
