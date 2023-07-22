@@ -24,10 +24,9 @@ interface HookFormTypes {
     mainAddress: string;
     zipCode: string;
   };
-  memberId: number;
   personName: string;
   phoneNumber: string;
-  productIds: [];
+  productIds: number[];
   requestDetail: string;
 }
 
@@ -43,7 +42,6 @@ function page() {
         mainAddress: '',
         zipCode: '',
       },
-      memberId: 0,
       personName: '',
       phoneNumber: '',
       productIds: [],
@@ -56,6 +54,26 @@ function page() {
   const [isClicked, setIsClicked] = useState(false);
   const [h, setH] = useState<any[]>([]);
   const [p, setP] = useState(0);
+  // 체크박스 상태
+  const [isDeliveryDiff, setIsDeliveryDiff] = useState(false);
+  const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
+
+  // 결제 수단 상태 (1: 무통장입금, 2: 페이북, 3: 신용 카드)
+  const [paymentMethod, setPaymentMethod] = useState(0);
+
+  // 체크박스 클릭 핸들러
+  const handleDeliveryDiffClick = () => {
+    setIsDeliveryDiff(!isDeliveryDiff);
+  };
+
+  const handleUseRegisteredAddrClick = () => {
+    setUseRegisteredAddr(!useRegisteredAddr);
+  };
+
+  // 결제 수단 핸들러
+  const handlePaymentMethodClick = (method: number) => {
+    setPaymentMethod(method);
+  };
 
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [total, setTotal] = useRecoilState<number>(totalPrice);
@@ -82,13 +100,26 @@ function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const registerHandler = async (data: HookFormTypes) => {
-    // let accessToken = await getAccessToken(cookies, setCookie);
-    // const response = await orderProducts(accessToken);
-    // if (response.success) {
-    //   router.push('/wardrobe/register/success');
-    // } else {
-    // }
+    // finalProducts에서 각 아이템의 productId를 추출
+    const productIds = finalProducts.map((item) => item.product.productId);
+    
+    // 새로운 변수 생성
+    let updatedData: HookFormTypes = {
+      ...data,
+      productIds: productIds
+    };
+  
+    // 출력 원하는 데이터
+    console.log(updatedData);
+    
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await orderProducts(accessToken,updatedData);
+    if (response.success) {
+      router.push('/myPick/home/shopping/purchase/success');
+    } else {
+    }
   };
+  
 
   return (
     <Container>
@@ -115,8 +146,8 @@ function page() {
             <User>배송자 정보</User>
             <SenderWrapper>
               <CheckWrapper>
-                <Check onClick={() => handleClick()}>
-                  <Off src={imageSrc} />
+                <Check onClick={handleDeliveryDiffClick}>
+                  <Off src={isDeliveryDiff ? check_on.src : check_off.src} />
                 </Check>
                 <CheckP>배송자 정보가 회원 정보와 달라요</CheckP>
               </CheckWrapper>
@@ -126,7 +157,7 @@ function page() {
                 <Content
                   placeholder="김회원"
                   {...register('personName', {
-                    required: '필수',
+                    
                   })}
                 />
                 {errors.personName && <p>{errors.personName.message}</p>}
@@ -135,7 +166,7 @@ function page() {
                 <Info>전화번호</Info>
                 <Content
                   {...register('phoneNumber', {
-                    required: '필수',
+                    
                   })}
                 />
                 {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
@@ -154,19 +185,19 @@ function page() {
                     {'배송 주소'}
                     <div className="star">{'*'}</div>
                   </Info>
-                  <CheckWrapper>
-                    <Check onClick={() => handleClick()}>
-                      <Off src={imageSrc} />
-                    </Check>
-                    <CheckP>등록 정보로 배송 받기</CheckP>
-                  </CheckWrapper>
+                    <CheckWrapper>
+                      <Check onClick={handleUseRegisteredAddrClick}>
+                        <Off src={useRegisteredAddr ? check_on.src : check_off.src} />
+                      </Check>
+                      <CheckP>등록 정보로 배송 받기</CheckP>
+                    </CheckWrapper>
                 </Wrapper>
                 <Address>
                   <ConfirmWrapper>
                     <Content
                       className="address"
                       {...register('address.zipCode', {
-                        required: '필수',
+                        
                       })}
                     />
                     {errors.address?.zipCode && (
@@ -178,21 +209,11 @@ function page() {
                     className="detail-address"
                     placeholder="상세 주소를 입력해주세요"
                     {...register('address.mainAddress', {
-                      required: '필수',
+                      
                     })}
                   />
                   {errors.address?.mainAddress && (
                     <p>{errors.address?.mainAddress.message}</p>
-                  )}
-                  <Content
-                    className="detail-address"
-                    placeholder="상세 주소를 입력해주세요"
-                    {...register('address.mainAddress', {
-                      required: '필수',
-                    })}
-                  />
-                  {errors.address?.detailAddress && (
-                    <p>{errors.address?.detailAddress.message}</p>
                   )}
                 </Address>
               </AddressWrapper>
@@ -207,25 +228,31 @@ function page() {
               <div className="star">{'*'}</div>
             </Method>
             <CheckMethodWrapper>
-              <CheckWrapper>
-                <Check onClick={() => handleClick()}>
-                  <Off src={imageSrc} />
+              <CheckWrapper onClick={() => handlePaymentMethodClick(1)}>
+                <Check>
+                  <Off src={paymentMethod === 1 ? check_on.src : check_off.src} />
                 </Check>
                 <CheckP>무통장입금</CheckP>
               </CheckWrapper>
               <CheckWrapper
-                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+                onClick={() => {
+                  handlePaymentMethodClick(2);
+                  alert('현재 이용 불가능한 서비스입니다.');
+                }}
               >
                 <Check>
-                  <Off src={imageSrc} />
+                  <Off src={paymentMethod === 2 ? check_on.src : check_off.src} />
                 </Check>
                 <CheckP>페이북</CheckP>
               </CheckWrapper>
               <CheckWrapper
-                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+                onClick={() => {
+                  handlePaymentMethodClick(3);
+                  alert('현재 이용 불가능한 서비스입니다.');
+                }}
               >
                 <Check>
-                  <Off src={imageSrc} />
+                  <Off src={paymentMethod === 3 ? check_on.src : check_off.src} />
                 </Check>
                 <CheckP>신용 카드</CheckP>
               </CheckWrapper>
@@ -296,6 +323,7 @@ function page() {
 }
 
 export default page;
+
 const Container = styled.div`
   margin-top: 62px;
   width: 1216px;
@@ -323,6 +351,7 @@ const OrderItemWrapper = styled.div`
   display: flex;
   margin-top: 60px;
   gap: 18px;
+  overflow-x : scroll;
 `;
 
 const OrderInfoWrapper = styled.div`
