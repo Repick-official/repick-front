@@ -2,11 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import sub from '@/assets/images/subscription.png';
-
+import {useRouter} from 'next/navigation';
 function Banner() {
+  const router = useRouter();
+  const handleBannerClick = () => {
+    router.push('/mypage/subscribe');
+  };
   return (
     <Container>
-      <BannerWrapper src={sub.src} />
+      <BannerWrapper src={sub.src} onClick={handleBannerClick} />
     </Container>
   );
 }

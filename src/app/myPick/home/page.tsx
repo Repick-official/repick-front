@@ -82,6 +82,7 @@ function page() {
     const response = await getIsSubscribe(accessToken);
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
+      router.push('/mypage/subscribe');
     } else {
       const selectedProducts = products.filter((item) => item.isClicked);
       if (selectedProducts.length > 0) {
