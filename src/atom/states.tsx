@@ -39,6 +39,7 @@ interface Product {
     mainImageFile: {
       imagePath: string;
     };
+    productId : number;
   };
   isChecked: boolean;
 }
@@ -57,6 +58,7 @@ export const requestProducts = atom<Product[]>({
         mainImageFile: {
           imagePath: '',
         },
+        productId : 0,
       },
       isChecked: false,
     },

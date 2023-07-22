@@ -66,11 +66,14 @@ function page() {
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
     } else {
-      products.map((item) => {
-        item.isClicked
-          ? handleHomeFitting(item.cartProductId)
-          : alert('신청할 제품을 선택해주세요.');
-      });
+      const selectedProducts = products.filter((item) => item.isClicked);
+      if (selectedProducts.length > 0) {
+        selectedProducts.forEach((item) =>
+          handleHomeFitting(item.cartProductId)
+        );
+      } else {
+        alert('신청할 제품을 선택해주세요.');
+      }
     }
   };
 
@@ -80,9 +83,12 @@ function page() {
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
     } else {
-      products.map((item) => {
-        item.isClicked ? goPurchase() : alert('구매할 제품을 선택해주세요.');
-      });
+      const selectedProducts = products.filter((item) => item.isClicked);
+      if (selectedProducts.length > 0) {
+        selectedProducts.forEach((item) => goPurchase());
+      } else {
+        alert('구매할 제품을 선택해주세요.');
+      }
     }
   };
 

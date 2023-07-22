@@ -648,24 +648,14 @@ export const inquirySubscribeLatest = async (access: any) => {
 
 export const orderProducts = async (
   access: any,
-  address: {
-    detailAddress: string;
-    mainAddress: string;
-    zipCode: string;
-  },
-  memberId: number,
-  personName: string,
-  phoneNumber: string,
-  productIds: [],
-  requestDetail: string
+  datas : any
 ) => {
   const data = {
-    address: address,
-    memberId: memberId,
-    personName: personName,
-    phoneNumber: phoneNumber,
-    productIds: productIds,
-    requestDetail: requestDetail,
+    address: datas.address,
+    personName: datas.personName,
+    phoneNumber: datas.phoneNumber,
+    productIds: datas.productIds,
+    requestDetail: datas.requestDetail,
   };
 
   const response = await fetch(process.env.API_URL + '/order/products', {

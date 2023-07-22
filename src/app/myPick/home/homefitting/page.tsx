@@ -26,6 +26,7 @@ interface Product {
     mainImageFile: {
       imagePath: string;
     };
+    productId : number,
   };
   isChecked: boolean;
 }
@@ -44,27 +45,32 @@ function page() {
   const deliveryFee = 0; //
 
   const userName = '도현';
+  console.log(selectedProducts);
 
   const handleClick = () => {
     const updatedProducts = products.map((product: Product): Product => {
       return { ...product, isChecked: !isClicked };
     });
-
+  
     if (!isClicked) {
       setSelectedCount(updatedProducts.length);
       setSelectedTotalPrice(
         updatedProducts.reduce((acc, curr) => acc + curr.product.price, 0)
       );
+      setSelectedProducts(updatedProducts);
       setImageSrc(check_on.src);
     } else {
       setSelectedCount(0);
       setSelectedTotalPrice(0);
+      setSelectedProducts([]);
       setImageSrc(check_off.src);
     }
-
+  
     setIsClicked(!isClicked);
     setProducts(updatedProducts);
   };
+  
+  
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
