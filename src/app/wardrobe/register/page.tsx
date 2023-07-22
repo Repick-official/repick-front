@@ -12,7 +12,6 @@ import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { FieldErrors, useForm } from 'react-hook-form';
 interface HookFormTypes {
-  access: any;
   name: string;
   phoneNumber: string;
   bank: {
@@ -27,6 +26,8 @@ interface HookFormTypes {
   bagQuantity: number;
   productQuantity: number;
   returnDate: string;
+  requestDetail : string;
+  id:number;
 }
 
 function page() {
@@ -40,7 +41,6 @@ function page() {
     formState: { errors },
   } = useForm<HookFormTypes>({
     defaultValues: {
-      access: '',
       name: '',
       phoneNumber: '',
       bank: {
@@ -55,16 +55,19 @@ function page() {
       bagQuantity: 0,
       productQuantity: 0,
       returnDate: '',
+      requestDetail : '',
+      id:1,
     },
   });
 
   const registerHandler = async (data: HookFormTypes) => {
-    //  let accessToken = await getAccessToken(cookies, setCookie);
-    //  const response = await pickupWardrobe(accessToken, data);
-    //  if (response.success) {
-    //    router.push('/wardrobe/register/success');
-    //  } else {
-    //  }
+     let accessToken = await getAccessToken(cookies, setCookie);
+     const response = await pickupWardrobe(accessToken, data);
+     if (response.success) {
+       router.push('/wardrobe/register/success');
+     } else {
+      alert("오류 ㅜ");
+     }
   };
 
   return (
@@ -84,6 +87,7 @@ function page() {
             <div className="star">{'*'}</div>
           </Info>
           <Content
+            required
             {...register('name', {
               required: '필수',
             })}
@@ -96,6 +100,7 @@ function page() {
             <div className="star">{'*'}</div>
           </Info>
           <Content
+            required
             {...register('phoneNumber', {
               required: '필수',
             })}
@@ -110,6 +115,7 @@ function page() {
           <Account>
             <AccountDetail>은행</AccountDetail>
             <Content
+              required
               className="bank"
               {...register('bank.bankName', {
                 required: '필수',
@@ -118,6 +124,7 @@ function page() {
             {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
             <AccountDetail>계좌번호</AccountDetail>
             <Content
+              required
               className="account"
               {...register('bank.accountNumber', {
                 required: '필수',
@@ -139,6 +146,7 @@ function page() {
               </Info>
               <Count>
                 <Content
+                  required
                   className="cloth"
                   placeholder="예상 수량"
                   {...register('bagQuantity', {
@@ -152,6 +160,7 @@ function page() {
                   <div className="star">{'*'}</div>
                 </Info>
                 <Content
+                  required
                   className="cloth"
                   placeholder="예상 개수"
                   {...register('productQuantity', {
@@ -178,7 +187,8 @@ function page() {
             </Wrapper>
             <Address>
               <AddressWrapper>
-                <Content
+                <Content 
+                  required
                   className="address"
                   {...register('address.zipCode', {
                     required: '필수',
@@ -190,6 +200,7 @@ function page() {
                 <Confirm>{'우편번호'}</Confirm>
               </AddressWrapper>
               <Content
+                required
                 className="detail-address"
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.mainAddress', {
@@ -200,6 +211,7 @@ function page() {
                 <p>{errors.address?.mainAddress.message}</p>
               )}
               <Content
+                required
                 className="detail-address"
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.detailAddress', {
@@ -216,12 +228,25 @@ function page() {
                 <div className="star">{'*'}</div>
               </Info>
               <Content
+                required
                 placeholder="2023-06-23"
                 {...register('returnDate', {
                   required: '필수',
                 })}
               />
               {errors.returnDate && <p>{errors.returnDate.message}</p>}
+            </Wrapper>
+            <Wrapper>
+              <Info>
+                {'수거 시 기타 요청 사항'}
+              </Info>
+              <Content
+                required
+                {...register('requestDetail', {
+                  required: '필수',
+                })}
+              />
+              {errors.requestDetail && <p>{errors.requestDetail.message}</p>}
             </Wrapper>
           </S>
           <B>

@@ -112,30 +112,9 @@ export const kakaoLogin = async (code: any) => {
 
 export const pickupWardrobe = async (
   access: any,
-  name: string,
-  phoneNumber: string,
-  bank: {
-    accountNumber: string;
-    bankName: string;
-  },
-  address: {
-    detailAddress: string;
-    mainAddress: string;
-    zipCode: string;
-  },
-  bagQuantity: number,
-  productQuantity: number,
-  returnDate: string
+  datas : any,
 ) => {
-  const data = {
-    name: name,
-    phoneNumber: phoneNumber,
-    bank: bank,
-    address: address,
-    bagQuantity: bagQuantity,
-    productQuantity: productQuantity,
-    returnDate: returnDate,
-  };
+  const data = datas;
 
   const response = await fetch(process.env.API_URL + '/sell', {
     method: 'POST',
