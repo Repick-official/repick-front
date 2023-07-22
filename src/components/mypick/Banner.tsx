@@ -13,8 +13,8 @@ function Banner() {
 
 export default Banner;
 const BannerWrapper = styled.img`
-  width: 100vw;
-  height: 134px;
+  width: 100%;
+  height: auto;
   border-radius: 15px;
   margin-top: 62px;
 `;

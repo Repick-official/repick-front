@@ -107,14 +107,14 @@ function page() {
   };
   return (
     <>
-      <BannerWrapper>
+      {/* <BannerWrapper>
         <Image
           src={logo_guide}
           alt="Picture of me"
           style={{ width: '100vw', height: '657px' }}
           placeholder="blur" // Optional blur-up while loading
         />
-      </BannerWrapper>
+      </BannerWrapper> */}
       <ContentWrapper>
         <Header>
           <Comment>인기 상품을 추천해드려요</Comment>
@@ -260,13 +260,15 @@ const BannerWrapper = styled.div`
 const ContentWrapper = styled.div`
   width: 1216px;
   margin: 0 auto;
-  margin-top: 33px;
+  margin-top: 60px;
 `;
 
 const Header = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  height: 56px;
 `;
 
 const Comment = styled.p`
@@ -302,7 +304,7 @@ const WrapMenu = styled.div<{ isselected: string }>`
   cursor: pointer;
 `;
 
-const OrderMenu = styled.p<{ isselected: string }>`
+const OrderMenu = styled.div<{ isselected: string }>`
   color: ${(props) =>
     props.isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
   text-align: center;
