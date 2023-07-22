@@ -192,7 +192,7 @@ export const putMypick = async (access: any, productId: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    return {success : true};
+    return { success: true };
   }
 };
 
@@ -314,16 +314,15 @@ export const getIsSubscribe = async (access: any) => {
   }
 };
 
-export const updateUserInfo = async (access: any, userInfo: any) => {
+export const updateUserInfo = async (access: any, datas: any) => {
   const data = {
-    email: userInfo.email,
-    name: userInfo.name,
-    nickname: userInfo.name,
-    password: '',
-    phoneNumber: userInfo.phone,
-    mainAddress: userInfo.address,
-    detailAddress: userInfo.address,
-    zipCode: '',
+    email: datas.email,
+    name: datas.name,
+    nickname: datas.nickname,
+
+    phoneNumber: datas.phoneNumber,
+    address: datas.address,
+    bank: datas.bank,
   };
 
   const response = await fetch(process.env.API_URL + '/sign/update', {
@@ -582,7 +581,7 @@ export const searchItem = async (
     );
     if (response.ok) {
       const data = await response.json();
-      console.log("TEST",data);
+      console.log('TEST', data);
       const clothes = data.map((item: any) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
