@@ -89,6 +89,7 @@ function page() {
     setH(clothes);
     setP(total);
   }, []);
+
   const handleClick = () => {
     if (isClicked) {
       setImageSrc(check_off.src);
@@ -111,12 +112,14 @@ function page() {
       productIds: productIds,
     };
 
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await orderProducts(accessToken, updatedData);
-    if (response.success) {
-      router.push('/myPick/shopping/purchase/success');
-      setFinalProducts([]);
+    if (isClicked && paymentMethod) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await orderProducts(accessToken, updatedData);
+      if (response.success) {
+        router.push('/mypage/success');
+      }
     } else {
+      alert('결제 수단을 선택하고 결제에 동의 해주세요');
     }
   };
 
