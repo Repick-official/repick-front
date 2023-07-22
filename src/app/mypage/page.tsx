@@ -23,13 +23,17 @@ import {
   inquirySubscribeLatest,
 } from '@/api/requests';
 interface HookFormTypes {
-  name: string;
-  id: string;
-  phone: string;
-  bankName: string;
-  bankNumber: string;
-  address: string;
+  address: {
+    mainAddress: string;
+  };
+  bank: {
+    accountNumber: string;
+    bankName: string;
+  };
   email: string;
+  name: string;
+  nickname: string;
+  phoneNumber: string;
 }
 function page() {
   const {
@@ -51,13 +55,14 @@ function page() {
     const checkUserInfo = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await getUserInfo(accessToken);
+      console.log(response);
       if (response) {
         setValue('name', response.nickname || '');
-        setValue('phone', response.phoneNumber || '');
-        setValue('bankName', response.bank || '');
-        setValue('bankNumber', '');
-        setValue('address', response.address || '');
-        setValue('id', '');
+        setValue('phoneNumber', response.phoneNumber || '');
+        setValue('bank.bankName', response.bank.bankName || '');
+        setValue('bank.accountNumber', response.bank.accountNumber || '');
+        setValue('address.mainAddress', response.address.mainAddress || '');
+        setValue('nickname', response.nickname || '');
         setValue('email', response.email || '');
       }
     };
@@ -127,11 +132,11 @@ function page() {
               <div className="star">{'*'}</div>
             </Info>
             <Content
-              {...register('phone', {
+              {...register('phoneNumber', {
                 required: '핸드폰 번호를 입력해주세요.',
               })}
             />
-            {errors.phone && <p>{errors.phone.message}</p>}
+            {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
           </Wrapper>
           <Wrapper>
             <Info>{'등록계좌'}</Info>
@@ -139,19 +144,22 @@ function page() {
               <ContentWrapper>
                 <InfoBank>은행</InfoBank>
                 <ContentBank
-                  {...register('bankName', {
+                  {...register('bank.bankName', {
                     required: '은행이름을 입력해주세요.',
                   })}
                 />
+                {errors.bank?.bankName && errors.bank?.bankName && (
+                  <p>{'은행 정보를 입력해주세요'}</p>
+                )}
               </ContentWrapper>
               <ContentWrapper>
                 <InfoBank>계좌번호</InfoBank>
                 <ContentBanks
-                  {...register('bankNumber', {
+                  {...register('bank.accountNumber', {
                     required: '은행 번호를 입력해주세요.',
                   })}
                 />
-                {errors.bankNumber && errors.bankName && (
+                {errors.bank?.accountNumber && errors.bank?.accountNumber && (
                   <p>{'은행 정보를 입력해주세요'}</p>
                 )}
               </ContentWrapper>
@@ -160,17 +168,21 @@ function page() {
           <Wrapper>
             <Info>{'등록주소'}</Info>
             <Content
-              {...register('address', { required: '주소를 입력해주세요.' })}
+              {...register('address.mainAddress', {
+                required: '주소를 입력해주세요.',
+              })}
             />
-            {errors.address && <p>{errors.address.message}</p>}
+            {errors.address?.mainAddress && (
+              <p>{errors.address?.mainAddress.message}</p>
+            )}
           </Wrapper>
           <Wrapper>
             <Info>{'아이디'}</Info>
             <Content
               placeholder="숫자, 영문 대소문자만 사용 가능합니다"
-              {...register('id', { required: '아이디를 입력해주세요.' })}
+              {...register('nickname', { required: '아이디를 입력해주세요.' })}
             />
-            {errors.id && <p>{errors.id.message}</p>}
+            {errors.nickname && <p>{errors.nickname.message}</p>}
           </Wrapper>
           <Wrapper>
             <Info>
@@ -611,7 +623,7 @@ const InputButton = styled.input`
   background: var(--1, #111);
   color: var(--4, #e8e8e8);
   text-align: center;
-
+  cursor: pointer;
   /* Body1 16pt sb */
   font-family: Pretendard;
   font-size: 16px;
