@@ -28,6 +28,7 @@ interface HookFormTypes {
   returnDate: string;
   requestDetail : string;
   id:number;
+  sellState : string;
 }
 
 function page() {
@@ -57,18 +58,24 @@ function page() {
       returnDate: '',
       requestDetail : '',
       id:1,
+      sellState: "DELIVERED"
     },
   });
 
   const registerHandler = async (data: HookFormTypes) => {
-     let accessToken = await getAccessToken(cookies, setCookie);
-     const response = await pickupWardrobe(accessToken, data);
-     if (response.success) {
-       router.push('/wardrobe/register/success');
-     } else {
+    console.log(data);
+
+    data.returnDate = new Date(data.returnDate).toISOString();
+  
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await pickupWardrobe(accessToken, data);
+    if (response.success) {
+      router.push('/wardrobe/register/success');
+    } else {
       alert("오류 ㅜ");
-     }
+    }
   };
+  
 
   return (
     <Container>
@@ -548,7 +555,7 @@ const InputButton = styled.input`
   background: var(--1, #111);
   color: var(--4, #e8e8e8);
   text-align: center;
-
+  cursor : pointer;
   /* Body1 16pt sb */
   font-family: Pretendard;
   font-size: 16px;
