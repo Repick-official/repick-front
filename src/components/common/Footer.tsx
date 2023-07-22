@@ -45,7 +45,7 @@ function Footer() {
             }
             <br />
             {
-              '이메일: repick@naver.com 서울 마포구 홍익대학교 T동 창업지원실 (평일 9:00 - 17:00)'
+              '이메일: repick@naver.com 서울 마포구 홍익대학교 T동 스타트업 라운지 (평일 9:00 - 17:00)'
             }
           </Do>
           <CopyRight>
@@ -72,7 +72,7 @@ const Q = styled.div`
   justify-content: center;
   background-color: rgba(246, 246, 246, 1);
   height: 364px;
-  margin-top:auto;
+  margin-top: auto;
 `;
 const Container = styled.div``;
 const Wrapper = styled.div`
