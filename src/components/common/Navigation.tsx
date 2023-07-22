@@ -8,10 +8,14 @@ import { useEffect, useState } from 'react';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '@/atom/states';
+import { selectedMypickPage } from '@/atom/states';
 
 function Navigation() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+
+  const [selectedPickPage, setSelectedPickPage] =
+    useRecoilState(selectedMypickPage);
 
   const [isLogin, setIslogin] = useState('');
   const [isUser, setIsUser] = useState('');
@@ -70,6 +74,7 @@ function Navigation() {
 
   const checkUserMypick = () => {
     if (userInfo.uesrNickname) {
+      setSelectedPickPage('마이픽 현황');
       setSelectedPage('마이픽');
       router.push('/myPick/home');
     } else {
