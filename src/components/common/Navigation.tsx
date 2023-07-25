@@ -51,7 +51,7 @@ function Navigation() {
         setSelectedPage('마이픽');
         break;
       case 'wardrobe':
-        setSelectedPage('옷장 수거');
+        setSelectedPage('옷장 정리');
         break;
       case 'mypage':
         setSelectedPage('');
@@ -86,7 +86,7 @@ function Navigation() {
 
   const checkUserWardrobe = () => {
     if (userInfo.uesrNickname) {
-      setSelectedPage('옷장 수거');
+      setSelectedPage('옷장 정리');
       router.push('/wardrobe');
     } else {
       alert('로그인이 필요한 서비스입니다.');
@@ -178,10 +178,10 @@ function Navigation() {
             <Section>
               <Option
                 onClick={() => checkUserWardrobe()}
-                selected={selectedPage === '옷장 수거' ? true : false}
+                selected={selectedPage === '옷장 정리' ? true : false}
               >
-                옷장 수거
-                {selectedPage === '옷장 수거' ? <SelectedPage /> : <></>}
+                옷장 정리
+                {selectedPage === '옷장 정리' ? <SelectedPage /> : <></>}
               </Option>
             </Section>
           </SemiWrapper>

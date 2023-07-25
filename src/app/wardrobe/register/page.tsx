@@ -26,9 +26,9 @@ interface HookFormTypes {
   bagQuantity: number;
   productQuantity: number;
   returnDate: string;
-  requestDetail : string;
-  id:number;
-  sellState : string;
+  requestDetail: string;
+  id: number;
+  sellState: string;
 }
 
 function page() {
@@ -56,9 +56,9 @@ function page() {
       bagQuantity: 0,
       productQuantity: 0,
       returnDate: '',
-      requestDetail : '',
-      id:1,
-      sellState: "DELIVERED"
+      requestDetail: '',
+      id: 1,
+      sellState: 'DELIVERED',
     },
   });
 
@@ -66,21 +66,20 @@ function page() {
     console.log(data);
 
     data.returnDate = new Date(data.returnDate).toISOString();
-  
+
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await pickupWardrobe(accessToken, data);
     if (response.success) {
       router.push('/wardrobe/register/success');
     } else {
-      alert("오류 ㅜ");
+      alert('오류 ㅜ');
     }
   };
-  
 
   return (
     <Container>
       <TitleWrapper>
-        <Title>옷장수거 신청</Title>
+        <Title>옷장 정리 신청</Title>
         <SemiTitle>
           리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?
         </SemiTitle>
@@ -194,7 +193,7 @@ function page() {
             </Wrapper>
             <Address>
               <AddressWrapper>
-                <Content 
+                <Content
                   required
                   className="address"
                   {...register('address.zipCode', {
@@ -244,9 +243,7 @@ function page() {
               {errors.returnDate && <p>{errors.returnDate.message}</p>}
             </Wrapper>
             <Wrapper>
-              <Info>
-                {'수거 시 기타 요청 사항'}
-              </Info>
+              <Info>{'수거 시 기타 요청 사항'}</Info>
               <Content
                 required
                 {...register('requestDetail', {
@@ -555,7 +552,7 @@ const InputButton = styled.input`
   background: var(--1, #111);
   color: var(--4, #e8e8e8);
   text-align: center;
-  cursor : pointer;
+  cursor: pointer;
   /* Body1 16pt sb */
   font-family: Pretendard;
   font-size: 16px;
