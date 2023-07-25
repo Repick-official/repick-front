@@ -112,6 +112,7 @@ function page() {
                     size={item.size}
                     name={item.name}
                     price={item.price}
+                    
                   />
                 </div>
               ))}

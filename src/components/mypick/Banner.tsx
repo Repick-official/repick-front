@@ -21,6 +21,7 @@ const BannerWrapper = styled.img`
   height: auto;
   border-radius: 15px;
   margin-top: 62px;
+  cursor : pointer;
 `;
 const Container = styled.div`
   display: flex;
