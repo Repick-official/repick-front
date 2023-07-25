@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import line from '@/assets/images/line.svg';
 import Button from '@/components/common/Button';
-import bag from '@/assets/images/bag.svg';
+import bagImage from '@/assets/images/bag.svg';
 import arrow7 from '@/assets/images/arrow7.svg';
 import arrow6 from '@/assets/images/arrow6.svg';
 import { useRouter } from 'next/navigation';
@@ -74,6 +74,11 @@ function page() {
     } else {
       alert('오류 ㅜ');
     }
+  };
+
+  const [bag, setBag] = useState(false);
+  const showBag = () => {
+    setBag(!bag);
   };
 
   return (
@@ -256,26 +261,28 @@ function page() {
           <B>
             <BagConfirm>
               <Check>
-                <Question>?</Question>
+                <Question onClick={() => showBag()}>?</Question>
               </Check>
               <BagText>리픽백 크기 확인하기</BagText>
             </BagConfirm>
-            <BagContainer>
-              <BagWrapper>
-                <BagHeight>
-                  <CM7>70cm</CM7>
-                  <Arrow7 src={arrow7.src} />
-                  <Bag src={bag.src} />
-                </BagHeight>
-                <BagWidth>
-                  <Arrow6 src={arrow6.src} />
-                  <CM6>60cm</CM6>
-                  <More>
-                    리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
-                  </More>
-                </BagWidth>
-              </BagWrapper>
-            </BagContainer>
+            {bag && (
+              <BagContainer>
+                <BagWrapper>
+                  <BagHeight>
+                    <CM7>70cm</CM7>
+                    <Arrow7 src={arrow7.src} />
+                    <Bag src={bagImage.src} />
+                  </BagHeight>
+                  <BagWidth>
+                    <Arrow6 src={arrow6.src} />
+                    <CM6>60cm</CM6>
+                    <More>
+                      리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
+                    </More>
+                  </BagWidth>
+                </BagWrapper>
+              </BagContainer>
+            )}
           </B>
         </A>
         <div className="button">
@@ -499,6 +506,11 @@ const BagContainer = styled.div`
   border-radius: 16px;
   background: var(--4, #e8e8e8);
   display: flex;
+
+  position: relative;
+
+  overflow: hidden;
+  transition: height 0.3s ease;
 `;
 const Arrow7 = styled.img`
   margin-left: 6.94px;
