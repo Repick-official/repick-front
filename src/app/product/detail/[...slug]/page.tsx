@@ -108,6 +108,25 @@ function page() {
     }
   };
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const sliderImageCount = 3;
+
+  const handleLeftArrowClick = () => {
+    // 왼쪽 화살표를 누르면 이미지들을 오른쪽으로 이동
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
+  const handleRightArrowClick = () => {
+    if (
+      currentImageIndex <
+      products.detailImageFiles.length - sliderImageCount
+    ) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -126,25 +145,28 @@ function page() {
           </MainImage>
 
           <Cut>
-            <LeftArrow src={leftArrow.src} />
-            <RightArrow src={rightArrow.src} />
+            <LeftArrow src={leftArrow.src} onClick={handleLeftArrowClick} />
+
             <P>
-              {products.detailImageFiles.map((item, idx) => (
-                <DetailImage key={idx}>
-                  <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
-                    {item.imagePath && (
-                      <Image
-                        alt="image"
-                        key={idx}
-                        src={item.imagePath}
-                        width={164.81}
-                        height={164.81}
-                      />
-                    )}
-                  </div>
-                </DetailImage>
-              ))}
+              {products.detailImageFiles
+                .slice(currentImageIndex, currentImageIndex + sliderImageCount)
+                .map((item, idx) => (
+                  <DetailImage key={idx}>
+                    <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                      {item.imagePath && (
+                        <Image
+                          alt="image"
+                          key={idx}
+                          src={item.imagePath}
+                          width={164.81}
+                          height={164.81}
+                        />
+                      )}
+                    </div>
+                  </DetailImage>
+                ))}
             </P>
+            <RightArrow src={rightArrow.src} onClick={handleRightArrowClick} />
           </Cut>
         </Cloth>
         <DetailContent>
@@ -214,7 +236,7 @@ const Container = styled.div`
 const Cloth = styled.div``;
 const MainImage = styled.div``;
 const DetailImage = styled.div`
-  margin-right: 21.56px;
+  margin-right: 21px;
 `;
 const Cut = styled.div`
   display: flex;
@@ -284,13 +306,15 @@ const Products = styled.div`
   margin-bottom: 148px;
 `;
 
-const LeftArrow = styled.img``;
+const LeftArrow = styled.img`
+  margin-right: 10px;
+`;
 const RightArrow = styled.img`
-  position: relative;
-  left: 565px;
+  margin-left: 10px;
 `;
 const P = styled.div`
-  width: 537.55px;
-  overflow: hidden;
+  width: 538.46px;
+
   display: flex;
+  overflow: hidden;
 `;

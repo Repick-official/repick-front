@@ -10,6 +10,7 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
+import Alert from '@/components/mypick/Alert';
 
 import {
   inquiryMypick,
@@ -60,19 +61,42 @@ function page() {
     });
   };
 
+  const [showAlert, setShowAlert] = useState(false);
+  const clickModal = () => setShowAlert(!showAlert);
+  const [text1, setText1] = useState('');
+  const [text2, setText2] = useState('');
+
   const handleApply = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await getIsSubscribe(accessToken);
-    if (response == 'NONE') {
-      alert('구독이 필요한 서비스입니다.');
+    const selectedProducts = products.filter((item) => item.isClicked);
+    if (selectedProducts.length <= 0) {
+      alert('신청할 제품을 선택해주세요.');
     } else {
-      const selectedProducts = products.filter((item) => item.isClicked);
-      if (selectedProducts.length > 0) {
-        selectedProducts.forEach((item) =>
-          handleHomeFitting(item.cartProductId)
-        );
+      if (response == 'NONE') {
+        setShowAlert(!showAlert);
+        setText1('멤버십 구독 회원만 이용 가능한 서비스입니다.');
+        setText2('리픽 멤버십을 구독하시겠어요?');
+      } else if (response == 'BASIC') {
+        if (selectedProducts.length > 3) {
+          setShowAlert(!showAlert);
+          setText1('베이직 멤버십 회원은 3벌까지만 입어볼 수 있어요!');
+          setText2('프로 플랜 멤버십으로 바꾸시겠어요?');
+        } else {
+          selectedProducts.forEach((item) =>
+            handleHomeFitting(item.cartProductId)
+          );
+        }
       } else {
-        alert('신청할 제품을 선택해주세요.');
+        if (selectedProducts.length > 5) {
+          setShowAlert(!showAlert);
+          setText1('홈피팅은 한 번에 최대 5벌까지만 가능해요.');
+          setText2('5벌 홈피팅 완료 후 다시 신청해주세요.');
+        } else {
+          selectedProducts.forEach((item) =>
+            handleHomeFitting(item.cartProductId)
+          );
+        }
       }
     }
   };
@@ -161,6 +185,9 @@ function page() {
             <div onClick={() => handleApply()}>
               <Button content="홈피팅 신청하기" num="5" />
             </div>
+            {showAlert && (
+              <Alert text1={text1} text2={text2} clickModal={clickModal} />
+            )}
             <div onClick={() => handlePurchase()}>
               <Button content="구매하기" num="6" />
             </div>

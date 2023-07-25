@@ -49,7 +49,7 @@ function SearchModal({ clickModal }: any) {
         window.location.href = '/product';
       }
       else{
-        alert("검색결과가 없습니다");
+        window.location.href = '/product/none';
       }
     }
   };

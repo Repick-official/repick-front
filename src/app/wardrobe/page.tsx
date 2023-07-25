@@ -13,7 +13,7 @@ function page() {
   return (
     <Container>
       <TitleWrapper>
-        <Title>옷장수거</Title>
+        <Title>옷장 정리</Title>
         <SemiTitle>
           리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?
         </SemiTitle>
@@ -31,7 +31,7 @@ function page() {
             <Background>
               <ApplyImage src={wardrobe_apply.src} />
             </Background>
-            <InfoTitle>옷장수거 신청하기</InfoTitle>
+            <InfoTitle>옷장 정리 신청하기</InfoTitle>
             <InfoContent>
               신청한 리픽백에 옷을 담아 문 앞에 놓으면 리픽이 직접 <br /> 옷을
               수거한 후 자체 검수와 위탁을 통해 새로운 주인에게 <br /> 판매될 수
