@@ -144,14 +144,30 @@ function page() {
     setSelectAll(!areAllProductsSelected ? '전체 선택 해제' : '전체 선택');
   };
 
+  const handleClickDelte = () => {
+    const selectedProducts = products.filter((item) => item.isClicked);
+    if (selectedProducts.length <= 0) {
+      alert('신청할 제품을 선택해주세요.');
+    } else {
+      const confirmDelete = confirm('선택한 제품을 삭제할까요?');
+      if (confirmDelete) {
+        const updatedProducts = products.filter((item) => !item.isClicked);
+        // 이제 updatedProducts 배열은 isClicked가 false인 제품들만 포함하고 있으므로 선택한 제품들이 삭제됩니다.
+        // 여기에서 'products' 상태나 변수를 'updatedProducts'로 업데이트할 수 있습니다.
+        setProducts(updatedProducts);
+      }
+    }
+  };
+
   return (
     <Container>
       <SemiContainer>
         <Content>
           <Pick>
             <Title>내가 픽한제품</Title>
-            <Filter onClick={() => handleClickAll()}>
-              <Clear>{selectAll}</Clear>
+            <Filter>
+              <Delte onClick={() => handleClickDelte()}>선택 상품 삭제</Delte>
+              <Clear onClick={() => handleClickAll()}>{selectAll}</Clear>
             </Filter>
           </Pick>
 
@@ -228,6 +244,7 @@ const Filter = styled.div`
   display: flex;
 `;
 const OnlyProduct = styled.div``;
+const Delte = styled.div``;
 const Clear = styled.div`
   margin-left: 54px;
 `;
@@ -259,5 +276,5 @@ const Products = styled.div`
   flex-wrap: wrap;
   // justify-content: space-between;
   margin-bottom: 70px;
-  gap: 18px;
+  gap: 24px;
 `;
