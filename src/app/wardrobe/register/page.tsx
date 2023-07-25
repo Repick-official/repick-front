@@ -101,6 +101,10 @@ function page() {
             required
             {...register('name', {
               required: '필수',
+              pattern: {
+                value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
+                message: '영어와 한글만 입력해주세요.',
+              },
             })}
           />
           {errors.name && <p>{errors.name.message}</p>}
@@ -114,6 +118,18 @@ function page() {
             required
             {...register('phoneNumber', {
               required: '필수',
+              pattern: {
+                value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                message: "숫자와 '-'만 입력해주세요.",
+              },
+              minLength: {
+                value: 11,
+                message: '번호는 9자 이상 입력해주세요.',
+              },
+              maxLength: {
+                value: 13,
+                message: '번호는 11자 이하로 입력해주세요.',
+              },
             })}
           />
           {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
@@ -130,6 +146,10 @@ function page() {
               className="bank"
               {...register('bank.bankName', {
                 required: '필수',
+                pattern: {
+                  value: /^[가-힣]+$/, // 한글만 입력되도록 정규식 패턴 설정
+                  message: '한글만 입력해주세요.',
+                },
               })}
             />
             {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
@@ -139,6 +159,10 @@ function page() {
               className="account"
               {...register('bank.accountNumber', {
                 required: '필수',
+                pattern: {
+                  value: /^[\d-]+$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                  message: "숫자와 '-'만 입력해주세요.",
+                },
               })}
             />
             {errors.bank?.accountNumber && (
@@ -162,6 +186,10 @@ function page() {
                   placeholder="예상 수량"
                   {...register('bagQuantity', {
                     required: '필수',
+                    pattern: {
+                      value: /^[\d]+$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                      message: '숫자만 입력해주세요.',
+                    },
                   })}
                 />
                 {errors.bagQuantity && <p>{errors.bagQuantity.message}</p>}
@@ -176,6 +204,10 @@ function page() {
                   placeholder="예상 개수"
                   {...register('productQuantity', {
                     required: '필수',
+                    pattern: {
+                      value: /^[\d]+$/, // 숫자만 입력되도록 정규식 패턴 설정
+                      message: '숫자만 입력해주세요.',
+                    },
                   })}
                 />
                 {errors.productQuantity && (
@@ -216,6 +248,10 @@ function page() {
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.mainAddress', {
                   required: '필수',
+                  pattern: {
+                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    message: '숫자와 한글만 입력해주세요.',
+                  },
                 })}
               />
               {errors.address?.mainAddress && (
@@ -227,6 +263,10 @@ function page() {
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.detailAddress', {
                   required: '필수',
+                  pattern: {
+                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    message: '숫자와 한글만 입력해주세요.',
+                  },
                 })}
               />
               {errors.address?.detailAddress && (
@@ -243,6 +283,10 @@ function page() {
                 placeholder="2023-06-23"
                 {...register('returnDate', {
                   required: '필수',
+                  pattern: {
+                    value: /^\d{4}-\d{2}-\d{2}$/, // 'yyyy-mm-dd' 형식에 맞는지 검사하는 정규식 패턴 설정
+                    message: '올바른 날짜 형식으로 입력해주세요. (yyyy-mm-dd)',
+                  },
                 })}
               />
               {errors.returnDate && <p>{errors.returnDate.message}</p>}
