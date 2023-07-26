@@ -122,7 +122,12 @@ function page() {
               <div className="star">{'*'}</div>
             </Info>
             <Content
-              {...register('name', { required: '이름을 입력해주세요.' })}
+              {...register('name', {
+                pattern: {
+                  value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
+                  message: '영어와 한글만 입력해주세요.',
+                },
+              })}
               required
             />
             {errors.name && <p>{errors.name.message}</p>}
@@ -134,7 +139,18 @@ function page() {
             </Info>
             <Content
               {...register('phoneNumber', {
-                required: '핸드폰 번호를 입력해주세요.',
+                pattern: {
+                  value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                  message: "숫자와 '-'만 입력해주세요.",
+                },
+                minLength: {
+                  value: 11,
+                  message: '번호는 9자 이상 입력해주세요.',
+                },
+                maxLength: {
+                  value: 13,
+                  message: '번호는 11자 이하로 입력해주세요.',
+                },
               })}
               required
             />
@@ -196,8 +212,14 @@ function page() {
               <div className="star">{'*'}</div>
             </Info>
             <Content
-              {...register('email', { required: '이메일을 입력해주세요.' })}
               required
+              {...register('email', {
+                required: '이메일을 입력해주세요.',
+                pattern: {
+                  value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                  message: '올바른 이메일 형식을 입력해주세요.',
+                },
+              })}
             />
             {errors.email && <p>{errors.email.message}</p>}
           </Wrapper>
