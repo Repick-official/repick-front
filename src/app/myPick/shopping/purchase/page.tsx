@@ -158,19 +158,42 @@ function page() {
                 <Info>이름</Info>
                 <Content
                   placeholder="김회원"
-                  {...register('personName', {})}
                   required
+                  {...register('personName', {
+                    required: '필수',
+                    pattern: {
+                      value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
+                      message: '영어와 한글만 입력해주세요.',
+                    },
+                  })}
                 />
                 {errors.personName && <p>{errors.personName.message}</p>}
               </Wrapper>
               <Wrapper>
                 <Info>전화번호</Info>
-                <Content {...register('phoneNumber', {})} required />
+                <Content
+                  {...register('phoneNumber', {
+                    pattern: {
+                      value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                      message: "숫자와 '-'만 입력해주세요.",
+                    },
+                    minLength: {
+                      value: 11,
+                      message: '번호는 9자 이상 입력해주세요.',
+                    },
+                    maxLength: {
+                      value: 13,
+                      message: '번호는 11자 이하로 입력해주세요.',
+                    },
+                  })}
+                  required
+                />
                 {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
               </Wrapper>
               <Wrapper>
                 <Info>등록주소</Info>
                 <Content />
+                {/* 여기는 왜 없지? */}
               </Wrapper>
             </SenderWrapper>
             <Line src={line.src} />
@@ -206,7 +229,12 @@ function page() {
                   <Content
                     className="detail-address"
                     placeholder="상세 주소를 입력해주세요"
-                    {...register('address.mainAddress', {})}
+                    {...register('address.mainAddress', {
+                      pattern: {
+                        value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                        message: '숫자와 한글만 입력해주세요.',
+                      },
+                    })}
                     required
                   />
                   {errors.address?.mainAddress && (
