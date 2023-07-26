@@ -16,6 +16,7 @@ import {
   inquiryMypick,
   applyHomeFitting,
   getIsSubscribe,
+  deleteProducts,
 } from '@/api/requests';
 import { NONAME } from 'dns';
 
@@ -144,17 +145,37 @@ function page() {
     setSelectAll(!areAllProductsSelected ? '전체 선택 해제' : '전체 선택');
   };
 
-  const handleClickDelte = () => {
+  const handleClickDelete = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
     if (selectedProducts.length <= 0) {
       alert('신청할 제품을 선택해주세요.');
     } else {
       const confirmDelete = confirm('선택한 제품을 삭제할까요?');
       if (confirmDelete) {
-        const updatedProducts = products.filter((item) => !item.isClicked);
-        // 이제 updatedProducts 배열은 isClicked가 false인 제품들만 포함하고 있으므로 선택한 제품들이 삭제됩니다.
-        // 여기에서 'products' 상태나 변수를 'updatedProducts'로 업데이트할 수 있습니다.
-        setProducts(updatedProducts);
+        const accessToken = await getAccessToken(cookies, setCookie);
+        const deletePromises = selectedProducts.map(async (item) => {
+          const response = await deleteProducts(
+            accessToken,
+            item.cartProductId
+          );
+          return response;
+        });
+
+        console.log('de', deletePromises);
+
+        const updatedProducts = await Promise.all(deletePromises);
+        // 이제 updatedProducts는 deleteProducts의 응답으로 이루어진 배열입니다.
+
+        // 필요한 경우 응답을 처리할 수 있습니다.
+        console.log('up', updatedProducts);
+
+        // 모든 삭제 요청이 해결된 후에 상태를 업데이트합니다.
+        setProducts((prevProducts) => {
+          const remainingProducts = prevProducts.filter(
+            (item) => !item.isClicked
+          );
+          return remainingProducts;
+        });
       }
     }
   };
@@ -166,7 +187,9 @@ function page() {
           <Pick>
             <Title>내가 픽한제품</Title>
             <Filter>
-              <Delte onClick={() => handleClickDelte()}>선택 상품 삭제</Delte>
+              <Delete onClick={() => handleClickDelete()}>
+                선택 상품 삭제
+              </Delete>
               <Clear onClick={() => handleClickAll()}>{selectAll}</Clear>
             </Filter>
           </Pick>
@@ -244,7 +267,7 @@ const Filter = styled.div`
   display: flex;
 `;
 const OnlyProduct = styled.div``;
-const Delte = styled.div``;
+const Delete = styled.div``;
 const Clear = styled.div`
   margin-left: 54px;
 `;

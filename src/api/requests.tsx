@@ -110,10 +110,7 @@ export const kakaoLogin = async (code: any) => {
   }
 };
 
-export const pickupWardrobe = async (
-  access: any,
-  datas : any,
-) => {
+export const pickupWardrobe = async (access: any, datas: any) => {
   const data = datas;
 
   const response = await fetch(process.env.API_URL + '/sell', {
@@ -624,10 +621,7 @@ export const inquirySubscribeLatest = async (access: any) => {
   }
 };
 
-export const orderProducts = async (
-  access: any,
-  datas : any
-) => {
+export const orderProducts = async (access: any, datas: any) => {
   const data = {
     address: datas.address,
     personName: datas.personName,
@@ -648,5 +642,28 @@ export const orderProducts = async (
     return { success: true };
   } else {
     return { success: false };
+  }
+};
+
+export const deleteProducts = async (access: any, cartProductId: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + `/cart/my-pick/${cartProductId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    return { success: true };
   }
 };
