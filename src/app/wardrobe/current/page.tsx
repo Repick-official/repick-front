@@ -1,23 +1,117 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import cloth_1 from '@/assets/images/mypick/cloth_1.png';
-import cloth_2 from '@/assets/images/mypick/cloth_2.png';
-import cloth_3 from '@/assets/images/mypick/cloth_3.png';
-import cloth_4 from '@/assets/images/mypick/cloth_4.png';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import more from '@/assets/images/wardrobe/more.svg';
+import getAccessToken from '@/util/getAccessToken';
+import { useCookies } from 'react-cookie';
+
+import {
+  showWardrobeAll,
+  showWardrobeSelling,
+  showWardrobeSold,
+  showWardrobeSettlement,
+} from '@/api/requests';
 
 function page() {
   const router = useRouter();
+  const [order, setOrder] = useState<string>('all');
+  const [products, setProducts] = useState<any[]>([]);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [total, setTotal] = useState<number>(0);
+  const [settlement, setSettlement] = useState<any[]>([]);
 
-  const price = 8000;
+  const clickSettlement = async () => {
+    const selectedProducts = products.filter((item) => item.isClicked === true);
 
-  const [select, setSelect] = useState(false);
+    const selectedProductIds = selectedProducts.map((item) => item.productId);
+
+    if (selectedProducts.length === 0) {
+      alert('상품을 선택해주세요.');
+      return;
+    } else if (
+      selectedProducts.some((item) => item.productState !== 'SOLD_OUT')
+    ) {
+      alert('판매 완료된 상품만 선택해주세요.');
+    } else if (
+      selectedProducts.every((item) => item.productState === 'SOLD_OUT')
+    ) {
+      setSettlement((prevSettlement) => [
+        ...prevSettlement,
+        ...selectedProductIds,
+      ]);
+    }
+  };
+  useEffect(() => {
+    if (settlement.length > 0) {
+      (async () => {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const settle = await showWardrobeSettlement(accessToken, settlement);
+        console.log('set', settlement);
+        router.push('/wardrobe/current/success');
+      })();
+    }
+  }, [settlement]);
+
+  useEffect(() => {
+    const get = async () => {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await showWardrobeAll(accessToken);
+      const clothes = response.map((item: any) => {
+        if (item.productState === 'SOLD_OUT') {
+          setTotal((prev) => prev + item.price);
+        }
+        return { ...item, isClicked: false };
+      });
+      setProducts(clothes);
+    };
+    get();
+  }, []);
+
+  const handleClick = (productId: number) => {
+    //상품 클릭
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((item) =>
+        item.productId === productId
+          ? { ...item, isClicked: !item.isClicked }
+          : item
+      );
+
+      return updatedProducts;
+    });
+  };
+
+  const ChangeAll = async (newOrder: string) => {
+    setOrder(newOrder);
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await showWardrobeAll(accessToken);
+    const clothes = response.map((item: any) => {
+      return { ...item, isClicked: false };
+    });
+    setProducts(clothes);
+  };
+  const ChangeSelling = async (newOrder: string) => {
+    setOrder(newOrder);
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await showWardrobeSelling(accessToken);
+    const clothes = response.map((item: any) => {
+      return { ...item, isClicked: false };
+    });
+    setProducts(clothes);
+  };
+  const ChangeSold = async (newOrder: string) => {
+    setOrder(newOrder);
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await showWardrobeSold(accessToken);
+    const clothes = response.map((item: any) => {
+      return { ...item, isClicked: false };
+    });
+    setProducts(clothes);
+  };
 
   return (
     <Container>
@@ -27,109 +121,44 @@ function page() {
           <SemiTitle>내가 판매 중인 제품들을 볼 수 있어요</SemiTitle>
         </T>
         <F>
-          <Filter>전체보기</Filter>
-          <Filter>판매중만</Filter>
-          <Filter>판매완료만</Filter>
+          <Filter
+            isselected={(order === 'all').toString()}
+            onClick={() => ChangeAll('all')}
+          >
+            전체보기
+          </Filter>
+          <Filter
+            isselected={(order === 'selling').toString()}
+            onClick={() => ChangeSelling('selling')}
+          >
+            판매중만
+          </Filter>
+          <Filter
+            isselected={(order === 'sold').toString()}
+            onClick={() => ChangeSold('sold')}
+          >
+            판매완료만
+          </Filter>
         </F>
       </Current>
+
       <Products>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_1.src}
-            tagName={'MM6'}
-            size = {'3, 55'}
-            name = {'코튼 점퍼 자켓'}
-            price={355000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_2.src}
-            tagName={'마뗑킴'}
-            size = {'Free'}
-            name = {'볼레로 숏패딩 점퍼'}
-            price={85000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_3.src}
-            tagName={'스파오'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={15000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={10000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={10000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={10000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={10000}
-          />
-        </Product>
-        <Product>
-          <Check onClick={() => setSelect(!select)}>
-            {select ? <On src={check_on.src} /> : <Off src={check_off.src} />}
-          </Check>
-          <ContentBodyInfo
-            src={cloth_4.src}
-            tagName={'NO BRAND'}
-            size={'Free'}
-            name = {'부클 집업 가디건'}
-            price={10000}
-          />
-        </Product>
+        {products.map((item) => (
+          <Product key={item.productId}>
+            <Check onClick={() => handleClick(item.productId)}>
+              <Off src={item.isClicked ? check_on.src : check_off.src} />
+            </Check>
+            <ContentBodyInfo
+              src={item.mainImageFile.imagePath}
+              tagName={item.brand}
+              size={item.size}
+              name={item.name}
+              price={item.price}
+            />
+          </Product>
+        ))}
       </Products>
+
       <More>
         상품 더보기
         <Arrow src={more.src} />
@@ -138,14 +167,12 @@ function page() {
         <Total>
           <S>판매된 총 금액</S>
           <P>
-            <div className="price">{price.toLocaleString('en-US')}</div>원
+            <div className="price">{total.toLocaleString('en-US')}</div>원
           </P>
         </Total>
       </Price>
-      <div
-        onClick={() => router.push('/wardrobe/current/success')}
-        className="button"
-      >
+
+      <div onClick={() => clickSettlement()} className="button">
         <Button content="정산 요청하기" num="4" />
       </div>
     </Container>
@@ -184,12 +211,13 @@ const T = styled.div`
 const F = styled.div`
   display: flex;
 `;
-const Filter = styled.div`
+const Filter = styled.div<{ isselected: string }>`
   margin-left: 24px;
   margin-top: 50px;
   font-size: 20px;
-  font-weight: 400;
-  color: var(--2, #5f5f5f);
+  font-weight: ${(props) => (props.isselected === 'true' ? '600' : '400')};
+  color: ${(props) =>
+    props.isselected === 'true' ? 'var(--1, #111)' : 'var(--2, #5F5F5F);'};
 `;
 
 const Product = styled.div`
@@ -208,9 +236,9 @@ const Products = styled.div`
   width: 1216px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  // justify-content: space-between;
+  margin-bottom: 70px;
+  gap: 24px;
 `;
 const More = styled.div`
   width: 1216px;

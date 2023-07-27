@@ -43,7 +43,7 @@ function page() {
               <Off src={check_off.src} />
               <On
                 src={check_on.src}
-                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+                onClick={() => router.push('/wardrobe/current')}
               />
             </Check>
             <Background>

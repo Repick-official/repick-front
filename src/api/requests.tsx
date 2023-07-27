@@ -667,3 +667,120 @@ export const deleteProducts = async (access: any, cartProductId: any) => {
     return { success: true };
   }
 };
+
+export const showWardrobeAll = async (access: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + '/sell/history/published',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+export const showWardrobeSelling = async (access: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + '/sell/history/selling',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+export const showWardrobeSold = async (access: any) => {
+  try {
+    const response = await fetch(process.env.API_URL + '/sell/history/sold', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+export const showWardrobeSettlement = async (access: any, ids: []) => {
+  const data = {
+    productIds: ids,
+  };
+  try {
+    const response = await fetch(process.env.API_URL + '/sell/settlement', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
