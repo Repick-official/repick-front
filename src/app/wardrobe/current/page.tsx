@@ -1,20 +1,16 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Button from '@/components/common/Button';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import check_off from '@/assets/images/check/off.svg';
-import check_on from '@/assets/images/check/on.svg';
-import more from '@/assets/images/wardrobe/more.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
-
 import {
   showWardrobeAll,
   showWardrobeSelling,
   showWardrobeSold,
   showWardrobeSettlement,
+  showWardrobeSettled,
 } from '@/api/requests';
 
 function page() {
@@ -23,39 +19,22 @@ function page() {
   const [products, setProducts] = useState<any[]>([]);
   const [cookies, setCookie, removeCookie] = useCookies();
   const [total, setTotal] = useState<number>(0);
-  const [settlement, setSettlement] = useState<any[]>([]);
+  const [sold, setSold] = useState<any[]>([]);
 
   const clickSettlement = async () => {
-    const selectedProducts = products.filter((item) => item.isClicked === true);
-
-    const selectedProductIds = selectedProducts.map((item) => item.productId);
-
-    if (selectedProducts.length === 0) {
-      alert('상품을 선택해주세요.');
-      return;
-    } else if (
-      selectedProducts.some((item) => item.productState !== 'SOLD_OUT')
-    ) {
-      alert('판매 완료된 상품만 선택해주세요.');
-    } else if (
-      selectedProducts.every((item) => item.productState === 'SOLD_OUT')
-    ) {
-      setSettlement((prevSettlement) => [
-        ...prevSettlement,
-        ...selectedProductIds,
-      ]);
+    if (order === 'all' || order === 'sold') {
+      if (sold.length === 0) {
+        // 'sold' 배열이 비어있는 경우 알림창 띄우기
+        alert('정산 요청할 상품이 없습니다.');
+      } else {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const settle = await showWardrobeSettlement(accessToken, sold);
+        router.push('/wardrobe/current/success');
+      }
+    } else {
+      alert('정산 요청이 불가능한 상품입니다.');
     }
   };
-  useEffect(() => {
-    if (settlement.length > 0) {
-      (async () => {
-        let accessToken = await getAccessToken(cookies, setCookie);
-        const settle = await showWardrobeSettlement(accessToken, settlement);
-        console.log('set', settlement);
-        router.push('/wardrobe/current/success');
-      })();
-    }
-  }, [settlement]);
 
   useEffect(() => {
     const get = async () => {
@@ -64,53 +43,38 @@ function page() {
       const clothes = response.map((item: any) => {
         if (item.productState === 'SOLD_OUT') {
           setTotal((prev) => prev + item.price);
+          setSold((prevSold) => [...prevSold, item.productId]);
         }
-        return { ...item, isClicked: false };
+        return item;
       });
       setProducts(clothes);
     };
     get();
   }, []);
+  console.log(products);
+  console.log('sold', sold);
 
-  const handleClick = (productId: number) => {
-    //상품 클릭
-    setProducts((prevProducts) => {
-      const updatedProducts = prevProducts.map((item) =>
-        item.productId === productId
-          ? { ...item, isClicked: !item.isClicked }
-          : item
-      );
-
-      return updatedProducts;
-    });
+  const handleChange = async (newOrder: string, apiFunction: any) => {
+    setOrder(newOrder);
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await apiFunction(accessToken);
+    setProducts(response);
   };
 
   const ChangeAll = async (newOrder: string) => {
-    setOrder(newOrder);
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await showWardrobeAll(accessToken);
-    const clothes = response.map((item: any) => {
-      return { ...item, isClicked: false };
-    });
-    setProducts(clothes);
+    await handleChange(newOrder, showWardrobeAll);
   };
+
   const ChangeSelling = async (newOrder: string) => {
-    setOrder(newOrder);
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await showWardrobeSelling(accessToken);
-    const clothes = response.map((item: any) => {
-      return { ...item, isClicked: false };
-    });
-    setProducts(clothes);
+    await handleChange(newOrder, showWardrobeSelling);
   };
+
   const ChangeSold = async (newOrder: string) => {
-    setOrder(newOrder);
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await showWardrobeSold(accessToken);
-    const clothes = response.map((item: any) => {
-      return { ...item, isClicked: false };
-    });
-    setProducts(clothes);
+    await handleChange(newOrder, showWardrobeSold);
+  };
+
+  const ChangeSettled = async (newOrder: string) => {
+    await handleChange(newOrder, showWardrobeSettled);
   };
 
   return (
@@ -131,13 +95,19 @@ function page() {
             isselected={(order === 'selling').toString()}
             onClick={() => ChangeSelling('selling')}
           >
-            판매중만
+            판매중
           </Filter>
           <Filter
             isselected={(order === 'sold').toString()}
             onClick={() => ChangeSold('sold')}
           >
-            판매완료만
+            판매완료
+          </Filter>
+          <Filter
+            isselected={(order === 'settled').toString()}
+            onClick={() => ChangeSettled('settled')}
+          >
+            정산완료
           </Filter>
         </F>
       </Current>
@@ -145,9 +115,14 @@ function page() {
       <Products>
         {products.map((item) => (
           <Product key={item.productId}>
-            <Check onClick={() => handleClick(item.productId)}>
-              <Off src={item.isClicked ? check_on.src : check_off.src} />
-            </Check>
+            {item.productState === 'SELLING' ||
+            item.productState === 'PENDING' ? (
+              <Option option="selling">판매 진행중</Option>
+            ) : item.productState === 'SOLD_OUT' ? (
+              <Option option="sold-out">판매완료</Option>
+            ) : (
+              <Option option="settled">정산완료</Option>
+            )}
             <ContentBodyInfo
               src={item.mainImageFile.imagePath}
               tagName={item.brand}
@@ -159,10 +134,6 @@ function page() {
         ))}
       </Products>
 
-      <More>
-        상품 더보기
-        <Arrow src={more.src} />
-      </More>
       <Price>
         <Total>
           <S>판매된 총 금액</S>
@@ -173,13 +144,36 @@ function page() {
       </Price>
 
       <div onClick={() => clickSettlement()} className="button">
-        <Button content="정산 요청하기" num="4" />
+        {order === 'selling' || order === 'settled' ? (
+          <Call isblack="black">정산 요청하기</Call>
+        ) : (
+          <Call isblack="gray">정산 요청하기</Call>
+        )}
       </div>
     </Container>
   );
 }
 
 export default page;
+
+const Call = styled.div<{ isblack: string }>`
+  border: none;
+  display: flex;
+  padding: 24px 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+
+  width: 280px;
+  height: 16px;
+  background: ${(props) =>
+    props.isblack == 'black' ? 'var(--3, #B4B4B4)' : 'var(--1, #111)'};
+  color: var(--4, #e8e8e8);
+`;
 
 const Container = styled.div`
   display: flex;
@@ -230,6 +224,18 @@ const Product = styled.div`
 const Check = styled.div`
   margin-bottom: 20px;
 `;
+const Option = styled.div<{ option: string }>`
+  margin-bottom: 20px;
+  font-size: 20px;
+
+  font-weight: 600;
+  color: ${(props) =>
+    props.option === 'selling'
+      ? 'var(--1, #111)'
+      : props.option === 'sold-out'
+      ? 'var(--serve-color, #FF8A00)'
+      : 'var(--3, #B4B4B4);'};
+`;
 const On = styled.img``;
 const Off = styled.img``;
 const Products = styled.div`
@@ -237,7 +243,7 @@ const Products = styled.div`
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-between;
-  margin-bottom: 70px;
+  margin-bottom: 80px;
   gap: 24px;
 `;
 const More = styled.div`
@@ -263,7 +269,7 @@ const Price = styled.div`
   height: 60px;
   border-radius: 13px;
   background: var(--4, #e8e8e8);
-  margin-top: 80px;
+
   margin-bottom: 70px;
   display: flex;
   justify-content: center;

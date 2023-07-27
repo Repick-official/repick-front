@@ -760,6 +760,38 @@ export const showWardrobeSold = async (access: any) => {
     throw error;
   }
 };
+export const showWardrobeSettled = async (access: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + '/sell/history/settled',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
 export const showWardrobeSettlement = async (access: any, ids: []) => {
   const data = {
     productIds: ids,
