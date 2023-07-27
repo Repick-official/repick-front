@@ -3,17 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
 import { styled } from 'styled-components';
-import ContentBodyImage from '@/components/guide/ContentBodyImage';
-import ImageDivision from '@/components/guide/ImageDivision';
+import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import { useRouter } from 'next/navigation';
 
-import guide_first from '@/assets/images/guide/guide_first.png';
-import guide_second from '@/assets/images/guide/guide_second.png';
-import guide_third from '@/assets/images/guide/guide_third.png';
-import guide_fourth from '@/assets/images/guide/guide_fourth.png';
-import guide_fifth from '@/assets/images/guide/guide_fifth.png';
-
+import info_1 from '@/assets/images/guide/info_1.png';
+import character_1 from '@/assets/images/guide/character_1.png';
 import { getMainPageProducts } from '@/api/requests';
 
 function page() {
@@ -41,57 +36,57 @@ function page() {
           src={logo_guide}
           alt="Picture of me"
           style={{ width: '100vw', height: 'auto' }}
-          placeholder="blur" // Optional blur-up while loading
+          placeholder="blur" 
         />
       </BannerWrapper>
+      <Section1>
+        <ContentWrapper>
+          <ContentTitle>
+            <Image
+              src = {small_logo}
+              alt="Small Logo"
+              style = {{width:'auto',height:'auto'}}
+              // placeholder ="blur"
+            />
+            <ContentTitleText>
+              Problem
+            </ContentTitleText>
+          </ContentTitle>
+          <ContentSubTitle>
+            현재 의류소비와 거래는 어떤 문제가 있을까요?
+          </ContentSubTitle>
+          <RectWrapper>
+            <LeftRect>
+              <Info1_P1>
+              한해 버려지는<br></br>
+              의류 폐기물의 양은?
+              </Info1_P1>
+              <Info1_P2>
+                →무려 9천 2백만 톤!
+              </Info1_P2>
+              <TempRect/>
+              <Image
+                src = {info_1}
+                alt="info_1"
+                style = {{position : 'absolute',right: '0'}}
+              />
+              <Image
+                src = {character_1}
+                alt="character_1"
+                style = {{
+                  position : 'absolute',
+                  bottom: '-16%',
+                  transform: 'rotate(-5deg)',
+                  left: '-17%'}}
+              />
+            </LeftRect>
+            <RightRect>
+
+            </RightRect>
+          </RectWrapper>
+        </ContentWrapper>
+      </Section1>
       <ContentWrapper>
-        <ContentHeader>{'리픽은 어떻게 운영될까요?'}</ContentHeader>
-        <ContentBody>
-          <ContentBodyP>{'<판매자>'}</ContentBodyP>
-          <ContentBodyImageWrapper>
-            <Wrap>
-              <ContentBodyImage src={guide_first.src} />
-              <Text>{'중고의류 수거 신청을 합니다.'}</Text>
-            </Wrap>
-
-            <ImageDivision />
-            <Wrap>
-              <ContentBodyImage src={guide_second.src} />
-              <Text>{'리픽은 의류를 수거하여 위탁 판매합니다.'}</Text>
-            </Wrap>
-          </ContentBodyImageWrapper>
-        </ContentBody>
-        <ContentBody>
-          <ContentBodyP>{'<구매자>'}</ContentBodyP>
-          <ContentBodyImageWrapper>
-            <Wrap>
-              <ContentBodyImage src={guide_third.src} />
-              <Text>
-                {'마음에 드는 옷을 합리적인 가격으로'}
-                <br />
-                {'선택합니다.'}
-              </Text>
-            </Wrap>
-
-            <ImageDivision />
-            <Wrap>
-              <ContentBodyImage src={guide_fourth.src} />
-              <Text>
-                {'마이픽을 통해 선택 현황을 보고 '}
-                <br /> {'구매를 확정하면 옷을 받아 볼 수 있습니다'}
-              </Text>
-            </Wrap>
-
-            <ImageDivision />
-            <Wrap>
-              <ContentBodyImage src={guide_fifth.src} />
-              <Text>
-                {'홈피팅 후 구매할 옷은 입금을 통해 구매하고'} <br />{' '}
-                {'구매하지 않을 옷은 반품 신청을 합니다'}
-              </Text>
-            </Wrap>
-          </ContentBodyImageWrapper>
-        </ContentBody>
         <ContentWaiting>
           <ContentWaitingInfoWrapper>
             <ContentWaitingInfoHeader>
@@ -125,73 +120,25 @@ function page() {
 }
 
 export default page;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Text = styled.div`
-  margin-top: 24px;
-  width: 288px;
-`;
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 80px;
-
   text-align: center;
 `;
 const BannerWrapper = styled.div`
   width: 100%;
   margin-top: 60px;
+  font-size : 0;
 `;
 
 const ContentWrapper = styled.div`
   width: 1216px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
-`;
-
-const ContentHeader = styled.p`
-  color: #111;
-  /* Header3 24pt sb */
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-
-  margin-bottom: 60px;
-`;
-
-const ContentBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const ContentBodyP = styled.p`
-  color: #111;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-`;
-
-const ContentBodyImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 50px;
+  justify-content: center;
 `;
-
 const ContentWaiting = styled.div`
   margin-top: 60px;
   margin-bottom: 148px;
@@ -218,3 +165,103 @@ const ContentWaitingInfoItemWrapper = styled.div`
   justify-content: center;
   gap: 24px;
 `;
+
+const Section1 = styled.div`
+  height : 846px;
+  display:flex;
+  align-items : center;
+  justify-content: center;
+`
+
+const ContentTitle = styled.div`
+  display:flex;
+  gap : 8px;
+  margin-bottom : 16px;
+`;
+const ContentTitleText = styled.p`
+  color: var(--serve-color, #FF8A00);
+  font-feature-settings: 'clig' off, 'liga' off;
+  /* Header3 24pt sb */
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 36px */
+`;
+
+const ContentSubTitle = styled.p`
+  color: var(--1, #111);
+  font-family: Pretendard;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+
+  margin-bottom :66px;
+`
+
+const LeftRect = styled.div`
+  width: 534px;
+  height: 364px;
+  border-radius: 21px;
+  background: linear-gradient(0deg, #000 0%, #000 100%), linear-gradient(306deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
+  flex-shrink: 0;
+  position:relative;
+`
+
+const RightRect = styled.div`
+  width: 555px;
+  height: 364px;
+  border-radius: 21px;
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.16);
+  background: #FFF;
+  flex-shrink: 0;
+`
+
+const RectWrapper = styled.div`
+  display:flex;
+  gap : 45px;
+`
+
+const TempRect = styled.div`
+  width: 364px;
+  height: 292px;
+  transform: rotate(-90deg);
+  border-radius: 21px;
+  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+  flex-shrink: 0;
+  position : absolute;
+  top: 10%;
+  z-index: 998;
+  left: 18%;
+`
+const Info1_P1 = styled.p`
+  position: absolute;
+  z-index:999;
+  text-align: left;
+  top: 10%;
+  left: 10%;
+  color: var(--5, #FFF);
+  font-family: Pretendard;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  font-feature-settings: 'clig' off, 'liga' off;
+`
+
+const Info1_P2 = styled.p`
+  position:absolute;
+  z-index: 999;
+  top: 44%;
+  left : 10%;
+  color: var(--serve-color, #FF8A00);
+  font-family: Pretendard;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  font-feature-settings: 'clig' off, 'liga' off;
+`
