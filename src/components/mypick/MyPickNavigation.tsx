@@ -97,7 +97,7 @@ function MyPickNavigation() {
 
           <Section>
             <Option
-              onClick={() => checkUserPurchase()}
+              onClick={() => router.push('/myPick/shopping/purchase')}
               selected={selectedPage === '구매하기' ? true : false}
             >
               구매하기
