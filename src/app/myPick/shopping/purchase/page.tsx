@@ -62,7 +62,7 @@ function page() {
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
   // 결제 수단 상태 (1: 무통장입금, 2: 페이북, 3: 신용 카드)
-  const [paymentMethod, setPaymentMethod] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState('');
 
   // 체크박스 클릭 핸들러
   const handleDeliveryDiffClick = () => {
@@ -74,7 +74,7 @@ function page() {
   };
 
   // 결제 수단 핸들러
-  const handlePaymentMethodClick = (method: number) => {
+  const handlePaymentMethodClick = (method: string) => {
     setPaymentMethod(method);
   };
 
@@ -260,36 +260,46 @@ function page() {
               <div className="star">{'*'}</div>
             </Method>
             <CheckMethodWrapper>
-              <CheckWrapper onClick={() => handlePaymentMethodClick(1)}>
+              <CheckWrapper
+                onClick={() => handlePaymentMethodClick('무통장 입금')}
+              >
                 <Check>
                   <Off
-                    src={paymentMethod === 1 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '무통장 입금'
+                        ? check_on.src
+                        : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>무통장입금</CheckP>
               </CheckWrapper>
               <CheckWrapper
                 onClick={() => {
-                  handlePaymentMethodClick(2);
                   alert('현재 이용 불가능한 서비스입니다.');
                 }}
               >
                 <Check>
                   <Off
-                    src={paymentMethod === 2 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '페이북' ? check_on.src : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>페이북</CheckP>
               </CheckWrapper>
               <CheckWrapper
                 onClick={() => {
-                  handlePaymentMethodClick(3);
                   alert('현재 이용 불가능한 서비스입니다.');
                 }}
               >
                 <Check>
                   <Off
-                    src={paymentMethod === 3 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '신용 카드'
+                        ? check_on.src
+                        : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>신용 카드</CheckP>
@@ -335,7 +345,7 @@ function page() {
               ))}
             </OrderPrice>
             <AllPrice>결제수단</AllPrice>
-            <MethodNotSelected>결제 수단 미선택 상태</MethodNotSelected>
+            <MethodNotSelected>{paymentMethod}</MethodNotSelected>
             <Accept>
               *주문할 상품의 상품명, 상품 가격, 배송 정보를 다시 한 번
               확인해주세요. 구매에 동의하시겠습니까?
