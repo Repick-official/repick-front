@@ -42,7 +42,7 @@ function page() {
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedTotalPrice, setSelectedTotalPrice] = useState<number>(0);
-  const [total, setTotal] = useRecoilState<number>(totalPrice);
+  // const [total, setTotal] = useRecoilState<number>(totalPrice);
   const deliveryFee = 0; //
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -141,7 +141,7 @@ function page() {
 
   const goPurchase = async () => {
     setFinalProducts(selectedProducts);
-    setTotal(selectedTotalPrice + deliveryFee);
+    // setTotal(selectedTotalPrice + deliveryFee);
     router.push('/myPick/shopping/purchase');
   };
 
@@ -571,6 +571,8 @@ const DeliveredItemP = styled.div`
   margin-left: 64px;
   margin-right: 84px;
   height: 166px;
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 const ItemBrand = styled.div``;

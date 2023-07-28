@@ -53,13 +53,16 @@ function page() {
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
   const [h, setH] = useState<any[]>([]);
-  const [p, setP] = useState(0);
+  // const [p, setP] = useState(0);
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
+  const [total, setTotal] = useState(0);
+
   // 체크박스 상태
   const [isDeliveryDiff, setIsDeliveryDiff] = useState(false);
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
   // 결제 수단 상태 (1: 무통장입금, 2: 페이북, 3: 신용 카드)
-  const [paymentMethod, setPaymentMethod] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState('');
 
   // 체크박스 클릭 핸들러
   const handleDeliveryDiffClick = () => {
@@ -71,23 +74,25 @@ function page() {
   };
 
   // 결제 수단 핸들러
-  const handlePaymentMethodClick = (method: number) => {
+  const handlePaymentMethodClick = (method: string) => {
     setPaymentMethod(method);
   };
 
-  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
-  const [total, setTotal] = useRecoilState<number>(totalPrice);
+  const clearProducts = () => {
+    setFinalProducts([]); // 기존 상태를 새로운 빈 배열로 업데이트
+  };
 
   useEffect(() => {
     if (finalProducts.length === 0) {
       alert('구매할 제품이 없습니다.');
-      router.push('/myPick/home/homefitting');
+      // router.push('/myPick/home');
     }
     const clothes = finalProducts.map((item: any) => {
+      setTotal((prevTotal) => prevTotal + item.product.price);
       return item;
     });
     setH(clothes);
-    setP(total);
+    // setP(total); 토탈 가격 계산
   }, []);
 
   const handleClick = () => {
@@ -116,6 +121,8 @@ function page() {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await orderProducts(accessToken, updatedData);
       if (response.success) {
+        clearProducts();
+
         router.push('/mypage/success');
       }
     } else {
@@ -130,7 +137,7 @@ function page() {
 
       <OrderItemWrapper>
         {h.map((item) => (
-          <div key={item.homeFittingId}>
+          <div key={item.product.productId}>
             <ContentBodyInfo
               src={item.product.mainImageFile.imagePath}
               tagName={item.product.brand}
@@ -253,36 +260,46 @@ function page() {
               <div className="star">{'*'}</div>
             </Method>
             <CheckMethodWrapper>
-              <CheckWrapper onClick={() => handlePaymentMethodClick(1)}>
+              <CheckWrapper
+                onClick={() => handlePaymentMethodClick('무통장 입금')}
+              >
                 <Check>
                   <Off
-                    src={paymentMethod === 1 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '무통장 입금'
+                        ? check_on.src
+                        : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>무통장입금</CheckP>
               </CheckWrapper>
               <CheckWrapper
                 onClick={() => {
-                  handlePaymentMethodClick(2);
                   alert('현재 이용 불가능한 서비스입니다.');
                 }}
               >
                 <Check>
                   <Off
-                    src={paymentMethod === 2 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '페이북' ? check_on.src : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>페이북</CheckP>
               </CheckWrapper>
               <CheckWrapper
                 onClick={() => {
-                  handlePaymentMethodClick(3);
                   alert('현재 이용 불가능한 서비스입니다.');
                 }}
               >
                 <Check>
                   <Off
-                    src={paymentMethod === 3 ? check_on.src : check_off.src}
+                    src={
+                      paymentMethod === '신용 카드'
+                        ? check_on.src
+                        : check_off.src
+                    }
                   />
                 </Check>
                 <CheckP>신용 카드</CheckP>
@@ -295,13 +312,13 @@ function page() {
             <PayInfo>
               <MoneyAllWrapper>
                 <All>총금액</All>
-                <Money>{p.toLocaleString('en-US')} 원</Money>
+                <Money>{total.toLocaleString('en-US')} 원</Money>
               </MoneyAllWrapper>
               <LineMoney src={line.src} />
               <MoneyDetail>
                 <MoneyWrapper>
                   <All>상품 금액</All>
-                  <Money>{p.toLocaleString('en-US')} 원</Money>
+                  <Money>{total.toLocaleString('en-US')} 원</Money>
                 </MoneyWrapper>
                 <MoneyWrapper>
                   <All>배송비</All>
@@ -316,7 +333,7 @@ function page() {
             <AllPrice>주문상품</AllPrice>
             <OrderPrice>
               {h.map((item) => (
-                <div key={item.homeFittingId}>
+                <div key={item.product.productId}>
                   <OrderItem
                     src={item.product.mainImageFile.imagePath}
                     tagName={item.product.brand}
@@ -328,7 +345,7 @@ function page() {
               ))}
             </OrderPrice>
             <AllPrice>결제수단</AllPrice>
-            <MethodNotSelected>결제 수단 미선택 상태</MethodNotSelected>
+            <MethodNotSelected>{paymentMethod}</MethodNotSelected>
             <Accept>
               *주문할 상품의 상품명, 상품 가격, 배송 정보를 다시 한 번
               확인해주세요. 구매에 동의하시겠습니까?
@@ -451,7 +468,7 @@ const Content = styled.input`
   border: none;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'Pretendard';
+
   color: rgba(180, 180, 180, 1);
   padding: 0px 0px 0px 24px;
   outline: none;

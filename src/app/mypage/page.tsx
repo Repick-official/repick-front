@@ -455,7 +455,7 @@ const ContentBank = styled.input`
   border: none;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'Pretendard';
+
   color: rgba(180, 180, 180, 1);
   padding: 0px 0px 0px 24px;
   outline: none;
@@ -476,7 +476,6 @@ const ContentBanks = styled.input`
   border: none;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'Pretendard';
   color: rgba(180, 180, 180, 1);
   padding: 0px 0px 0px 24px;
   outline: none;

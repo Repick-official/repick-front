@@ -102,7 +102,7 @@ const TagName = styled.p<TagNameProps>`
   margin: 0;
 `;
 
-const ItemInfo = styled.p`
+const ItemInfo = styled.div`
   color: var(--1, #111);
   text-align: center;
   font-size: 16px;

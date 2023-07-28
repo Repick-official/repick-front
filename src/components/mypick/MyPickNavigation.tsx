@@ -97,7 +97,7 @@ function MyPickNavigation() {
 
           <Section>
             <Option
-              onClick={() => checkUserPurchase()}
+              onClick={() => router.push('/myPick/shopping/purchase')}
               selected={selectedPage === '구매하기' ? true : false}
             >
               구매하기
@@ -146,7 +146,7 @@ const SelectedPage = styled.div`
   width: 133.5px;
   height: 3px;
   background-color: var(--1, #111);
-  margin-top: 40.5px;
+  margin-top: 38px;
   position: absolute;
   z-index: 1;
 `;

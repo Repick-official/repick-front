@@ -11,6 +11,7 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import Alert from '@/components/mypick/Alert';
+import { requestProducts, totalPrice } from '@/atom/states';
 
 import {
   inquiryMypick,
@@ -29,6 +30,7 @@ function page() {
   const [products, setProducts] = useState<any[]>([]);
 
   const [selectAll, setSelectAll] = useState('전체 선택');
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
   useEffect(() => {
     const get = async () => {
@@ -103,18 +105,11 @@ function page() {
   };
 
   const handlePurchase = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await getIsSubscribe(accessToken);
-    if (response == 'NONE') {
-      alert('구독이 필요한 서비스입니다.');
-      router.push('/mypage/subscribe');
+    const selectedProducts = products.filter((item) => item.isClicked);
+    if (selectedProducts.length > 0) {
+      selectedProducts.forEach((item) => goPurchase(selectedProducts));
     } else {
-      const selectedProducts = products.filter((item) => item.isClicked);
-      if (selectedProducts.length > 0) {
-        selectedProducts.forEach((item) => goPurchase());
-      } else {
-        alert('구매할 제품을 선택해주세요.');
-      }
+      alert('구매할 제품을 선택해주세요.');
     }
   };
 
@@ -125,10 +120,16 @@ function page() {
     router.push('/myPick/home/homefitting/success');
   };
 
-  const goPurchase = async () => {
-    alert('현재 이용 불가능한 서비스입니다. 홈피팅 신청 먼저 해주세요.');
-    // setSelectedPage('구매하기');
-    // router.push('/myPick/shopping/purchase');
+  const goPurchase = (selectedProducts: any) => {
+    setSelectedPage('구매하기');
+
+    // 구매하기에 해당 제품 담아야 함.
+    // const updatedProducts = [...finalProducts, ...selectedProducts];
+
+    // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
+    setFinalProducts(selectedProducts);
+
+    router.push('/myPick/shopping/purchase');
   };
 
   const handleClickAll = () => {
@@ -299,5 +300,5 @@ const Products = styled.div`
   flex-wrap: wrap;
   // justify-content: space-between;
   margin-bottom: 70px;
-  gap: 24px;
+  gap: 21px;
 `;
