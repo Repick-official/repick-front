@@ -571,6 +571,8 @@ const DeliveredItemP = styled.div`
   margin-left: 64px;
   margin-right: 84px;
   height: 166px;
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 const ItemBrand = styled.div``;
