@@ -2,7 +2,7 @@
 import '../reset.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@/components/common/Button';
 import line from '@/assets/images/line.svg';
 import approved from '@/assets/images/mypage/approved.svg';
@@ -125,12 +125,12 @@ function page() {
               {...register('name', {
                 pattern: {
                   value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
-                  message: '영어와 한글만 입력해주세요.',
+                  message: '*',
                 },
               })}
               required
             />
-            {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && <Error>{errors.name.message}</Error>}
           </Wrapper>
           <Wrapper>
             <Info>
@@ -141,70 +141,89 @@ function page() {
               {...register('phoneNumber', {
                 pattern: {
                   value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
-                  message: "숫자와 '-'만 입력해주세요.",
+                  message: '*',
                 },
                 minLength: {
                   value: 11,
-                  message: '번호는 9자 이상 입력해주세요.',
+                  message: '*',
                 },
                 maxLength: {
                   value: 13,
-                  message: '번호는 11자 이하로 입력해주세요.',
+                  message: '*',
                 },
               })}
               required
             />
-            {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+            {errors.phoneNumber && <Error>{errors.phoneNumber.message}</Error>}
           </Wrapper>
           <Wrapper>
-            <Info>{'등록계좌'}</Info>
+            <Info>
+              {'등록계좌'}
+              <div className="star">{'*'}</div>
+            </Info>
             <Contents>
               <ContentWrapper>
                 <InfoBank>은행</InfoBank>
                 <ContentBank
                   {...register('bank.bankName', {
-                    required: '은행이름을 입력해주세요.',
+                    pattern: {
+                      value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
+                      message: '*',
+                    },
                   })}
                   required
                 />
-                {errors.bank?.bankName && errors.bank?.bankName && (
-                  <p>{'은행 정보를 입력해주세요'}</p>
+                {errors.bank?.bankName && (
+                  <Error>{errors.bank?.bankName.message}</Error>
                 )}
               </ContentWrapper>
               <ContentWrapper>
                 <InfoBank>계좌번호</InfoBank>
                 <ContentBanks
                   {...register('bank.accountNumber', {
-                    required: '은행 번호를 입력해주세요.',
+                    pattern: {
+                      value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
+                      message: '*',
+                    },
                   })}
                   required
                 />
-                {errors.bank?.accountNumber && errors.bank?.accountNumber && (
-                  <p>{'은행 정보를 입력해주세요'}</p>
+                {errors.bank?.accountNumber && (
+                  <Error>{errors.bank?.accountNumber.message}</Error>
                 )}
               </ContentWrapper>
             </Contents>
           </Wrapper>
           <Wrapper>
-            <Info>{'등록주소'}</Info>
+            <Info>
+              {'등록주소'}
+              <div className="star">{'*'}</div>
+            </Info>
             <Content
               {...register('address.mainAddress', {
-                required: '주소를 입력해주세요.',
+                pattern: {
+                  value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                  message: '*',
+                },
               })}
               required
             />
             {errors.address?.mainAddress && (
-              <p>{errors.address?.mainAddress.message}</p>
+              <Error>{errors.address?.mainAddress.message}</Error>
             )}
           </Wrapper>
           <Wrapper>
             <Info>{'아이디'}</Info>
             <Content
               placeholder="숫자, 영문 대소문자만 사용 가능합니다"
-              {...register('nickname', { required: '아이디를 입력해주세요.' })}
-              required
+              {...register('nickname', {
+                pattern: {
+                  value: /^[0-9a-zA-Z]+$/,
+                  message: '*',
+                },
+              })}
             />
-            {errors.nickname && <p>{errors.nickname.message}</p>}
+            {errors.nickname && <Error>{errors.nickname.message}</Error>}
           </Wrapper>
           <Wrapper>
             <Info>
@@ -217,11 +236,11 @@ function page() {
                 required: '이메일을 입력해주세요.',
                 pattern: {
                   value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-                  message: '올바른 이메일 형식을 입력해주세요.',
+                  message: '*',
                 },
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <Error>{errors.email.message}</Error>}
           </Wrapper>
         </R>
         <InfoEditButton>
@@ -337,6 +356,13 @@ function page() {
 }
 
 export default page;
+
+const Error = styled.div`
+  color: rgba(255, 61, 0, 1);
+  font-size: 20px;
+  margin-left: 3px;
+  margin-right: 0;
+`;
 
 const Sub = styled.div`
   font-size: 16px;
