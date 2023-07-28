@@ -19,6 +19,8 @@ import rightArrow from '@/assets/images/product/rightArrow.svg';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { selectedNavPage } from '@/atom/states';
+import { requestProducts, totalPrice } from '@/atom/states';
+import { Product } from '@/atom/states';
 
 function page() {
   //제품 디테일 api
@@ -76,6 +78,7 @@ function page() {
   const router = useRouter();
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
   const putMypickCart = async () => {
     if (cookies.access) {
@@ -97,10 +100,29 @@ function page() {
     }
   };
 
-  const purchase = async () => {
+  const purchase = () => {
     if (userInfo.uesrNickname) {
-      let accessToken = await getAccessToken(cookies, setCookie);
-      alert('현재 이용 불가능한 서비스입니다. 마이픽에 먼저 담아주세요~');
+      const newProduct: Product = {
+        homeFittingId: 0,
+        product: {
+          brand: products.brand,
+          detail: products.detail,
+          size: products.size,
+          price: products.price,
+          name: products.name,
+          mainImageFile: {
+            imagePath: products.mainImageFile.imagePath,
+          },
+          productId: products.productId,
+        },
+        isChecked: false,
+      };
+      router.push('/myPick/shopping/purchase');
+
+      // const updatedProducts = [...finalProducts, newProduct];
+
+      // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
+      setFinalProducts([newProduct]);
     } else {
       alert('로그인이 필요한 서비스입니다.');
       router.push('/login');

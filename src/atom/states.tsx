@@ -28,7 +28,7 @@ export const userInfoState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-interface Product {
+export interface Product {
   homeFittingId: number;
   product: {
     brand: string;
@@ -39,7 +39,7 @@ interface Product {
     mainImageFile: {
       imagePath: string;
     };
-    productId : number;
+    productId: number;
   };
   isChecked: boolean;
 }
@@ -58,7 +58,7 @@ export const requestProducts = atom<Product[]>({
         mainImageFile: {
           imagePath: '',
         },
-        productId : 0,
+        productId: 0,
       },
       isChecked: false,
     },

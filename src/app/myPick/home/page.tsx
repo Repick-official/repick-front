@@ -105,12 +105,6 @@ function page() {
   };
 
   const handlePurchase = async () => {
-    // let accessToken = await getAccessToken(cookies, setCookie);
-    // const response = await getIsSubscribe(accessToken);
-    // if (response == 'NONE') {
-    //   alert('구독이 필요한 서비스입니다.');
-    //   router.push('/mypage/subscribe');
-    // } else {
     const selectedProducts = products.filter((item) => item.isClicked);
     if (selectedProducts.length > 0) {
       selectedProducts.forEach((item) => goPurchase(selectedProducts));
@@ -127,14 +121,13 @@ function page() {
   };
 
   const goPurchase = (selectedProducts: any) => {
-    // alert('현재 이용 불가능한 서비스입니다. 홈피팅 신청 먼저 해주세요.');
     setSelectedPage('구매하기');
 
     // 구매하기에 해당 제품 담아야 함.
-    const updatedProducts = [...finalProducts, ...selectedProducts];
+    // const updatedProducts = [...finalProducts, ...selectedProducts];
 
     // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
-    setFinalProducts(updatedProducts);
+    setFinalProducts(selectedProducts);
 
     router.push('/myPick/shopping/purchase');
   };
