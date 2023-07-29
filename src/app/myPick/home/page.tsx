@@ -13,7 +13,6 @@ import { useCookies } from 'react-cookie';
 import Alert from '@/components/mypick/Alert';
 import { requestProducts } from '@/atom/states';
 import { selectedNavPage } from '@/atom/states';
-
 import {
   inquiryMypick,
   applyHomeFitting,
@@ -21,7 +20,6 @@ import {
   deleteProducts,
   getUserInfo,
 } from '@/api/requests';
-import { NONAME } from 'dns';
 
 function page() {
   const router = useRouter();
@@ -89,6 +87,7 @@ function page() {
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const [btn, setBtn] = useState(0);
+  const [cartProducts, setCartProducts] = useState<any[]>([]);
 
   const handleApply = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
@@ -119,9 +118,7 @@ function page() {
             address &&
             email
           ) {
-            selectedProducts.forEach((item) =>
-              handleHomeFitting(item.cartProductId)
-            );
+            updateCartProducts(selectedProducts);
           } else {
             const userConfirmation = window.confirm(
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
@@ -148,9 +145,7 @@ function page() {
             address &&
             email
           ) {
-            selectedProducts.forEach((item) =>
-              handleHomeFitting(item.cartProductId)
-            );
+            updateCartProducts(selectedProducts);
           } else {
             const userConfirmation = window.confirm(
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
@@ -165,6 +160,19 @@ function page() {
     }
   };
 
+  const updateCartProducts = async (selectedProducts: any) => {
+    const newCartProducts = selectedProducts.map((item: any) => item.productId);
+
+    // setCartProducts를 호출한 후에 handleHomeFitting 함수를 호출
+    setCartProducts((prevCartProducts) => [
+      ...prevCartProducts,
+      ...newCartProducts,
+    ]);
+
+    // handleHomeFitting 함수를 updateCartProducts 함수 호출 후에 실행
+    await handleHomeFitting(); //아놔 왜 안 되는거지?
+  };
+
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
     if (selectedProducts.length > 0) {
@@ -177,14 +185,14 @@ function page() {
     }
   };
 
-  const handleHomeFitting = async (Id: any) => {
+  const handleHomeFitting = async () => {
     const userConfirmation = window.confirm(
       '마이페이지에 저장되어 있는 정보로 홈피팅이 신청됩니다. 홈피팅을 신청하시겠습니까?'
     );
-
     if (userConfirmation) {
+      // console.log('켁', Ids);
       let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await applyHomeFitting(accessToken, Id);
+      const response = await applyHomeFitting(accessToken, cartProducts);
       setSelectedPage('홈피팅');
       router.push('/myPick/home/homefitting/success');
     } else {

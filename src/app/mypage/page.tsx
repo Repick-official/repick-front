@@ -91,7 +91,7 @@ function page() {
     const response = await updateUserInfo(accessToken, data);
     if (response.success) {
       alert('회원정보를 수정하였습니다');
-      router.push('/');
+      // router.push('/');
     }
   };
   const handleClick = () => {

@@ -201,18 +201,19 @@ export const inquiryMypick = async (access: any) => {
   }
 };
 
-export const applyHomeFitting = async (access: any, cartProductId: any) => {
+export const applyHomeFitting = async (access: any, ids: []) => {
+  const data = {
+    cartProductIds: ids,
+  };
   try {
-    const response = await fetch(
-      process.env.API_URL + `/home-fitting/${cartProductId}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${access}`,
-        },
-      }
-    );
+    const response = await fetch(process.env.API_URL + '/home-fitting/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access}`,
+      },
+      body: JSON.stringify(data),
+    });
     if (response.ok) {
       const data = await response.json();
       return data;
