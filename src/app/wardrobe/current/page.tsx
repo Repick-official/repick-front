@@ -22,17 +22,20 @@ function page() {
   const [sold, setSold] = useState<any[]>([]);
 
   const clickSettlement = async () => {
-    if (order === 'all' || order === 'sold') {
-      if (sold.length === 0) {
-        // 'sold' 배열이 비어있는 경우 알림창 띄우기
-        alert('정산 요청할 상품이 없습니다.');
+    const confirm = window.confirm('정산 요청을 신청하시겠습니까?');
+    if (confirm) {
+      if (order === 'all' || order === 'sold') {
+        if (sold.length === 0) {
+          // 'sold' 배열이 비어있는 경우 알림창 띄우기
+          alert('정산 요청할 상품이 없습니다.');
+        } else {
+          let accessToken = await getAccessToken(cookies, setCookie);
+          const settle = await showWardrobeSettlement(accessToken, sold);
+          router.push('/wardrobe/current/success');
+        }
       } else {
-        let accessToken = await getAccessToken(cookies, setCookie);
-        const settle = await showWardrobeSettlement(accessToken, sold);
-        router.push('/wardrobe/current/success');
+        alert('정산 요청이 불가능한 상품입니다.');
       }
-    } else {
-      alert('정산 요청이 불가능한 상품입니다.');
     }
   };
 
@@ -244,7 +247,7 @@ const Products = styled.div`
   flex-wrap: wrap;
   // justify-content: space-between;
   margin-bottom: 80px;
-  gap: 24px;
+  gap: 15px;
 `;
 const More = styled.div`
   width: 1216px;

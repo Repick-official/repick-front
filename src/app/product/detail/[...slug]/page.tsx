@@ -19,7 +19,7 @@ import rightArrow from '@/assets/images/product/rightArrow.svg';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { selectedNavPage } from '@/atom/states';
-import { requestProducts, totalPrice } from '@/atom/states';
+import { requestProducts } from '@/atom/states';
 import { Product } from '@/atom/states';
 
 function page() {
@@ -81,52 +81,58 @@ function page() {
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
   const putMypickCart = async () => {
-    if (cookies.access) {
-      let location = window.location.pathname;
-      let split = location.split('/');
-      let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await putMypick(accessToken, split[3]);
-      if (response.success) {
-        alert('이미 마이픽 또는 홈피팅에 있는 제품입니다.');
-        return;
+    const confirm = window.confirm('해당 상품을 마이픽에 담으시겠습니까?');
+    if (confirm) {
+      if (cookies.access) {
+        let location = window.location.pathname;
+        let split = location.split('/');
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const response = await putMypick(accessToken, split[3]);
+        if (response.success) {
+          alert('이미 마이픽 또는 홈피팅에 있는 제품입니다.');
+          return;
+        } else {
+          alert('선택하신 제품을 마이픽에 담았습니다.');
+          router.push('/product');
+        }
       } else {
-        alert('선택하신 제품을 마이픽에 담았습니다.');
-        router.push('/product');
+        alert('로그인이 필요한 서비스입니다.');
+        router.push('/login');
+        setSelectedPage('');
       }
-    } else {
-      alert('로그인이 필요한 서비스입니다.');
-      router.push('/login');
-      setSelectedPage('');
     }
   };
 
   const purchase = () => {
-    if (userInfo.uesrNickname) {
-      const newProduct: Product = {
-        homeFittingId: 0,
-        product: {
-          brand: products.brand,
-          detail: products.detail,
-          size: products.size,
-          price: products.price,
-          name: products.name,
-          mainImageFile: {
-            imagePath: products.mainImageFile.imagePath,
+    const confirm = window.confirm('해당 상품을 바로 구매하시겠습니까?');
+    if (confirm) {
+      if (userInfo.uesrNickname) {
+        const newProduct: Product = {
+          homeFittingId: 0,
+          product: {
+            brand: products.brand,
+            detail: products.detail,
+            size: products.size,
+            price: products.price,
+            name: products.name,
+            mainImageFile: {
+              imagePath: products.mainImageFile.imagePath,
+            },
+            productId: products.productId,
           },
-          productId: products.productId,
-        },
-        isChecked: false,
-      };
-      router.push('/myPick/shopping/purchase');
+          isChecked: false,
+        };
+        router.push('/myPick/shopping/purchase');
 
-      // const updatedProducts = [...finalProducts, newProduct];
+        // const updatedProducts = [...finalProducts, newProduct];
 
-      // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
-      setFinalProducts([newProduct]);
-    } else {
-      alert('로그인이 필요한 서비스입니다.');
-      router.push('/login');
-      setSelectedPage('');
+        // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
+        setFinalProducts([newProduct]);
+      } else {
+        alert('로그인이 필요한 서비스입니다.');
+        router.push('/login');
+        setSelectedPage('');
+      }
     }
   };
 

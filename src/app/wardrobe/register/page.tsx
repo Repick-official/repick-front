@@ -33,7 +33,7 @@ interface HookFormTypes {
 
 function page() {
   const router = useRouter();
-  //new Date(date).toISOString(); returnDate 줄 때 이 형식으로 줘야함
+
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const {
@@ -53,7 +53,7 @@ function page() {
         mainAddress: '',
         zipCode: '',
       },
-      bagQuantity: 0,
+      bagQuantity: 0, //이렇게 하면 placeholder 없어지는딩
       productQuantity: 0,
       returnDate: '',
       requestDetail: '',
@@ -63,16 +63,15 @@ function page() {
   });
 
   const registerHandler = async (data: HookFormTypes) => {
-    console.log(data);
+    const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
+    if (confirm) {
+      console.log(data);
 
-    data.returnDate = new Date(data.returnDate).toISOString();
-
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await pickupWardrobe(accessToken, data);
-    if (response.success) {
-      router.push('/wardrobe/register/success');
-    } else {
-      alert('오류 ㅜ');
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await pickupWardrobe(accessToken, data);
+      if (response.success) {
+        router.push('/wardrobe/register/success');
+      }
     }
   };
 
