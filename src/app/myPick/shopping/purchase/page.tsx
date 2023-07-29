@@ -118,12 +118,15 @@ function page() {
     };
 
     if (isClicked && paymentMethod) {
-      let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await orderProducts(accessToken, updatedData);
-      if (response.success) {
-        clearProducts();
+      const confirm = window.confirm('결제하시겠습니까?');
+      if (confirm) {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const response = await orderProducts(accessToken, updatedData);
+        if (response.success) {
+          clearProducts();
 
-        router.push('/mypage/success');
+          router.push('/mypage/success');
+        }
       }
     } else {
       alert('결제 수단을 선택하고 결제에 동의 해주세요');

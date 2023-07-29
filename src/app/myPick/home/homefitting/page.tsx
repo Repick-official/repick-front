@@ -140,9 +140,14 @@ function page() {
   };
 
   const goPurchase = async () => {
-    setFinalProducts(selectedProducts);
-    // setTotal(selectedTotalPrice + deliveryFee);
-    router.push('/myPick/shopping/purchase');
+    const confirm = window.confirm(
+      '선택하신 제품들 외에는 반품됩니다. 선택하신 제품들을 구매하시겠습니까?'
+    );
+    if (confirm) {
+      setFinalProducts(selectedProducts);
+
+      router.push('/myPick/shopping/purchase');
+    }
   };
 
   return (
