@@ -63,13 +63,22 @@ function Navigation() {
   }, []);
 
   const logoutHandler = async () => {
-    localStorage.removeItem('recoil-persist');
-    alert('로그아웃 되었습니다.');
-    document.cookie = 'access=; expires=0; path=/;';
-    setIsUser('마이페이지');
-    setIslogin('로그인');
-    setBold('notBold');
-    setSelectedPage('서비스 가이드');
+    const confirm = window.confirm('로그아웃 하시겠습니까?');
+    if (confirm) {
+      localStorage.removeItem('recoil-persist');
+      alert('로그아웃 되었습니다.');
+      document.cookie = 'access=; expires=0; path=/;';
+      setIsUser('마이페이지');
+      setIslogin('로그인');
+      setBold('notBold');
+      setSelectedPage('');
+      router.push('/login');
+    }
+  };
+
+  const loginHandler = () => {
+    setSelectedPage('');
+    router.push('/login');
   };
 
   const checkUserMypick = () => {
@@ -95,15 +104,25 @@ function Navigation() {
     }
   };
 
-  const checkUserMypage = () => {
-    if (userInfo.uesrNickname) {
-      setSelectedPage('');
-      router.push('/mypage');
-    } else {
-      alert('로그인이 필요한 서비스입니다.');
-      router.push('/login');
-      setSelectedPage('');
-    }
+  // const checkUserMypage = () => {
+  //   if (userInfo.uesrNickname) {
+  //     setSelectedPage('');
+  //     router.push('/mypage');
+  //   } else {
+  //     alert('로그인이 필요한 서비스입니다.');
+  //     router.push('/login');
+  //     setSelectedPage('');
+  //   }
+  // };
+
+  const userPage = () => {
+    setSelectedPage('');
+    router.push('/mypage');
+  };
+  const myPage = () => {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/login');
+    setSelectedPage('');
   };
 
   const goHome = () => {
@@ -122,19 +141,19 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              <My login={bold} onClick={() => checkUserMypage()}>
-                {isUser}
+              <My login={bold}>
+                {/* {isUser} */}
+                {isUser == '마이페이지' ? (
+                  <div onClick={myPage}>{isUser}</div>
+                ) : (
+                  <div onClick={userPage}>{isUser}</div>
+                )}
               </My>
-              <Login
-                onClick={() => {
-                  setSelectedPage('');
-                  router.push('/login');
-                }}
-              >
+              <Login>
                 {isLogin == '로그아웃' ? (
                   <div onClick={logoutHandler}>{isLogin}</div>
                 ) : (
-                  <div>{isLogin}</div>
+                  <div onClick={loginHandler}>{isLogin}</div>
                 )}
               </Login>
             </PageWrapper>
