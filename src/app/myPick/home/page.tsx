@@ -152,6 +152,7 @@ function page() {
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
             );
             if (userConfirmation) {
+              setSelectedNaviPage(''); // 왜 안 되는거지
               router.push('/mypage');
             }
           }

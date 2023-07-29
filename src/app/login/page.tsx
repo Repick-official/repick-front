@@ -205,6 +205,7 @@ const SnsIconWrapper = styled.div`
   width: 228px;
   justify-content: space-between;
   margin-bottom: 148px;
+  margin-top: 18px;
 `;
 
 const Icon = styled.div`

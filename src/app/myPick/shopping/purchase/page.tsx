@@ -9,7 +9,7 @@ import line from '@/assets/images/line.svg';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import OrderItem from '@/components/homefitting/OrderItem';
-import { requestProducts, totalPrice } from '@/atom/states';
+import { requestProducts } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { orderProducts } from '@/api/requests';
@@ -167,14 +167,15 @@ function page() {
                   placeholder="김회원"
                   required
                   {...register('personName', {
-                    required: '필수',
                     pattern: {
                       value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
-                      message: '영어와 한글만 입력해주세요.',
+                      message: '*',
                     },
                   })}
                 />
-                {errors.personName && <p>{errors.personName.message}</p>}
+                {errors.personName && (
+                  <Error>{errors.personName.message}</Error>
+                )}
               </Wrapper>
               <Wrapper>
                 <Info>전화번호</Info>
@@ -182,25 +183,38 @@ function page() {
                   {...register('phoneNumber', {
                     pattern: {
                       value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
-                      message: "숫자와 '-'만 입력해주세요.",
+                      message: '*',
                     },
                     minLength: {
                       value: 11,
-                      message: '번호는 9자 이상 입력해주세요.',
+                      message: '*',
                     },
                     maxLength: {
                       value: 13,
-                      message: '번호는 11자 이하로 입력해주세요.',
+                      message: '*',
                     },
                   })}
                   required
                 />
-                {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+                {errors.phoneNumber && (
+                  <Error>{errors.phoneNumber.message}</Error>
+                )}
               </Wrapper>
               <Wrapper>
                 <Info>등록주소</Info>
-                <Content />
-                {/* 여기는 왜 없지? */}
+
+                <Content
+                  {...register('address.mainAddress', {
+                    pattern: {
+                      value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                      message: '*',
+                    },
+                  })}
+                  required
+                />
+                {errors.address?.mainAddress && (
+                  <Error>{errors.address?.mainAddress.message}</Error>
+                )}
               </Wrapper>
             </SenderWrapper>
             <Line src={line.src} />
@@ -225,28 +239,35 @@ function page() {
                   <ConfirmWrapper>
                     <Content
                       className="address"
-                      {...register('address.zipCode', {})}
+                      {...register('address.zipCode', {
+                        pattern: {
+                          value: /^[\d]*$/, // 숫자만 입력되도록 정규식 패턴 설정
+                          message: '*',
+                        },
+                      })}
                       required
                     />
                     {errors.address?.zipCode && (
-                      <p>{errors.address?.zipCode.message}</p>
+                      <Error>{errors.address?.zipCode.message}</Error>
                     )}
                     <Confirm>{'우편번호'}</Confirm>
                   </ConfirmWrapper>
-                  <Content
-                    className="detail-address"
-                    placeholder="상세 주소를 입력해주세요"
-                    {...register('address.mainAddress', {
-                      pattern: {
-                        value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
-                        message: '숫자와 한글만 입력해주세요.',
-                      },
-                    })}
-                    required
-                  />
-                  {errors.address?.mainAddress && (
-                    <p>{errors.address?.mainAddress.message}</p>
-                  )}
+                  <S>
+                    <Content
+                      className="detail-address"
+                      placeholder="상세 주소를 입력해주세요"
+                      {...register('address.mainAddress', {
+                        pattern: {
+                          value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                          message: '*',
+                        },
+                      })}
+                      required
+                    />
+                    {errors.address?.mainAddress && (
+                      <Error>{errors.address?.mainAddress.message}</Error>
+                    )}
+                  </S>
                 </Address>
               </AddressWrapper>
               <Request>
@@ -370,6 +391,18 @@ function page() {
 }
 
 export default page;
+
+const S = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Error = styled.div`
+  color: rgba(255, 61, 0, 1);
+  font-size: 20px;
+  margin-left: 3px;
+  margin-right: 0;
+`;
 
 const Container = styled.div`
   margin-top: 62px;
@@ -534,6 +567,7 @@ const Confirm = styled.button`
 
 const ConfirmWrapper = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const AddressWrapper = styled.div`
