@@ -88,6 +88,7 @@ function page() {
   const clickModal = () => setShowAlert(!showAlert);
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
+  const [btn, setBtn] = useState(0);
 
   const handleApply = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
@@ -100,11 +101,13 @@ function page() {
         setShowAlert(!showAlert);
         setText1('멤버십 구독 회원만 이용 가능한 서비스입니다.');
         setText2('리픽 멤버십을 구독하시겠어요?');
+        setBtn(3);
       } else if (response == 'BASIC') {
         if (selectedProducts.length > 3) {
           setShowAlert(!showAlert);
           setText1('베이직 멤버십 회원은 3벌까지만 입어볼 수 있어요!');
           setText2('프로 플랜 멤버십으로 바꾸시겠어요?');
+          setBtn(2);
         } else {
           //여기서 회원 정보 모두 있는지 확인
           console.log('있음');
@@ -133,6 +136,7 @@ function page() {
           setShowAlert(!showAlert);
           setText1('홈피팅은 한 번에 최대 5벌까지만 가능해요.');
           setText2('5벌 홈피팅 완료 후 다시 신청해주세요.');
+          setBtn(1);
         } else {
           //여기서 회원 정보 모두 있는지 확인
           console.log('있음');
@@ -300,7 +304,12 @@ function page() {
               <Button content="홈피팅 신청하기" num="5" />
             </div>
             {showAlert && (
-              <Alert text1={text1} text2={text2} clickModal={clickModal} />
+              <Alert
+                text1={text1}
+                text2={text2}
+                button={btn}
+                clickModal={clickModal}
+              />
             )}
             <div onClick={() => handlePurchase()}>
               <Button content="구매하기" num="6" />
@@ -374,5 +383,5 @@ const Products = styled.div`
   flex-wrap: wrap;
   // justify-content: space-between;
   margin-bottom: 70px;
-  gap: 21px;
+  gap: 17px;
 `;

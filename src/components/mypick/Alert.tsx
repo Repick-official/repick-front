@@ -9,10 +9,12 @@ function SearchModal({
   clickModal,
   text1,
   text2,
+  button,
 }: {
   clickModal: any;
   text1: string;
   text2: string;
+  button: number;
 }) {
   const router = useRouter();
 
@@ -24,6 +26,23 @@ function SearchModal({
           <Content>
             <Text>{text1} </Text>
             <Text>{text2}</Text>
+            {button === 2 ? (
+              <Button>
+                <Small onClick={clickModal}>다음에 하기</Small>
+                <Small onClick={() => router.push('/mypage')}>
+                  프로 플랜으로 바꾸러 가기
+                </Small>
+              </Button>
+            ) : button === 3 ? (
+              <Button>
+                <Small onClick={clickModal}>다음에 하기</Small>
+                <Small>구독하러 가기</Small>
+              </Button>
+            ) : (
+              <Button>
+                <Large onClick={clickModal}>확인했어요</Large>
+              </Button>
+            )}
           </Content>
         </SearchModalContent>
       </ModalBox>
@@ -32,6 +51,12 @@ function SearchModal({
 }
 
 export default SearchModal;
+
+const Button = styled.div`
+  display: flex;
+`;
+const Small = styled.div``;
+const Large = styled.div``;
 
 const ModalBox = styled.div`
   position: fixed;
