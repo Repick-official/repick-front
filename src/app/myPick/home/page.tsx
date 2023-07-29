@@ -192,7 +192,7 @@ function page() {
         '마이페이지로 이동해 정보를 수정하시겠습니까?'
       );
       if (confirm) {
-        setSelectedNaviPage('');
+        setSelectedNaviPage(''); //여긴 되는 것 같은디
         router.push('/mypage');
       }
     }

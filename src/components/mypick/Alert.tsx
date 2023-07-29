@@ -4,6 +4,8 @@ import search_dark from '@/assets/images/search_dark.svg';
 import React, { useEffect, useState, useRef } from 'react';
 import { searchItem } from '@/api/requests';
 import { useRouter, redirect } from 'next/navigation';
+import { selectedNavPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
 
 function SearchModal({
   clickModal,
@@ -17,7 +19,13 @@ function SearchModal({
   button: number;
 }) {
   const router = useRouter();
+  const [selectedNaviPage, setSelectedNaviPage] =
+    useRecoilState(selectedNavPage);
 
+  const goSubscribe = () => {
+    setSelectedNaviPage('');
+    router.push('/mypage');
+  };
   return (
     <>
       <ModalBox onClick={clickModal}>
@@ -28,15 +36,21 @@ function SearchModal({
             <Text>{text2}</Text>
             {button === 2 ? (
               <Button>
-                <Small onClick={clickModal}>다음에 하기</Small>
-                <Small onClick={() => router.push('/mypage')}>
+                <Small size="normal" onClick={clickModal}>
+                  다음에 하기
+                </Small>
+                <Small size="small" onClick={goSubscribe}>
                   프로 플랜으로 바꾸러 가기
                 </Small>
               </Button>
             ) : button === 3 ? (
               <Button>
-                <Small onClick={clickModal}>다음에 하기</Small>
-                <Small>구독하러 가기</Small>
+                <Small size="normal" onClick={clickModal}>
+                  다음에 하기
+                </Small>
+                <Small size="small" onClick={goSubscribe}>
+                  구독하러 가기
+                </Small>
               </Button>
             ) : (
               <Button>
@@ -54,9 +68,37 @@ export default SearchModal;
 
 const Button = styled.div`
   display: flex;
+  gap: 20px;
+  margin-top: 38px;
 `;
-const Small = styled.div``;
-const Large = styled.div``;
+const Small = styled.div<{ size: string }>`
+  border-radius: 15px;
+  background: var(--1, #111);
+  display: flex;
+  width: 238px;
+  height: 80px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: ${(props) => (props.size === 'normal' ? '20px' : '16px')};
+  font-style: normal;
+  font-weight: 600;
+  color: var(--4, #e8e8e8);
+`;
+const Large = styled.div`
+  border-radius: 15px;
+  background: var(--1, #111);
+  display: flex;
+  width: 360.622px;
+  height: 80px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--4, #e8e8e8);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+`;
 
 const ModalBox = styled.div`
   position: fixed;
