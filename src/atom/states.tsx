@@ -65,9 +65,3 @@ export const requestProducts = atom<Product[]>({
   ],
   effects_UNSTABLE: [persistAtom],
 });
-
-export const totalPrice = atom<number>({
-  key: 'totalPrice',
-  default: 0,
-  effects_UNSTABLE: [persistAtom],
-});

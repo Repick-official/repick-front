@@ -11,19 +11,23 @@ import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import Alert from '@/components/mypick/Alert';
-import { requestProducts, totalPrice } from '@/atom/states';
+import { requestProducts } from '@/atom/states';
+import { selectedNavPage } from '@/atom/states';
 
 import {
   inquiryMypick,
   applyHomeFitting,
   getIsSubscribe,
   deleteProducts,
+  getUserInfo,
 } from '@/api/requests';
 import { NONAME } from 'dns';
 
 function page() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
+  const [selectedNaviPage, setSelectedNaviPage] =
+    useRecoilState(selectedNavPage);
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -31,11 +35,27 @@ function page() {
 
   const [selectAll, setSelectAll] = useState('전체 선택');
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryMypick(accessToken);
+
+      const res = await getUserInfo(accessToken);
+      setName(res.name);
+      setPhoneNumber(res.phoneNumber);
+      setBankName(res.bank.bankName);
+      setAccountNumber(res.bank.accountNumber);
+      setAddress(res.address.mainAddress);
+      setEmail(res.email);
+
+      console.log('res', res);
       const clothes = response.map((item: any) => {
         return { ...item, isClicked: false };
       });
@@ -86,9 +106,27 @@ function page() {
           setText1('베이직 멤버십 회원은 3벌까지만 입어볼 수 있어요!');
           setText2('프로 플랜 멤버십으로 바꾸시겠어요?');
         } else {
-          selectedProducts.forEach((item) =>
-            handleHomeFitting(item.cartProductId)
-          );
+          //여기서 회원 정보 모두 있는지 확인
+          console.log('있음');
+          if (
+            name &&
+            phoneNumber &&
+            bankName &&
+            accountNumber &&
+            address &&
+            email
+          ) {
+            selectedProducts.forEach((item) =>
+              handleHomeFitting(item.cartProductId)
+            );
+          } else {
+            const userConfirmation = window.confirm(
+              '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
+            );
+            if (userConfirmation) {
+              router.push('/mypage');
+            }
+          }
         }
       } else {
         if (selectedProducts.length > 5) {
@@ -96,9 +134,27 @@ function page() {
           setText1('홈피팅은 한 번에 최대 5벌까지만 가능해요.');
           setText2('5벌 홈피팅 완료 후 다시 신청해주세요.');
         } else {
-          selectedProducts.forEach((item) =>
-            handleHomeFitting(item.cartProductId)
-          );
+          //여기서 회원 정보 모두 있는지 확인
+          console.log('있음');
+          if (
+            name &&
+            phoneNumber &&
+            bankName &&
+            accountNumber &&
+            address &&
+            email
+          ) {
+            selectedProducts.forEach((item) =>
+              handleHomeFitting(item.cartProductId)
+            );
+          } else {
+            const userConfirmation = window.confirm(
+              '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
+            );
+            if (userConfirmation) {
+              router.push('/mypage');
+            }
+          }
         }
       }
     }
@@ -107,17 +163,34 @@ function page() {
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
     if (selectedProducts.length > 0) {
-      selectedProducts.forEach((item) => goPurchase(selectedProducts));
+      const confirm = window.confirm('홈피팅 하지 않고 바로 구매하시겠습니까?');
+      if (confirm) {
+        selectedProducts.forEach((item) => goPurchase(selectedProducts));
+      }
     } else {
       alert('구매할 제품을 선택해주세요.');
     }
   };
 
   const handleHomeFitting = async (Id: any) => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await applyHomeFitting(accessToken, Id);
-    setSelectedPage('홈피팅');
-    router.push('/myPick/home/homefitting/success');
+    const userConfirmation = window.confirm(
+      '마이페이지에 저장되어 있는 정보로 홈피팅이 신청됩니다. 홈피팅을 신청하시겠습니까?'
+    );
+
+    if (userConfirmation) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await applyHomeFitting(accessToken, Id);
+      setSelectedPage('홈피팅');
+      router.push('/myPick/home/homefitting/success');
+    } else {
+      const confirm = window.confirm(
+        '마이페이지로 이동해 정보를 수정하시겠습니까?'
+      );
+      if (confirm) {
+        setSelectedNaviPage('');
+        router.push('/mypage');
+      }
+    }
   };
 
   const goPurchase = (selectedProducts: any) => {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import sample from '@/assets/images/homefitting/sample.png';
 import { useRouter } from 'next/navigation';
-import { selectedMypickPage, requestProducts, totalPrice } from '@/atom/states';
+import { selectedMypickPage, requestProducts } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Image from 'next/image';
