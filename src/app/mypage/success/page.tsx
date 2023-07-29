@@ -10,7 +10,8 @@ function page() {
         mainText="구독 결제가 완료되었어요!"
         subText1="구독 결제가 완료되었어요."
         subText2="리픽을 이용해주셔서 감사합니다."
-        ishome = {false}
+        ishome={false}
+        icon="check"
       />
     </Container>
   );

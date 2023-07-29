@@ -125,7 +125,7 @@ function page() {
         if (response.success) {
           clearProducts();
 
-          router.push('/mypage/success');
+          router.push('/myPick/shopping/purchase/success');
         }
       }
     } else {

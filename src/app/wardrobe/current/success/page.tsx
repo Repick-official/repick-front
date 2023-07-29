@@ -11,6 +11,7 @@ function page() {
         subText1="빠른 시일 내에 정산하고 알림 드리도록 하겠습니다."
         subText2="리픽을 이용해주셔서 감사합니다."
         ishome={false}
+        icon="check"
       />
     </Container>
   );

@@ -6,17 +6,22 @@ import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
+import none from '@/assets/images/search/none.svg';
+import purchase from '@/assets/images/mypick/purchase.png';
+import wardrobe from '@/assets/images/wardrobe/wardrobe.svg';
 
 function Success({
   mainText,
   subText1,
   subText2,
   ishome,
+  icon,
 }: {
   mainText: string;
   subText1: string;
   subText2: string;
   ishome: boolean;
+  icon: string;
 }) {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
   const [selectedNavigationPage, setSelectedNavigationPage] =
@@ -28,7 +33,15 @@ function Success({
       <SuccessWrapper>
         <WelcomeWrapper>
           <IconWrapper>
-            <CheckIcon src={registerCheck.src} />
+            {icon === 'check' ? (
+              <CheckIcon src={registerCheck.src} />
+            ) : icon === 'none' ? (
+              <NoneIcon src={none.src} />
+            ) : icon === 'wardrobe' ? (
+              <WardrobeIcon src={wardrobe.src} />
+            ) : (
+              <PurchaseIcon src={purchase.src} />
+            )}
           </IconWrapper>
           <WelcomeMessageWrapper>
             <WelcomeMainText>{mainText}</WelcomeMainText>
@@ -92,11 +105,26 @@ const WelcomeWrapper = styled.div`
 const IconWrapper = styled.div`
   text-align: center;
   margin-bottom: 24px;
-  margin-top: 120px;
 `;
 const CheckIcon = styled.img`
   width: 108px;
   height: 108px;
+  margin-top: 120px;
+`;
+const NoneIcon = styled.img`
+  width: 124.256px;
+  height: 172px;
+  margin-top: 58px;
+`;
+const WardrobeIcon = styled.img`
+  width: 118.65px;
+  height: 172px;
+  margin-top: 60px;
+`;
+const PurchaseIcon = styled.img`
+  width: 348px;
+  height: 258px;
+  margin-top: 32px;
 `;
 const WelcomeMessageWrapper = styled.div``;
 
