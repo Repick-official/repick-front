@@ -102,11 +102,11 @@ function page() {
             {...register('name', {
               pattern: {
                 value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
-                message: '영어와 한글만 입력해주세요.',
+                message: '*',
               },
             })}
           />
-          {errors.name && <p>{errors.name.message}</p>}
+          {errors.name && <Error>{errors.name.message}</Error>}
         </Wrapper>
         <Wrapper>
           <Info>
@@ -118,19 +118,19 @@ function page() {
             {...register('phoneNumber', {
               pattern: {
                 value: /^[\d-]*$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
-                message: "숫자와 '-'만 입력해주세요.",
+                message: '*',
               },
               minLength: {
                 value: 11,
-                message: '번호는 9자 이상 입력해주세요.',
+                message: '*',
               },
               maxLength: {
                 value: 13,
-                message: '번호는 11자 이하로 입력해주세요.',
+                message: '*',
               },
             })}
           />
-          {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+          {errors.phoneNumber && <Error>{errors.phoneNumber.message}</Error>}
         </Wrapper>
         <Wrapper>
           <Info>
@@ -145,11 +145,13 @@ function page() {
               {...register('bank.bankName', {
                 pattern: {
                   value: /^[가-힣]+$/, // 한글만 입력되도록 정규식 패턴 설정
-                  message: '한글만 입력해주세요.',
+                  message: '*',
                 },
               })}
             />
-            {errors.bank?.bankName && <p>{errors.bank?.bankName.message}</p>}
+            {errors.bank?.bankName && (
+              <Error>{errors.bank?.bankName.message}</Error>
+            )}
             <AccountDetail>계좌번호</AccountDetail>
             <Content
               required
@@ -157,12 +159,12 @@ function page() {
               {...register('bank.accountNumber', {
                 pattern: {
                   value: /^[\d-]+$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
-                  message: "숫자와 '-'만 입력해주세요.",
+                  message: '*',
                 },
               })}
             />
             {errors.bank?.accountNumber && (
-              <p>{errors.bank?.accountNumber.message}</p>
+              <Error>{errors.bank?.accountNumber.message}</Error>
             )}
           </Account>
         </Wrapper>
@@ -183,11 +185,13 @@ function page() {
                   {...register('bagQuantity', {
                     pattern: {
                       value: /^[\d]+$/, // 숫자와 '-'만 입력되도록 정규식 패턴 설정
-                      message: '숫자만 입력해주세요.',
+                      message: '*',
                     },
                   })}
                 />
-                {errors.bagQuantity && <p>{errors.bagQuantity.message}</p>}
+                {errors.bagQuantity && (
+                  <Error>{errors.bagQuantity.message}</Error>
+                )}
                 <Text>벌</Text>
                 <Info className="bag">
                   {'필요한 리픽백 수'}
@@ -200,12 +204,12 @@ function page() {
                   {...register('productQuantity', {
                     pattern: {
                       value: /^[\d]+$/, // 숫자만 입력되도록 정규식 패턴 설정
-                      message: '숫자만 입력해주세요.',
+                      message: '*',
                     },
                   })}
                 />
                 {errors.productQuantity && (
-                  <p>{errors.productQuantity.message}</p>
+                  <Error>{errors.productQuantity.message}</Error>
                 )}
                 <Text>개가 필요해요</Text>
               </Count>
@@ -224,44 +228,55 @@ function page() {
             </Wrapper>
             <Address>
               <AddressWrapper>
-                <Content
-                  required
-                  className="address"
-                  {...register('address.zipCode', {})}
-                />
-                {errors.address?.zipCode && (
-                  <p>{errors.address?.zipCode.message}</p>
-                )}
+                <Si>
+                  <Content
+                    required
+                    className="address"
+                    {...register('address.zipCode', {
+                      pattern: {
+                        value: /^[\d]*$/, // 숫자만 입력되도록 정규식 패턴 설정
+                        message: '*',
+                      },
+                    })}
+                  />
+                  {errors.address?.zipCode && (
+                    <Error>{errors.address?.zipCode.message}</Error>
+                  )}
+                </Si>
                 <Confirm>{'우편번호'}</Confirm>
               </AddressWrapper>
-              <Content
-                required
-                className="detail-address"
-                placeholder="상세 주소를 입력해주세요"
-                {...register('address.mainAddress', {
-                  pattern: {
-                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
-                    message: '숫자와 한글만 입력해주세요.',
-                  },
-                })}
-              />
-              {errors.address?.mainAddress && (
-                <p>{errors.address?.mainAddress.message}</p>
-              )}
-              <Content
-                required
-                className="detail-address"
-                placeholder="상세 주소를 입력해주세요"
-                {...register('address.detailAddress', {
-                  pattern: {
-                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
-                    message: '숫자와 한글만 입력해주세요.',
-                  },
-                })}
-              />
-              {errors.address?.detailAddress && (
-                <p>{errors.address?.detailAddress.message}</p>
-              )}
+              <Si>
+                <Content
+                  required
+                  className="detail-address"
+                  placeholder="상세 주소를 입력해주세요"
+                  {...register('address.mainAddress', {
+                    pattern: {
+                      value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                      message: '*',
+                    },
+                  })}
+                />
+                {errors.address?.mainAddress && (
+                  <Error>{errors.address?.mainAddress.message}</Error>
+                )}
+              </Si>
+              <Si>
+                <Content
+                  required
+                  className="detail-address"
+                  placeholder="상세 주소를 입력해주세요"
+                  {...register('address.detailAddress', {
+                    pattern: {
+                      value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                      message: '*',
+                    },
+                  })}
+                />
+                {errors.address?.detailAddress && (
+                  <Error>{errors.address?.detailAddress.message}</Error>
+                )}
+              </Si>
             </Address>
             <Wrapper>
               <Info>
@@ -274,11 +289,11 @@ function page() {
                 {...register('returnDate', {
                   pattern: {
                     value: /^\d{4}-\d{2}-\d{2}$/, // 'yyyy-mm-dd' 형식에 맞는지 검사하는 정규식 패턴 설정
-                    message: '올바른 날짜 형식으로 입력해주세요. (yyyy-mm-dd)',
+                    message: '*',
                   },
                 })}
               />
-              {errors.returnDate && <p>{errors.returnDate.message}</p>}
+              {errors.returnDate && <Error>{errors.returnDate.message}</Error>}
             </Wrapper>
             <Wrapper>
               <Info>{'수거 시 기타 요청 사항'}</Info>
@@ -321,6 +336,18 @@ function page() {
 }
 
 export default page;
+
+const Si = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Error = styled.div`
+  color: rgba(255, 61, 0, 1);
+  font-size: 20px;
+  margin-left: 3px;
+  margin-right: 0;
+`;
 
 const Container = styled.div`
   ::placeholder {
