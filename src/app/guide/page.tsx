@@ -164,7 +164,7 @@ function page() {
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
-      <BannerWrapper2>
+      {/* <BannerWrapper2>
         <Image
           src={slogan_1}
           alt="Slogan_1"
@@ -206,7 +206,7 @@ function page() {
             // placeholder ="blur"
           />
         </ContentWrapper.basic>
-      </Section3>
+      </Section3> */}
       <Section4>
         <SubCard.Img>
           <Image
