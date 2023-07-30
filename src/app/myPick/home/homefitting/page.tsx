@@ -18,6 +18,7 @@ import { useCookies } from 'react-cookie';
 
 interface Product {
   homeFittingId: number;
+  homeFittingState: string;
   product: {
     brand: string;
     detail: string;
@@ -54,14 +55,19 @@ function page() {
   }, []);
 
   const handleClick = () => {
-    const updatedProducts = products.map((product: Product): Product => {
-      return { ...product, isChecked: !isClicked };
-    });
+    const updatedProducts = deliveredProducts.map(
+      (product: Product): Product => {
+        return { ...product, isChecked: !isClicked };
+      }
+    );
 
     if (!isClicked) {
       setSelectedCount(updatedProducts.length);
       setSelectedTotalPrice(
-        updatedProducts.reduce((acc, curr) => acc + curr.product.price, 0)
+        updatedProducts.reduce(
+          (acc: any, curr: any) => acc + curr.product.price,
+          0
+        )
       );
       setSelectedProducts(updatedProducts);
       setImageSrc(check_on.src);
@@ -73,57 +79,95 @@ function page() {
     }
 
     setIsClicked(!isClicked);
-    setProducts(updatedProducts);
+    setDeliveredProducts(updatedProducts);
   };
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [deliveringProducts, setDeliveringProducts] = useState<Product[]>([]);
+  const [deliveredProducts, setDeliveredProducts] = useState<Product[]>([]);
+  const delivered: any[] | ((prevState: Product[]) => Product[]) = [];
+  const delivering: any[] | ((prevState: Product[]) => Product[]) = [];
+  const [date1, setDate1] = useState('');
+  const [date2, setDate2] = useState('');
 
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryHomeFitting(accessToken);
-      const productsWithCheckStatus = response.map((product: any) => ({
+
+      console.log('아놔', response);
+      response.forEach((product: any) => {
+        if (product.homeFittingState === 'DELIVERED') {
+          delivered.push(product);
+        } else if (product.homeFittingState === 'DELIVERING') {
+          delivering.push(product);
+        }
+      });
+
+      setDeliveredProducts(delivered);
+      setDeliveringProducts(delivering);
+
+      const productsWithCheckStatus = delivered.map((product: any) => ({
         ...product,
         isChecked: false,
       }));
-      setProducts(productsWithCheckStatus);
-      // setUnselectedProducts(productsWithCheckStatus);
+      setDeliveredProducts(productsWithCheckStatus);
+      setDate2(delivered[0].createdDate);
+      setDate1(delivering[0].createdDate);
     };
     get();
   }, []);
-  const handleCheck = (id: number) => {
-    const updatedProducts = products.map((product: Product): Product => {
-      if (product.homeFittingId === id) {
-        const newProduct = { ...product, isChecked: !product.isChecked };
 
-        if (newProduct.isChecked) {
-          setSelectedCount((prev) => prev + 1);
-          setSelectedTotalPrice((prev) => prev + newProduct.product.price);
-          setSelectedProducts((prev) => [...prev, newProduct]);
-          // setUnselectedProducts((prev) =>
-          //   prev.filter((prod) => prod.homeFittingId !== id)
-          // );
-        } else {
-          setSelectedCount((prev) => prev - 1);
-          setSelectedTotalPrice((prev) => prev - newProduct.product.price);
-          setSelectedProducts((prev) =>
-            prev.filter((prod) => prod.homeFittingId !== id)
-          );
-          // setUnselectedProducts((prev) => [...prev, newProduct]);
+  console.log('delivered', deliveredProducts);
+  console.log('delivering', deliveringProducts);
+  console.log('date', date2);
+  const dateObject2 = new Date(date2);
+  const dateObject1 = new Date(date1);
+
+  const formattedDate1 = `${dateObject1.getFullYear()}년 ${
+    dateObject1.getMonth() + 1
+  }월 ${dateObject1.getDate()}일`;
+
+  const formattedDate2 = `${
+    dateObject2.getMonth() + 1
+  }월 ${dateObject2.getDate()}일`;
+
+  const handleCheck = (id: number) => {
+    const updatedProducts = deliveredProducts.map(
+      (product: Product): Product => {
+        if (product.homeFittingId === id) {
+          const newProduct = { ...product, isChecked: !product.isChecked };
+
+          if (newProduct.isChecked) {
+            setSelectedCount((prev) => prev + 1);
+            setSelectedTotalPrice((prev) => prev + newProduct.product.price);
+            setSelectedProducts((prev) => [...prev, newProduct]);
+            // setUnselectedProducts((prev) =>
+            //   prev.filter((prod) => prod.homeFittingId !== id)
+            // );
+          } else {
+            setSelectedCount((prev) => prev - 1);
+            setSelectedTotalPrice((prev) => prev - newProduct.product.price);
+            setSelectedProducts((prev) =>
+              prev.filter((prod) => prod.homeFittingId !== id)
+            );
+            // setUnselectedProducts((prev) => [...prev, newProduct]);
+          }
+
+          return newProduct;
         }
 
-        return newProduct;
+        return product;
       }
+    );
 
-      return product;
-    });
-
-    setProducts(updatedProducts);
+    setDeliveredProducts(updatedProducts);
 
     // Check if all items are selected or not
-    const allChecked = updatedProducts.every((product) => product.isChecked);
+    const allChecked = updatedProducts.every(
+      (product: any) => product.isChecked
+    );
 
     if (allChecked) {
       setImageSrc(check_on.src);
@@ -159,29 +203,42 @@ function page() {
         </DeliveryNowP2>
         <DeliveryInfo>
           <DeliveryInfoContent>
-            <DeliveryInfoDate>2023년 06월 29일</DeliveryInfoDate>
+            <DeliveryInfoDate>{formattedDate1}</DeliveryInfoDate>
             <DeliveryInfoItem>
               <DeliveryInfoItemImg>
-                <Image src={sample.src} alt="Sample" width={200} height={200} />
+                {deliveringProducts.length > 0 &&
+                  deliveringProducts[0].product && (
+                    <Image
+                      src={
+                        deliveringProducts[0].product.mainImageFile.imagePath
+                      }
+                      alt="Sample"
+                      width={200}
+                      height={200}
+                    />
+                  )}
               </DeliveryInfoItemImg>
               <DeliveryInfoItemWrapper>
                 <DeliveryInfoItemState>
-                  핀턱 필리츠 미니 스커트 외 2건이 현재 배송 중입니다.
+                  {deliveringProducts.length > 0 &&
+                    deliveringProducts[0].product && (
+                      <span>
+                        {deliveringProducts[0].product.name} 외{' '}
+                        {deliveringProducts.length - 1} 건이 현재 배송 중입니다.
+                      </span>
+                    )}
                 </DeliveryInfoItemState>
                 <DeliveryInfoItemStateWrapper>
                   <DeliveryInfoItemList>
-                    <DeliveryItem
-                      brand="[마뗑킴]"
-                      name="Free / 볼레로 숏패딩 점퍼"
-                    />
-                    <DeliveryItem
-                      brand="[마뗑킴]"
-                      name="Free / 볼레로 숏패딩 점퍼"
-                    />
-                    <DeliveryItem
-                      brand="[마뗑킴]"
-                      name="Free / 볼레로 숏패딩 점퍼"
-                    />
+                    {deliveringProducts.length > 0 &&
+                      deliveringProducts.map((item) => (
+                        <D key={item.product.productId}>
+                          <DeliveryItem
+                            brand={`[${item.product.brand}]`}
+                            name={`${item.product.size} / ${item.product.name}`}
+                          />
+                        </D>
+                      ))}
                   </DeliveryInfoItemList>
                   <DeliveryInfoItemButton>
                     <DeliveryInfoWrapP
@@ -212,10 +269,9 @@ function page() {
         </DeliveryNowP2>
         <DeliveredInfo>
           <DeliveredSuccess>배송완료</DeliveredSuccess>
-          <DeliveredDate>6/20(화) 도착</DeliveredDate>
         </DeliveredInfo>
         <DeliveredOrderDate>
-          {user}님이 6월 19일날 주문하신 의류입니다.
+          {user}님이 {formattedDate2}날 주문하신 의류입니다.
         </DeliveredOrderDate>
         <DeliveredItemWrapper>
           <DeliveredItemCategory>
@@ -230,7 +286,7 @@ function page() {
             <ReturnFee>수거비</ReturnFee>
           </DeliveredItemCategory>
           <DeliveredItemList>
-            {products.flatMap((product, index) => [
+            {deliveredProducts.flatMap((product: any, index: any) => [
               <DeliveredItem key={index}>
                 <CheckWrapper>
                   <Check onClick={() => handleCheck(product.homeFittingId)}>
@@ -269,7 +325,7 @@ function page() {
                 </DeliveredItemPrice>
                 <DeliveredItemReturnFee>무료</DeliveredItemReturnFee>
               </DeliveredItem>,
-              index < products.length - 1 ? (
+              index < deliveredProducts.length - 1 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1216"
@@ -297,7 +353,7 @@ function page() {
           </OrderCount>
           <ReturnCount>
             <ReturnP>반품수량</ReturnP>
-            <ReturnNum>{products.length - selectedCount}</ReturnNum>
+            <ReturnNum>{deliveredProducts.length - selectedCount}</ReturnNum>
           </ReturnCount>
         </OrderInfo>
         <AllPrice>
@@ -316,6 +372,8 @@ function page() {
 }
 
 export default page;
+
+const D = styled.div``;
 
 const Container = styled.div`
   margin-top: 72px;
