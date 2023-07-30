@@ -201,7 +201,7 @@ export const inquiryMypick = async (access: any) => {
   }
 };
 
-export const applyHomeFitting = async (access: any, ids: []) => {
+export const applyHomeFitting = async (access: any, ids: any[]) => {
   const data = {
     cartProductIds: ids,
   };
@@ -793,7 +793,7 @@ export const showWardrobeSettled = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobeSettlement = async (access: any, ids: []) => {
+export const showWardrobeSettlement = async (access: any, ids: any[]) => {
   const data = {
     productIds: ids,
   };
