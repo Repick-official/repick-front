@@ -13,6 +13,9 @@ import guide_third from '@/assets/images/guide/guide_third.png';
 import guide_fourth from '@/assets/images/guide/guide_fourth.png';
 import character_2 from '@/assets/images/guide/character_2.png';
 import character_3 from '@/assets/images/guide/character_3.png';
+import character_4 from '@/assets/images/guide/character_4.png';
+import character_5 from '@/assets/images/guide/character_5.png';
+import presents from '@/assets/images/guide/presents.png';
 import slogan_1 from '@/assets/images/guide/slogan_1.png'
 import SubBackground from '@/assets/images/guide/SubBackground.png';
 function page() {
@@ -65,13 +68,13 @@ function page() {
               ❶
             </Content.Number>
             <svg xmlns="http://www.w3.org/2000/svg" width="328" height="2" viewBox="0 0 328 2" fill="none">
-              <path d="M0.5 1H328" stroke="black" stroke-dasharray="5 5"/>
+              <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5"/>
             </svg>
             <Content.Number>
               ❷
             </Content.Number>
             <svg xmlns="http://www.w3.org/2000/svg" width="328" height="2" viewBox="0 0 328 2" fill="none">
-              <path d="M0.5 1H328" stroke="black" stroke-dasharray="5 5"/>
+              <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5"/>
             </svg>
             <Content.Number>
               ❸
@@ -204,6 +207,14 @@ function page() {
         </ContentWrapper.basic>
       </Section3>
       <Section4>
+        <SubCard.Img>
+          <Image
+            src = {SubBackground}
+            alt="Small Logo"
+            style = {{width:'100%',height:'100%'}}
+            // placeholder ="blur"
+          />
+        </SubCard.Img>
         <ContentWrapper.left>
           <Content.Title>
             <Image
@@ -225,7 +236,89 @@ function page() {
           </Content.Description_Left_White>
         </ContentWrapper.left>
         <SubCard.Wrapper>
-          
+          <SubCard.Card>
+            <SubCard.Title>
+              Basic Plan
+            </SubCard.Title>
+            <div>
+            <SubCard.CostDiscounted>
+              15,900원
+            </SubCard.CostDiscounted>
+            <SubCard.Discount>
+              40%
+            </SubCard.Discount>
+            </div>
+            <SubCard.TotalCost>
+              월 9,540원
+              <SubCard.Vat>
+                (부가세 포함)
+              </SubCard.Vat>
+            </SubCard.TotalCost>
+            <SubCard.Description>
+            홈피팅 시 3벌의 의류를 선택 가능합니다.*<br>
+            </br>추가로 결제되는 금액은 없습니다.*
+            </SubCard.Description>
+            <Image
+              src = {character_4}
+              alt="character_4"
+              style = {{
+                width:'103px',
+                height:'124px',
+                position : 'absolute',
+                left : '-59px',
+                bottom : '-52px'
+              }}
+              // placeholder ="blur"
+            />
+          </SubCard.Card>
+          <SubCard.Card>
+            <SubCard.Title>
+              Pro Plan
+            </SubCard.Title>
+            <div>
+            <SubCard.CostDiscounted>
+              25,900원
+            </SubCard.CostDiscounted>
+            <SubCard.Discount>
+              60%
+            </SubCard.Discount>
+            </div>
+            <SubCard.TotalCost>
+              월 15,540원
+              <SubCard.Vat>
+                (부가세 포함)
+              </SubCard.Vat>
+            </SubCard.TotalCost>
+            <SubCard.Description>
+            홈피팅 시 5벌의 의류를 선택 가능합니다.*<br>
+            </br>추가로 결제되는 금액은 없습니다.*
+            </SubCard.Description>
+            <Image
+              src = {character_5}
+              alt="character_5"
+              style = {{
+                width:'209px',
+                height:'262px',
+                position : 'absolute',
+                top : '-196px',
+                right : '-37px',
+                transform : 'rotate(4.776deg)'
+              }}
+              // placeholder ="blur"
+            />
+            <Image
+              src = {presents}
+              alt="presents"
+              style = {{
+                width:'auto',
+                height:'auto',
+                position : 'absolute',
+                bottom: '-42px',
+                right : '-112px',
+              }}
+              // placeholder ="blur"
+            />
+          </SubCard.Card>
         </SubCard.Wrapper>
       </Section4>
       <ContentWrapper.center>
@@ -517,12 +610,102 @@ const Section4 = styled.div`
   align-items : center;
   justify-content : center;
   flex-direction : column;
+  background: #111111;
+  position : relative;
 `
-
 const SubCard = {
   Wrapper : styled.div`
     display:flex;
     margin-top : 112px;
     gap : 42px;
+    position : relative;
+    `,
+    Img : styled.div`
+    width:100%;
+    height:100%;
+    position : absolute;
+    top : 0;
+    left : 0;
+    `,
+    Card : styled.div`
+    width: 479px;
+    height: 248px;
+    border-radius: 15px;
+    border: 1px solid #FFF;
+    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.16);
+    background: #FFF;
+    flex-shrink: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction : column;
+    align-items : baseline;
+    padding : 54px;
+    justify-content : center;
+    gap : 11px;
+    text-align : left;
+  `,
+  Title : styled.p`
+  color: var(--1, #111);
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  CostDiscounted : styled.span`
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    text-decoration : line-through;
+    text-decoration-color : #FF3D00;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  Discount : styled.span`
+    margin-left : 12px;
+    color: var(--unnamed, #FF3D00);
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  TotalCost : styled.span`
+    color: var(--1, #111);
+    font-feature-settings: 'clig' off, 'liga' off;
+    
+    /* Header1 48pt sb */
+    font-family: Pretendard;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 67.2px */
+  `,
+  Vat : styled.span`
+    margin-left : 12px;
+    color: var(--1, #111);
+    font-feature-settings: 'clig' off, 'liga' off;
+    
+    /* Header4 20pt sb */
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 28px */
+  `,
+  Description : styled.p`
+    color: var(--1, #111);
+    font-feature-settings: 'clig' off, 'liga' off;
+    
+    /* Body2 16pt rg */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
   `
 }
