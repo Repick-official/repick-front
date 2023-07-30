@@ -161,17 +161,12 @@ function page() {
   };
 
   const updateCartProducts = async (selectedProducts: any) => {
-    const newCartProducts = selectedProducts.map((item: any) => item.productId);
-
-    // setCartProducts를 호출한 후에 handleHomeFitting 함수를 호출
-    setCartProducts((prevCartProducts) => [
-      ...prevCartProducts,
-      ...newCartProducts,
-    ]);
-
-    // handleHomeFitting 함수를 updateCartProducts 함수 호출 후에 실행
-    await handleHomeFitting(); //아놔 왜 안 되는거지?
+    const newCartProducts = [...cartProducts, ...selectedProducts.map((item: any) => item.productId)];
+  
+    setCartProducts(newCartProducts);
+    await handleHomeFitting(newCartProducts); 
   };
+  
 
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
@@ -185,14 +180,13 @@ function page() {
     }
   };
 
-  const handleHomeFitting = async () => {
+  const handleHomeFitting = async (updatedCartProducts : any) => {
     const userConfirmation = window.confirm(
       '마이페이지에 저장되어 있는 정보로 홈피팅이 신청됩니다. 홈피팅을 신청하시겠습니까?'
     );
     if (userConfirmation) {
-      // console.log('켁', Ids);
       let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await applyHomeFitting(accessToken, cartProducts);
+      const response = await applyHomeFitting(accessToken, updatedCartProducts);
       setSelectedPage('홈피팅');
       router.push('/myPick/home/homefitting/success');
     } else {
@@ -200,7 +194,7 @@ function page() {
         '마이페이지로 이동해 정보를 수정하시겠습니까?'
       );
       if (confirm) {
-        setSelectedNaviPage(''); //여긴 되는 것 같은디
+        setSelectedNaviPage('');
         router.push('/mypage');
       }
     }
