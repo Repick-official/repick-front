@@ -12,10 +12,11 @@ import guide_second from '@/assets/images/guide/guide_second.png';
 import guide_third from '@/assets/images/guide/guide_third.png';
 import guide_fourth from '@/assets/images/guide/guide_fourth.png';
 import character_2 from '@/assets/images/guide/character_2.png';
+import character_3 from '@/assets/images/guide/character_3.png';
 import slogan_1 from '@/assets/images/guide/slogan_1.png'
+import SubBackground from '@/assets/images/guide/SubBackground.png';
 function page() {
   const router = useRouter();
-
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
@@ -175,7 +176,7 @@ function page() {
               alt="Small Logo"
               style = {{width:'auto',height:'auto'}}
               // placeholder ="blur"
-              />
+            />
             <Content.TitleText>
               Service Point
             </Content.TitleText>
@@ -187,7 +188,46 @@ function page() {
           제휴 업체를 통해 기부가 이루어지며 판매자 님의 이름으로 영수증이 발급돼요.<br></br>옷 돌려받기 또한 신청하실 수 있어요!
           </Content.Description_Center>
         </ContentWrapper.center>
+        <ContentWrapper.basic>
+          <Image
+            src = {character_3}
+            alt="character_3"
+            style = {{width:'320px',height:'auto'}}
+            // placeholder ="blur"
+          />
+          <Image
+            src = {guide_second}
+            alt="guide_second"
+            style = {{width:'auto',height:'auto',position:'relative',top:'-70px'}}
+            // placeholder ="blur"
+          />
+        </ContentWrapper.basic>
       </Section3>
+      <Section4>
+        <ContentWrapper.left>
+          <Content.Title>
+            <Image
+              src = {small_logo}
+              alt="Small Logo"
+              style = {{width:'auto',height:'auto'}}
+              // placeholder ="blur"
+            />
+            <Content.TitleText>
+              Subscription  
+            </Content.TitleText>
+          </Content.Title>
+          <Content.Sub_White>
+            리픽 구독자를 위한 특별 혜택!
+          </Content.Sub_White>
+          <Content.Description_Left_White>
+          리픽을 구독하고 온라인 쇼핑에선 만나볼 수 없었던 홈피팅의 기회를 누려보세요.<br>
+          </br>리픽에서는 배달 추가금 0원으로 부담없는 반품과 배송이 가능해요!  
+          </Content.Description_Left_White>
+        </ContentWrapper.left>
+        <SubCard.Wrapper>
+          
+        </SubCard.Wrapper>
+      </Section4>
       <ContentWrapper.center>
         <ContentWaiting>
           <ContentWaitingInfoWrapper>
@@ -208,8 +248,7 @@ function page() {
                     tagName={item.brand}
                     size={item.size}
                     name={item.name}
-                    price={item.price}
-                    
+                    price={item.price}                    
                   />
                 </div>
               ))}
@@ -263,7 +302,13 @@ const ContentWrapper = {
     width: 1216px;
     display:flex;
     justify-content : space-between;
-  `
+  `,
+  basic : styled.div`
+    width:1216px;
+    display: flex;
+    align-items : center;
+    justify-content : center;
+  `,
 }
 const ContentWaiting = styled.div`
   margin-top: 60px;
@@ -320,6 +365,16 @@ const Content = {
   Sub : styled.p`
     text-align : left;
     color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  Sub_White : styled.p`
+    text-align : left;
+    color: var(--1, #FFF);
     font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
@@ -400,6 +455,29 @@ const Content = {
     line-height: 155.5%;
     font-feature-settings: 'clig' off, 'liga' off;
   `,
+  Description_Left : styled.p`
+    margin-top : 18px;
+    text-align : left;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.5%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  
+  Description_Left_White : styled.p`
+    margin-top : 18px;
+    text-align : left;
+    color: var(--1, #FFF);
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.5%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
 }
 
 const Section2 = styled.div`
@@ -429,4 +507,22 @@ const Section3 = styled.div`
   display:flex;
   align-items : center;
   justify-content : center;
+  flex-direction : column;
 `
+
+const Section4 = styled.div`
+  width: 100%;
+  height: 1000px;
+  display:flex;
+  align-items : center;
+  justify-content : center;
+  flex-direction : column;
+`
+
+const SubCard = {
+  Wrapper : styled.div`
+    display:flex;
+    margin-top : 112px;
+    gap : 42px;
+  `
+}
