@@ -11,54 +11,36 @@ function Footer() {
             <P>
               <Bold>{'헬프 센터'}</Bold>
               <Bold> {'운영 정책'}</Bold>
-              <Bold>{'ABOUT US'}</Bold>
             </P>
             <N>
               <I>
-                <Info>{'공지 사항'}</Info>
                 <Info>{'자주 하는 질문'}</Info>
                 <Info>{'1:1 문의'}</Info>
-                <Info>{'고객 센터'}</Info>
               </I>
               <I>
-                <Info>{'이용 약관'}</Info>
                 <Info>{'개인정보 처리 방침'}</Info>
-              </I>
-              <I>
-                <Info>{'회사 소개'}</Info>
-                <Info>{'서비스 가이드'}</Info>
-                <Info>{'인재 채용'}</Info>
               </I>
             </N>
           </Content>
           <Logo src={logo.src} />
           <Do>
-            <span
-              style={{
-                fontWeight: '600',
-              }}
-            >
-              {'(주)Repick 대표: 이도현'}
-            </span>
-            {
-              ' 사업자 등록 번호: 23579349109535 전화번호 23579-34910-9535(평일 9:00 - 17:00)'
-            }
+            {'Repick | 대표 : 이도현 | 개인정보담당자 : 서찬혁'}
             <br />
             {
-              '이메일: repick@naver.com 서울 마포구 홍익대학교 T동 스타트업 라운지 (평일 9:00 - 17:00)'
+              '메일: repick.official@gmail.com | 주소 : 서울 마포구 홍익대학교 산학협력단 Startup Lounge 1F (평일 9:00 - 17:00) | TEL : 010-2890-9773'
             }
           </Do>
           <CopyRight>
             {'Copyright (c) 2023 Repick 리픽 All rights Reserved.'}
           </CopyRight>
         </Wrapper>
-        <App>
+        {/* <App>
           <Down>{'Repick 앱 다운로드'}</Down>
           <W>
             <A>{'IOS App Store'}</A>
             <A>{'Android'}</A>
           </W>
-        </App>
+        </App> */}
       </Q>
     </Container>
   );
