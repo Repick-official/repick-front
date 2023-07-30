@@ -6,17 +6,13 @@ import { styled } from 'styled-components';
 import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import { useRouter } from 'next/navigation';
-
-import info_1 from '@/assets/images/guide/info_1.png';
-import character_1 from '@/assets/images/guide/character_1.png';
 import { getMainPageProducts } from '@/api/requests';
-import graph_1 from '@/assets/images/guide/graph_1.png';
-
-import identity_1 from '@/assets/images/guide/identity_1.png';
-import identity_2 from '@/assets/images/guide/identity_2.png';
-import identity_3 from '@/assets/images/guide/identity_3.png';
-
-import slogan_1 from '@/assets/images/guide/slogan_1.png';
+import guide_first from '@/assets/images/guide/guide_first.png';
+import guide_second from '@/assets/images/guide/guide_second.png';
+import guide_third from '@/assets/images/guide/guide_third.png';
+import guide_fourth from '@/assets/images/guide/guide_fourth.png';
+import character_2 from '@/assets/images/guide/character_2.png';
+import slogan_1 from '@/assets/images/guide/slogan_1.png'
 function page() {
   const router = useRouter();
 
@@ -36,7 +32,7 @@ function page() {
   }, []);
 
   return (
-    <Content>
+    <Contents>
       <BannerWrapper>
         <Image
           src={logo_guide}
@@ -46,112 +42,153 @@ function page() {
         />
       </BannerWrapper>
       <Section1>
-        <ContentWrapper>
-          <ContentTitle>
+        <ContentWrapper.left>
+          <Content.Title>
             <Image
               src = {small_logo}
               alt="Small Logo"
               style = {{width:'auto',height:'auto'}}
               // placeholder ="blur"
             />
-            <ContentTitleText>
-              Problem
-            </ContentTitleText>
-          </ContentTitle>
-          <ContentSubTitle>
-            현재 의류소비와 거래는 어떤 문제가 있을까요?
-          </ContentSubTitle>
-          <RectWrapper>
-            <LeftRect>
-              <Info1_P1>
-              한해 버려지는<br></br>
-              의류 폐기물의 양은?
-              </Info1_P1>
-              <Info1_P2>
-                →무려 9천 2백만 톤!
-              </Info1_P2>
-              <TempRect/>
+            <Content.TitleText>
+              Repick Service
+            </Content.TitleText>
+          </Content.Title>
+          <Content.Sub>
+            부담없이 집에서 직접<br></br>입어보고 결제하세요
+          </Content.Sub>
+        </ContentWrapper.left>
+        <ContentWrapper.center>
+          <Content.NumberWrapper>
+            <Content.Number>
+              ❶
+            </Content.Number>
+            <svg xmlns="http://www.w3.org/2000/svg" width="328" height="2" viewBox="0 0 328 2" fill="none">
+              <path d="M0.5 1H328" stroke="black" stroke-dasharray="5 5"/>
+            </svg>
+            <Content.Number>
+              ❷
+            </Content.Number>
+            <svg xmlns="http://www.w3.org/2000/svg" width="328" height="2" viewBox="0 0 328 2" fill="none">
+              <path d="M0.5 1H328" stroke="black" stroke-dasharray="5 5"/>
+            </svg>
+            <Content.Number>
+              ❸
+            </Content.Number>
+          </Content.NumberWrapper>
+          <Content.IntroWrapper>  
+            <Content.IntroItem>
               <Image
-                src = {info_1}
-                alt="info_1"
-                style = {{position : 'absolute',right: '0'}}
+                src = {guide_first}
+                alt="guide_first"
+                style = {{width:'344px',height:'auto'}}
+                // placeholder ="blur"
               />
+              <Content.IntroWrapP>
+                <Content.IntroP>
+                리픽의 옷들은 엄격한 검수 기준과<br></br>살균 처리 과정을 거쳐 선정돼요 
+                </Content.IntroP>
+              </Content.IntroWrapP>
+            </Content.IntroItem>
+            <Content.IntroItem>
               <Image
-                src = {character_1}
-                alt="character_1"
-                style = {{
-                  position : 'absolute',
-                  bottom: '-16%',
-                  transform: 'rotate(-5deg)',
-                  left: '-17%'}}
+                src = {guide_second}
+                alt="guide_second"
+                style = {{width:'344px',height:'auto'}}
+                // placeholder ="blur"
               />
-            </LeftRect>
-            <RightRect>
-              <GraphTitleWrapper>
-                <GraphTitle>
-                  C2C 직거래 사기 피해액 현황
-                </GraphTitle>
-                <GraphTitleUnit>
-                  (단위:원)
-                </GraphTitleUnit>
-              </GraphTitleWrapper>
+              <Content.IntroWrapP>
+                <Content.IntroP>
+                새 옷처럼 개별 포장되어<br></br>배송이 시작돼요
+                </Content.IntroP>
+              </Content.IntroWrapP>
+            </Content.IntroItem>
+            <Content.IntroItem>
               <Image
-                src = {graph_1}
-                alt="graph_1"
+                src = {guide_third}
+                alt="guide_third"
+                style = {{width:'344px',height:'auto'}}
+                // placeholder ="blur"
               />
-            </RightRect>
-          </RectWrapper>
-        </ContentWrapper>
+              <Content.IntroWrapP>
+                <Content.IntroP>
+                직접 입어 보고 마음에 드는 옷들만 골라 구매하세요<br></br>나머지 옷들은 그대로 다시 반품할 수 있어요 
+                </Content.IntroP>
+              </Content.IntroWrapP>
+            </Content.IntroItem>
+          </Content.IntroWrapper>
+        </ContentWrapper.center>
       </Section1>
       <Section2>
-        <ContentWrapper>
-          <ContentTitle>
+        <ContentWrapper.SpaceBetween>  
+          <LogoWrapper>
             <Image
-              src = {small_logo}
-              alt="Small Logo"
-              style = {{width:'auto',height:'auto'}}
+              src = {guide_fourth}
+              alt="guide_fourth"
+              style = {{width:'428px',height:'auto'}}
               // placeholder ="blur"
             />
-            <ContentTitleText>
-              Brand Identity
-            </ContentTitleText>
-          </ContentTitle>
-          <div>
-            <ContentSubTitle>
-              그래서 <HighlightText>리픽서비스</HighlightText>는요,
-            </ContentSubTitle>
-          </div>
-          <ContentDescribe>
-          브랜드 리픽은 사용 가치가 남은 중고 의류를 수거하여 자체 검수와 위탁 관리를 통해<br></br>
-          다양하고 합리적인 의류 소비를 추구하는 다른 사용자들에게 제공합니다.
-          </ContentDescribe>
-          <IdentityWrapper>
-            <Image
-              src = {identity_1}
-              alt = "Identity_1"
-            />
-            <Image
-              src = {identity_2}
-              alt = "Identity_2"
-            />
-            <Image
-              src = {identity_3}
-              alt = "Identity_3"
-            />
-          </IdentityWrapper>
-        </ContentWrapper>
+            <Character._2>
+              <Image
+                src = {character_2}
+                alt="character_2"
+                style = {{width:'auto',height:'auto'}}
+                // placeholder ="blur"
+                />
+            </Character._2>
+          </LogoWrapper>
+          <ContentWrapper.right>
+            <Content.Title>
+              <Image
+                src = {small_logo}
+                alt="Small Logo"
+                style = {{width:'auto',height:'auto'}}
+                // placeholder ="blur"
+                />
+              <Content.TitleText>
+                Repick Service
+              </Content.TitleText>
+            </Content.Title>
+            <Content.SubRight>
+            원클릭 옷장정리로<br></br>수익 창출해보세요!
+            </Content.SubRight>
+            <Content.Description>
+            정리하고싶은 옷들을 문 밖에 두기만 하면<br></br>
+  수거, 촬영, 살균 후 판매까지 리픽이 모두 알아서 처리해요!
+            </Content.Description>
+          </ContentWrapper.right>
+        </ContentWrapper.SpaceBetween>
       </Section2>
-      <BannerWrapper>
+      <BannerWrapper2>
         <Image
           src={slogan_1}
           alt="Slogan_1"
-          style={{ width: '100vw', height: 'auto' }}
+          style={{ width: '100%', height: 'auto' }}
           placeholder="blur" 
-        />
-        <PointTriangle/>
-          
-      </BannerWrapper>
-      <ContentWrapper>
+        />          
+      </BannerWrapper2>
+      <Section3>
+        <ContentWrapper.center>
+          <Content.Title>
+            <Image
+              src = {small_logo}
+              alt="Small Logo"
+              style = {{width:'auto',height:'auto'}}
+              // placeholder ="blur"
+              />
+            <Content.TitleText>
+              Service Point
+            </Content.TitleText>
+          </Content.Title>
+          <Content.Sub>
+          팔리지 않은 옷들은 판매자 님의 이름으로 기부 됩니다.
+          </Content.Sub>
+          <Content.Description_Center>
+          제휴 업체를 통해 기부가 이루어지며 판매자 님의 이름으로 영수증이 발급돼요.<br></br>옷 돌려받기 또한 신청하실 수 있어요!
+          </Content.Description_Center>
+        </ContentWrapper.center>
+      </Section3>
+      <ContentWrapper.center>
         <ContentWaiting>
           <ContentWaitingInfoWrapper>
             <ContentWaitingInfoHeader>
@@ -179,13 +216,13 @@ function page() {
             </ContentWaitingInfoItemWrapper>
           </ContentWaitingInfoWrapper>
         </ContentWaiting>
-      </ContentWrapper>
-    </Content>
+      </ContentWrapper.center>
+    </Contents>
   );
 }
 
 export default page;
-const Content = styled.div`
+const Contents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,14 +234,37 @@ const BannerWrapper = styled.div`
   font-size : 0;
   position : relative;
 `;
-
-const ContentWrapper = styled.div`
-  width: 1216px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const BannerWrapper2 = styled.div`
+  width: 100%;
+  font-size : 0;
+  position : relative;
 `;
+
+const ContentWrapper = {
+  left : styled.div`
+    width: 1216px;
+    display: flex;
+    flex-direction : column;
+  `,
+  center : styled.div`
+    width: 1216px;
+    display: flex;
+    align-items : center;
+    justify-content : center;
+    flex-direction : column;
+  `,
+  right : styled.div`
+    display: flex;
+    flex-direction : column;
+    align-items : end;
+    margin-top: 40px;
+  `,
+  SpaceBetween : styled.div`
+    width: 1216px;
+    display:flex;
+    justify-content : space-between;
+  `
+}
 const ContentWaiting = styled.div`
   margin-top: 60px;
   margin-bottom: 148px;
@@ -233,173 +293,140 @@ const ContentWaitingInfoItemWrapper = styled.div`
 `;
 
 const Section1 = styled.div`
-  height : 846px;
+  height : 936px;
   display:flex;
   align-items : center;
   justify-content: center;
-`
-
-const ContentTitle = styled.div`
-  display:flex;
-  gap : 8px;
-  margin-bottom : 16px;
-`;
-const ContentTitleText = styled.p`
-  color: var(--serve-color, #FF8A00);
-  font-feature-settings: 'clig' off, 'liga' off;
-  /* Header3 24pt sb */
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 36px */
-`;
-
-const ContentSubTitle = styled.p`
-  color: var(--1, #111);
-  font-family: Pretendard;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  text-align: center;
-  font-feature-settings: 'clig' off, 'liga' off;
-
-  margin-bottom :66px;
-`
-
-const LeftRect = styled.div`
-  width: 534px;
-  height: 364px;
-  border-radius: 21px;
-  background: linear-gradient(0deg, #000 0%, #000 100%), linear-gradient(306deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
-  flex-shrink: 0;
-  position:relative;
-`
-
-const RightRect = styled.div`
-  width: 555px;
-  height: 364px;
-  border-radius: 21px;
-  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.16);
-  background: #FFF;
-  flex-shrink: 0;
-  display:flex;
   flex-direction : column;
+  gap : 50px;
+`
+
+const Content = {
+  Title : styled.div`
+    display:flex;
+    gap : 8px;
+    margin-bottom : 16px;
+  `,
+  TitleText : styled.p`
+    color: var(--serve-color, #FF8A00);
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* Header3 24pt sb */
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 36px */
+  `,
+  Sub : styled.p`
+    text-align : left;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  SubRight : styled.p`
+    text-align : right;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  NumberWrapper : styled.div`
+    display:flex;
+    align-items : center;
+    justify-content : center;
+    gap : 48px;
+  `,
+  Number : styled.p`
+    color: #000;
+    font-family: Pretendard;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 200%;
+  `,
+  IntroWrapper : styled.div`
+    display:flex;
+    gap : 100px;
+  `,
+  IntroItem : styled.div`
+    display:flex;
+    flex-direction : column;
+    gap : 18px;
+  `,
+  IntroWrapP : styled.div`
+    border-radius: 11px;
+    background: #FFF9F2;
+    height:100px;
+    display:flex;
+    align-items : center;
+  `,
+  IntroP : styled.p`
+    margin : 0 auto;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  Description : styled.p`
+    margin-top : 18px;
+    text-align : right;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.5%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+  Description_Center : styled.p`
+    margin-top : 18px;
+    text-align : center;
+    color: var(--1, #111);
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 155.5%;
+    font-feature-settings: 'clig' off, 'liga' off;
+  `,
+}
+
+const Section2 = styled.div`
+  width: 100%;
+  height: 653px;
+  background: #FFF9F2;
+  flex-shrink: 0;
+  display:flex;
   align-items : center;
   justify-content : center;
-  gap : 24px;
 `
 
-const RectWrapper = styled.div`
-  display:flex;
-  gap : 45px;
+const LogoWrapper = styled.div`
+  position : relative;
 `
 
-const TempRect = styled.div`
-  width: 364px;
-  height: 292px;
-  transform: rotate(-90deg);
-  border-radius: 21px;
-  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
-  flex-shrink: 0;
-  position : absolute;
-  top: 10%;
-  z-index: 998;
-  left: 18%;
-`
-const Info1_P1 = styled.p`
-  position: absolute;
-  z-index:999;
-  text-align: left;
-  top: 10%;
-  left: 10%;
-  color: var(--5, #FFF);
-  font-family: Pretendard;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 130%;
-  font-feature-settings: 'clig' off, 'liga' off;
-`
+const Character = {
+  _2 : styled.div`
+    position:absolute;
+    bottom: -16px;
+    right : 0px;
+  `
+}
 
-const Info1_P2 = styled.p`
-  position:absolute;
-  z-index: 999;
-  top: 44%;
-  left : 10%;
-  color: var(--serve-color, #FF8A00);
-  font-family: Pretendard;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 130%;
-  font-feature-settings: 'clig' off, 'liga' off;
-`
-const GraphTitleWrapper = styled.div`
-  display:flex;
-  gap : 8px;
-  align-items : center;
-`
-const GraphTitle = styled.p`
-  color: var(--1, #111);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  font-feature-settings: 'clig' off, 'liga' off;
-`
-
-const GraphTitleUnit = styled.p`
-  color: var(--unnamed, #8C8C8C);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  font-feature-settings: 'clig' off, 'liga' off;
-`
-const Section2 = styled.div`
-  height : 860px;
+const Section3 = styled.div`
+  height:1032px;
   display:flex;
   align-items : center;
-  justify-content: center;
-`
-const HighlightText = styled.span`
-  box-shadow: inset 0 -29px 0 #bfffa1;
-`;
-
-const ContentDescribe = styled.p`
-  color: #1D1C1B;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-  text-align: center;
-  font-feature-settings: 'clig' off, 'liga' off;
-  margin-top : -48px;
-  margin-bottom : 63px;
-`
-
-const IdentityWrapper = styled.div`
-  display:flex;
-  gap : 27px;
-`
-
-const PointTriangle = styled.div`
-  width: 0;
-  height: 0;
-  border-bottom: 100px solid transparent;
-  border-top: 100px solid transparent;
-  border-left: 80px solid white;
-  border-right: 80px solid transparent;
-  transform : rotate(90deg);
-  position:absolute;
-  top : -22px;
-  left: 0;
-  margin: 0 auto;
-  right: 0;
-
+  justify-content : center;
 `
