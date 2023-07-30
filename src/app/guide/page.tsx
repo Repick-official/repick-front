@@ -30,6 +30,7 @@ function page() {
         return item;
       });
       setProducts(clothes);
+      console.log(clothes);
     };
 
     get();
@@ -154,7 +155,7 @@ function page() {
               </Content.TitleText>
             </Content.Title>
             <Content.SubRight>
-            원클릭 옷장정리로<br></br>수익 창출해보세요!
+            빠르고 편리하게<br></br>나의 옷들을 판매해보세요!
             </Content.SubRight>
             <Content.Description>
             정리하고싶은 옷들을 문 밖에 두기만 하면<br></br>
@@ -321,34 +322,52 @@ function page() {
           </SubCard.Card>
         </SubCard.Wrapper>
       </Section4>
-      <ContentWrapper.center>
-        <ContentWaiting>
-          <ContentWaitingInfoWrapper>
-            <ContentWaitingInfoHeader>
-              {'리픽에 다양한 제품들이 기다리고 있어요!'}
-            </ContentWaitingInfoHeader>
-            <ContentWaitingInfoItemWrapper>
-              {products.map((item) => (
-                <div
-                  onClick={() =>
-                    router.push(`/product/detail/${item.productId}`)
-                  }
-                  key={item.productId}
-                >
-                  <ContentBodyInfo
+      <Section5>
+        <ContentWrapper.center>
+          <Content.Title>
+            <Image
+              src = {small_logo}
+              alt="Small Logo"
+              style = {{width:'auto',height:'auto'}}
+              // placeholder ="blur"
+            />
+            <Content.TitleText>
+              Shopping
+            </Content.TitleText>
+          </Content.Title>
+          <Content.Sub>
+          리픽에 다양한 제품들이 기다리고 있어요!
+          </Content.Sub>
+          <ContentWaiting>
+            <ContentWaitingInfoWrapper>
+              <ContentWaitingInfoItemWrapper>
+                {products.map((item) => (
+                  <div
+                    onClick={() =>
+                      router.push(`/product/detail/${item.productId}`)
+                    }
                     key={item.productId}
-                    src={item.mainImageFile.imagePath}
-                    tagName={item.brand}
-                    size={item.size}
-                    name={item.name}
-                    price={item.price}                    
-                  />
-                </div>
-              ))}
-            </ContentWaitingInfoItemWrapper>
-          </ContentWaitingInfoWrapper>
-        </ContentWaiting>
-      </ContentWrapper.center>
+                  >
+                    <ContentBodyInfo
+                      key={item.productId}
+                      src={item.mainImageFile.imagePath}
+                      tagName={item.brand}
+                      size={item.size}
+                      name={item.name}
+                      price={item.price}                    
+                    />
+                  </div>
+                ))}
+              </ContentWaitingInfoItemWrapper>
+            </ContentWaitingInfoWrapper>
+          </ContentWaiting>
+          <PurchaseButton>
+            <PurchaseP>
+            리픽 제품 구매하러가기
+            </PurchaseP>
+          </PurchaseButton>
+        </ContentWrapper.center>
+      </Section5>
     </Contents>
   );
 }
@@ -709,3 +728,34 @@ const SubCard = {
     line-height: 140%; /* 22.4px */
   `
 }
+const Section5 = styled.div`
+  height : 1141px;
+  display:flex;
+  align-items : center;
+  justify-content : center;
+`
+
+const PurchaseButton = styled.div`
+  display: flex;
+  width: 495.5px;
+  height: 20px;
+  overflow: hidden;
+  padding: 45.406px 75.677px;
+  border-radius: 28.379px;
+  background: var(--1, #111);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18.919px;
+`
+
+const PurchaseP = styled.p`
+  color: var(--4, #E8E8E8);
+  font-family: Pretendard;
+  font-size: 30.271px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+`
