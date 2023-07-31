@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import check_off from '@/assets/images/check/off.svg';
@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import SubscribePlan from '@/components/mypage/SubscribePlan';
 import { selectedSubscribePlan } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import { subscribePlan } from '@/api/requests';
+import { subscribePlan, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import getAccessToken from '@/util/getAccessToken';
 
@@ -23,6 +23,13 @@ function page() {
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
 
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+
   const handleClick = () => {
     if (isClicked) {
       setImageSrc(check_off.src);
@@ -35,12 +42,45 @@ function page() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
+  useEffect(() => {
+    const get = async () => {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const res = await getUserInfo(accessToken);
+      setName(res.name);
+      setPhoneNumber(res.phoneNumber);
+      setBankName(res.bank.bankName);
+      setAccountNumber(res.bank.accountNumber);
+      setAddress(res.address?.mainAddress);
+      setEmail(res.email);
+
+      console.log('res', res);
+    };
+    get();
+  }, []);
+
   const subscribeHandler = async () => {
     if (isClicked) {
       let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await subscribePlan(accessToken, selectPlan);
-      if (response.success) {
-        router.push('/mypage/success');
+
+      if (
+        name &&
+        phoneNumber &&
+        bankName &&
+        accountNumber &&
+        address &&
+        email
+      ) {
+        const response = await subscribePlan(accessToken, selectPlan);
+        if (response.success) {
+          router.push('/mypage/success');
+        }
+      } else {
+        const userConfirmation = window.confirm(
+          '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
+        );
+        if (userConfirmation) {
+          router.push('/mypage');
+        }
       }
     } else {
       alert('결제에 동의 해주세요');

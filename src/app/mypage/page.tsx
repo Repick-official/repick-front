@@ -61,7 +61,7 @@ function page() {
         setValue('phoneNumber', response.phoneNumber || '');
         setValue('bank.bankName', response.bank.bankName || '');
         setValue('bank.accountNumber', response.bank.accountNumber || '');
-        setValue('address.mainAddress', response.address.mainAddress || '');
+        setValue('address.mainAddress', response.address?.mainAddress || '');
         setValue('nickname', response.nickname || '');
         setValue('email', response.email || '');
       }
