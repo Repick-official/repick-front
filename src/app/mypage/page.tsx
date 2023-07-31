@@ -57,7 +57,7 @@ function page() {
       const response = await getUserInfo(accessToken);
       console.log(response);
       if (response) {
-        setValue('name', response.nickname || '');
+        setValue('name', response.name || '');
         setValue('phoneNumber', response.phoneNumber || '');
         setValue('bank.bankName', response.bank.bankName || '');
         setValue('bank.accountNumber', response.bank.accountNumber || '');

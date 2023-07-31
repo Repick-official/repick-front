@@ -558,7 +558,7 @@ export const searchItem = async (
     );
     if (response.ok) {
       const data = await response.json();
-      console.log('TEST', data);
+      console.log('냐', data);
       const clothes = data.map((item: any) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
@@ -575,6 +575,52 @@ export const searchItem = async (
     throw error;
   }
 };
+export const searchItemByPrice = async (
+  cursorId: number = 0,
+  cursorPrice: number = 0,
+  pageSize: number = 16,
+  keyword: string,
+  sortType: string
+): Promise<any> => {
+  const params = {
+    cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    cursorPrice: cursorPrice !== 0 ? cursorPrice.toString() : '',
+    pageSize: pageSize !== 0 ? pageSize.toString() : '16',
+    keyword: keyword,
+    sortType: sortType,
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+  try {
+    const response = await fetch(
+      `${process.env.API_URL}/products/keyword/by-price?${queryString}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log('뉴', data);
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    // 에러 처리
+    console.error(error);
+    throw error;
+  }
+};
+
 export const inquirySubscribe = async (access: any, state: string) => {
   try {
     const response = await fetch(
