@@ -206,7 +206,7 @@ export const applyHomeFitting = async (access: any, ids: any[]) => {
     cartProductIds: ids,
   };
   try {
-    const response = await fetch(process.env.API_URL + '/home-fitting/', {
+    const response = await fetch(process.env.API_URL + '/home-fitting', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
