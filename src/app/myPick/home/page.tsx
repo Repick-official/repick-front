@@ -50,7 +50,7 @@ function page() {
       setPhoneNumber(res.phoneNumber);
       setBankName(res.bank.bankName);
       setAccountNumber(res.bank.accountNumber);
-      setAddress(res.address.mainAddress);
+      setAddress(res.address?.mainAddress);
       setEmail(res.email);
 
       console.log('res', res);

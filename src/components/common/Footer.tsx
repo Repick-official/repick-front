@@ -58,6 +58,7 @@ const Q = styled.div`
 `;
 const Container = styled.div``;
 const Wrapper = styled.div`
+  width: 1216px;
   margin-top: 53px;
 `;
 const Content = styled.div`
@@ -91,7 +92,7 @@ const N = styled.div``;
 const Logo = styled.img`
   width: 106px;
   height: 33px;
-  margin-top: 30px;
+  margin-top: 60px;
 `;
 const Do = styled.div`
   font-size: 14px;

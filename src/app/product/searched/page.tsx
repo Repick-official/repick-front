@@ -1,5 +1,4 @@
 'use client';
-import '../reset.css';
 import React, { useEffect, useState } from 'react';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import cloth_1 from '@/assets/images/mypick/cloth_1.png';
@@ -8,12 +7,13 @@ import { useRouter } from 'next/navigation';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
 import Image from 'next/image';
 import Banner from '@/components/common/Banner';
+import { useRecoilState } from 'recoil';
+import { keyword } from '@/atom/states';
 import {
   getCategory,
-  getItemLatest,
-  getItemLowest,
-  getItemHighest,
   getItemSeen,
+  searchItemByPrice,
+  searchItem,
 } from '@/api/requests';
 interface Product {
   brand: string;
@@ -34,45 +34,72 @@ function page() {
   const router = useRouter();
   const [categoryData, setCategoryData] = useState<any>({});
   const [cursorId, setCursorId] = useState<number>(0);
+  const [cursorPrice, setCursorPrice] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
   const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
   const [isSearchedItem, setIsSearchedItem] = useState<boolean>(false);
+  const pageSize = 16;
+
+  const [text, setText] = useRecoilState(keyword);
+
   const fetchItem = async () => {
     let response: Product[];
     switch (order) {
       case 'latest':
-        response = await getItemLatest(cursorId, categoryId);
+        response = await searchItem(cursorId, categoryId, text);
+        console.log('text', text);
+        console.log('최신', response);
         break;
       case 'lowest':
-        response = await getItemLowest(cursorId, categoryId);
+        response = await searchItemByPrice(
+          cursorId,
+          cursorPrice,
+          pageSize,
+          text,
+          'low'
+        );
+
+        console.log('낮은', response);
         break;
       case 'highest':
-        response = await getItemHighest(cursorId, categoryId);
+        response = await searchItemByPrice(
+          cursorId,
+          cursorPrice,
+          pageSize,
+          text,
+          'high'
+        );
+
+        console.log('높은', response);
         break;
       case 'seen':
         // response = await getItemSeen(cursorId, categoryId);
-        response = await getItemLatest(cursorId, categoryId);
+        response = await searchItem(cursorId, categoryId, text);
         alert('조회순은 아직 없습니다~');
         break;
       default:
-        response = await getItemLatest(cursorId, categoryId);
+        response = await searchItem(cursorId, categoryId, text);
     }
 
-    setProducts((prevProducts) => [...prevProducts, ...response]);
-    if (response.length > 0) {
-      const lastProductId = response[response.length - 1].productId;
-      setCursorId(lastProductId);
-    }
+    setProducts(response);
+    // if (response.length > 0) {
+    // 여기 아래가 이상하다
+    const lastProductId = response[response.length - 1].productId;
+    setCursorId(lastProductId);
+    const lastProductPrice = response[response.length - 1].price;
+    setCursorPrice(lastProductPrice);
+    // }
   };
+  console.log('ssssss', products);
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
+      console.log('response', response);
       const categoryMap = response.reduce((map: any, item: any) => {
         if (item.parentId === null) {
           return map;
         }
-
         if (!map[item.parentId]) {
           map[item.parentId] = [];
         }
@@ -82,26 +109,35 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    const item = sessionStorage.getItem('items');
-    const searchedItem = item ? JSON.parse(item) : null;
+    // fetchItem();
+    // const item = sessionStorage.getItem('items');
+    // const searchedItem = item ? JSON.parse(item) : null;
+    // console.log('categoryData', categoryData);
+    // console.log('searchedItem', searchedItem);
+    // if (searchedItem) {
+    //   setProducts(searchedItem);
+    //   setCursorId(searchedItem[searchedItem.length - 1].productId);
+    //   console.log('cursorId', cursorId);
+    //   setCursorPrice(searchedItem[searchedItem.length - 1].price);
+    //   // sessionStorage.clear();
+    //   setIsSearchedItem(true);
+    // } else {
+    //   // setProducts([]);
+    //   // fetchItem();
+    // }
+  }, []);
 
-    console.log(searchedItem);
-    if (searchedItem) {
-      setProducts(searchedItem);
-      setCursorId(searchedItem[searchedItem.length - 1].productId);
-      sessionStorage.clear();
-      setIsSearchedItem(true);
-    } else {
-      setProducts([]);
-      fetchItem();
-    }
-  }, [categoryId, order]);
+  useEffect(() => {
+    fetchItem();
+  }, [order]);
 
   const loadMoreItems = () => {
     fetchItem();
   };
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
+    console.log('order', order);
+    // fetchItem();
     // setCursorId(0);
     // setProducts([]);
   };
@@ -330,7 +366,6 @@ const OptionWrapper = styled.div`
   background-color: rgba(232, 232, 232, 0.5);
   height: 118.109px;
 `;
-
 const OptionList = styled.div`
   width: 794px;
   height: 28px;

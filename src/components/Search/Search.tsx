@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import X from '@/assets/images/x.svg';
 import search_dark from '@/assets/images/search_dark.svg';
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { searchItem } from '@/api/requests';
-import {useRouter,redirect} from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
+import { useRecoilState } from 'recoil';
+import { keyword } from '@/atom/states';
 
 interface Product {
   brand: string;
@@ -27,28 +29,29 @@ function SearchModal({ clickModal }: any) {
   const [inputText, setInputText] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [cursorId, setCursorId] = useState<number>(0);
-  const [keyword, setKeyword] = useState('');
+
   const pageSize = 16;
 
-  const handleChange = async (e: { target: { value: any } }) => {
+  const [text, setText] = useRecoilState(keyword);
+
+  const handleChange = async (e: { target: { value: string } }) => {
     setInputText(e.target.value);
   };
-  const handleOnKeyPress = (e: { key: string; }) => {
+  const handleOnKeyPress = async (e: { key: string }) => {
     if (e.key === 'Enter') {
+      setText(inputText);
       search();
     }
-
   };
   const search = async () => {
     if (inputText.trim() !== '') {
       const response = await searchItem(cursorId, pageSize, inputText);
-      if(response.length>0){
+      if (response.length > 0) {
         const lastProductId = response[response.length - 1].productId;
         sessionStorage.setItem('items', JSON.stringify(response));
         clickModal();
-        window.location.href = '/product';
-      }
-      else{
+        window.location.href = '/product/searched';
+      } else {
         window.location.href = '/product/none';
       }
     }
@@ -64,7 +67,12 @@ function SearchModal({ clickModal }: any) {
           <Remove onClick={clickModal} src={X.src}></Remove>
           <Content>
             <SearchWrapper>
-              <SearchBox ref={inputRef} value={inputText} onChange={handleChange} onKeyPress={handleOnKeyPress}/>
+              <SearchBox
+                ref={inputRef}
+                value={inputText}
+                onChange={handleChange}
+                onKeyPress={handleOnKeyPress}
+              />
               <ButtonWrapper src={search_dark.src} onClick={() => search()} />
             </SearchWrapper>
             <ContentWrapper>
@@ -96,7 +104,7 @@ const ModalBox = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 
-  cursor : default;
+  cursor: default;
 `;
 
 const SearchModalContent = styled.div`
