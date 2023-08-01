@@ -18,10 +18,17 @@ import character_5 from '@/assets/images/guide/character_5.png';
 import presents from '@/assets/images/guide/presents.png';
 import slogan_1 from '@/assets/images/guide/slogan_1.png'
 import SubBackground from '@/assets/images/guide/SubBackground.png';
+import "react-alice-carousel/lib/alice-carousel.css";
+import AliceCarousel from 'react-alice-carousel';
 function page() {
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
-
+  const responsive = {
+      512: {
+        items: 4,
+      },
+  };
+  const handleDragStart = (e: { preventDefault: () => any; }) => e.preventDefault();
   useEffect(() => {
     const get = async () => {
       const response = await getMainPageProducts();
@@ -35,7 +42,25 @@ function page() {
 
     get();
   }, []);
-
+  const items = products.map((item) => {
+    return (
+      <div
+        onClick={() =>
+          router.push(`/product/detail/${item.productId}`)
+        }
+        key={item.productId}
+      >
+        <ContentBodyInfo
+          key={item.productId}
+          src={item.mainImageFile.imagePath}
+          tagName={item.brand}
+          size={item.size}
+          name={item.name}
+          price={item.price}                    
+        />
+      </div>
+    )
+  })
   return (
     <Contents>
       <BannerWrapper>
@@ -341,23 +366,16 @@ function page() {
           <ContentWaiting>
             <ContentWaitingInfoWrapper>
               <ContentWaitingInfoItemWrapper>
-                {products.map((item) => (
-                  <div
-                    onClick={() =>
-                      router.push(`/product/detail/${item.productId}`)
-                    }
-                    key={item.productId}
-                  >
-                    <ContentBodyInfo
-                      key={item.productId}
-                      src={item.mainImageFile.imagePath}
-                      tagName={item.brand}
-                      size={item.size}
-                      name={item.name}
-                      price={item.price}                    
-                    />
-                  </div>
-                ))}
+                <AliceCarousel
+                  mouseTracking
+                  infinite={true}
+                  animationDuration={1000}
+                  disableDotsControls
+                  disableButtonsControls
+                  responsive={responsive}
+                  autoPlay
+                  items={items}
+                />
               </ContentWaitingInfoItemWrapper>
             </ContentWaitingInfoWrapper>
           </ContentWaiting>
@@ -423,6 +441,8 @@ const ContentWrapper = {
   `,
 }
 const ContentWaiting = styled.div`
+  width:100%;
+  overflow : auto;
   margin-top: 60px;
   margin-bottom: 148px;
 `;
