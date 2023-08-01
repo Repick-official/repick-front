@@ -24,7 +24,9 @@ import {
 } from '@/api/requests';
 interface HookFormTypes {
   address: {
+    detailAddress: string;
     mainAddress: string;
+    zipCode: string;
   };
   bank: {
     accountNumber: string;
@@ -61,7 +63,12 @@ function page() {
         setValue('phoneNumber', response.phoneNumber || '');
         setValue('bank.bankName', response.bank.bankName || '');
         setValue('bank.accountNumber', response.bank.accountNumber || '');
+        setValue('address.zipCode', response.address?.zipCode || '');
         setValue('address.mainAddress', response.address?.mainAddress || '');
+        setValue(
+          'address.detailAddress',
+          response.address?.detailAddress || ''
+        );
         setValue('nickname', response.nickname || '');
         setValue('email', response.email || '');
       }
@@ -195,24 +202,64 @@ function page() {
               </ContentWrapper>
             </Contents>
           </Wrapper>
-          <Wrapper>
-            <Info>
-              {'등록주소'}
-              <div className="star">{'*'}</div>
-            </Info>
-            <Content
-              {...register('address.mainAddress', {
-                pattern: {
-                  value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
-                  message: '*',
-                },
-              })}
-              required
-            />
-            {errors.address?.mainAddress && (
-              <Error>{errors.address?.mainAddress.message}</Error>
-            )}
-          </Wrapper>
+          {/* <Wrapper> */}
+
+          <Address>
+            <AddressWrapper>
+              <Info>
+                {'등록주소'}
+                <div className="star">{'*'}</div>
+              </Info>
+              <Si>
+                <Content
+                  required
+                  className="address"
+                  {...register('address.zipCode', {
+                    pattern: {
+                      value: /^[\d]*$/, // 숫자만 입력되도록 정규식 패턴 설정
+                      message: '*',
+                    },
+                  })}
+                />
+                {errors.address?.zipCode && (
+                  <Error>{errors.address?.zipCode.message}</Error>
+                )}
+              </Si>
+              <Confirm>{'우편번호'}</Confirm>
+            </AddressWrapper>
+            <Si>
+              <Content
+                required
+                className="detail-address"
+                placeholder="상세 주소를 입력해주세요"
+                {...register('address.mainAddress', {
+                  pattern: {
+                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    message: '*',
+                  },
+                })}
+              />
+              {errors.address?.mainAddress && (
+                <Error>{errors.address?.mainAddress.message}</Error>
+              )}
+            </Si>
+            <Si>
+              <Content
+                required
+                className="detail-address"
+                placeholder="상세 주소를 입력해주세요"
+                {...register('address.detailAddress', {
+                  pattern: {
+                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    message: '*',
+                  },
+                })}
+              />
+              {errors.address?.detailAddress && (
+                <Error>{errors.address?.detailAddress.message}</Error>
+              )}
+            </Si>
+          </Address>
           <Wrapper>
             <Info>{'아이디'}</Info>
             <Content
@@ -357,6 +404,30 @@ function page() {
 }
 
 export default page;
+
+const AddressWrapper = styled.div`
+  display: flex;
+  margin-bottom: 18px;
+`;
+
+const Confirm = styled.button`
+  border-radius: 15px;
+  background: var(--3, #b4b4b4);
+  width: 104px;
+  height: 56px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 24px;
+`;
+const Address = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const Si = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const Error = styled.div`
   color: rgba(255, 61, 0, 1);

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import line from '@/assets/images/line.svg';
 import Button from '@/components/common/Button';
@@ -7,10 +7,13 @@ import bagImage from '@/assets/images/bag.svg';
 import arrow7 from '@/assets/images/arrow7.svg';
 import arrow6 from '@/assets/images/arrow6.svg';
 import { useRouter } from 'next/navigation';
-import { pickupWardrobe } from '@/api/requests';
+import { pickupWardrobe, getUserInfo } from '@/api/requests';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { FieldErrors, useForm } from 'react-hook-form';
+import check_off from '@/assets/images/check/off.svg';
+import check_on from '@/assets/images/check/on.svg';
+
 interface HookFormTypes {
   name: string;
   phoneNumber: string;
@@ -40,27 +43,29 @@ function page() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<HookFormTypes>({
-    defaultValues: {
-      name: '',
-      phoneNumber: '',
-      bank: {
-        accountNumber: '',
-        bankName: '',
-      },
-      address: {
-        detailAddress: '',
-        mainAddress: '',
-        zipCode: '',
-      },
-      bagQuantity: 0, //이렇게 하면 placeholder 없어지는딩
-      productQuantity: 0,
-      returnDate: '',
-      requestDetail: '',
-      id: 1,
-      sellState: 'DELIVERED',
-    },
-  });
+    setValue,
+  } = useForm<HookFormTypes>();
+  // {
+  //   defaultValues: {
+  //     name: '',
+  //     phoneNumber: '',
+  //     bank: {
+  //       accountNumber: '',
+  //       bankName: '',
+  //     },
+  //     address: {
+  //       detailAddress: '',
+  //       mainAddress: '',
+  //       zipCode: '',
+  //     },
+  //     bagQuantity: 0, //이렇게 하면 placeholder 없어지는딩
+  //     productQuantity: 0,
+  //     returnDate: '',
+  //     requestDetail: '',
+  //     id: 1,
+  //     sellState: 'DELIVERED',
+  //   },
+  // }
 
   const registerHandler = async (data: HookFormTypes) => {
     const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
@@ -79,6 +84,35 @@ function page() {
   const showBag = () => {
     setBag(!bag);
   };
+
+  const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
+
+  const handleUseRegisteredAddrClick = async () => {
+    setUseRegisteredAddr(!useRegisteredAddr);
+  };
+
+  useEffect(() => {
+    const check = async () => {
+      if (useRegisteredAddr) {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const response = await getUserInfo(accessToken);
+        console.log(response);
+        if (response) {
+          setValue('address.zipCode', response.address?.zipCode || '');
+          setValue('address.mainAddress', response.address?.mainAddress || '');
+          setValue(
+            'address.detailAddress',
+            response.address?.detailAddress || ''
+          );
+        }
+      } else {
+        setValue('address.zipCode', '');
+        setValue('address.mainAddress', '');
+        setValue('address.detailAddress', '');
+      }
+    };
+    check();
+  }, [useRegisteredAddr]);
 
   return (
     <Container>
@@ -220,7 +254,11 @@ function page() {
               </Info>
               <ApplyWrapper>
                 <CheckWrapper>
-                  <Check />
+                  <Check onClick={handleUseRegisteredAddrClick}>
+                    <Off
+                      src={useRegisteredAddr ? check_on.src : check_off.src}
+                    />
+                  </Check>
                   <AddressApply>등록 주소로 수거 신청하기</AddressApply>
                 </CheckWrapper>
               </ApplyWrapper>
@@ -335,6 +373,8 @@ function page() {
 }
 
 export default page;
+
+const Off = styled.img``;
 
 const Si = styled.div`
   display: flex;
