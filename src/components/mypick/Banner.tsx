@@ -2,10 +2,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import sub from '@/assets/images/subscription.png';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { selectedNavPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
+
 function Banner() {
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
   const router = useRouter();
   const handleBannerClick = () => {
+    setSelectedPage('');
     router.push('/mypage/subscribe');
   };
   return (
@@ -21,7 +26,7 @@ const BannerWrapper = styled.img`
   height: auto;
   border-radius: 15px;
   margin-top: 62px;
-  cursor : pointer;
+  cursor: pointer;
 `;
 const Container = styled.div`
   display: flex;
