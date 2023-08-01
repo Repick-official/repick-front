@@ -12,7 +12,7 @@ import OrderItem from '@/components/homefitting/OrderItem';
 import { requestProducts } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { orderProducts } from '@/api/requests';
+import { orderProducts, getUserInfo } from '@/api/requests';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import Button from '@/components/common/Button';
@@ -24,7 +24,7 @@ interface HookFormTypes {
     mainAddress: string;
     zipCode: string;
   };
-  personName: string;
+  name: string;
   phoneNumber: string;
   productIds: number[];
   requestDetail: string;
@@ -35,6 +35,7 @@ function page() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<HookFormTypes>({
     defaultValues: {
       address: {
@@ -42,7 +43,7 @@ function page() {
         mainAddress: '',
         zipCode: '',
       },
-      personName: '',
+      name: '',
       phoneNumber: '',
       productIds: [],
       requestDetail: '',
@@ -70,9 +71,50 @@ function page() {
     setIsDeliveryDiff(!isDeliveryDiff);
   };
 
-  const handleUseRegisteredAddrClick = () => {
+  useEffect(() => {
+    const check = async () => {
+      if (!isDeliveryDiff) {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const response = await getUserInfo(accessToken);
+        console.log(response);
+        if (response) {
+          setValue('name', response.name || '');
+          setValue('phoneNumber', response.phoneNumber || '');
+        }
+      } else {
+        setValue('name', '');
+        setValue('phoneNumber', '');
+      }
+    };
+    check();
+  }, [isDeliveryDiff]);
+
+  const handleUseRegisteredAddrClick = async () => {
     setUseRegisteredAddr(!useRegisteredAddr);
   };
+
+  useEffect(() => {
+    const check = async () => {
+      if (useRegisteredAddr) {
+        let accessToken = await getAccessToken(cookies, setCookie);
+        const response = await getUserInfo(accessToken);
+        console.log(response);
+        if (response) {
+          setValue('address.zipCode', response.address?.zipCode || '');
+          setValue('address.mainAddress', response.address?.mainAddress || '');
+          setValue(
+            'address.detailAddress',
+            response.address?.detailAddress || ''
+          );
+        }
+      } else {
+        setValue('address.zipCode', '');
+        setValue('address.mainAddress', '');
+        setValue('address.detailAddress', '');
+      }
+    };
+    check();
+  }, [useRegisteredAddr]);
 
   // 결제 수단 핸들러
   const handlePaymentMethodClick = (method: string) => {
@@ -170,16 +212,14 @@ function page() {
                 <Content
                   placeholder="김회원"
                   required
-                  {...register('personName', {
+                  {...register('name', {
                     pattern: {
                       value: /^[a-zA-Z가-힣]+$/, // Only English and Korean characters are allowed
                       message: '*',
                     },
                   })}
                 />
-                {errors.personName && (
-                  <Error>{errors.personName.message}</Error>
-                )}
+                {errors.name && <Error>{errors.name.message}</Error>}
               </Wrapper>
               <Wrapper>
                 <Info>전화번호</Info>
@@ -202,22 +242,6 @@ function page() {
                 />
                 {errors.phoneNumber && (
                   <Error>{errors.phoneNumber.message}</Error>
-                )}
-              </Wrapper>
-              <Wrapper>
-                <Info>등록주소</Info>
-
-                <Content
-                  {...register('address.mainAddress', {
-                    pattern: {
-                      value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
-                      message: '*',
-                    },
-                  })}
-                  required
-                />
-                {errors.address?.mainAddress && (
-                  <Error>{errors.address?.mainAddress.message}</Error>
                 )}
               </Wrapper>
             </SenderWrapper>
@@ -270,6 +294,22 @@ function page() {
                     />
                     {errors.address?.mainAddress && (
                       <Error>{errors.address?.mainAddress.message}</Error>
+                    )}
+                  </S>
+                  <S>
+                    <Content
+                      className="detail-address"
+                      placeholder="상세 주소를 입력해주세요"
+                      {...register('address.detailAddress', {
+                        pattern: {
+                          value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                          message: '*',
+                        },
+                      })}
+                      required
+                    />
+                    {errors.address?.detailAddress && (
+                      <Error>{errors.address?.detailAddress.message}</Error>
                     )}
                   </S>
                 </Address>

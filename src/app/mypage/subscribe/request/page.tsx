@@ -71,8 +71,11 @@ function page() {
         email
       ) {
         const response = await subscribePlan(accessToken, selectPlan);
-        if (response.success) {
-          router.push('/mypage/success');
+        const confirm = window.confirm('결제 하시겠습니까?');
+        if (confirm) {
+          if (response.success) {
+            router.push('/mypage/success');
+          }
         }
       } else {
         const userConfirmation = window.confirm(
