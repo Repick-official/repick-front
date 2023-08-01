@@ -389,6 +389,7 @@ const Error = styled.div`
 `;
 
 const Container = styled.div`
+  width: 1216px;
   ::placeholder {
     color: var(--3, #b4b4b4);
   }

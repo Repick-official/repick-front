@@ -206,19 +206,19 @@ function page() {
             </Info>
             <Info>
               <Tag>제품명</Tag>
-              <Sub bold={'bold'}>{products.name}</Sub>
+              <Sub $bold={'bold'}>{products.name}</Sub>
             </Info>
             <Info>
               <Tag>사이즈</Tag>
-              <Sub bold={'notBold'}>{products.size}</Sub>
+              <Sub $bold={'notBold'}>{products.size}</Sub>
             </Info>
             <Info>
               <Tag>제품 성격</Tag>
-              <Sub bold={'notBold'}>{products.detail}</Sub>
+              <Sub $bold={'notBold'}>{products.detail}</Sub>
             </Info>
             <Info>
               <Tag>가격</Tag>
-              <Sub bold={'bold'}>
+              <Sub $bold={'bold'}>
                 {products.price.toLocaleString('en-US')}원
               </Sub>
             </Info>
@@ -304,10 +304,10 @@ const Tag = styled.div`
   font-weight: 400;
   width: 128px;
 `;
-const Sub = styled.div<{ bold: string }>`
+const Sub = styled.div<{ $bold: string }>`
   width: 376px;
-  font-weight: ${(props) => (props.bold === 'bold' ? '600' : '400')};
-  font-size: ${(props) => (props.bold === 'bold' ? '20px' : '16px')};
+  font-weight: ${(props) => (props.$bold === 'bold' ? '600' : '400')};
+  font-size: ${(props) => (props.$bold === 'bold' ? '20px' : '16px')};
 `;
 const Brand = styled.div`
   font-size: 16px;

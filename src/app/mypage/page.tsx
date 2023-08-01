@@ -305,16 +305,25 @@ function page() {
       </CheckWrapper>
       <Line src={line.src} />
       <SubscribeCategory>
-        <SubscribeMenu bold={'bold'} onClick={() => setSubscribeInfo(1)}>
+        <SubscribeMenu $bold={'bold'} onClick={() => setSubscribeInfo(1)}>
           구독 내역
         </SubscribeMenu>
-        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(2)}>
+        <SubscribeMenu
+          $bold={'notBold'}
+          onClick={() => handleSubscribeClick(2)}
+        >
           구매 내역
         </SubscribeMenu>
-        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(3)}>
+        <SubscribeMenu
+          $bold={'notBold'}
+          onClick={() => handleSubscribeClick(3)}
+        >
           옷장 수거 내역
         </SubscribeMenu>
-        <SubscribeMenu bold={'notBold'} onClick={() => handleSubscribeClick(4)}>
+        <SubscribeMenu
+          $bold={'notBold'}
+          onClick={() => handleSubscribeClick(4)}
+        >
           정산 내역
         </SubscribeMenu>
       </SubscribeCategory>
@@ -641,13 +650,13 @@ const SubscribeCategory = styled.div`
   margin-bottom: 24px;
   justify-content: space-evenly;
 `;
-const SubscribeMenu = styled.p<{ bold: string }>`
+const SubscribeMenu = styled.p<{ $bold: string }>`
   width: 135px;
   text-align: center;
   cursor: pointer;
   font-size: 16px;
-  font-weight: ${(props) => (props.bold == 'bold' ? '600' : '400')};
-  color: ${(props) => (props.bold == 'bold' ? '#111' : '#5F5F5F')};
+  font-weight: ${(props) => (props.$bold == 'bold' ? '600' : '400')};
+  color: ${(props) => (props.$bold == 'bold' ? '#111' : '#5F5F5F')};
 `;
 
 const NavSubscribed = styled.div`

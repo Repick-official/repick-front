@@ -141,7 +141,7 @@ function Navigation() {
               <SearchModal />
             </LogoWrapper>
             <PageWrapper>
-              <My login={bold}>
+              <My $login={bold}>
                 {/* {isUser} */}
                 {isUser == '마이페이지' ? (
                   <div onClick={myPage}>{isUser}</div>
@@ -165,7 +165,7 @@ function Navigation() {
                   setSelectedPage('서비스 가이드');
                   router.push('/guide');
                 }}
-                selected={selectedPage === '서비스 가이드' ? true : false}
+                $selected={selectedPage === '서비스 가이드' ? true : false}
               >
                 서비스 가이드
                 {selectedPage === '서비스 가이드' ? <SelectedPage /> : <></>}
@@ -177,7 +177,7 @@ function Navigation() {
                   setSelectedPage('제품 보기');
                   router.push('/product');
                 }}
-                selected={selectedPage === '제품 보기' ? true : false}
+                $selected={selectedPage === '제품 보기' ? true : false}
               >
                 제품 보기
                 {selectedPage === '제품 보기' ? <SelectedPage /> : <></>}
@@ -187,7 +187,7 @@ function Navigation() {
             <Section>
               <Option
                 onClick={() => checkUserMypick()}
-                selected={selectedPage === '마이픽' ? true : false}
+                $selected={selectedPage === '마이픽' ? true : false}
               >
                 마이픽
                 {selectedPage === '마이픽' ? <SelectedPage /> : <></>}
@@ -197,7 +197,7 @@ function Navigation() {
             <Section>
               <Option
                 onClick={() => checkUserWardrobe()}
-                selected={selectedPage === '옷장 정리' ? true : false}
+                $selected={selectedPage === '옷장 정리' ? true : false}
               >
                 옷장 정리
                 {selectedPage === '옷장 정리' ? <SelectedPage /> : <></>}
@@ -242,10 +242,10 @@ const PageWrapper = styled.div`
   margin-top: 30px;
   display: flex;
 `;
-const My = styled.div<{ login: string }>`
+const My = styled.div<{ $login: string }>`
   font-size: 16px;
   margin-right: 39px;
-  font-weight: ${(props) => (props.login === 'bold' ? '600' : '400')};
+  font-weight: ${(props) => (props.$login === 'bold' ? '600' : '400')};
   cursor: pointer;
 `;
 const Login = styled.div`
@@ -259,11 +259,11 @@ const SemiWrapper = styled.div`
   display: flex;
   margin: 44px 0 0 0;
 `;
-const Option = styled.div<{ selected: boolean }>`
+const Option = styled.div<{ $selected: boolean }>`
   font-size: 20px;
   margin-right: 83px;
   text-align: center;
   width: 153px;
-  font-weight: ${(props) => (props.selected ? '600' : '400')};
+  font-weight: ${(props) => (props.$selected ? '600' : '400')};
   cursor: pointer;
 `;

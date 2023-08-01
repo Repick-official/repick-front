@@ -123,34 +123,34 @@ function page() {
           <Comment>인기 상품을 추천해드려요</Comment>
           <SelectOrder>
             <WrapMenu
-              isselected={(order === 'latest').toString()}
+              $isselected={(order === 'latest').toString()}
               onClick={() => handleOrderChange('latest')}
             >
-              <OrderMenu isselected={(order === 'latest').toString()}>
+              <OrderMenu $isselected={(order === 'latest').toString()}>
                 최신순
               </OrderMenu>
             </WrapMenu>
             <WrapMenu
-              isselected={(order === 'seen').toString()}
+              $isselected={(order === 'seen').toString()}
               onClick={() => handleOrderChange('seen')}
             >
-              <OrderMenu isselected={(order === 'seen').toString()}>
+              <OrderMenu $isselected={(order === 'seen').toString()}>
                 조회순
               </OrderMenu>
             </WrapMenu>
             <WrapMenu
-              isselected={(order === 'highest').toString()}
+              $isselected={(order === 'highest').toString()}
               onClick={() => handleOrderChange('highest')}
             >
-              <OrderMenu isselected={(order === 'highest').toString()}>
+              <OrderMenu $isselected={(order === 'highest').toString()}>
                 높은 가격순
               </OrderMenu>
             </WrapMenu>
             <WrapMenu
-              isselected={(order === 'lowest').toString()}
+              $isselected={(order === 'lowest').toString()}
               onClick={() => handleOrderChange('lowest')}
             >
-              <OrderMenu isselected={(order === 'lowest').toString()}>
+              <OrderMenu $isselected={(order === 'lowest').toString()}>
                 낮은 가격순
               </OrderMenu>
             </WrapMenu>
@@ -165,7 +165,7 @@ function page() {
                   {categoryData[parentId].map(
                     ({ id, name }: { id: number; name: string }) => (
                       <Option
-                        isselected={(id === categoryId).toString()}
+                        $isselected={(id === categoryId).toString()}
                         key={id}
                         onClick={() => {
                           setCategoryId(id);
@@ -300,7 +300,7 @@ const SelectOrder = styled.div`
   background: var(--4, #e8e8e8);
 `;
 
-const WrapMenu = styled.div<{ isselected: string }>`
+const WrapMenu = styled.div<{ $isselected: string }>`
   display: inline-flex;
   padding: 8px 23px;
   justify-content: center;
@@ -308,18 +308,18 @@ const WrapMenu = styled.div<{ isselected: string }>`
   gap: 10px;
   border-radius: 12px;
   background: ${(props) =>
-    props.isselected === 'true' ? 'var(--1, #111)' : 'var(--4, #E8E8E8)'};
+    props.$isselected === 'true' ? 'var(--1, #111)' : 'var(--4, #E8E8E8)'};
   cursor: pointer;
 `;
 
-const OrderMenu = styled.div<{ isselected: string }>`
+const OrderMenu = styled.div<{ $isselected: string }>`
   color: ${(props) =>
-    props.isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
+    props.$isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
   text-align: center;
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
-  font-weight: ${(props) => (props.isselected === 'true' ? '700' : '400')};
+  font-weight: ${(props) => (props.$isselected === 'true' ? '700' : '400')};
   line-height: 140%; /* 22.4px */
 `;
 
@@ -358,15 +358,15 @@ const OptionDetail = styled.div`
   gap: 33px;
   align-items: center;
 `;
-const Option = styled.p<{ isselected: string }>`
+const Option = styled.p<{ $isselected: string }>`
   color: ${(props) =>
-    props.isselected === 'true' ? 'var(--4, #FFF)' : 'var(--1, #111)'};
+    props.$isselected === 'true' ? 'var(--4, #FFF)' : 'var(--1, #111)'};
   cursor: pointer;
   text-align: center;
 
   border-radius: 12px;
   background: ${(props) =>
-    props.isselected === 'true' ? 'var(--1, #111)' : ''};
+    props.$isselected === 'true' ? 'var(--1, #111)' : ''};
 
   font-family: Pretendard;
   font-size: 16px;

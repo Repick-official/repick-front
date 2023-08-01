@@ -78,7 +78,7 @@ function MyPickNavigation() {
                 setSelectedPage('마이픽 현황');
                 router.push('/myPick/home');
               }}
-              selected={selectedPage === '마이픽 현황' ? true : false}
+              $selected={selectedPage === '마이픽 현황' ? true : false}
             >
               마이픽 현황
               {selectedPage === '마이픽 현황' ? <SelectedPage /> : <></>}
@@ -88,7 +88,7 @@ function MyPickNavigation() {
           <Section>
             <Option
               onClick={() => checkUserHomeFitting()}
-              selected={selectedPage === '홈피팅' ? true : false}
+              $selected={selectedPage === '홈피팅' ? true : false}
             >
               홈피팅
               {selectedPage === '홈피팅' ? <SelectedPage /> : <></>}
@@ -98,7 +98,7 @@ function MyPickNavigation() {
           <Section>
             <Option
               onClick={() => router.push('/myPick/shopping/purchase')}
-              selected={selectedPage === '구매하기' ? true : false}
+              $selected={selectedPage === '구매하기' ? true : false}
             >
               구매하기
               {selectedPage === '구매하기' ? <SelectedPage /> : <></>}
@@ -108,7 +108,7 @@ function MyPickNavigation() {
           <Section>
             <Option
               onClick={() => checkUserPurchaseHistory()}
-              selected={selectedPage === '구매내역' ? true : false}
+              $selected={selectedPage === '구매내역' ? true : false}
             >
               구매내역
               {selectedPage === '구매내역' ? <SelectedPage /> : <></>}
@@ -131,11 +131,11 @@ const Menu = styled.div`
   position: relative;
 `;
 const Section = styled.div``;
-const Option = styled.div<{ selected: boolean }>`
+const Option = styled.div<{ $selected: boolean }>`
   font-size: 16px;
-  font-weight: ${(props) => (props.selected ? '600' : '400')};
+  font-weight: ${(props) => (props.$selected ? '600' : '400')};
   color: ${(props) =>
-    props.selected ? 'var(--1, #111);' : 'var(--2, #5F5F5F);'};
+    props.$selected ? 'var(--1, #111);' : 'var(--2, #5F5F5F);'};
   display: flex;
   flex-direction: column;
   align-items: center;
