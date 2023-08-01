@@ -91,9 +91,8 @@ function page() {
     checkUserInfo();
     checkIsSubscribe();
     showSubscribeInfo();
-  }, []);
-  console.log('history', history);
-
+   console.log('history', history);
+  },[]);
   const onValid = async (data: HookFormTypes) => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await updateUserInfo(accessToken, data);
@@ -114,7 +113,7 @@ function page() {
   const handleSubscribeClick = (num: React.SetStateAction<number>) => {
     setSubscribeInfo(num);
     alert('현재 이용 불가능한 서비스입니다.');
-  };
+  }; 
   return (
     <Container>
       <form onSubmit={handleSubmit(onValid)}>
@@ -214,6 +213,7 @@ function page() {
                 <Content
                   required
                   className="address"
+                  placeholder = "숫자만 입력하세요"
                   {...register('address.zipCode', {
                     pattern: {
                       value: /^[\d]*$/, // 숫자만 입력되도록 정규식 패턴 설정
@@ -234,7 +234,7 @@ function page() {
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.mainAddress', {
                   pattern: {
-                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    value: /^[\d가-힣\s]*$/, // 숫자, 한글, 공백만 입력되도록 정규식 패턴 설정
                     message: '*',
                   },
                 })}
@@ -250,7 +250,7 @@ function page() {
                 placeholder="상세 주소를 입력해주세요"
                 {...register('address.detailAddress', {
                   pattern: {
-                    value: /^[\d가-힣]*$/, // 숫자와 한글만 입력되도록 정규식 패턴 설정
+                    value: /^[\d가-힣\s]*$/, // 숫자, 한글, 공백만 입력되도록 정규식 패턴 설정
                     message: '*',
                   },
                 })}
