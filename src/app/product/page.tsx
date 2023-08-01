@@ -34,40 +34,42 @@ function page() {
   const router = useRouter();
   const [categoryData, setCategoryData] = useState<any>({});
   const [cursorId, setCursorId] = useState<number>(0);
+  const [cursorPrice, setCursorPrice] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
   const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
   const [isSearchedItem, setIsSearchedItem] = useState<boolean>(false);
+  const [loadMoreTimer, setLoadMoreTimer] = useState<NodeJS.Timeout | null>(null);
   const fetchItem = async () => {
+    console.log('순서 :',order,' 마지막 상품ID : ',cursorId,' category ID : ',categoryId);
     let response: Product[];
     switch (order) {
       case 'latest':
         response = await getItemLatest(cursorId, categoryId);
         break;
       case 'lowest':
-        response = await getItemLowest(cursorId, categoryId);
+        response = await getItemLowest(cursorId, cursorPrice, categoryId);
         break;
       case 'highest':
-        response = await getItemHighest(cursorId, categoryId);
+        response = await getItemHighest(cursorId, cursorPrice, categoryId);
         break;
       case 'seen':
         // response = await getItemSeen(cursorId, categoryId);
         response = await getItemLatest(cursorId, categoryId);
         alert('조회순은 아직 없습니다~');
+        setCategoryId(0);
         break;
       default:
         response = await getItemLatest(cursorId, categoryId);
     }
-
     setProducts((prevProducts) => [...prevProducts, ...response]);
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;
+      const lastProductPrice = response[response.length - 1].price;
       setCursorId(lastProductId);
-      console.log('lastProductId', lastProductId);
-      console.log('response', response);
+      setCursorPrice(lastProductPrice);
     }
   };
-  console.log('커서 아이디', cursorId);
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
@@ -88,10 +90,10 @@ function page() {
     const item = sessionStorage.getItem('items');
     const searchedItem = item ? JSON.parse(item) : null;
 
-    console.log(searchedItem);
     if (searchedItem) {
       setProducts(searchedItem);
       setCursorId(searchedItem[searchedItem.length - 1].productId);
+      setCursorPrice(searchedItem[searchedItem.length - 1].price);
       sessionStorage.clear();
       setIsSearchedItem(true);
     } else {
@@ -101,13 +103,26 @@ function page() {
   }, [categoryId, order]);
 
   const loadMoreItems = () => {
-    fetchItem();
+    if (loadMoreTimer) {
+      clearTimeout(loadMoreTimer);
+    }
+    const timer = setTimeout(fetchItem, 500);
+    setLoadMoreTimer(timer);
   };
+
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
-    // setCursorId(0);
+    setCursorId(0);
+    setCursorPrice(0);
     // setProducts([]);
   };
+  useEffect(() => {
+    return () => {
+      if (loadMoreTimer) {
+        clearTimeout(loadMoreTimer);
+      }
+    };
+  }, [loadMoreTimer]);
   return (
     <>
       {/* <BannerWrapper>
@@ -170,6 +185,7 @@ function page() {
                         onClick={() => {
                           setCategoryId(id);
                           setCursorId(0);
+                          setCursorPrice(0);
                         }}
                       >
                         {name}
@@ -184,6 +200,7 @@ function page() {
             onClick={() => {
               setCategoryId(0);
               setCursorId(0);
+              setCursorPrice(0);
             }}
           >
             초기화

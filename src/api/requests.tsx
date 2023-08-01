@@ -383,11 +383,13 @@ export const getItemLatest = async (
 
 export const getItemLowest = async (
   cursorId: number = 0,
+  cursorPrice: number = 0,
   categoryId: number = 0,
   pageSize: number = 16
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    cursorPrice : cursorPrice !==0 ? cursorPrice.toString() : '',
     categoryId: categoryId !== 0 ? categoryId.toString() : '',
     pageSize: pageSize.toString(),
   };
@@ -426,11 +428,13 @@ export const getItemLowest = async (
 };
 export const getItemHighest = async (
   cursorId: number = 0,
+  cursorPrice : number = 0,
   categoryId: number = 0,
   pageSize: number = 16
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
+    cursorPrice : cursorPrice !==0 ? cursorPrice.toString() : '',
     categoryId: categoryId !== 0 ? categoryId.toString() : '',
     pageSize: pageSize.toString(),
   };
