@@ -63,8 +63,11 @@ function page() {
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;
       setCursorId(lastProductId);
+      console.log('lastProductId', lastProductId);
+      console.log('response', response);
     }
   };
+  console.log('커서 아이디', cursorId);
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();

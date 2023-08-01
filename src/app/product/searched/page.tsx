@@ -48,7 +48,7 @@ function page() {
     switch (order) {
       case 'latest':
         response = await searchItem(cursorId, categoryId, text);
-        console.log('text', text);
+
         console.log('최신', response);
         break;
       case 'lowest':
@@ -74,7 +74,6 @@ function page() {
         console.log('높은', response);
         break;
       case 'seen':
-        // response = await getItemSeen(cursorId, categoryId);
         response = await searchItem(cursorId, categoryId, text);
         alert('조회순은 아직 없습니다~');
         break;
@@ -83,15 +82,19 @@ function page() {
     }
 
     setProducts(response);
-    // if (response.length > 0) {
-    // 여기 아래가 이상하다
-    const lastProductId = response[response.length - 1].productId;
-    setCursorId(lastProductId);
-    const lastProductPrice = response[response.length - 1].price;
-    setCursorPrice(lastProductPrice);
-    // }
+    if (response.length > 0) {
+      const lastProductId = response[response.length - 1].productId;
+      setCursorId(lastProductId);
+      console.log('lastProductId', lastProductId);
+      const lastProductPrice = response[response.length - 1].price;
+      setCursorPrice(lastProductPrice);
+      console.log('lastProductPrice', lastProductPrice);
+    }
   };
-  console.log('ssssss', products);
+
+  console.log('랜딘 커서 아이디', cursorId);
+  console.log('랜딩 가격', cursorPrice);
+
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
@@ -105,26 +108,11 @@ function page() {
         }
         map[item.parentId].push(item);
         return map;
-      }, {});
+      }, []);
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    // fetchItem();
-    // const item = sessionStorage.getItem('items');
-    // const searchedItem = item ? JSON.parse(item) : null;
-    // console.log('categoryData', categoryData);
-    // console.log('searchedItem', searchedItem);
-    // if (searchedItem) {
-    //   setProducts(searchedItem);
-    //   setCursorId(searchedItem[searchedItem.length - 1].productId);
-    //   console.log('cursorId', cursorId);
-    //   setCursorPrice(searchedItem[searchedItem.length - 1].price);
-    //   // sessionStorage.clear();
-    //   setIsSearchedItem(true);
-    // } else {
-    //   // setProducts([]);
-    //   // fetchItem();
-    // }
+    setOrder('latest');
   }, []);
 
   useEffect(() => {
@@ -136,21 +124,10 @@ function page() {
   };
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
-    console.log('order', order);
-    // fetchItem();
-    // setCursorId(0);
-    // setProducts([]);
   };
+  console.log('order', order);
   return (
     <>
-      {/* <BannerWrapper>
-        <Image
-          src={logo_guide}
-          alt="Picture of me"
-          style={{ width: '100vw', height: '657px' }}
-          placeholder="blur" // Optional blur-up while loading
-        />
-      </BannerWrapper> */}
       <ContentWrapper>
         <Header>
           <Comment>인기 상품을 추천해드려요</Comment>

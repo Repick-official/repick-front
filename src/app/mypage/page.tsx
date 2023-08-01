@@ -85,6 +85,7 @@ function page() {
     checkIsSubscribe();
     showSubscribeInfo();
   }, []);
+  console.log('history', history);
 
   const onValid = async (data: HookFormTypes) => {
     let accessToken = await getAccessToken(cookies, setCookie);
@@ -298,8 +299,8 @@ function page() {
       {isSubscribed ? (
         <div>
           <div>
-            {history.map((item) => (
-              <MembershipInfo key={item.id}>
+            {history.map((item, index) => (
+              <MembershipInfo key={index}>
                 <MembershipInfoWrapper>
                   <MembershipInfoMenu>
                     <S>

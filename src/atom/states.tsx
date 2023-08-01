@@ -52,22 +52,6 @@ export interface Product {
 
 export const requestProducts = atom<Product[]>({
   key: 'products',
-  default: [
-    {
-      homeFittingId: 0,
-      product: {
-        brand: '',
-        detail: '',
-        size: '',
-        price: 0,
-        name: '',
-        mainImageFile: {
-          imagePath: '',
-        },
-        productId: 0,
-      },
-      isChecked: false,
-    },
-  ],
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });

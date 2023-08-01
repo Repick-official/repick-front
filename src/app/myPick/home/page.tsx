@@ -89,7 +89,7 @@ function page() {
   const [btn, setBtn] = useState(0);
   const [cartProducts, setCartProducts] = useState<any[]>([]);
 
-  const [updatedProducts, setUpdatedProducts] = useState<any[]>([]);
+  // const [updatedProducts, setUpdatedProducts] = useState<any[]>([]);
 
   // useEffect(() => {
   //   const selectedProductIds = updatedProducts.map(
@@ -102,11 +102,28 @@ function page() {
   // }, [updatedProducts]);
 
   const handleApply = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await getIsSubscribe(accessToken);
     const selectedProducts = products.filter((item) => item.isClicked);
     console.log('selectedProducts', selectedProducts);
-    setUpdatedProducts(selectedProducts);
+    // setUpdatedProducts(selectedProducts);
+
+    setCartProducts((prevCartProducts) => [
+      ...prevCartProducts,
+      ...selectedProducts.map((item) => item.cartProductId),
+    ]);
+    handle(selectedProducts);
+  };
+
+  const handle = async (selectedProducts: any) => {
+    let accessToken = await getAccessToken(cookies, setCookie);
+    const response = await getIsSubscribe(accessToken);
+    // const selectedProducts = products.filter((item) => item.isClicked);
+    // console.log('selectedProducts', selectedProducts);
+    // setUpdatedProducts(selectedProducts);
+
+    // setCartProducts((prevCartProducts) => [
+    //   ...prevCartProducts,
+    //   ...selectedProducts.map((item) => item.cartProductId),
+    // ]);
 
     if (selectedProducts.length <= 0) {
       alert('신청할 제품을 선택해주세요.');
@@ -133,10 +150,6 @@ function page() {
             address &&
             email
           ) {
-            setCartProducts((prevCartProducts) => [
-              ...prevCartProducts,
-              ...selectedProducts.map((item) => item.cartProductId),
-            ]);
             handleHomeFitting();
           } else {
             const userConfirmation = window.confirm(
@@ -164,10 +177,6 @@ function page() {
             address &&
             email
           ) {
-            setCartProducts((prevCartProducts) => [
-              ...prevCartProducts,
-              ...selectedProducts.map((item) => item.cartProductId),
-            ]);
             handleHomeFitting();
           } else {
             const userConfirmation = window.confirm(
@@ -183,8 +192,8 @@ function page() {
     }
   };
 
-  console.log('updatedProducts', updatedProducts);
-  console.log('cartProducts', cartProducts);
+  // console.log('updatedProducts', updatedProducts);
+  // console.log('cartProducts', cartProducts);
 
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);

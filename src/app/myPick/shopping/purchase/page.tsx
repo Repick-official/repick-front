@@ -56,6 +56,7 @@ function page() {
   // const [p, setP] = useState(0);
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [total, setTotal] = useState(0);
+  console.log('finalProducts', finalProducts);
 
   // 체크박스 상태
   const [isDeliveryDiff, setIsDeliveryDiff] = useState(false);
@@ -93,7 +94,7 @@ function page() {
     });
     setH(clothes);
     // setP(total); 토탈 가격 계산
-  }, []);
+  }, [finalProducts]);
 
   const handleClick = () => {
     if (isClicked) {

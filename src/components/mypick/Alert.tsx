@@ -26,14 +26,37 @@ function SearchModal({
     setSelectedNaviPage('');
     router.push('/mypage');
   };
+
+  let text1JSX: any = text1;
+  let text2Style = {};
+
+  if (text1.includes('5벌까지만 가능해요.')) {
+    text1JSX = (
+      <>
+        홈피팅은 한 번에 <span className="orange-text">최대 5벌까지</span>만
+        가능해요.
+      </>
+    );
+  } else if (text1.includes('3벌까지만 입어볼 수 있어요!')) {
+    text1JSX = (
+      <>
+        베이직 멤버십 회원은 <span className="orange-text">3벌까지</span>만
+        입어볼 수 있어요!
+      </>
+    );
+  }
+
+  // text2는 항상 검정색으로 렌더링
+  text2Style = { color: 'black' };
+
   return (
     <>
       <ModalBox onClick={clickModal}>
         <SearchModalContent onClick={(e: any) => e.stopPropagation()}>
           <Remove onClick={clickModal} src={X.src}></Remove>
           <Content>
-            <Text>{text1} </Text>
-            <Text>{text2}</Text>
+            <Text>{text1JSX}</Text>
+            <Text style={text2Style}>{text2}</Text>
             {button === 2 ? (
               <Button>
                 <Small size="normal" onClick={clickModal}>
@@ -141,4 +164,8 @@ const Text = styled.div`
   text-align: center;
   font-size: 24px;
   font-weight: 600;
+
+  .orange-text {
+    color: orange;
+  }
 `;
