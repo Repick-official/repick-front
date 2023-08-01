@@ -2,13 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 function Button({ content, num }: { content: string; num: string }) {
-  return <Show num={num}>{content}</Show>;
+  return <Show $num={num}>{content}</Show>;
 }
 
 export default Button;
 
 const Show = styled.button<{
-  num: string;
+  $num: string;
 }>`
   border: none;
   display: flex;
@@ -22,49 +22,49 @@ const Show = styled.button<{
   cursor: pointer;
 
   ${(props) =>
-    (props.num == '1' && //배경 : 회색, 글씨 : 주황
+    (props.$num == '1' && //배경 : 회색, 글씨 : 주황
       css`
         width: 517px;
         height: 80px;
         background: var(--4, #e8e8e8);
         color: var(--serve-color, #ff8a00);
       `) ||
-    (props.num == '2' && //배경 : 회색, 글씨 : 검정
+    (props.$num == '2' && //배경 : 회색, 글씨 : 검정
       css`
         width: 517px;
         height: 80px;
         background: var(--4, #e8e8e8);
         color: var(--1, #111);
       `) ||
-    (props.num == '3' &&
+    (props.$num == '3' &&
       css`
         width: 310px;
         height: 60px;
         background: var(--1, #111);
         color: var(--4, #e8e8e8);
       `) ||
-    (props.num == '4' &&
+    (props.$num == '4' &&
       css`
         width: 360px;
         height: 60px;
         background: var(--1, #111);
         color: var(--4, #e8e8e8);
       `) ||
-    (props.num == '5' && //배경 : 회색, 글씨 : 주황
+    (props.$num == '5' && //배경 : 회색, 글씨 : 주황
       css`
         width: 360px;
         height: 60px;
         background: var(--4, #e8e8e8);
         color: var(--serve-color, #ff8a00);
       `) ||
-    (props.num == '6' && //배경 : 회색, 글씨 : 검정
+    (props.$num == '6' && //배경 : 회색, 글씨 : 검정
       css`
         width: 360px;
         height: 60px;
         background: var(--4, #e8e8e8);
         color: var(--1, #111);
       `) ||
-    (props.num == '7' &&
+    (props.$num == '7' &&
       css`
         width: 391px;
         height: 60px;

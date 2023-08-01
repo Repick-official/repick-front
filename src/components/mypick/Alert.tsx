@@ -59,19 +59,19 @@ function SearchModal({
             <Text style={text2Style}>{text2}</Text>
             {button === 2 ? (
               <Button>
-                <Small size="normal" onClick={clickModal}>
+                <Small $size="normal" onClick={clickModal}>
                   다음에 하기
                 </Small>
-                <Small size="small" onClick={goSubscribe}>
+                <Small $size="small" onClick={goSubscribe}>
                   프로 플랜으로 바꾸러 가기
                 </Small>
               </Button>
             ) : button === 3 ? (
               <Button>
-                <Small size="normal" onClick={clickModal}>
+                <Small $size="normal" onClick={clickModal}>
                   다음에 하기
                 </Small>
-                <Small size="small" onClick={goSubscribe}>
+                <Small $size="small" onClick={goSubscribe}>
                   구독하러 가기
                 </Small>
               </Button>
@@ -94,7 +94,7 @@ const Button = styled.div`
   gap: 20px;
   margin-top: 38px;
 `;
-const Small = styled.div<{ size: string }>`
+const Small = styled.div<{ $size: string }>`
   border-radius: 15px;
   background: var(--1, #111);
   display: flex;
@@ -103,7 +103,7 @@ const Small = styled.div<{ size: string }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: ${(props) => (props.size === 'normal' ? '20px' : '16px')};
+  font-size: ${(props) => (props.$size === 'normal' ? '20px' : '16px')};
   font-style: normal;
   font-weight: 600;
   color: var(--4, #e8e8e8);

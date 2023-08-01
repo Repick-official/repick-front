@@ -89,25 +89,25 @@ function page() {
         </T>
         <F>
           <Filter
-            isselected={(order === 'all').toString()}
+            $isselected={(order === 'all').toString()}
             onClick={() => ChangeAll('all')}
           >
             전체보기
           </Filter>
           <Filter
-            isselected={(order === 'selling').toString()}
+            $isselected={(order === 'selling').toString()}
             onClick={() => ChangeSelling('selling')}
           >
             판매중
           </Filter>
           <Filter
-            isselected={(order === 'sold').toString()}
+            $isselected={(order === 'sold').toString()}
             onClick={() => ChangeSold('sold')}
           >
             판매완료
           </Filter>
           <Filter
-            isselected={(order === 'settled').toString()}
+            $isselected={(order === 'settled').toString()}
             onClick={() => ChangeSettled('settled')}
           >
             정산완료
@@ -120,11 +120,11 @@ function page() {
           <Product key={item.productId}>
             {item.productState === 'SELLING' ||
             item.productState === 'PENDING' ? (
-              <Option option="selling">판매 진행중</Option>
+              <Option $option="selling">판매 진행중</Option>
             ) : item.productState === 'SOLD_OUT' ? (
-              <Option option="sold-out">판매완료</Option>
+              <Option $option="sold-out">판매완료</Option>
             ) : (
-              <Option option="settled">정산완료</Option>
+              <Option $option="settled">정산완료</Option>
             )}
             <ContentBodyInfo
               src={item.mainImageFile.imagePath}
@@ -148,9 +148,9 @@ function page() {
 
       <div onClick={() => clickSettlement()} className="button">
         {order === 'selling' || order === 'settled' ? (
-          <Call isblack="black">정산 요청하기</Call>
+          <Call $isblack="black">정산 요청하기</Call>
         ) : (
-          <Call isblack="gray">정산 요청하기</Call>
+          <Call $isblack="gray">정산 요청하기</Call>
         )}
       </div>
     </Container>
@@ -159,7 +159,7 @@ function page() {
 
 export default page;
 
-const Call = styled.div<{ isblack: string }>`
+const Call = styled.div<{ $isblack: string }>`
   border: none;
   display: flex;
   padding: 24px 40px;
@@ -174,7 +174,7 @@ const Call = styled.div<{ isblack: string }>`
   width: 280px;
   height: 16px;
   background: ${(props) =>
-    props.isblack == 'black' ? 'var(--3, #B4B4B4)' : 'var(--1, #111)'};
+    props.$isblack == 'black' ? 'var(--3, #B4B4B4)' : 'var(--1, #111)'};
   color: var(--4, #e8e8e8);
 `;
 
@@ -208,13 +208,13 @@ const T = styled.div`
 const F = styled.div`
   display: flex;
 `;
-const Filter = styled.div<{ isselected: string }>`
+const Filter = styled.div<{ $isselected: string }>`
   margin-left: 24px;
   margin-top: 50px;
   font-size: 20px;
-  font-weight: ${(props) => (props.isselected === 'true' ? '600' : '400')};
+  font-weight: ${(props) => (props.$isselected === 'true' ? '600' : '400')};
   color: ${(props) =>
-    props.isselected === 'true' ? 'var(--1, #111)' : 'var(--2, #5F5F5F);'};
+    props.$isselected === 'true' ? 'var(--1, #111)' : 'var(--2, #5F5F5F);'};
 `;
 
 const Product = styled.div`
@@ -227,15 +227,15 @@ const Product = styled.div`
 const Check = styled.div`
   margin-bottom: 20px;
 `;
-const Option = styled.div<{ option: string }>`
+const Option = styled.div<{ $option: string }>`
   margin-bottom: 20px;
   font-size: 20px;
 
   font-weight: 600;
   color: ${(props) =>
-    props.option === 'selling'
+    props.$option === 'selling'
       ? 'var(--1, #111)'
-      : props.option === 'sold-out'
+      : props.$option === 'sold-out'
       ? 'var(--serve-color, #FF8A00)'
       : 'var(--3, #B4B4B4);'};
 `;
