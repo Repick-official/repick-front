@@ -34,13 +34,6 @@ function Footer() {
             {'Copyright (c) 2023 Repick 리픽 All rights Reserved.'}
           </CopyRight>
         </Wrapper>
-        {/* <App>
-          <Down>{'Repick 앱 다운로드'}</Down>
-          <W>
-            <A>{'IOS App Store'}</A>
-            <A>{'Android'}</A>
-          </W>
-        </App> */}
       </Q>
     </Container>
   );
@@ -72,11 +65,13 @@ const Bold = styled.div`
   font-weight: 600;
   color: var(--1, #111);
   margin-bottom: 8px;
+  line-height: 140%;
 `;
 const Info = styled.div`
   margin-right: 24px;
   font-size: 16px;
   color: rgba(95, 95, 95, 1);
+  line-height: 140%;
 `;
 
 const I = styled.div`
@@ -98,11 +93,13 @@ const Do = styled.div`
   font-size: 14px;
   line-height: 150%;
   color: rgba(95, 95, 95, 1);
+  line-height: 140%;
 `;
 const CopyRight = styled.div`
   font-size: 14px;
   margin-top: 19px;
   color: rgba(95, 95, 95, 1);
+  line-height: 140%;
 `;
 const Down = styled.div`
   font-size: 19px;

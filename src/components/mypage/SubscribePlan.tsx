@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 function SubscribePlan({
@@ -11,7 +10,7 @@ function SubscribePlan({
   discounted: string;
 }) {
   return (
-    <>
+    <Container>
       <Wrapper>
         <Box>
           <Content>
@@ -37,12 +36,13 @@ function SubscribePlan({
           </Content>
         </Box>
       </Wrapper>
-    </>
+    </Container>
   );
 }
 
 export default SubscribePlan;
 
+const Container = styled.div``;
 const Wrapper = styled.div`
   display: flex;
   margin-top: 60px;
@@ -61,19 +61,23 @@ const Content = styled.div`
 const Plan = styled.div`
   font-weight: 600;
   font-size: 24px;
+  line-height: 150%;
 `;
 const Price = styled.div`
   font-weight: 600;
   font-size: 48px;
+  line-height: 140%;
 `;
 const Discount = styled.div`
   font-weight: 600;
   font-size: 48px;
+  line-height: 140%;
 `;
 const Info = styled.div`
   font-weight: 400;
   font-size: 16px;
   margin-top: 30px;
+  line-height: 140%;
 `;
 
 const DiscountWrapper = styled.div`
@@ -91,6 +95,7 @@ const Tax = styled.div`
   font-size: 20px;
   margin-top: 30px;
   margin-left: 12px;
+  line-height: 140%;
 `;
 const Line = styled.div`
   width: 204px;
