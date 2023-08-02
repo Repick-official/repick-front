@@ -75,7 +75,6 @@ function page() {
       default:
         response = await searchItem(cursorId, pageSize, text);
     }
-    console.log(response);
     setProducts(response);
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;

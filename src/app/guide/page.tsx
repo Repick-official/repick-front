@@ -43,7 +43,6 @@ function page() {
         return item;
       });
       setProducts(clothes);
-      console.log(clothes);
     };
 
     get();

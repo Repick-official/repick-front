@@ -53,7 +53,6 @@ function page() {
       if (useRegisteredAddr) {
         let accessToken = await getAccessToken(cookies, setCookie);
         const response = await getUserInfo(accessToken);
-        console.log(response);
         if (response) {
           setValue('address.zipCode', response.address?.zipCode || '');
           setValue('address.mainAddress', response.address?.mainAddress || '');
@@ -74,8 +73,6 @@ function page() {
   const registerHandler = async (data: HookFormTypes) => {
     const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
     if (confirm) {
-      console.log(data);
-
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await pickupWardrobe(accessToken, data);
       if (response.success) {

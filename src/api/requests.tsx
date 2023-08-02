@@ -23,8 +23,6 @@ export const getMainPageProducts = async () => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -51,8 +49,6 @@ export const getDetailPageProducts = async (productId: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -143,8 +139,6 @@ export const getCategories = async () => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -195,8 +189,6 @@ export const inquiryMypick = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -221,8 +213,6 @@ export const applyHomeFitting = async (access: any, ids: any[]) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -243,8 +233,6 @@ export const checkSubscribe = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -264,8 +252,6 @@ export const getUserInfo = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -285,8 +271,6 @@ export const getIsSubscribe = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -332,8 +316,6 @@ export const getCategory = async () => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -375,8 +357,6 @@ export const getItemLatest = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -421,8 +401,6 @@ export const getItemLowest = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -466,8 +444,6 @@ export const getItemHighest = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -503,7 +479,6 @@ export const getItemSeen = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
@@ -532,8 +507,6 @@ export const inquiryHomeFitting = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -562,7 +535,6 @@ export const searchItem = async (
     );
     if (response.ok) {
       const data = await response.json();
-      console.log('냐', data);
       const clothes = data.map((item: any) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
@@ -574,8 +546,6 @@ export const searchItem = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -619,8 +589,6 @@ export const searchItemByPrice = async (
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -643,8 +611,6 @@ export const inquirySubscribe = async (access: any, state: string) => {
       return data;
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -666,8 +632,6 @@ export const inquirySubscribeLatest = async (access: any) => {
       return data;
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -745,8 +709,6 @@ export const showWardrobeAll = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -777,8 +739,6 @@ export const showWardrobeSelling = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -806,8 +766,6 @@ export const showWardrobeSold = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -838,8 +796,6 @@ export const showWardrobeSettled = async (access: any) => {
       throw new Error('Error fetching poll types');
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
@@ -862,8 +818,6 @@ export const showWardrobeSettlement = async (access: any, ids: any[]) => {
       return data;
     }
   } catch (error) {
-    // 에러 처리
-    console.error(error);
     throw error;
   }
 };
