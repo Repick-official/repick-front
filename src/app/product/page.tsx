@@ -43,14 +43,6 @@ function page() {
     null
   );
   const fetchItem = async () => {
-    console.log(
-      '순서 :',
-      order,
-      ' 마지막 상품ID : ',
-      cursorId,
-      ' category ID : ',
-      categoryId
-    );
     let response: Product[];
     switch (order) {
       case 'latest':
@@ -120,6 +112,10 @@ function page() {
   };
 
   const handleOrderChange = (newOrder: string) => {
+    if(newOrder === 'seen'){
+      alert("조회순은 아직 없습니다~");
+      return ;
+    }
     setOrder(newOrder);
     setCursorId(0);
     setCursorPrice(0);
