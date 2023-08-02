@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
 import Success from '@/components/common/Success';
 import { keyword } from '@/atom/states';
+import { useEffect } from 'react';
 
 function page() {
   const [text, setText] = useRecoilState(keyword);
