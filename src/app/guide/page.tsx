@@ -96,7 +96,7 @@ function page() {
         </ContentWrapper.left>
         <ContentWrapper.center>
           <Content.NumberWrapper>
-            <Content.Number>❶</Content.Number>
+            <Content.Number>1</Content.Number>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="328"
@@ -106,7 +106,7 @@ function page() {
             >
               <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5" />
             </svg>
-            <Content.Number>❷</Content.Number>
+            <Content.Number>2</Content.Number>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="328"
@@ -116,7 +116,7 @@ function page() {
             >
               <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5" />
             </svg>
-            <Content.Number>❸</Content.Number>
+            <Content.Number>3</Content.Number>
           </Content.NumberWrapper>
           <Content.IntroWrapper>
             <Content.IntroItem>
@@ -522,11 +522,17 @@ const Content = {
     gap: 48px;
   `,
   Number: styled.p`
-    color: #000;
-    font-size: 32px;
+    background: black;
+    color: #fff;
+    font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: 200%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height:20px;
+    border-radius: 25px;
   `,
   IntroWrapper: styled.div`
     display: flex;
