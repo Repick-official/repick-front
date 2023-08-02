@@ -311,8 +311,6 @@ const Header = styled.div`
 
 const Comment = styled.p`
   color: var(--1, #111);
-  /* Header2 32pt sb */
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -346,7 +344,6 @@ const OrderMenu = styled.div<{ $isselected: string }>`
   color: ${(props) =>
     props.$isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
   text-align: center;
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: ${(props) => (props.$isselected === 'true' ? '700' : '400')};
@@ -373,9 +370,6 @@ const OptionList = styled.div`
 const OptionP = styled.p`
   color: var(--1, #111);
   text-align: center;
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -397,7 +391,6 @@ const Option = styled.p<{ $isselected: string }>`
   background: ${(props) =>
     props.$isselected === 'true' ? 'var(--1, #111)' : ''};
 
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -439,9 +432,6 @@ const ShowMoreItems = styled.div`
 `;
 const ShowP = styled.p`
   color: var(--2, #5f5f5f);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

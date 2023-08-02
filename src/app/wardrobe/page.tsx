@@ -67,6 +67,7 @@ const Container = styled.div``;
 const Title = styled.div`
   font-size: 36px;
   font-weight: 600;
+  line-height: 140%;
 `;
 const SemiTitle = styled.div`
   font-size: 20px;

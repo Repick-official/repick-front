@@ -441,7 +441,6 @@ const ContentWaitingInfoWrapper = styled.div`
 
 const ContentWaitingInfoHeader = styled.div`
   color: #111;
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -476,7 +475,7 @@ const Content = {
       'clig' off,
       'liga' off;
     /* Header3 24pt sb */
-    font-family: Pretendard;
+
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -485,7 +484,6 @@ const Content = {
   Sub: styled.p`
     text-align: left;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -497,7 +495,6 @@ const Content = {
   Sub_White: styled.p`
     text-align: left;
     color: var(--1, #fff);
-    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -509,7 +506,6 @@ const Content = {
   SubRight: styled.p`
     text-align: right;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -526,7 +522,6 @@ const Content = {
   `,
   Number: styled.p`
     color: #000;
-    font-family: Pretendard;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
@@ -551,7 +546,6 @@ const Content = {
   IntroP: styled.p`
     margin: 0 auto;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -565,7 +559,6 @@ const Content = {
     margin-top: 18px;
     text-align: right;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -578,7 +571,6 @@ const Content = {
     margin-top: 18px;
     text-align: center;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -591,7 +583,6 @@ const Content = {
     margin-top: 18px;
     text-align: left;
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -605,7 +596,6 @@ const Content = {
     margin-top: 18px;
     text-align: left;
     color: var(--1, #fff);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -689,7 +679,6 @@ const SubCard = {
   `,
   Title: styled.p`
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -700,7 +689,6 @@ const SubCard = {
   `,
   CostDiscounted: styled.span`
     color: var(--1, #111);
-    font-family: Pretendard;
     font-size: 36px;
     font-style: normal;
     font-weight: 600;
@@ -714,7 +702,6 @@ const SubCard = {
   Discount: styled.span`
     margin-left: 12px;
     color: var(--unnamed, #ff3d00);
-    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -728,9 +715,6 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
-
-    /* Header1 48pt sb */
-    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -742,9 +726,6 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
-
-    /* Header4 20pt sb */
-    font-family: Pretendard;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -755,9 +736,6 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
-
-    /* Body2 16pt rg */
-    font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -787,7 +765,6 @@ const PurchaseButton = styled.div`
 
 const PurchaseP = styled.p`
   color: var(--4, #e8e8e8);
-  font-family: Pretendard;
   font-size: 30.271px;
   font-style: normal;
   font-weight: 600;

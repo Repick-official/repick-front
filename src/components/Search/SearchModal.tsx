@@ -55,7 +55,6 @@ const Search = {
     outline: none;
     cursor: pointer;
     line-height: 140%;
-    font-family: Pretendard;
   `,
   Button: styled.img`
     cursor: pointer;

@@ -213,7 +213,6 @@ const Contents = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Pretendard';
   `,
   Content: styled.div``,
 };

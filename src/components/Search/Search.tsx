@@ -135,7 +135,6 @@ const Content = {
     font-size: 28px;
     font-weight: 400;
     outline: none;
-    font-family: Pretendard;
   `,
   Button: styled.img`
     cursor: pointer;

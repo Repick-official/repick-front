@@ -387,7 +387,6 @@ const DeliveryInfoWrapper = styled.div`
 
 const DeliveryNowP1 = styled.p`
   color: #111;
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -396,7 +395,6 @@ const DeliveryNowP1 = styled.p`
 
 const DeliveryNowP2 = styled.p`
   color: #111;
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -419,7 +417,6 @@ const DeliveryInfoContent = styled.div`
 
 const DeliveryInfoDate = styled.p`
   color: #b4b4b4;
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -444,7 +441,6 @@ const DeliveryInfoItemWrapper = styled.div`
 
 const DeliveryInfoItemState = styled.p`
   color: #111;
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -478,8 +474,6 @@ const DeliveryInfoItemButton = styled.div`
 const DeliveryInfoWrapP = styled.p`
   color: #e8e8e8;
   text-align: center;
-
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -504,9 +498,6 @@ const DeliveredInfo = styled.div`
 
 const DeliveredSuccess = styled.p`
   color: var(--serve-color, #ff8a00);
-
-  /* Header3 24pt sb */
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -515,9 +506,6 @@ const DeliveredSuccess = styled.p`
 
 const DeliveredDate = styled.p`
   color: var(--1, #111);
-
-  /* Header3 24pt sb */
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -528,9 +516,6 @@ const DeliveredOrderDate = styled.p`
   width: 100%;
   text-align: center;
   color: var(--3, #b4b4b4);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -556,8 +541,6 @@ const DeliveredItemCategory = styled.div`
   background: rgb(255, 138, 0, 0.1);
   align-items: center;
   color: var(--1, #111);
-
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -618,9 +601,6 @@ const DeliveredItemInfo = styled.div`
   display: flex;
   align-items: center;
   color: var(--1, #111);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -645,8 +625,6 @@ const ItemSize = styled.div``;
 const DeliveredItemPrice = styled.p`
   color: var(--1, #111);
   text-align: center;
-  /* Header3 24pt sb */
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -657,9 +635,6 @@ const DeliveredItemReturnFee = styled.p`
   color: var(--1, #111);
   text-align: center;
   margin-left: 150px;
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -693,9 +668,6 @@ const OrderCount = styled.div`
 
 const OrderP = styled.p`
   color: var(--1, #111);
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -704,9 +676,6 @@ const OrderP = styled.p`
 
 const OrderNum = styled.p`
   color: var(--serve-color, #ff8a00);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -723,9 +692,6 @@ const ReturnCount = styled.div`
 
 const ReturnP = styled.p`
   color: var(--1, #111);
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -734,9 +700,6 @@ const ReturnP = styled.p`
 
 const ReturnNum = styled.p`
   color: var(--serve-color, #ff8a00);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -756,9 +719,6 @@ const AllPrice = styled.div`
 
 const PriceP = styled.p`
   color: var(--3, #b4b4b4);
-
-  /* Header3 24pt sb */
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -767,9 +727,6 @@ const PriceP = styled.p`
 
 const PriceNum = styled.p`
   color: var(--1, #111);
-
-  /* Header2 32pt sb */
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -779,9 +736,6 @@ const PriceNum = styled.p`
 const WarnInfo = styled.p`
   width: 100%;
   color: var(--3, #b4b4b4);
-
-  /* Caption 14pt rg */
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -802,9 +756,6 @@ const PurchaseButton = styled.div`
 const PurchaseP = styled.p`
   color: var(--4, #e8e8e8);
   text-align: center;
-
-  /* Body1 16pt sb */
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

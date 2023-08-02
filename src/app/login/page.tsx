@@ -168,7 +168,6 @@ const MenuWrapper = styled.div`
 const Menu = styled.p`
   width: 87px;
   font-size: 16px;
-  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
@@ -193,7 +192,6 @@ const SnsWrapper = styled.div`
 const SnsLoginText = styled.p`
   color: var(--3, #b4b4b4);
   font-size: 16px;
-  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;

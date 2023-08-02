@@ -456,7 +456,6 @@ const Container = styled.div`
 
 const OrderGuideP1 = styled.div`
   color: #111;
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -464,7 +463,6 @@ const OrderGuideP1 = styled.div`
 `;
 const OrderGuideP2 = styled.div`
   color: #111;
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -570,8 +568,6 @@ const CheckWrapper = styled.div`
 
 const CheckP = styled.div`
   color: var(--2, #5f5f5f);
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -627,9 +623,6 @@ const Request = styled.div`
 
 const InfoP = styled.div`
   color: var(--2, #5f5f5f);
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -642,9 +635,6 @@ const Method = styled.div`
   color: #111;
   display: flex;
   margin-bottom: 40px;
-
-  /* Header3 24pt sb */
-  font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -669,9 +659,6 @@ const All = styled.div``;
 
 const AllPrice = styled.div`
   color: var(--1, #111);
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -683,9 +670,6 @@ const MoneyAllWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   color: var(--1, #111);
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -716,9 +700,6 @@ const MoneyWrapper = styled.div`
   justify-content: space-between;
   color: var(--1, #111);
   height: 34px;
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -728,8 +709,6 @@ const MethodNotSelected = styled.div`
   margin-top: 18px;
   margin-bottom: 60px;
   color: var(--2, #5f5f5f);
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -738,9 +717,6 @@ const MethodNotSelected = styled.div`
 const Accept = styled.div`
   margin-bottom: 24px;
   color: var(--2, #5f5f5f);
-
-  /* Body1 16pt sb */
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -766,9 +742,6 @@ const PurchaseButton = styled.div`
 const PurchaseP = styled.input`
   color: var(--4, #e8e8e8);
   text-align: center;
-
-  /* Body1 16pt sb */
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -780,9 +753,6 @@ const AcceptP = styled.div`
   display: flex;
   align-items: center;
   color: #111;
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -810,9 +780,6 @@ const InputButton = styled.input`
   color: var(--4, #e8e8e8);
   text-align: center;
   cursor: pointer;
-
-  /* Body1 16pt sb */
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
