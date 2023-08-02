@@ -1,10 +1,7 @@
 'use client';
 import React from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-// import line from '@/assets/images/line.svg';
-import { useRouter } from 'next/navigation';
 
 function page() {
   return (
@@ -14,7 +11,6 @@ function page() {
           <Register>{'리픽 회원가입'}</Register>
           <Welcome>{'반가워요! 리픽에 오신 것을 환영해요'}</Welcome>
         </Title>
-        {/* <Line src={line.src} /> */}
         <User>{'회원 정보'}</User>
         <Wrapper>
           <Info>
