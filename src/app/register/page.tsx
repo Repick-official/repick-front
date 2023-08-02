@@ -14,7 +14,7 @@ function page() {
           <Register>{'리픽 회원가입'}</Register>
           <Welcome>{'반가워요! 리픽에 오신 것을 환영해요'}</Welcome>
         </Title>
-        <Line src={line.src} />
+        {/* <Line src={line.src} /> */}
         <User>{'회원 정보'}</User>
         <Wrapper>
           <Info>
@@ -163,9 +163,9 @@ const Confirm = styled.button`
   font-size: 16px;
   margin-left: 24px;
 `;
-const Line = styled.img`
-  margin-top: 60px;
-`;
+// const Line = styled.img`
+//   margin-top: 60px;
+// `;
 const Address = styled.div`
   display: flex;
   flex-direction: column;
