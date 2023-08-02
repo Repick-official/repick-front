@@ -1,12 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
-import { styled } from 'styled-components';
 import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import { useRouter } from 'next/navigation';
-import { getMainPageProducts } from '@/api/requests';
 import guide_first from '@/assets/images/guide/guide_first.png';
 import guide_second from '@/assets/images/guide/guide_second.png';
 import guide_third from '@/assets/images/guide/guide_third.png';
@@ -20,17 +16,23 @@ import slogan_1 from '@/assets/images/guide/slogan_1.png';
 import SubBackground from '@/assets/images/guide/SubBackground.png';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
+import { useEffect, useState } from 'react';
+import { styled } from 'styled-components';
+import { useRouter } from 'next/navigation';
+import { getMainPageProducts } from '@/api/requests';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 
 function page() {
   const router = useRouter();
+
   const [products, setProducts] = useState<any[]>([]);
   const responsive = {
     512: {
       items: 4,
     },
   };
+
   const handleDragStart = (e: { preventDefault: () => any }) =>
     e.preventDefault();
   useEffect(() => {

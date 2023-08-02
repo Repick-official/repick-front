@@ -1,9 +1,7 @@
 'use client';
-import React from 'react';
 import MyPickNavigation from '@/components/mypick/MyPickNavigation';
 import { styled } from 'styled-components';
-// import './../../../../app/global.css';
-import Banner from '@/components/mypick/Banner';
+
 type Props = {
   children: React.ReactNode;
 };

@@ -1,16 +1,16 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import { useRouter } from 'next/navigation';
-import { selectedMypickPage } from '@/atom/states';
-import { useRecoilState } from 'recoil';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import getAccessToken from '@/util/getAccessToken';
-import { useCookies } from 'react-cookie';
 import Alert from '@/components/mypick/Alert';
+import { useRouter } from 'next/navigation';
+import { selectedMypickPage } from '@/atom/states';
+import { useRecoilState } from 'recoil';
+import { useCookies } from 'react-cookie';
 import { requestProducts } from '@/atom/states';
 import { selectedNavPage } from '@/atom/states';
 import {
@@ -23,16 +23,14 @@ import {
 
 function page() {
   const router = useRouter();
+
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
   const [selectedNaviPage, setSelectedNaviPage] =
     useRecoilState(selectedNavPage);
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [products, setProducts] = useState<any[]>([]);
-
-  const [selectAll, setSelectAll] = useState('전체 선택');
-  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [bankName, setBankName] = useState('');
@@ -42,6 +40,14 @@ function page() {
   const [detailAddress, setDetailAddress] = useState('');
   const [email, setEmail] = useState('');
 
+  const [selectAll, setSelectAll] = useState('전체 선택');
+  const [products, setProducts] = useState<any[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [text1, setText1] = useState('');
+  const [text2, setText2] = useState('');
+  const [btn, setBtn] = useState(0);
+  const [cartProducts, setCartProducts] = useState<any[]>([]);
+
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -50,8 +56,8 @@ function page() {
       const res = await getUserInfo(accessToken);
       setName(res.name);
       setPhoneNumber(res.phoneNumber);
-      setBankName(res.bank.bankName);
-      setAccountNumber(res.bank.accountNumber);
+      setBankName(res.bank?.bankName);
+      setAccountNumber(res.bank?.accountNumber);
       setZipCode(res.address?.zipCode);
       setMainAddress(res.address?.mainAddress);
       setDetailAddress(res.address?.detailAddress);
@@ -66,8 +72,9 @@ function page() {
     setSelectAll(areAllSelected ? '전체 선택' : '전체 선택 해제');
   }, []);
 
+  const clickModal = () => setShowAlert(!showAlert);
+
   const handleClick = (productId: number) => {
-    //상품 클릭
     setProducts((prevProducts) => {
       const updatedProducts = prevProducts.map((item) =>
         item.product.productId === productId
@@ -84,28 +91,9 @@ function page() {
     });
   };
 
-  const [showAlert, setShowAlert] = useState(false);
-  const clickModal = () => setShowAlert(!showAlert);
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const [btn, setBtn] = useState(0);
-  const [cartProducts, setCartProducts] = useState<any[]>([]);
-
-  // const [updatedProducts, setUpdatedProducts] = useState<any[]>([]);
-
-  // useEffect(() => {
-  //   const selectedProductIds = updatedProducts.map(
-  //     (item) => item.cartProductId
-  //   );
-  //   setCartProducts((prevCartProducts) => [
-  //     ...prevCartProducts,
-  //     ...selectedProductIds,
-  //   ]);
-  // }, [updatedProducts]);
-
   const handleApply = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
-    // setUpdatedProducts(selectedProducts);
+
     const newCartProducts = [
       ...cartProducts,
       ...selectedProducts.map((item) => item.cartProductId),
@@ -118,14 +106,6 @@ function page() {
   const handle = async (selectedProducts: any) => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await getIsSubscribe(accessToken);
-    // const selectedProducts = products.filter((item) => item.isClicked);
-    // console.log('selectedProducts', selectedProducts);
-    // setUpdatedProducts(selectedProducts);
-
-    // setCartProducts((prevCartProducts) => [
-    //   ...prevCartProducts,
-    //   ...selectedProducts.map((item) => item.cartProductId),
-    // ]);
 
     if (selectedProducts.length <= 0) {
       alert('신청할 제품을 선택해주세요.');
@@ -142,7 +122,6 @@ function page() {
           setText2('프로 플랜 멤버십으로 바꾸시겠어요?');
           setBtn(2);
         } else {
-          //여기서 회원 정보 모두 있는지 확인
           if (
             name &&
             phoneNumber &&
@@ -170,7 +149,6 @@ function page() {
           setText2('5벌 홈피팅 완료 후 다시 신청해주세요.');
           setBtn(1);
         } else {
-          //여기서 회원 정보 모두 있는지 확인
           if (
             name &&
             phoneNumber &&
@@ -187,7 +165,7 @@ function page() {
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
             );
             if (userConfirmation) {
-              setSelectedNaviPage(''); // 왜 안 되는거지
+              setSelectedNaviPage('');
               router.push('/mypage');
             }
           }
@@ -195,9 +173,6 @@ function page() {
       }
     }
   };
-
-  // console.log('updatedProducts', updatedProducts);
-  // console.log('cartProducts', cartProducts);
 
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
@@ -216,7 +191,6 @@ function page() {
       '마이페이지에 저장되어 있는 정보로 홈피팅이 신청됩니다. 홈피팅을 신청하시겠습니까?'
     );
     if (userConfirmation) {
-      console.log('아놔', selectedProducts);
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await applyHomeFitting(accessToken, selectedProducts);
       setSelectedPage('홈피팅');
@@ -234,13 +208,7 @@ function page() {
 
   const goPurchase = (selectedProducts: any) => {
     setSelectedPage('구매하기');
-
-    // 구매하기에 해당 제품 담아야 함.
-    // const updatedProducts = [...finalProducts, ...selectedProducts];
-
-    // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
     setFinalProducts(selectedProducts);
-
     router.push('/myPick/shopping/purchase');
   };
 
@@ -274,15 +242,8 @@ function page() {
           return response;
         });
 
-        console.log('de', deletePromises);
-
         const updatedProducts = await Promise.all(deletePromises);
-        // 이제 updatedProducts는 deleteProducts의 응답으로 이루어진 배열입니다.
 
-        // 필요한 경우 응답을 처리할 수 있습니다.
-        console.log('up', updatedProducts);
-
-        // 모든 삭제 요청이 해결된 후에 상태를 업데이트합니다.
         setProducts((prevProducts) => {
           const remainingProducts = prevProducts.filter(
             (item) => !item.isClicked
@@ -294,32 +255,37 @@ function page() {
   };
 
   return (
-    <Container>
-      <SemiContainer>
-        <Content>
-          <Pick>
-            <Title>내가 픽한제품</Title>
-            <Filter>
-              <Delete onClick={() => handleClickDelete()}>
+    <Container.Wrapper>
+      <Container.Semi>
+        <Content.Wrapper>
+          <Content.Pick>
+            <Content.Title>내가 픽한제품</Content.Title>
+            <Content.Filter>
+              <Content.Delete onClick={() => handleClickDelete()}>
                 선택 상품 삭제
-              </Delete>
-              <Clear onClick={() => handleClickAll()}>{selectAll}</Clear>
-            </Filter>
-          </Pick>
+              </Content.Delete>
+              <Content.Clear onClick={() => handleClickAll()}>
+                {selectAll}
+              </Content.Clear>
+            </Content.Filter>
+          </Content.Pick>
 
-          <Products>
+          <Products.Wrapper>
             {products.map((item) => (
-              <Product key={item.product.productId}>
-                <Check onClick={() => handleClick(item.product.productId)}>
-                  <Off src={item.isClicked ? check_on.src : check_off.src} />
-                </Check>
+              <Products.Content key={item.product.productId}>
+                <Products.Check
+                  onClick={() => handleClick(item.product.productId)}
+                >
+                  <Products.Button
+                    src={item.isClicked ? check_on.src : check_off.src}
+                  />
+                </Products.Check>
                 <div
                   key={item.product.productId}
                   onClick={() =>
                     router.push(`/product/detail/${item.product.productId}`)
                   }
                 >
-                  {/* 여기 왜 이동이 안 되는거지? */}
                   <ContentBodyInfo
                     key={item.product.productId}
                     src={item.product.mainImageFile.imagePath}
@@ -329,11 +295,11 @@ function page() {
                     price={item.product.price}
                   />
                 </div>
-              </Product>
+              </Products.Content>
             ))}
-          </Products>
+          </Products.Wrapper>
 
-          <ButtonWrapper>
+          <Container.Button>
             <div onClick={() => handleApply()}>
               <Button content="홈피팅 신청하기" num="5" />
             </div>
@@ -348,74 +314,78 @@ function page() {
             <div onClick={() => handlePurchase()}>
               <Button content="구매하기" num="6" />
             </div>
-          </ButtonWrapper>
-        </Content>
-      </SemiContainer>
-    </Container>
+          </Container.Button>
+        </Content.Wrapper>
+      </Container.Semi>
+    </Container.Wrapper>
   );
 }
 
 export default page;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const SemiContainer = styled.div`
-  width: 1216px;
-`;
+const Container = {
+  Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+  Semi: styled.div`
+    width: 1216px;
+  `,
+  Button: styled.div`
+    display: flex;
+    width: 744px;
+    justify-content: space-between;
+    margin-bottom: 148px;
+  `,
+};
+const Content = {
+  Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+  Pick: styled.div`
+    width: 1216px;
+    margin-top: 104px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  `,
+  Title: styled.div`
+    font-size: 24px;
+    font-weight: 600;
+  `,
+  Filter: styled.div`
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--2, #5f5f5f);
+    display: flex;
+  `,
+  Delete: styled.div``,
+  Clear: styled.div`
+    margin-left: 54px;
+  `,
+};
 
-const Pick = styled.div`
-  width: 1216px;
-  margin-top: 104px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 40px;
-`;
-const Title = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-`;
-const Filter = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--2, #5f5f5f);
-  display: flex;
-`;
-const OnlyProduct = styled.div``;
-const Delete = styled.div``;
-const Clear = styled.div`
-  margin-left: 54px;
-`;
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 744px;
-  justify-content: space-between;
-  margin-bottom: 148px;
-`;
-const Product = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-`;
-const Check = styled.div`
-  margin-bottom: 20px;
-`;
-const On = styled.img``;
-const Off = styled.img``;
-const Products = styled.div`
-  width: 1216px;
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-between;
-  margin-bottom: 70px;
-  gap: 17px;
-`;
+const Products = {
+  Wrapper: styled.div`
+    width: 1216px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 70px;
+    gap: 17px;
+  `,
+  Content: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  `,
+
+  Check: styled.div`
+    margin-bottom: 20px;
+  `,
+  Button: styled.img``,
+};

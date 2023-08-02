@@ -1,12 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
 import logo from '@/assets/images/navigation/logo.svg';
 import kakao from '@/assets/images/kakao.png';
 import Button from '@/components/common/Button';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 function page() {
   const router = useRouter();

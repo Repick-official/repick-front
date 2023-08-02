@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import none from '@/assets/images/search/none.svg';

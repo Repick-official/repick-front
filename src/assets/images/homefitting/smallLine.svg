@@ -1,0 +1,14 @@
+<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1216"
+                  height="2"
+                  viewBox="0 0 1216 2"
+                  fill="none"
+                  key={`svg${index}`}
+                >
+                  <path
+                    d="M0 1L1216 1.00011"
+                    stroke="#B4B4B4"
+                    strokeDasharray="5 5"
+                  />
+                </svg>
