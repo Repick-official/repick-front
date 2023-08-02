@@ -408,6 +408,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 36px;
   font-weight: 600;
+  line-height: 140%;
 `;
 const SemiTitle = styled.div`
   font-size: 20px;
@@ -659,8 +660,6 @@ const InputButton = styled.input`
   color: var(--4, #e8e8e8);
   text-align: center;
   cursor: pointer;
-  /* Body1 16pt sb */
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

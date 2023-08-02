@@ -96,7 +96,6 @@ const TagWrapper = styled.div<TagWrapperProps>`
 const TagName = styled.p<TagNameProps>`
   color: ${(props) => props.textcolor || '#5F5F5F'};
   text-align: center;
-  font-family: Pretendard;
   font-size: 14px;
   font-weight: 400;
   margin: 0;

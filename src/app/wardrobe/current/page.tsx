@@ -196,6 +196,7 @@ const Current = styled.div`
 const Title = styled.div`
   font-size: 36px;
   font-weight: 600;
+  line-height: 140%;
 `;
 const SemiTitle = styled.div`
   font-size: 20px;
@@ -221,8 +222,7 @@ const Product = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 `;
 const Check = styled.div`
   margin-bottom: 20px;
@@ -246,7 +246,8 @@ const Products = styled.div`
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-between;
-  margin-bottom: 80px;
+  // margin-bottom: 80px;
+  margin-top: 60px;
   gap: 15px;
 `;
 const More = styled.div`

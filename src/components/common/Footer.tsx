@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '@/assets/images/loco.svg';
+import logo from '@/assets/images/navigation/logo.svg';
 import styled from 'styled-components';
 
 function Footer() {

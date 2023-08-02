@@ -27,7 +27,9 @@ function page() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [address, setAddress] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [mainAddress, setMainAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
   const [email, setEmail] = useState('');
 
   const handleClick = () => {
@@ -50,7 +52,9 @@ function page() {
       setPhoneNumber(res.phoneNumber);
       setBankName(res.bank.bankName);
       setAccountNumber(res.bank.accountNumber);
-      setAddress(res.address?.mainAddress);
+      setZipCode(res.address?.zipCode);
+      setMainAddress(res.address?.mainAddress);
+      setDetailAddress(res.address?.detailAddress);
       setEmail(res.email);
 
       console.log('res', res);
@@ -67,7 +71,9 @@ function page() {
         phoneNumber &&
         bankName &&
         accountNumber &&
-        address &&
+        zipCode &&
+        mainAddress &&
+        detailAddress &&
         email
       ) {
         const response = await subscribePlan(accessToken, selectPlan);
