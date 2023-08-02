@@ -27,9 +27,6 @@ function MyPickNavigation() {
       case 'purchase':
         setSelectedPage('구매하기');
         break;
-      // case 'wardrobe':
-      //   setSelectedPage('구매내역');
-      //   break;
     }
   }, []);
 
@@ -63,7 +60,6 @@ function MyPickNavigation() {
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
     } else {
-      // setSelectedPage('구매내역'); 나중에 살리기
       alert('현재 이용 불가능한 서비스입니다.');
     }
   };
