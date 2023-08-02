@@ -137,9 +137,6 @@ const SearchModalContent = styled.div`
   width: 580px;
   height: 329px;
   background-color: var(--5, #fff);
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
   box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 `;
@@ -160,7 +157,7 @@ const Text = styled.div`
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-
+  line-height: 150%;
   .orange-text {
     color: orange;
   }

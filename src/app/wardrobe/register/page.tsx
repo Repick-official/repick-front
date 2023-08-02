@@ -605,6 +605,7 @@ const Bag = {
     width: 28px;
     height: 28px;
     font-size: 20px;
+    cursor: pointer;
   `,
   More: styled.div`
     font-size: 16px;

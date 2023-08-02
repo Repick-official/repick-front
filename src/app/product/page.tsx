@@ -57,7 +57,7 @@ function page() {
       case 'seen':
         // response = await getItemSeen(cursorId, categoryId);
         response = await getItemLatest(cursorId, categoryId);
-        alert('조회순은 아직 없습니다~');
+        alert('조회순은 아직 없습니다.');
         setCategoryId(0);
         break;
       default:
@@ -101,9 +101,9 @@ function page() {
   };
 
   const handleOrderChange = (newOrder: string) => {
-    if(newOrder === 'seen'){
-      alert("조회순은 아직 없습니다~");
-      return ;
+    if (newOrder === 'seen') {
+      alert('조회순은 아직 없습니다~');
+      return;
     }
     setOrder(newOrder);
     setCursorId(0);

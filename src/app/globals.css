@@ -1,6 +1,3 @@
-/* @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import url('./reset.css'); */
-
 html {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -27,7 +24,6 @@ body::-webkit-scrollbar {
 }
 
 .content {
-  /* width: 1216px; */
   flex-grow: 1;
 }
 

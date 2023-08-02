@@ -70,7 +70,7 @@ function page() {
         break;
       case 'seen':
         response = await searchItem(cursorId, categoryId, text);
-        alert('조회순은 아직 없습니다~');
+        alert('조회순은 아직 없습니다.');
         break;
       default:
         response = await searchItem(cursorId, pageSize, text);
@@ -114,9 +114,9 @@ function page() {
     fetchItem();
   };
   const handleOrderChange = (newOrder: string) => {
-    if(newOrder === 'seen'){
-      alert("조회순은 아직 없습니다~");
-      return ;
+    if (newOrder === 'seen') {
+      alert('조회순은 아직 없습니다~');
+      return;
     }
     setOrder(newOrder);
     setCursorId(0);
