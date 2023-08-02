@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';

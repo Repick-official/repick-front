@@ -1,4 +1,3 @@
-import React from 'react';
 import { styled } from 'styled-components';
 function DeliveryItem({ brand, name }: { brand: string; name: string }) {
   return (

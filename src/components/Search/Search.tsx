@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import X from '@/assets/images/x.svg';
-import search_dark from '@/assets/images/search_dark.svg';
+import X from '@/assets/images/search/x.svg';
+import search_dark from '@/assets/images/search/search_dark.svg';
 import { useEffect, useState, useRef } from 'react';
 import { searchItem } from '@/api/requests';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ function SearchModal({ clickModal }: any) {
     }
   };
 
-  const search = async (inputText : string) => {
+  const search = async (inputText: string) => {
     if (inputText.trim() !== '') {
       const response = await searchItem(cursorId, pageSize, inputText);
       if (response.length > 0) {
@@ -59,7 +59,10 @@ function SearchModal({ clickModal }: any) {
                 onChange={handleChange}
                 onKeyPress={handleOnKeyPress}
               />
-              <Content.Button src={search_dark.src} onClick={() => search(inputText)} />
+              <Content.Button
+                src={search_dark.src}
+                onClick={() => search(inputText)}
+              />
             </Content.Search>
             <Content.Recommend>
               <Recommend.Current>최근 검색어</Recommend.Current>

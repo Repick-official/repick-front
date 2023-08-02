@@ -1,14 +1,12 @@
 'use client';
-import React from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import sub from '@/assets/images/subscription.png';
+import getAccessToken from '@/util/getAccessToken';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { getIsSubscribe } from '@/api/requests';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function MyPickNavigation() {
   const router = useRouter();
@@ -40,17 +38,6 @@ function MyPickNavigation() {
     } else {
       setSelectedPage('홈피팅');
       router.push('/myPick/home/homefitting');
-    }
-  };
-
-  const checkUserPurchase = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await getIsSubscribe(accessToken);
-    if (response == 'NONE') {
-      alert('구독이 필요한 서비스입니다.');
-    } else {
-      setSelectedPage('구매하기');
-      router.push('/myPick/shopping/purchase');
     }
   };
 

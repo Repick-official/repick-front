@@ -152,7 +152,9 @@ function page() {
       const confirm = window.confirm('결제하시겠습니까?');
       if (confirm) {
         let accessToken = await getAccessToken(cookies, setCookie);
+        console.log(updatedData);
         const response = await orderProducts(accessToken, updatedData);
+        console.log(response);
         if (response.success) {
           clearProducts();
           router.push('/myPick/shopping/purchase/success');

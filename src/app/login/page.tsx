@@ -1,7 +1,7 @@
 'use client';
 import styled from 'styled-components';
 import logo from '@/assets/images/navigation/logo.svg';
-import kakao from '@/assets/images/kakao.png';
+import kakao from '@/assets/images/login/kakao.png';
 import Button from '@/components/common/Button';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';

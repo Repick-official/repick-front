@@ -1,4 +1,3 @@
-import React from 'react';
 import hearts from '@/assets/images/guide/heart.svg';
 import eye from '@/assets/images/guide/eye.svg';
 import { styled } from 'styled-components';
