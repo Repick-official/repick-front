@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import none from '@/assets/images/search/none.svg';
@@ -8,8 +8,15 @@ import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
 import Success from '@/components/common/Success';
+import { keyword } from '@/atom/states';
 
 function page() {
+  const [text, setText] = useRecoilState(keyword);
+  useEffect(() => {
+    return () => {
+      setText('');
+    };
+  },[])
   return (
     <Container>
       <Success

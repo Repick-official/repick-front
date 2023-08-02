@@ -1,18 +1,30 @@
 import styled from 'styled-components';
 import search from '@/assets/images/search/search.svg';
 import Modal from '@/components/Search/Search';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { keyword } from '@/atom/states';
 
 function SearchModal() {
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => setShowModal(!showModal);
+  const [text, setText] = useRecoilState(keyword);
+  const [placeholderText, setPlaceholderText] = useState('어떤 의류를 찾고 계신가요?');
+
+  useEffect(() => {
+    if(text.length > 0)
+      setPlaceholderText(text);
+    else{
+      setPlaceholderText('어떤 의류를 찾고 계신가요?');
+    }
+  }, [text]);
 
   return (
     <Contatiner>
       <Search.Wrapper>
         <Search.InputWrapper onClick={clickModal}>
           <Search.Box
-            placeholder="어떤 의류를 찾고 계신가요?"
+            placeholder={placeholderText}
             onClick={clickModal}
           ></Search.Box>
           <Search.Button src={search.src} onClick={clickModal} />

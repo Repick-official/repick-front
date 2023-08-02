@@ -30,17 +30,14 @@ function SearchModal({ clickModal }: any) {
   const handleOnKeyPress = async (e: { key: string }) => {
     if (e.key === 'Enter') {
       setText(inputText);
-      search();
+      search(inputText);
     }
   };
 
-  const search = async () => {
+  const search = async (inputText : string) => {
     if (inputText.trim() !== '') {
-      const response = await searchItem(cursorId, pageSize, text);
+      const response = await searchItem(cursorId, pageSize, inputText);
       if (response.length > 0) {
-        const lastProductId = response[response.length - 1].productId;
-        setProductId(lastProductId);
-        sessionStorage.setItem('items', JSON.stringify(response));
         clickModal();
         window.location.href = '/product/searched';
       } else {
@@ -62,7 +59,7 @@ function SearchModal({ clickModal }: any) {
                 onChange={handleChange}
                 onKeyPress={handleOnKeyPress}
               />
-              <Content.Button src={search_dark.src} onClick={() => search()} />
+              <Content.Button src={search_dark.src} onClick={() => search(inputText)} />
             </Content.Search>
             <Content.Recommend>
               <Recommend.Current>최근 검색어</Recommend.Current>

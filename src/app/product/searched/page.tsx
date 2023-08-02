@@ -45,20 +45,10 @@ function page() {
   const [productId, setProductId] = useRecoilState(searchedlastProductId);
 
   const fetchItem = async () => {
-    console.log(
-      '순서 :',
-      order,
-      ' 마지막 상품ID : ',
-      cursorId,
-      ' category ID : ',
-      categoryId
-    );
     let response: Product[];
     switch (order) {
       case 'latest':
-        response = await searchItem(cursorId, categoryId, text);
-
-        console.log('최신', response);
+        response = await searchItem(cursorId, pageSize, text);
         break;
       case 'lowest':
         response = await searchItemByPrice(
@@ -68,8 +58,6 @@ function page() {
           text,
           'low'
         );
-
-        console.log('낮은', response);
         break;
       case 'highest':
         response = await searchItemByPrice(
@@ -79,23 +67,20 @@ function page() {
           text,
           'high'
         );
-
-        console.log('높은', response);
         break;
       case 'seen':
         response = await searchItem(cursorId, categoryId, text);
         alert('조회순은 아직 없습니다~');
         break;
       default:
-        response = await searchItem(cursorId, categoryId, text);
+        response = await searchItem(cursorId, pageSize, text);
     }
-
+    console.log(response);
     setProducts(response);
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;
-      setCursorId(lastProductId);
-
       const lastProductPrice = response[response.length - 1].price;
+      setCursorId(lastProductId);
       setCursorPrice(lastProductPrice);
     }
   };
@@ -103,7 +88,6 @@ function page() {
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
-
       const categoryMap = response.reduce((map: any, item: any) => {
         if (item.parentId === null) {
           return map;
@@ -117,22 +101,12 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    const item = sessionStorage.getItem('items');
-    const searchedItem = item ? JSON.parse(item) : null;
-    console.log('searchedItem', searchedItem);
-    if (searchedItem) {
-      setProducts(searchedItem);
-      setCursorId(searchedItem[searchedItem.length - 1].productId);
-
-      setCursorPrice(searchedItem[searchedItem.length - 1].price);
-      sessionStorage.clear();
-      setIsSearchedItem(true);
-    } else {
-      setProducts([]);
-      fetchItem();
-    }
+    setProducts([]);
+    fetchItem();
+    return () => {
+      setText('');
+    };
   }, []);
-
   useEffect(() => {
     fetchItem();
   }, [order]);
@@ -141,11 +115,14 @@ function page() {
     fetchItem();
   };
   const handleOrderChange = (newOrder: string) => {
+    if(newOrder === 'seen'){
+      alert("조회순은 아직 없습니다~");
+      return ;
+    }
     setOrder(newOrder);
     setCursorId(0);
     setCursorPrice(0);
   };
-
   return (
     <>
       <ContentWrapper>
@@ -197,10 +174,10 @@ function page() {
                       <Option
                         $isselected={(id === categoryId).toString()}
                         key={id}
-                        onClick={() => {
-                          setCategoryId(id);
-                          setCursorId(0);
-                        }}
+                        // onClick={() => {
+                        //   setCategoryId(id);
+                        //   setCursorId(0);
+                        // }}
                       >
                         {name}
                       </Option>
@@ -361,7 +338,7 @@ const OptionWrapper = styled.div`
   height: 118.109px;
 `;
 const OptionList = styled.div`
-  width: 794px;
+  width: 960px;
   height: 28px;
   display: flex;
   gap: 103px;

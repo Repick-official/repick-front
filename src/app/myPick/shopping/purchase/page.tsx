@@ -128,7 +128,8 @@ function page() {
   useEffect(() => {
     if (finalProducts.length === 0) {
       alert('구매할 제품이 없습니다.');
-      // router.push('/myPick/home');
+      router.push('/myPick/home');
+      return ;
     }
     const clothes = finalProducts.map((item: any) => {
       setTotal((prevTotal) => prevTotal + item.product.price);

@@ -88,19 +88,8 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    const item = sessionStorage.getItem('items');
-    const searchedItem = item ? JSON.parse(item) : null;
-
-    if (searchedItem) {
-      setProducts(searchedItem);
-      setCursorId(searchedItem[searchedItem.length - 1].productId);
-      setCursorPrice(searchedItem[searchedItem.length - 1].price);
-      sessionStorage.clear();
-      setIsSearchedItem(true);
-    } else {
-      setProducts([]);
-      fetchItem();
-    }
+    setProducts([]);
+    fetchItem();
   }, [categoryId, order]);
 
   const loadMoreItems = () => {
@@ -354,7 +343,7 @@ const OptionWrapper = styled.div`
 `;
 
 const OptionList = styled.div`
-  width: 794px;
+  width: 960px;
   height: 28px;
   display: flex;
   gap: 103px;
@@ -384,6 +373,7 @@ const Option = styled.p<{ $isselected: string }>`
   background: ${(props) =>
     props.$isselected === 'true' ? 'var(--1, #111)' : ''};
 
+  padding: 10px;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
