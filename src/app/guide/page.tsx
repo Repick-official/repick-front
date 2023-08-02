@@ -553,7 +553,7 @@ const Content = {
   IntroP: styled.p`
     margin: 0 auto;
     color: var(--1, #111);
-    font-size: 20px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
