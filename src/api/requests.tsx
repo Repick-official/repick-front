@@ -639,7 +639,7 @@ export const inquirySubscribeLatest = async (access: any) => {
 export const orderProducts = async (access: any, datas: any) => {
   const data = {
     address: datas.address,
-    personName: datas.personName,
+    personName: datas.name,
     phoneNumber: datas.phoneNumber,
     productIds: datas.productIds,
     requestDetail: datas.requestDetail,
