@@ -271,6 +271,8 @@ const Container = {
     display: flex;
     justify-content: space-between;
     margin-bottom: 148px;
+    overflow: hidden;
+    gap: 20px;
   `,
   DetailContent: styled.div`
     margin-left: 106px;
