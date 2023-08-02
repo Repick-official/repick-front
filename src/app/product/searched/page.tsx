@@ -8,7 +8,7 @@ import logo_guide from '@/assets/images/guide/logo_guide.png';
 import Image from 'next/image';
 import Banner from '@/components/common/Banner';
 import { useRecoilState } from 'recoil';
-import { keyword } from '@/atom/states';
+import { keyword, searchedlastProductId } from '@/atom/states';
 import {
   getCategory,
   getItemSeen,
@@ -42,8 +42,17 @@ function page() {
   const pageSize = 16;
 
   const [text, setText] = useRecoilState(keyword);
+  const [productId, setProductId] = useRecoilState(searchedlastProductId);
 
   const fetchItem = async () => {
+    console.log(
+      '순서 :',
+      order,
+      ' 마지막 상품ID : ',
+      cursorId,
+      ' category ID : ',
+      categoryId
+    );
     let response: Product[];
     switch (order) {
       case 'latest':
@@ -85,20 +94,16 @@ function page() {
     if (response.length > 0) {
       const lastProductId = response[response.length - 1].productId;
       setCursorId(lastProductId);
-      console.log('lastProductId', lastProductId);
+
       const lastProductPrice = response[response.length - 1].price;
       setCursorPrice(lastProductPrice);
-      console.log('lastProductPrice', lastProductPrice);
     }
   };
-
-  console.log('랜딘 커서 아이디', cursorId);
-  console.log('랜딩 가격', cursorPrice);
 
   useEffect(() => {
     const fetchCategory = async () => {
       const response: any = await getCategory();
-      console.log('response', response);
+
       const categoryMap = response.reduce((map: any, item: any) => {
         if (item.parentId === null) {
           return map;
@@ -112,7 +117,20 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    setOrder('latest');
+    const item = sessionStorage.getItem('items');
+    const searchedItem = item ? JSON.parse(item) : null;
+    console.log('searchedItem', searchedItem);
+    if (searchedItem) {
+      setProducts(searchedItem);
+      setCursorId(searchedItem[searchedItem.length - 1].productId);
+
+      setCursorPrice(searchedItem[searchedItem.length - 1].price);
+      sessionStorage.clear();
+      setIsSearchedItem(true);
+    } else {
+      setProducts([]);
+      fetchItem();
+    }
   }, []);
 
   useEffect(() => {
@@ -124,8 +142,10 @@ function page() {
   };
   const handleOrderChange = (newOrder: string) => {
     setOrder(newOrder);
+    setCursorId(0);
+    setCursorPrice(0);
   };
-  console.log('order', order);
+
   return (
     <>
       <ContentWrapper>

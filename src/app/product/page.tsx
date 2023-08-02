@@ -39,9 +39,18 @@ function page() {
   const [order, setOrder] = useState<string>('latest');
   const [products, setProducts] = useState<Product[]>([]);
   const [isSearchedItem, setIsSearchedItem] = useState<boolean>(false);
-  const [loadMoreTimer, setLoadMoreTimer] = useState<NodeJS.Timeout | null>(null);
+  const [loadMoreTimer, setLoadMoreTimer] = useState<NodeJS.Timeout | null>(
+    null
+  );
   const fetchItem = async () => {
-    console.log('순서 :',order,' 마지막 상품ID : ',cursorId,' category ID : ',categoryId);
+    console.log(
+      '순서 :',
+      order,
+      ' 마지막 상품ID : ',
+      cursorId,
+      ' category ID : ',
+      categoryId
+    );
     let response: Product[];
     switch (order) {
       case 'latest':

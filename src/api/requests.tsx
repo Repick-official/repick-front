@@ -389,7 +389,7 @@ export const getItemLowest = async (
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
-    cursorPrice : cursorPrice !==0 ? cursorPrice.toString() : '',
+    cursorPrice: cursorPrice !== 0 ? cursorPrice.toString() : '',
     categoryId: categoryId !== 0 ? categoryId.toString() : '',
     pageSize: pageSize.toString(),
   };
@@ -428,13 +428,13 @@ export const getItemLowest = async (
 };
 export const getItemHighest = async (
   cursorId: number = 0,
-  cursorPrice : number = 0,
+  cursorPrice: number = 0,
   categoryId: number = 0,
   pageSize: number = 16
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
-    cursorPrice : cursorPrice !==0 ? cursorPrice.toString() : '',
+    cursorPrice: cursorPrice !== 0 ? cursorPrice.toString() : '',
     categoryId: categoryId !== 0 ? categoryId.toString() : '',
     pageSize: pageSize.toString(),
   };
@@ -545,7 +545,7 @@ export const searchItem = async (
 ): Promise<any> => {
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
-    pageSize: pageSize !== 0 ? pageSize.toString() : '16',
+    pageSize: pageSize.toString(),
     keyword: keyword,
   };
 
@@ -589,7 +589,7 @@ export const searchItemByPrice = async (
   const params = {
     cursorId: cursorId !== 0 ? cursorId.toString() : '',
     cursorPrice: cursorPrice !== 0 ? cursorPrice.toString() : '',
-    pageSize: pageSize !== 0 ? pageSize.toString() : '16',
+    pageSize: pageSize.toString(),
     keyword: keyword,
     sortType: sortType,
   };
@@ -607,7 +607,7 @@ export const searchItemByPrice = async (
     );
     if (response.ok) {
       const data = await response.json();
-      console.log('뉴', data);
+
       const clothes = data.map((item: any) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';

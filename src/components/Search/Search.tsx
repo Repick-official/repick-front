@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { searchItem } from '@/api/requests';
 import { useRouter, redirect } from 'next/navigation';
 import { useRecoilState } from 'recoil';
-import { keyword } from '@/atom/states';
+import { keyword, searchedlastProductId } from '@/atom/states';
 
 interface Product {
   brand: string;
@@ -27,7 +27,7 @@ function SearchModal({ clickModal }: any) {
   const router = useRouter();
   const inputRef = useRef<any>();
   const [inputText, setInputText] = useState('');
-  const [products, setProducts] = useState<Product[]>([]);
+  const [productId, setProductId] = useRecoilState(searchedlastProductId);
   const [cursorId, setCursorId] = useState<number>(0);
 
   const pageSize = 16;
@@ -45,9 +45,10 @@ function SearchModal({ clickModal }: any) {
   };
   const search = async () => {
     if (inputText.trim() !== '') {
-      const response = await searchItem(cursorId, pageSize, inputText);
+      const response = await searchItem(cursorId, pageSize, text);
       if (response.length > 0) {
         const lastProductId = response[response.length - 1].productId;
+        //setProductId(lastProductId);
         sessionStorage.setItem('items', JSON.stringify(response));
         clickModal();
         window.location.href = '/product/searched';
