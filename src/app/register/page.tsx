@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import line from '@/assets/images/line.svg';
+// import line from '@/assets/images/line.svg';
 import { useRouter } from 'next/navigation';
 
 function page() {

@@ -3,7 +3,7 @@ import getAccessToken from '@/util/getAccessToken';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import styled from 'styled-components';
-import line from '@/assets/images/line.svg';
+import line from '@/assets/images/wardrobe/line.svg';
 import bagImage from '@/assets/images/wardrobe/bag.svg';
 import arrow7 from '@/assets/images/wardrobe/arrow7.svg';
 import arrow6 from '@/assets/images/wardrobe/arrow6.svg';
