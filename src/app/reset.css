@@ -97,6 +97,9 @@ header,
 hgroup,
 menu,
 nav,
+input {
+  font-family: 'Pretendard';
+}
 section {
   display: block;
 }

@@ -62,8 +62,8 @@ function page() {
       if (response) {
         setValue('name', response.name || '');
         setValue('phoneNumber', response.phoneNumber || '');
-        setValue('bank.bankName', response.bank.bankName || '');
-        setValue('bank.accountNumber', response.bank.accountNumber || '');
+        setValue('bank.bankName', response.bank?.bankName || '');
+        setValue('bank.accountNumber', response.bank?.accountNumber || '');
         setValue('address.zipCode', response.address?.zipCode || '');
         setValue('address.mainAddress', response.address?.mainAddress || '');
         setValue(
@@ -219,7 +219,6 @@ function page() {
                 <Info.Right
                   required
                   className="address"
-                  placeholder="숫자만 입력하세요"
                   {...register('address.zipCode', {
                     pattern: {
                       value: /^[\d]*$/,
@@ -231,7 +230,11 @@ function page() {
                   <Error>{errors.address?.zipCode.message}</Error>
                 )}
               </Address.Wrap>
-              <Address.Confirm>{'우편번호'}</Address.Confirm>
+              <Address.Confirm
+                onClick={() => alert('현재 이용 불가능한 서비스입니다.')}
+              >
+                {'우편번호'}
+              </Address.Confirm>
             </Address.Content>
             <Address.Wrap>
               <Info.Right
@@ -503,6 +506,7 @@ const Info = {
     line-height: 140%;
     padding: 0px 0px 0px 24px;
     outline: none;
+    font-family: Pretendard;
 
     &.address {
       width: 308px;
@@ -569,9 +573,12 @@ const Bank = {
     border-radius: 15px;
     border: none;
     font-size: 20px;
-    font-weight: 400;
 
-    color: rgba(180, 180, 180, 1);
+    color: var(--2, #5f5f5f);
+
+    font-weight: 600;
+
+    //color: rgba(180, 180, 180, 1);
     padding: 0px 0px 0px 24px;
     outline: none;
     &.address {
@@ -598,7 +605,10 @@ const Address = {
     display: flex;
     align-items: center;
   `,
-  Confirm: styled.button`
+  Confirm: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 15px;
     background: var(--3, #b4b4b4);
     width: 104px;
@@ -696,7 +706,7 @@ const Membership = {
     width: 100%;
   `,
   InfoMenu: styled.div`
-    width: 140px;
+    width: 150px;
     text-align: center;
   `,
   Line: styled.img`
