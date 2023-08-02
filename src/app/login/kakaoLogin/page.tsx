@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { kakaoLogin } from '@/api/requests';
 import { useCookies } from 'react-cookie';
@@ -9,9 +9,8 @@ import { useRecoilState } from 'recoil';
 function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const router = useRouter();
-
-  
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
   const checkKakaoLogin = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
@@ -21,7 +20,7 @@ function page() {
       expiresDate1.setDate(expiresDate1.getDate() + 1);
       setCookie('access', response.accessToken, {
         expires: expiresDate1,
-        path : '/'
+        path: '/',
       });
       setUserInfo({
         id: response.id,
