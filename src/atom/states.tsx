@@ -5,7 +5,7 @@ const { persistAtom } = recoilPersist();
 
 export const keyword = atom<string>({
   key: '키워드',
-  default: '키워드',
+  default: '어떤 의류를 찾고 계신가요?',
   effects_UNSTABLE: [persistAtom],
 });
 
