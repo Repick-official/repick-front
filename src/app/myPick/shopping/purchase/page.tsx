@@ -53,7 +53,6 @@ function page() {
 
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
-
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
   const [product, setProduct] = useState<any[]>([]);
@@ -108,12 +107,16 @@ function page() {
       router.push('/myPick/home');
       return;
     }
-    const clothes = finalProducts.map((item: any) => {
-      setTotal((prevTotal) => prevTotal + item.product.price);
-      return item;
-    });
-    setProduct(clothes);
-  }, [finalProducts]);
+  
+    if (finalProducts.length > 0) {
+      // finalProducts 배열이 비어있지 않은 경우에만 setTotal 호출
+      const clothes = finalProducts.map((item: any) => {
+        setTotal((prevTotal) => prevTotal + item.product.price);
+        return item;
+      });
+      setProduct(clothes);
+    }
+  }, []);
 
   const handleDeliveryDiffClick = () => {
     setIsDeliveryDiff(!isDeliveryDiff);
@@ -129,6 +132,7 @@ function page() {
 
   const clearProducts = () => {
     setFinalProducts([]);
+    return ;
   };
 
   const handleClick = () => {
@@ -152,12 +156,10 @@ function page() {
       const confirm = window.confirm('결제하시겠습니까?');
       if (confirm) {
         let accessToken = await getAccessToken(cookies, setCookie);
-        console.log(updatedData);
         const response = await orderProducts(accessToken, updatedData);
-        console.log(response);
         if (response.success) {
-          clearProducts();
           router.push('/myPick/shopping/purchase/success');
+          clearProducts();
         }
       }
     } else {
@@ -277,7 +279,7 @@ function page() {
                       placeholder="상세 주소를 입력해주세요"
                       {...register('address.mainAddress', {
                         pattern: {
-                          value: /^[\d가-힣]*$/,
+                          value: /^[\d가-힣\s]*$/,
                           message: '*',
                         },
                       })}
@@ -293,7 +295,7 @@ function page() {
                       placeholder="상세 주소를 입력해주세요"
                       {...register('address.detailAddress', {
                         pattern: {
-                          value: /^[\d가-힣]*$/,
+                          value: /^[\d가-힣\s]*$/,
                           message: '*',
                         },
                       })}
