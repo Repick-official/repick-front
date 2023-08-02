@@ -52,12 +52,10 @@ function page() {
       setPhoneNumber(res.phoneNumber);
       setBankName(res.bank.bankName);
       setAccountNumber(res.bank.accountNumber);
-      setZipCode(res.address?.zipcode);
+      setZipCode(res.address?.zipCode);
       setMainAddress(res.address?.mainAddress);
       setDetailAddress(res.address?.detailAddress);
       setEmail(res.email);
-
-      console.log('res', res);
       const clothes = response.map((item: any) => {
         return { ...item, isClicked: false };
       });
@@ -107,14 +105,14 @@ function page() {
 
   const handleApply = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
-    console.log('selectedProducts', selectedProducts);
     // setUpdatedProducts(selectedProducts);
-
-    setCartProducts((prevCartProducts) => [
-      ...prevCartProducts,
+    const newCartProducts = [
+      ...cartProducts,
       ...selectedProducts.map((item) => item.cartProductId),
-    ]);
-    handle(selectedProducts);
+    ];
+
+    setCartProducts(newCartProducts);
+    handle(newCartProducts);
   };
 
   const handle = async (selectedProducts: any) => {
@@ -145,7 +143,6 @@ function page() {
           setBtn(2);
         } else {
           //여기서 회원 정보 모두 있는지 확인
-          console.log('있음');
           if (
             name &&
             phoneNumber &&
@@ -156,7 +153,7 @@ function page() {
             detailAddress &&
             email
           ) {
-            handleHomeFitting();
+            handleHomeFitting(selectedProducts);
           } else {
             const userConfirmation = window.confirm(
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
@@ -174,7 +171,6 @@ function page() {
           setBtn(1);
         } else {
           //여기서 회원 정보 모두 있는지 확인
-          console.log('있음');
           if (
             name &&
             phoneNumber &&
@@ -185,7 +181,7 @@ function page() {
             detailAddress &&
             email
           ) {
-            handleHomeFitting();
+            handleHomeFitting(selectedProducts);
           } else {
             const userConfirmation = window.confirm(
               '마이페이지에 필요한 정보가 모두 들어가 있지 않습니다. 마이페이지로 이동하시겠습니까?'
@@ -215,14 +211,14 @@ function page() {
     }
   };
 
-  const handleHomeFitting = async () => {
+  const handleHomeFitting = async (selectedProducts: any) => {
     const userConfirmation = window.confirm(
       '마이페이지에 저장되어 있는 정보로 홈피팅이 신청됩니다. 홈피팅을 신청하시겠습니까?'
     );
     if (userConfirmation) {
-      console.log('아놔', cartProducts);
+      console.log('아놔', selectedProducts);
       let accessToken = await getAccessToken(cookies, setCookie);
-      const response = await applyHomeFitting(accessToken, cartProducts);
+      const response = await applyHomeFitting(accessToken, selectedProducts);
       setSelectedPage('홈피팅');
       router.push('/myPick/home/homefitting/success');
     } else {
