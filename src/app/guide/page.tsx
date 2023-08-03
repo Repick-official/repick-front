@@ -335,26 +335,26 @@ function page() {
             />
           </SubCard.Card>
           <SubCard.Card>
-            <AnimatedSection1 ref={ref} inview={inView.toString()}>
+            <AnimatedSection5 ref={ref} inview={inView.toString()}>
               <SubCard.Title>Pro Plan</SubCard.Title>
-            </AnimatedSection1>
-            <AnimatedSection2 ref={ref} inview={inView.toString()}>
+            </AnimatedSection5>
+            <AnimatedSection6 ref={ref} inview={inView.toString()}>
               <SubCard.CostDiscounted>25,900원</SubCard.CostDiscounted>
               <SubCard.Discount>60%</SubCard.Discount>
-            </AnimatedSection2>
-            <AnimatedSection3 ref={ref} inview={inView.toString()}>
+            </AnimatedSection6>
+            <AnimatedSection7 ref={ref} inview={inView.toString()}>
               <SubCard.TotalCost>
                 월 15,540원
                 <SubCard.Vat>(부가세 포함)</SubCard.Vat>
               </SubCard.TotalCost>
-            </AnimatedSection3>
+            </AnimatedSection7>
 
-            <AnimatedSection4 ref={ref} inview={inView.toString()}>
+            <AnimatedSection8 ref={ref} inview={inView.toString()}>
               <SubCard.Description>
                 홈피팅 시 5벌의 의류를 선택 가능합니다.*<br></br>추가로 결제되는
                 금액은 없습니다.*
               </SubCard.Description>
-            </AnimatedSection4>
+            </AnimatedSection8>
 
             {/* <AnimatedSection6 ref={ref} inview={inView.toString()}> */}
             <Image
@@ -847,6 +847,14 @@ const PurchaseP = styled.p`
     'liga' off;
 `;
 
+const slideFromLeftToRight = keyframes`
+  0% {
+    transform: translateX(-100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
 const slideFromRightToLeft = keyframes`
   0% {
     transform: translateX(100vw);
@@ -861,7 +869,7 @@ const AnimatedSection1 = styled.div<SlideInDivProps>`
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft} 1s ease-out;
+      animation: ${slideFromLeftToRight} 1s ease-out;
       opacity: 1;
     `}
 `;
@@ -870,7 +878,7 @@ const AnimatedSection2 = styled.div<SlideInDivProps>`
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft} 1.2s ease-out;
+      animation: ${slideFromLeftToRight} 1.2s ease-out;
       opacity: 1;
     `}
 `;
@@ -879,7 +887,7 @@ const AnimatedSection3 = styled.div<SlideInDivProps>`
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft} 1.4s ease-out;
+      animation: ${slideFromLeftToRight} 1.4s ease-out;
       opacity: 1;
     `}
 `;
@@ -888,61 +896,43 @@ const AnimatedSection4 = styled.div<SlideInDivProps>`
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft} 1.6s ease-out;
+      animation: ${slideFromLeftToRight} 1.6s ease-out;
       opacity: 1;
     `}
-`;
-const slideFromRightToLeft5 = keyframes`
-  0% {
-    transform: translateX(100vw);
-  }
-  100% {
-    transform: translateX(0);
-  }
 `;
 const AnimatedSection5 = styled.div<SlideInDivProps>`
   opacity: 0;
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft5} 1.6s ease-out;
+      animation: ${slideFromRightToLeft} 1s ease-out;
       opacity: 1;
     `}
-`;
-const slideFromRightToLeft6 = keyframes`
-  0% {
-    right : -37;
-    transform: translateX(100vw);
-  }
-  100% {
-    transform: translateX(0);
-    /* right : -37px; */
-  }
 `;
 const AnimatedSection6 = styled.div<SlideInDivProps>`
   opacity: 0;
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft6} 1.7s ease-out;
+      animation: ${slideFromRightToLeft} 1.2s ease-out;
       opacity: 1;
     `}
-`;
-
-const slideFromRightToLeft7 = keyframes`
-  0% {
-    right : 0;
-  }
-  100% {
-    right : -112px;
-  }
 `;
 const AnimatedSection7 = styled.div<SlideInDivProps>`
   opacity: 0;
   ${({ inview }) =>
     inview == 'true' &&
     css`
-      animation: ${slideFromRightToLeft7} 1.8s ease-out;
+      animation: ${slideFromRightToLeft} 1.4s ease-out;
+      opacity: 1;
+    `}
+`;
+const AnimatedSection8 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft} 1.6s ease-out;
       opacity: 1;
     `}
 `;
