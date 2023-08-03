@@ -1,12 +1,12 @@
 'use client';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
-<<<<<<< HEAD
 import { styled, css, keyframes } from 'styled-components';
-=======
->>>>>>> fb86356d760b43e4bfd7d6d2d456edd183462965
 import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
+import { useRouter } from 'next/navigation';
+import { getMainPageProducts } from '@/api/requests';
 import guide_first from '@/assets/images/guide/guide_first.png';
 import guide_second from '@/assets/images/guide/guide_second.png';
 import guide_third from '@/assets/images/guide/guide_third.png';
@@ -20,10 +20,6 @@ import slogan_1 from '@/assets/images/guide/slogan_1.png';
 import SubBackground from '@/assets/images/guide/SubBackground.png';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
-import { useEffect, useState } from 'react';
-import { styled } from 'styled-components';
-import { useRouter } from 'next/navigation';
-import { getMainPageProducts } from '@/api/requests';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
@@ -32,20 +28,15 @@ type SlideInDivProps = {
 };
 function page() {
   const router = useRouter();
-
   const [products, setProducts] = useState<any[]>([]);
   const responsive = {
     512: {
       items: 4,
     },
   };
-<<<<<<< HEAD
   const { ref, inView, entry } = useInView({
     triggerOnce: true,
   });
-=======
-
->>>>>>> fb86356d760b43e4bfd7d6d2d456edd183462965
   const handleDragStart = (e: { preventDefault: () => any }) =>
     e.preventDefault();
   useEffect(() => {
@@ -56,6 +47,7 @@ function page() {
         return item;
       });
       setProducts(clothes);
+      console.log(clothes);
     };
 
     get();
@@ -109,7 +101,7 @@ function page() {
         </ContentWrapper.left>
         <ContentWrapper.center>
           <Content.NumberWrapper>
-            <Content.Number>1</Content.Number>
+            <Content.Number>❶</Content.Number>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="328"
@@ -119,7 +111,7 @@ function page() {
             >
               <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5" />
             </svg>
-            <Content.Number>2</Content.Number>
+            <Content.Number>❷</Content.Number>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="328"
@@ -129,7 +121,7 @@ function page() {
             >
               <path d="M0.5 1H328" stroke="black" strokeDasharray="5 5" />
             </svg>
-            <Content.Number>3</Content.Number>
+            <Content.Number>❸</Content.Number>
           </Content.NumberWrapper>
           <Content.IntroWrapper>
             <Content.IntroItem>
@@ -459,6 +451,7 @@ const ContentWaitingInfoWrapper = styled.div`
 
 const ContentWaitingInfoHeader = styled.div`
   color: #111;
+  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -493,7 +486,7 @@ const Content = {
       'clig' off,
       'liga' off;
     /* Header3 24pt sb */
-
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -502,6 +495,7 @@ const Content = {
   Sub: styled.p`
     text-align: left;
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -513,6 +507,7 @@ const Content = {
   Sub_White: styled.p`
     text-align: left;
     color: var(--1, #fff);
+    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -524,6 +519,7 @@ const Content = {
   SubRight: styled.p`
     text-align: right;
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -539,17 +535,12 @@ const Content = {
     gap: 48px;
   `,
   Number: styled.p`
-    background: black;
-    color: #fff;
-    font-size: 20px;
+    color: #000;
+    font-family: Pretendard;
+    font-size: 32px;
     font-style: normal;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height:20px;
-    border-radius: 25px;
+    line-height: 200%;
   `,
   IntroWrapper: styled.div`
     display: flex;
@@ -570,7 +561,8 @@ const Content = {
   IntroP: styled.p`
     margin: 0 auto;
     color: var(--1, #111);
-    font-size: 17px;
+    font-family: Pretendard;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -583,6 +575,7 @@ const Content = {
     margin-top: 18px;
     text-align: right;
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -595,6 +588,7 @@ const Content = {
     margin-top: 18px;
     text-align: center;
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -607,6 +601,7 @@ const Content = {
     margin-top: 18px;
     text-align: left;
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -620,6 +615,7 @@ const Content = {
     margin-top: 18px;
     text-align: left;
     color: var(--1, #fff);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -710,6 +706,7 @@ const SubCard = {
         opacity: 1;
       `}
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -720,6 +717,7 @@ const SubCard = {
   `,
   CostDiscounted: styled.span`
     color: var(--1, #111);
+    font-family: Pretendard;
     font-size: 36px;
     font-style: normal;
     font-weight: 600;
@@ -733,6 +731,7 @@ const SubCard = {
   Discount: styled.span`
     margin-left: 12px;
     color: var(--unnamed, #ff3d00);
+    font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -746,6 +745,9 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
+
+    /* Header1 48pt sb */
+    font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
@@ -757,6 +759,9 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
+
+    /* Header4 20pt sb */
+    font-family: Pretendard;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -767,6 +772,9 @@ const SubCard = {
     font-feature-settings:
       'clig' off,
       'liga' off;
+
+    /* Body2 16pt rg */
+    font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -797,6 +805,7 @@ const PurchaseButton = styled.div`
 
 const PurchaseP = styled.p`
   color: var(--4, #e8e8e8);
+  font-family: Pretendard;
   font-size: 30.271px;
   font-style: normal;
   font-weight: 600;
