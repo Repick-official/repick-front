@@ -70,5 +70,12 @@ const Show = styled.button<{
         height: 60px;
         background: var(--1, #111);
         color: var(--4, #e8e8e8);
+      `) ||
+    (props.$num == '8' && //배경 : 회색, 글씨 : 진한 회색
+      css`
+        width: 360px;
+        height: 60px;
+        background: var(--4, #e8e8e8);
+        color: #5f5f5f;
       `)}
 `;
