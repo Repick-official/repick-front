@@ -265,7 +265,7 @@ function page() {
                   placeholder="상세 주소를 입력해주세요"
                   {...register('address.mainAddress', {
                     pattern: {
-                      value: /^[\d가-힣]*$/,
+                      value: /^[\d가-힣\s]*$/,
                       message: '*',
                     },
                   })}
@@ -281,7 +281,7 @@ function page() {
                   placeholder="상세 주소를 입력해주세요"
                   {...register('address.detailAddress', {
                     pattern: {
-                      value: /^[\d가-힣]*$/,
+                      value: /^[\d가-힣\s]*$/,
                       message: '*',
                     },
                   })}
@@ -635,4 +635,5 @@ const InputButton = styled.input`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+  border: none;
 `;

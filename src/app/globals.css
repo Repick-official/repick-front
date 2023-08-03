@@ -40,8 +40,8 @@ body::-webkit-scrollbar {
   font-display: swap;
   src:
     local('Pretendard SemiBold'),
-    url('./woff2/Pretendard-SemiBold.woff2') format('woff2'),
-    url('./woff/Pretendard-SemiBold.woff') format('woff');
+    url('./woff2/Pretendard-SemiBold.woff2') format('WOFF2'),
+    url('./woff/Pretendard-SemiBold.woff') format('WOFF');
 }
 
 @font-face {
@@ -50,6 +50,6 @@ body::-webkit-scrollbar {
   font-display: swap;
   src:
     local('Pretendard Regular'),
-    url('./woff2/Pretendard-Regular.woff2') format('woff2'),
-    url('./woff/Pretendard-Regular.woff') format('woff');
+    url('./woff2/Pretendard-Regular.woff2') format('WOFF2'),
+    url('./woff/Pretendard-Regular.woff') format('WOFF');
 }
