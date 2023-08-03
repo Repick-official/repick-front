@@ -80,20 +80,21 @@ function page() {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryHomeFitting(accessToken);
+      console.log('response', response);
       response.forEach((product: any) => {
         if (product.homeFittingState === 'DELIVERED') {
-          if (product.length > 0) {
-            setIdDelivered(true);
+          if (response.length > 0) {
             delivered.push(product);
+            setIdDelivered(true);
             setDate2(delivered[0].createdDate);
           } else {
             setIdDelivered(false);
           }
         } else if (product.homeFittingState === 'DELIVERING') {
-          if (product.length > 0) {
-            setIsDelivering(true);
+          if (response.length > 0) {
             delivering.push(product);
             setDate1(delivering[0].createdDate);
+            setIsDelivering(true);
           } else {
             setIsDelivering(false);
           }
