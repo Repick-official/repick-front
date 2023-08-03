@@ -17,6 +17,9 @@ import character_4 from '@/assets/images/guide/character_4.png';
 import character_5 from '@/assets/images/guide/character_5.png';
 import presents from '@/assets/images/guide/presents.png';
 import slogan_1 from '@/assets/images/guide/slogan_1.png';
+
+import banner1 from '@/assets/images/banner/banner1.png';
+import banner2 from '@/assets/images/banner/banner2.png';
 import SubBackground from '@/assets/images/guide/SubBackground.png';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
@@ -24,19 +27,30 @@ import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
 type SlideInDivProps = {
-  inView: boolean;
+  inview: string;
 };
 function page() {
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
+
   const responsive = {
     512: {
       items: 4,
     },
   };
-  const { ref, inView, entry } = useInView({
+  const {
+    ref: ref,
+    inView: inView,
+    entry: entry,
+  } = useInView({
     triggerOnce: true,
   });
+
+  const responsiveBanner = {
+    512: {
+      items: 1,
+    },
+  };
   const handleDragStart = (e: { preventDefault: () => any }) =>
     e.preventDefault();
   useEffect(() => {
@@ -77,8 +91,18 @@ function page() {
   return (
     <Contents>
       <BannerWrapper>
+        {/* <AliceCarousel
+          mouseTracking
+          infinite={true}
+          animationDuration={1000}
+          disableDotsControls
+          disableButtonsControls
+          responsive={responsiveBanner}
+          autoPlay
+          items={bannerItems}
+        /> */}
         <Image
-          src={logo_guide}
+          src={banner2}
           alt="Picture of me"
           style={{ width: '100vw', height: 'auto' }}
           placeholder="blur"
@@ -277,21 +301,27 @@ function page() {
         </ContentWrapper.left>
         <SubCard.Wrapper>
           <SubCard.Card>
-            <SubCard.Title ref={ref} inView={inView}>
-              Basic Plan
-            </SubCard.Title>
-            <WrapDiscount ref={ref} inView={inView}>
+            <AnimatedSection1 ref={ref} inview={inView.toString()}>
+              <SubCard.Title>Basic Plan</SubCard.Title>
+            </AnimatedSection1>
+            <AnimatedSection2 ref={ref} inview={inView.toString()}>
               <SubCard.CostDiscounted>15,900원</SubCard.CostDiscounted>
               <SubCard.Discount>40%</SubCard.Discount>
-            </WrapDiscount>
-            <SubCard.TotalCost>
-              월 9,540원
-              <SubCard.Vat>(부가세 포함)</SubCard.Vat>
-            </SubCard.TotalCost>
-            <SubCard.Description>
-              홈피팅 시 3벌의 의류를 선택 가능합니다.*<br></br>추가로 결제되는
-              금액은 없습니다.*
-            </SubCard.Description>
+            </AnimatedSection2>
+            <AnimatedSection3 ref={ref} inview={inView.toString()}>
+              <SubCard.TotalCost>
+                월 9,540원
+                <SubCard.Vat>(부가세 포함)</SubCard.Vat>
+              </SubCard.TotalCost>
+            </AnimatedSection3>
+
+            <AnimatedSection4 ref={ref} inview={inView.toString()}>
+              <SubCard.Description>
+                홈피팅 시 3벌의 의류를 선택 가능합니다.*<br></br>추가로 결제되는
+                금액은 없습니다.*
+              </SubCard.Description>
+            </AnimatedSection4>
+
             <Image
               src={character_4}
               alt="character_4"
@@ -302,25 +332,31 @@ function page() {
                 left: '-59px',
                 bottom: '-52px',
               }}
-              // placeholder ="blur"
             />
           </SubCard.Card>
           <SubCard.Card>
-            <SubCard.Title ref={ref} inView={inView}>
-              Pro Plan
-            </SubCard.Title>
-            <div>
+            <AnimatedSection1 ref={ref} inview={inView.toString()}>
+              <SubCard.Title>Pro Plan</SubCard.Title>
+            </AnimatedSection1>
+            <AnimatedSection2 ref={ref} inview={inView.toString()}>
               <SubCard.CostDiscounted>25,900원</SubCard.CostDiscounted>
               <SubCard.Discount>60%</SubCard.Discount>
-            </div>
-            <SubCard.TotalCost>
-              월 15,540원
-              <SubCard.Vat>(부가세 포함)</SubCard.Vat>
-            </SubCard.TotalCost>
-            <SubCard.Description>
-              홈피팅 시 5벌의 의류를 선택 가능합니다.*<br></br>추가로 결제되는
-              금액은 없습니다.*
-            </SubCard.Description>
+            </AnimatedSection2>
+            <AnimatedSection3 ref={ref} inview={inView.toString()}>
+              <SubCard.TotalCost>
+                월 15,540원
+                <SubCard.Vat>(부가세 포함)</SubCard.Vat>
+              </SubCard.TotalCost>
+            </AnimatedSection3>
+
+            <AnimatedSection4 ref={ref} inview={inView.toString()}>
+              <SubCard.Description>
+                홈피팅 시 5벌의 의류를 선택 가능합니다.*<br></br>추가로 결제되는
+                금액은 없습니다.*
+              </SubCard.Description>
+            </AnimatedSection4>
+
+            {/* <AnimatedSection6 ref={ref} inview={inView.toString()}> */}
             <Image
               src={character_5}
               alt="character_5"
@@ -334,6 +370,8 @@ function page() {
               }}
               // placeholder ="blur"
             />
+            {/* </AnimatedSection6>
+            <AnimatedSection7 ref={ref} inview={inView.toString()}> */}
             <Image
               src={presents}
               alt="presents"
@@ -562,7 +600,7 @@ const Content = {
     margin: 0 auto;
     color: var(--1, #111);
     font-family: Pretendard;
-    font-size: 20px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -697,14 +735,7 @@ const SubCard = {
     gap: 11px;
     text-align: left;
   `,
-  Title: styled.p<SlideInDivProps>`
-    opacity: 0;
-    ${({ inView }) =>
-      inView &&
-      css`
-        animation: ${slideFromRightToLeft} 1s ease-out;
-        opacity: 1;
-      `}
+  Title: styled.p`
     color: var(--1, #111);
     font-family: Pretendard;
     font-size: 24px;
@@ -825,4 +856,93 @@ const slideFromRightToLeft = keyframes`
   }
 `;
 
-const WrapDiscount = styled.div<SlideInDivProps>``;
+const AnimatedSection1 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft} 1s ease-out;
+      opacity: 1;
+    `}
+`;
+const AnimatedSection2 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft} 1.2s ease-out;
+      opacity: 1;
+    `}
+`;
+const AnimatedSection3 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft} 1.4s ease-out;
+      opacity: 1;
+    `}
+`;
+const AnimatedSection4 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft} 1.6s ease-out;
+      opacity: 1;
+    `}
+`;
+const slideFromRightToLeft5 = keyframes`
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+const AnimatedSection5 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft5} 1.6s ease-out;
+      opacity: 1;
+    `}
+`;
+const slideFromRightToLeft6 = keyframes`
+  0% {
+    right : -37;
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+    /* right : -37px; */
+  }
+`;
+const AnimatedSection6 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft6} 1.7s ease-out;
+      opacity: 1;
+    `}
+`;
+
+const slideFromRightToLeft7 = keyframes`
+  0% {
+    right : 0;
+  }
+  100% {
+    right : -112px;
+  }
+`;
+const AnimatedSection7 = styled.div<SlideInDivProps>`
+  opacity: 0;
+  ${({ inview }) =>
+    inview == 'true' &&
+    css`
+      animation: ${slideFromRightToLeft7} 1.8s ease-out;
+      opacity: 1;
+    `}
+`;
