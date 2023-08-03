@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo_guide from '@/assets/images/guide/logo_guide.png';
-import { styled } from 'styled-components';
+import { styled, css, keyframes } from 'styled-components';
 import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import { useRouter } from 'next/navigation';
@@ -22,7 +22,10 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-
+import { useInView } from 'react-intersection-observer';
+type SlideInDivProps = {
+  inView: boolean;
+};
 function page() {
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
@@ -31,6 +34,9 @@ function page() {
       items: 4,
     },
   };
+  const { ref, inView, entry } = useInView({
+    triggerOnce: true,
+  });
   const handleDragStart = (e: { preventDefault: () => any }) =>
     e.preventDefault();
   useEffect(() => {
@@ -271,11 +277,13 @@ function page() {
         </ContentWrapper.left>
         <SubCard.Wrapper>
           <SubCard.Card>
-            <SubCard.Title>Basic Plan</SubCard.Title>
-            <div>
+            <SubCard.Title ref={ref} inView={inView}>
+              Basic Plan
+            </SubCard.Title>
+            <WrapDiscount ref={ref} inView={inView}>
               <SubCard.CostDiscounted>15,900원</SubCard.CostDiscounted>
               <SubCard.Discount>40%</SubCard.Discount>
-            </div>
+            </WrapDiscount>
             <SubCard.TotalCost>
               월 9,540원
               <SubCard.Vat>(부가세 포함)</SubCard.Vat>
@@ -298,7 +306,9 @@ function page() {
             />
           </SubCard.Card>
           <SubCard.Card>
-            <SubCard.Title>Pro Plan</SubCard.Title>
+            <SubCard.Title ref={ref} inView={inView}>
+              Pro Plan
+            </SubCard.Title>
             <div>
               <SubCard.CostDiscounted>25,900원</SubCard.CostDiscounted>
               <SubCard.Discount>60%</SubCard.Discount>
@@ -687,7 +697,14 @@ const SubCard = {
     gap: 11px;
     text-align: left;
   `,
-  Title: styled.p`
+  Title: styled.p<SlideInDivProps>`
+    opacity: 0;
+    ${({ inView }) =>
+      inView &&
+      css`
+        animation: ${slideFromRightToLeft} 1s ease-out;
+        opacity: 1;
+      `}
     color: var(--1, #111);
     font-family: Pretendard;
     font-size: 24px;
@@ -783,6 +800,7 @@ const PurchaseButton = styled.div`
   justify-content: center;
   align-items: center;
   gap: 18.919px;
+  cursor: pointer;
 `;
 
 const PurchaseP = styled.p`
@@ -797,3 +815,14 @@ const PurchaseP = styled.p`
     'clig' off,
     'liga' off;
 `;
+
+const slideFromRightToLeft = keyframes`
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+const WrapDiscount = styled.div<SlideInDivProps>``;
