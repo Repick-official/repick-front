@@ -1,18 +1,19 @@
 'use client';
-import React from 'react';
 import styled from 'styled-components';
-import sub from '@/assets/images/subscription.png';
+import sub from '@/assets/images/banner/subscription.png';
 import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 
 function Banner() {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+
   const router = useRouter();
   const handleBannerClick = () => {
     setSelectedPage('');
     router.push('/mypage/subscribe');
   };
+
   return (
     <Container>
       <BannerWrapper src={sub.src} onClick={handleBannerClick} />

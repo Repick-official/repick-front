@@ -1,14 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import registerCheck from '@/assets/images/check/register_check.svg';
+import none from '@/assets/images/search/none.svg';
+import purchase from '@/assets/images/mypick/purchase.png';
+import wardrobe from '@/assets/images/wardrobe/wardrobe.svg';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
-import none from '@/assets/images/search/none.svg';
-import purchase from '@/assets/images/mypick/purchase.png';
-import wardrobe from '@/assets/images/wardrobe/wardrobe.svg';
 
 function Success({
   mainText,
@@ -30,29 +29,29 @@ function Success({
   const router = useRouter();
   return (
     <Component>
-      <SuccessWrapper>
-        <WelcomeWrapper>
-          <IconWrapper>
+      <Wrapper.Success>
+        <Wrapper.Welcome>
+          <Wrapper.Icon>
             {icon === 'check' ? (
-              <CheckIcon src={registerCheck.src} />
+              <Icon.Check src={registerCheck.src} />
             ) : icon === 'none' ? (
-              <NoneIcon src={none.src} />
+              <Icon.None src={none.src} />
             ) : icon === 'wardrobe' ? (
-              <WardrobeIcon src={wardrobe.src} />
+              <Icon.Wardrobe src={wardrobe.src} />
             ) : (
-              <PurchaseIcon src={purchase.src} />
+              <Icon.Purchase src={purchase.src} />
             )}
-          </IconWrapper>
-          <WelcomeMessageWrapper>
-            <WelcomeMainText>{mainText}</WelcomeMainText>
-            <WelcomeSubText>
+          </Wrapper.Icon>
+          <Wrapper.WelcomeMessage>
+            <Text.Main>{mainText}</Text.Main>
+            <Text.Sub>
               {subText1}
               <br />
               {subText2}
-            </WelcomeSubText>
-          </WelcomeMessageWrapper>
-        </WelcomeWrapper>
-        <ButtonWrapper>
+            </Text.Sub>
+          </Wrapper.WelcomeMessage>
+        </Wrapper.Welcome>
+        <Wrapper.Button>
           <div
             onClick={() => {
               setSelectedPage('마이픽 현황');
@@ -80,8 +79,8 @@ function Success({
               <Button content="다른 제품 보러가기" num="4" />
             </div>
           )}
-        </ButtonWrapper>
-      </SuccessWrapper>
+        </Wrapper.Button>
+      </Wrapper.Success>
     </Component>
   );
 }
@@ -95,57 +94,63 @@ const Component = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-const SuccessWrapper = styled.div`
-  margin-bottom: 158px;
-`;
-const WelcomeWrapper = styled.div`
-  margin-bottom: 70px;
-`;
 
-const IconWrapper = styled.div`
-  text-align: center;
-  margin-bottom: 24px;
-`;
-const CheckIcon = styled.img`
-  width: 108px;
-  height: 108px;
-  margin-top: 120px;
-`;
-const NoneIcon = styled.img`
-  width: 124.256px;
-  height: 172px;
-  margin-top: 58px;
-`;
-const WardrobeIcon = styled.img`
-  width: 118.65px;
-  height: 172px;
-  margin-top: 60px;
-`;
-const PurchaseIcon = styled.img`
-  width: 348px;
-  height: 258px;
-  margin-top: 32px;
-`;
-const WelcomeMessageWrapper = styled.div``;
+const Wrapper = {
+  Success: styled.div`
+    margin-bottom: 158px;
+  `,
+  Welcome: styled.div`
+    margin-bottom: 70px;
+  `,
 
-const WelcomeMainText = styled.div`
-  color: #111;
-  text-align: center;
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 140%;
-  margin-bottom: 20px;
-`;
+  Icon: styled.div`
+    text-align: center;
+    margin-bottom: 24px;
+  `,
+  WelcomeMessage: styled.div``,
+  Button: styled.div`
+    display: flex;
+    gap: 25px;
+  `,
+};
 
-const WelcomeSubText = styled.div`
-  color: #111;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
-`;
+const Icon = {
+  Check: styled.img`
+    width: 108px;
+    height: 108px;
+    margin-top: 120px;
+  `,
+  None: styled.img`
+    width: 124.256px;
+    height: 172px;
+    margin-top: 58px;
+  `,
+  Wardrobe: styled.img`
+    width: 118.65px;
+    height: 172px;
+    margin-top: 60px;
+  `,
+  Purchase: styled.img`
+    width: 348px;
+    height: 258px;
+    margin-top: 32px;
+  `,
+};
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 25px;
-`;
+const Text = {
+  Main: styled.div`
+    color: #111;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 140%;
+    margin-bottom: 20px;
+  `,
+  Sub: styled.div`
+    color: #111;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+  `,
+};

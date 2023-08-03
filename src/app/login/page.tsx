@@ -1,12 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
-import logo from '@/assets/images/loco.svg';
-import kakao from '@/assets/images/kakao.png';
+import logo from '@/assets/images/navigation/logo.svg';
+import kakao from '@/assets/images/login/kakao.png';
 import Button from '@/components/common/Button';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 function page() {
   const router = useRouter();
@@ -168,7 +168,6 @@ const MenuWrapper = styled.div`
 const Menu = styled.p`
   width: 87px;
   font-size: 16px;
-  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
@@ -193,7 +192,6 @@ const SnsWrapper = styled.div`
 const SnsLoginText = styled.p`
   color: var(--3, #b4b4b4);
   font-size: 16px;
-  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;

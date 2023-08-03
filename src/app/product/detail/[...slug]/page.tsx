@@ -1,29 +1,25 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import line from '@/assets/images/line.svg';
+import line from '@/assets/images/detail/line.svg';
 import Image from 'next/image';
+import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
+import getAccessToken from '@/util/getAccessToken';
+import leftArrow from '@/assets/images/product/leftArrow.svg';
+import rightArrow from '@/assets/images/product/rightArrow.svg';
+import { useEffect, useState } from 'react';
 import {
   getDetailPageProducts,
   getMainPageProducts,
-  getCategories,
   putMypick,
 } from '@/api/requests';
 import { useRouter } from 'next/navigation';
-import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
-import leftArrow from '@/assets/images/product/leftArrow.svg';
-import rightArrow from '@/assets/images/product/rightArrow.svg';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import { selectedNavPage } from '@/atom/states';
-import { requestProducts } from '@/atom/states';
-import { Product } from '@/atom/states';
+import { selectedNavPage, requestProducts, Product } from '@/atom/states';
 
 function page() {
-  //제품 디테일 api
   const [products, setProducts] = useState({
     productId: 0,
     name: '',
@@ -47,6 +43,18 @@ function page() {
     ],
   });
 
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const router = useRouter();
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
+
+  const [recommends, setRecommends] = useState<any[]>([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const sliderImageCount = 3;
+
   useEffect(() => {
     const get = async () => {
       let location = window.location.pathname;
@@ -56,9 +64,6 @@ function page() {
     };
     get();
   }, []);
-
-  //추천 상품 api
-  const [recommends, setRecommends] = useState<any[]>([]);
 
   useEffect(() => {
     const get = async () => {
@@ -72,13 +77,6 @@ function page() {
 
     get();
   }, []);
-
-  //마이픽 담기 api
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const router = useRouter();
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
-  const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
   const putMypickCart = async () => {
     const confirm = window.confirm('해당 상품을 마이픽에 담으시겠습니까?');
@@ -124,9 +122,6 @@ function page() {
         };
         router.push('/myPick/shopping/purchase');
 
-        // const updatedProducts = [...finalProducts, newProduct];
-
-        // 합쳐진 배열을 setFinalProducts를 통해 requestProducts에 할당
         setFinalProducts([newProduct]);
       } else {
         alert('로그인이 필요한 서비스입니다.');
@@ -136,11 +131,7 @@ function page() {
     }
   };
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const sliderImageCount = 3;
-
   const handleLeftArrowClick = () => {
-    // 왼쪽 화살표를 누르면 이미지들을 오른쪽으로 이동
     if (currentImageIndex > 0) {
       setCurrentImageIndex(currentImageIndex - 1);
     }
@@ -156,10 +147,10 @@ function page() {
   };
 
   return (
-    <Container>
-      <Content>
-        <Cloth>
-          <MainImage>
+    <Container.Container>
+      <Container.Content>
+        <Cloth.Cloth>
+          <Cloth.MainImage>
             <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
               {products.mainImageFile.imagePath && (
                 <Image
@@ -170,16 +161,19 @@ function page() {
                 />
               )}
             </div>
-          </MainImage>
+          </Cloth.MainImage>
 
-          <Cut>
-            <LeftArrow src={leftArrow.src} onClick={handleLeftArrowClick} />
+          <Cloth.Cut>
+            <Cloth.LeftArrow
+              src={leftArrow.src}
+              onClick={handleLeftArrowClick}
+            />
 
-            <P>
+            <Cloth.Product>
               {products.detailImageFiles
                 .slice(currentImageIndex, currentImageIndex + sliderImageCount)
                 .map((item, idx) => (
-                  <DetailImage key={idx}>
+                  <Cloth.DetailImage key={idx}>
                     <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
                       {item.imagePath && (
                         <Image
@@ -191,38 +185,41 @@ function page() {
                         />
                       )}
                     </div>
-                  </DetailImage>
+                  </Cloth.DetailImage>
                 ))}
-            </P>
-            <RightArrow src={rightArrow.src} onClick={handleRightArrowClick} />
-          </Cut>
-        </Cloth>
-        <DetailContent>
-          <Category>{`제품 카테고리 > ${products.categoryInfoList[0].parentCategoryName} > ${products.categoryInfoList[0].categoryName}`}</Category>
-          <ProductContent>
-            <Info>
-              <Tag>브랜드</Tag>
-              <Brand>{products.brand}</Brand>
-            </Info>
-            <Info>
-              <Tag>제품명</Tag>
-              <Sub $bold={'bold'}>{products.name}</Sub>
-            </Info>
-            <Info>
-              <Tag>사이즈</Tag>
-              <Sub $bold={'notBold'}>{products.size}</Sub>
-            </Info>
-            <Info>
-              <Tag>제품 성격</Tag>
-              <Sub $bold={'notBold'}>{products.detail}</Sub>
-            </Info>
-            <Info>
-              <Tag>가격</Tag>
-              <Sub $bold={'bold'}>
+            </Cloth.Product>
+            <Cloth.RightArrow
+              src={rightArrow.src}
+              onClick={handleRightArrowClick}
+            />
+          </Cloth.Cut>
+        </Cloth.Cloth>
+        <Container.DetailContent>
+          <Container.Category>{`제품 카테고리 > ${products.categoryInfoList[0].parentCategoryName} > ${products.categoryInfoList[0].categoryName}`}</Container.Category>
+          <Products.Content>
+            <Products.Info>
+              <Products.Tag>브랜드</Products.Tag>
+              <Products.Brand>{products.brand}</Products.Brand>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>제품명</Products.Tag>
+              <Products.Sub $bold={'bold'}>{products.name}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>사이즈</Products.Tag>
+              <Products.Sub $bold={'notBold'}>{products.size}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>제품 성격</Products.Tag>
+              <Products.Sub $bold={'notBold'}>{products.detail}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>가격</Products.Tag>
+              <Products.Sub $bold={'bold'}>
                 {products.price.toLocaleString('en-US')}원
-              </Sub>
-            </Info>
-          </ProductContent>
+              </Products.Sub>
+            </Products.Info>
+          </Products.Content>
           <div className="button">
             <div className="btn" onClick={() => putMypickCart()}>
               <Button content="마이픽에 담기" num="1" />
@@ -231,11 +228,11 @@ function page() {
               <Button content="구매하기" num="2" />
             </div>
           </div>
-        </DetailContent>
-      </Content>
-      <Line src={line.src} />
-      <Recommend>이런 제품은 어떠세요?</Recommend>
-      <Products>
+        </Container.DetailContent>
+      </Container.Content>
+      <Container.Line src={line.src} />
+      <Container.Recommend>이런 제품은 어떠세요?</Container.Recommend>
+      <Container.Products>
         {recommends.map((item) => (
           <div
             key={item.productId}
@@ -251,98 +248,104 @@ function page() {
             />
           </div>
         ))}
-      </Products>
-    </Container>
+      </Container.Products>
+    </Container.Container>
   );
 }
 
 export default page;
 
-const Container = styled.div`
-  width: 1216px;
-`;
-const Cloth = styled.div``;
-const MainImage = styled.div``;
-const DetailImage = styled.div`
-  margin-right: 21px;
-`;
-const Cut = styled.div`
-  display: flex;
-  width: 592px;
-  margin-top: 24px;
-`;
-const Content = styled.div`
-  display: flex;
-  width: 1216px;
-  height: 750px;
+const Container = {
+  Container: styled.div`
+    width: 1216px;
+  `,
+  Content: styled.div`
+    display: flex;
+    width: 1216px;
+    height: 750px;
 
-  margin-top: 120px;
-`;
-const DetailContent = styled.div`
-  margin-left: 106px;
-  .button {
-    margin-top: 244px;
-  }
-  .btn {
-    margin-top: 29px;
-  }
-`;
-const Category = styled.div`
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-`;
-const ProductContent = styled.div`
-  margin-top: 68px;
-`;
-const Info = styled.div`
-  display: flex;
-  margin-bottom: 24px;
-`;
-const Tag = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  width: 128px;
-`;
-const Sub = styled.div<{ $bold: string }>`
-  width: 376px;
-  font-weight: ${(props) => (props.$bold === 'bold' ? '600' : '400')};
-  font-size: ${(props) => (props.$bold === 'bold' ? '20px' : '16px')};
-`;
-const Brand = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  background-color: #e8e8e8;
-  border-radius: 5px;
-  padding: 2px 24px;
-`;
+    margin-top: 120px;
+  `,
+  Products: styled.div`
+    width: 1216px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 148px;
+    overflow: hidden;
+    gap: 20px;
+  `,
+  DetailContent: styled.div`
+    margin-left: 106px;
+    .button {
+      margin-top: 244px;
+    }
+    .btn {
+      margin-top: 29px;
+    }
+  `,
+  Line: styled.img`
+    margin-top: 127px;
+    margin-bottom: 20px;
+  `,
+  Recommend: styled.div`
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 40px;
+  `,
+  Category: styled.div`
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+  `,
+};
 
-const Line = styled.img`
-  margin-top: 127px;
-  margin-bottom: 20px;
-`;
-const Recommend = styled.div`
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 40px;
-`;
+const Cloth = {
+  Cloth: styled.div``,
+  MainImage: styled.div``,
+  DetailImage: styled.div`
+    margin-right: 21px;
+  `,
+  Cut: styled.div`
+    display: flex;
+    width: 592px;
+    margin-top: 24px;
+  `,
+  LeftArrow: styled.img`
+    margin-right: 10px;
+  `,
+  RightArrow: styled.img`
+    margin-left: 10px;
+  `,
+  Product: styled.div`
+    width: 538.46px;
+    display: flex;
+    overflow: hidden;
+  `,
+};
 
-const Products = styled.div`
-  width: 1216px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 148px;
-`;
-
-const LeftArrow = styled.img`
-  margin-right: 10px;
-`;
-const RightArrow = styled.img`
-  margin-left: 10px;
-`;
-const P = styled.div`
-  width: 538.46px;
-
-  display: flex;
-  overflow: hidden;
-`;
+const Products = {
+  Content: styled.div`
+    margin-top: 68px;
+  `,
+  Info: styled.div`
+    display: flex;
+    margin-bottom: 24px;
+  `,
+  Tag: styled.div`
+    font-size: 16px;
+    font-weight: 400;
+    width: 128px;
+  `,
+  Sub: styled.div<{ $bold: string }>`
+    width: 376px;
+    font-weight: ${(props) => (props.$bold === 'bold' ? '600' : '400')};
+    font-size: ${(props) => (props.$bold === 'bold' ? '20px' : '16px')};
+  `,
+  Brand: styled.div`
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding: 2px 24px;
+  `,
+};

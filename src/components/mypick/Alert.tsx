@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import X from '@/assets/images/mypick/x.svg';
-import search_dark from '@/assets/images/search_dark.svg';
-import React, { useEffect, useState, useRef } from 'react';
-import { searchItem } from '@/api/requests';
-import { useRouter, redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 
@@ -22,13 +19,15 @@ function SearchModal({
   const [selectedNaviPage, setSelectedNaviPage] =
     useRecoilState(selectedNavPage);
 
+  let text1JSX: any = text1;
+  let text2Style = {};
+
   const goSubscribe = () => {
     setSelectedNaviPage('');
     router.push('/mypage');
   };
 
-  let text1JSX: any = text1;
-  let text2Style = {};
+  text2Style = { color: 'black' };
 
   if (text1.includes('5벌까지만 가능해요.')) {
     text1JSX = (
@@ -45,9 +44,6 @@ function SearchModal({
       </>
     );
   }
-
-  // text2는 항상 검정색으로 렌더링
-  text2Style = { color: 'black' };
 
   return (
     <>
@@ -141,9 +137,6 @@ const SearchModalContent = styled.div`
   width: 580px;
   height: 329px;
   background-color: var(--5, #fff);
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
   box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 `;
@@ -164,7 +157,7 @@ const Text = styled.div`
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-
+  line-height: 150%;
   .orange-text {
     color: orange;
   }

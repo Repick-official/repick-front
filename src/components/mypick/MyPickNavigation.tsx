@@ -1,14 +1,12 @@
 'use client';
-import React from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import sub from '@/assets/images/subscription.png';
+import getAccessToken from '@/util/getAccessToken';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { getIsSubscribe } from '@/api/requests';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function MyPickNavigation() {
   const router = useRouter();
@@ -27,9 +25,6 @@ function MyPickNavigation() {
       case 'purchase':
         setSelectedPage('구매하기');
         break;
-      // case 'wardrobe':
-      //   setSelectedPage('구매내역');
-      //   break;
     }
   }, []);
 
@@ -46,24 +41,12 @@ function MyPickNavigation() {
     }
   };
 
-  const checkUserPurchase = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await getIsSubscribe(accessToken);
-    if (response == 'NONE') {
-      alert('구독이 필요한 서비스입니다.');
-    } else {
-      setSelectedPage('구매하기');
-      router.push('/myPick/shopping/purchase');
-    }
-  };
-
   const checkUserPurchaseHistory = async () => {
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await getIsSubscribe(accessToken);
     if (response == 'NONE') {
       alert('구독이 필요한 서비스입니다.');
     } else {
-      // setSelectedPage('구매내역'); 나중에 살리기
       alert('현재 이용 불가능한 서비스입니다.');
     }
   };

@@ -43,14 +43,6 @@ function page() {
     null
   );
   const fetchItem = async () => {
-    console.log(
-      '순서 :',
-      order,
-      ' 마지막 상품ID : ',
-      cursorId,
-      ' category ID : ',
-      categoryId
-    );
     let response: Product[];
     switch (order) {
       case 'latest':
@@ -65,7 +57,7 @@ function page() {
       case 'seen':
         // response = await getItemSeen(cursorId, categoryId);
         response = await getItemLatest(cursorId, categoryId);
-        alert('조회순은 아직 없습니다~');
+        alert('조회순은 아직 없습니다.');
         setCategoryId(0);
         break;
       default:
@@ -96,19 +88,8 @@ function page() {
       setCategoryData(categoryMap);
     };
     fetchCategory();
-    const item = sessionStorage.getItem('items');
-    const searchedItem = item ? JSON.parse(item) : null;
-
-    if (searchedItem) {
-      setProducts(searchedItem);
-      setCursorId(searchedItem[searchedItem.length - 1].productId);
-      setCursorPrice(searchedItem[searchedItem.length - 1].price);
-      sessionStorage.clear();
-      setIsSearchedItem(true);
-    } else {
-      setProducts([]);
-      fetchItem();
-    }
+    setProducts([]);
+    fetchItem();
   }, [categoryId, order]);
 
   const loadMoreItems = () => {
@@ -120,6 +101,10 @@ function page() {
   };
 
   const handleOrderChange = (newOrder: string) => {
+    if (newOrder === 'seen') {
+      alert('조회순은 아직 없습니다~');
+      return;
+    }
     setOrder(newOrder);
     setCursorId(0);
     setCursorPrice(0);
@@ -307,8 +292,6 @@ const Header = styled.div`
 
 const Comment = styled.p`
   color: var(--1, #111);
-  /* Header2 32pt sb */
-  font-family: Pretendard;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -342,7 +325,6 @@ const OrderMenu = styled.div<{ $isselected: string }>`
   color: ${(props) =>
     props.$isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
   text-align: center;
-  font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
   font-weight: ${(props) => (props.$isselected === 'true' ? '700' : '400')};
@@ -361,7 +343,7 @@ const OptionWrapper = styled.div`
 `;
 
 const OptionList = styled.div`
-  width: 794px;
+  width: 960px;
   height: 28px;
   display: flex;
   gap: 103px;
@@ -370,9 +352,6 @@ const OptionList = styled.div`
 const OptionP = styled.p`
   color: var(--1, #111);
   text-align: center;
-
-  /* Header4 20pt sb */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -394,7 +373,7 @@ const Option = styled.p<{ $isselected: string }>`
   background: ${(props) =>
     props.$isselected === 'true' ? 'var(--1, #111)' : ''};
 
-  font-family: Pretendard;
+  padding: 10px;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -436,9 +415,6 @@ const ShowMoreItems = styled.div`
 `;
 const ShowP = styled.p`
   color: var(--2, #5f5f5f);
-
-  /* Header4 20pt rg */
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

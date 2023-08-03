@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import ItemHeartInfo from '@/components/guide/ItemHeartInfo';
@@ -10,13 +9,6 @@ interface ContentBodyInfoProps {
   name: string;
   price: number;
 }
-interface TagWrapperProps {
-  bgcolor: string;
-}
-
-interface TagNameProps {
-  textcolor: string;
-}
 
 const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   src,
@@ -25,32 +17,14 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   name,
   price,
 }) => {
-  const tagColors: { [key: string]: string } = {
-    '나이키 에센셜': '#5F5F5F',
-    꼼데가르송: '#111',
-    미쏘: '#B4B4B4',
-    MM6: '#111',
-    마뗑킴: '#5F5F5F',
-    스파오: '#B4B4B4',
-    // 필요한 만큼 추가
-  };
-  const tagNameColors: { [key: string]: string } = {
-    '나이키 에센셜': '#fff',
-    꼼데가르송: '#fff',
-    미쏘: '#111',
-    MM6: '#fff',
-    마뗑킴: '#fff',
-    스파오: '#111',
-    // 필요한 만큼 추가
-  };
   return (
     <ImageWrapper>
       <ImageDiv style={{ borderRadius: '15px', overflow: 'hidden' }}>
         <Image src={src} alt="Picture of me" width={286} height={286} />
       </ImageDiv>
       <ImageBody>
-        <TagWrapper bgcolor={tagColors[tagName]}>
-          <TagName textcolor={tagNameColors[tagName]}>{tagName}</TagName>
+        <TagWrapper>
+          <TagName>{tagName}</TagName>
         </TagWrapper>
         <ItemInfoWrapper>
           <ItemInfo>{size}</ItemInfo>
@@ -91,20 +65,17 @@ const ImageBody = styled.div`
   cursor: pointer;
 `;
 
-const TagWrapper = styled.div<TagWrapperProps>`
+const TagWrapper = styled.div`
   display: inline-flex;
   height: 26px;
   padding: 2px 24px;
   align-items: center;
   border-radius: 5px;
-  background: ${(props) =>
-    props.bgcolor ||
-    '#E8E8E8'}; // bgColor props를 받아서 적용하거나, 값이 없을 경우 기본값으로 #5F5F5F를 사용
+  background: var(--4, #e8e8e8);
 `;
-const TagName = styled.p<TagNameProps>`
-  color: ${(props) => props.textcolor || '#5F5F5F'};
+const TagName = styled.p`
+  color: '#5F5F5F'
   text-align: center;
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: 400;
   margin: 0;

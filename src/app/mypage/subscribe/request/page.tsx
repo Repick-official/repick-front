@@ -1,24 +1,20 @@
 'use client';
-import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import SubscribePlan from '@/components/mypage/SubscribePlan';
+import getAccessToken from '@/util/getAccessToken';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SubscribePlan from '@/components/mypage/SubscribePlan';
 import { selectedSubscribePlan } from '@/atom/states';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { subscribePlan, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
-import getAccessToken from '@/util/getAccessToken';
 
 function page() {
   const router = useRouter();
-
-  const [select, setSelect] = useState(false);
-
-  const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
 
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [isClicked, setIsClicked] = useState(false);
@@ -27,8 +23,29 @@ function page() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [address, setAddress] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [mainAddress, setMainAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
   const [email, setEmail] = useState('');
+
+  const [selectPlan, setSelectPlan] = useRecoilState(selectedSubscribePlan);
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  useEffect(() => {
+    const get = async () => {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const res = await getUserInfo(accessToken);
+      setName(res.name);
+      setPhoneNumber(res.phoneNumber);
+      setBankName(res.bank?.bankName);
+      setAccountNumber(res.bank?.accountNumber);
+      setZipCode(res.address?.zipCode);
+      setMainAddress(res.address?.mainAddress);
+      setDetailAddress(res.address?.detailAddress);
+      setEmail(res.email);
+    };
+    get();
+  }, []);
 
   const handleClick = () => {
     if (isClicked) {
@@ -40,24 +57,6 @@ function page() {
     }
   };
 
-  const [cookies, setCookie, removeCookie] = useCookies();
-
-  useEffect(() => {
-    const get = async () => {
-      let accessToken = await getAccessToken(cookies, setCookie);
-      const res = await getUserInfo(accessToken);
-      setName(res.name);
-      setPhoneNumber(res.phoneNumber);
-      setBankName(res.bank.bankName);
-      setAccountNumber(res.bank.accountNumber);
-      setAddress(res.address?.mainAddress);
-      setEmail(res.email);
-
-      console.log('res', res);
-    };
-    get();
-  }, []);
-
   const subscribeHandler = async () => {
     if (isClicked) {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -67,7 +66,9 @@ function page() {
         phoneNumber &&
         bankName &&
         accountNumber &&
-        address &&
+        zipCode &&
+        mainAddress &&
+        detailAddress &&
         email
       ) {
         const response = await subscribePlan(accessToken, selectPlan);
@@ -154,81 +155,27 @@ const Title = styled.div`
   font-weight: 600;
   margin-top: 120px;
   text-align: center;
+  line-height: 140%;
 `;
 const SemiTitle = styled.div`
   font-size: 20px;
   font-weight: 400;
   text-align: center;
 `;
-const Wrapper = styled.div`
-  display: flex;
-  margin-top: 60px;
-`;
-const Box = styled.div`
-  border-radius: 15px;
-  background: var(--5, #fff);
-  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.16);
-  width: 1216px;
-  height: 260px;
-`;
-const Content = styled.div`
-  margin-left: 101px;
-  margin-top: 42px;
-`;
-const Plan = styled.div`
-  font-weight: 600;
-  font-size: 24px;
-`;
-const Price = styled.div`
-  font-weight: 600;
-  font-size: 48px;
-`;
-const Discount = styled.div`
-  font-weight: 600;
-  font-size: 48px;
-`;
-const Info = styled.div`
-  font-weight: 400;
-  font-size: 16px;
-  margin-top: 30px;
-`;
 
-const DiscountWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-  position: relative;
-`;
-const PriceWrapper = styled.div`
-  display: flex;
-  margin-left: 24px;
-`;
-const Tax = styled.div`
-  font-weight: 600;
-  font-size: 20px;
-  margin-top: 30px;
-  margin-left: 12px;
-`;
-const Line = styled.div`
-  width: 204px;
-  height: 5px;
-  background: var(--unnamed, #ff3d00);
-  position: absolute;
-`;
 const Notice = styled.div`
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   text-align: center;
   margin-top: 60px;
+  line-height: 140%;
 `;
 const Check = styled.div``;
 const Off = styled.img`
   margin-bottom: 24px;
 `;
-const On = styled.img`
-  margin-bottom: 24px;
-`;
+
 const Agree = styled.div`
   display: flex;
 

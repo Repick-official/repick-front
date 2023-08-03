@@ -1,7 +1,6 @@
 'use client';
-import React from 'react';
 import styled from 'styled-components';
-import sub from '@/assets/images/Banner1216.png';
+import sub from '@/assets/images/Banner/Banner.png';
 
 function Banner() {
   return (
