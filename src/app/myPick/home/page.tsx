@@ -1,12 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
+import not from '@/assets/images/mypick/not.png';
 import getAccessToken from '@/util/getAccessToken';
 import Alert from '@/components/mypick/Alert';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
@@ -212,6 +213,11 @@ function page() {
     router.push('/myPick/shopping/purchase');
   };
 
+  const handleProduct = () => {
+    setSelectedNaviPage('제품 보기');
+    router.push('/product');
+  };
+
   const handleClickAll = () => {
     const areAllProductsSelected = products.every(
       (product) => product.isClicked
@@ -260,60 +266,87 @@ function page() {
         <Content.Wrapper>
           <Content.Pick>
             <Content.Title>내가 픽한제품</Content.Title>
-            <Content.Filter>
-              <Content.Delete onClick={() => handleClickDelete()}>
-                선택 상품 삭제
-              </Content.Delete>
-              <Content.Clear onClick={() => handleClickAll()}>
-                {selectAll}
-              </Content.Clear>
-            </Content.Filter>
+            {products.length > 0 ? (
+              <Content.Filter>
+                <Content.Delete onClick={() => handleClickDelete()}>
+                  선택 상품 삭제
+                </Content.Delete>
+                <Content.Clear onClick={() => handleClickAll()}>
+                  {selectAll}
+                </Content.Clear>
+              </Content.Filter>
+            ) : (
+              <></>
+            )}
           </Content.Pick>
 
           <Products.Wrapper>
-            {products.map((item) => (
-              <Products.Content key={item.product.productId}>
-                <Products.Check
-                  onClick={() => handleClick(item.product.productId)}
-                >
-                  <Products.Button
-                    src={item.isClicked ? check_on.src : check_off.src}
-                  />
-                </Products.Check>
-                <div
-                  key={item.product.productId}
-                  onClick={() =>
-                    router.push(`/product/detail/${item.product.productId}`)
-                  }
-                >
-                  <ContentBodyInfo
+            {products.length > 0 ? (
+              products.map((item) => (
+                <Products.Content key={item.product.productId}>
+                  <Products.Check
+                    onClick={() => handleClick(item.product.productId)}
+                  >
+                    <Products.Button
+                      src={item.isClicked ? check_on.src : check_off.src}
+                    />
+                  </Products.Check>
+                  <div
                     key={item.product.productId}
-                    src={item.product.mainImageFile.imagePath}
-                    tagName={item.product.brand}
-                    size={item.product.size}
-                    name={item.product.name}
-                    price={item.product.price}
-                  />
-                </div>
-              </Products.Content>
-            ))}
+                    onClick={() =>
+                      router.push(`/product/detail/${item.product.productId}`)
+                    }
+                  >
+                    <ContentBodyInfo
+                      key={item.product.productId}
+                      src={item.product.mainImageFile.imagePath}
+                      tagName={item.product.brand}
+                      size={item.product.size}
+                      name={item.product.name}
+                      price={item.product.price}
+                    />
+                  </div>
+                </Products.Content>
+              ))
+            ) : (
+              <Not.Container>
+                <Not.Wrapper>
+                  <Not.Icon src={not.src} />
+                  <Not.Title>아직 픽한 제품이 없어요</Not.Title>
+                  <Not.Content>
+                    제품 보기에서 마음에 드는 제품을 선택해 <br /> 마이픽에
+                    담아주세요!
+                  </Not.Content>
+                </Not.Wrapper>
+              </Not.Container>
+            )}
           </Products.Wrapper>
 
           <Container.Button>
-            <div onClick={() => handleApply()}>
-              <Button content="홈피팅 신청하기" num="5" />
-            </div>
-            {showAlert && (
-              <Alert
-                text1={text1}
-                text2={text2}
-                button={btn}
-                clickModal={clickModal}
-              />
+            {products.length > 0 ? (
+              <>
+                <div onClick={() => handleApply()}>
+                  <Button content="홈피팅 신청하기" num="5" />
+                </div>
+                {showAlert && (
+                  <Alert
+                    text1={text1}
+                    text2={text2}
+                    button={btn}
+                    clickModal={clickModal}
+                  />
+                )}
+                <div onClick={() => handlePurchase()}>
+                  <Button content="구매하기" num="6" />
+                </div>
+              </>
+            ) : (
+              <Not.Container>
+                <div onClick={() => handleProduct()}>
+                  <Button content="제품 보러가기" num="8" />
+                </div>
+              </Not.Container>
             )}
-            <div onClick={() => handlePurchase()}>
-              <Button content="구매하기" num="6" />
-            </div>
           </Container.Button>
         </Content.Wrapper>
       </Container.Semi>
@@ -322,6 +355,38 @@ function page() {
 }
 
 export default page;
+
+const Not = {
+  Container: styled.div`
+    width: 1216px;
+    display: flex;
+    justify-content: center;
+  `,
+  Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  `,
+  Icon: styled.img`
+    margin-bottom: 22px;
+  `,
+  Title: styled.div`
+    color: var(--1, #111);
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 140%;
+  `,
+  Content: styled.div`
+    color: var(--1, #111);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+  `,
+};
 
 const Container = {
   Wrapper: styled.div`
