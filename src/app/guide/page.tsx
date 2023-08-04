@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import logo_guide from '@/assets/images/guide/logo_guide.png';
 import { styled, css, keyframes } from 'styled-components';
 import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
@@ -12,13 +11,9 @@ import guide_second from '@/assets/images/guide/guide_second.png';
 import guide_third from '@/assets/images/guide/guide_third.png';
 import guide_fourth from '@/assets/images/guide/guide_fourth.png';
 import character_2 from '@/assets/images/guide/character_2.png';
-import character_3 from '@/assets/images/guide/character_3.png';
 import character_4 from '@/assets/images/guide/character_4.png';
 import character_5 from '@/assets/images/guide/character_5.png';
 import presents from '@/assets/images/guide/presents.png';
-import slogan_1 from '@/assets/images/guide/slogan_1.png';
-
-import banner1 from '@/assets/images/banner/banner1.png';
 import banner2 from '@/assets/images/banner/banner2.png';
 import SubBackground from '@/assets/images/guide/SubBackground.png';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -229,49 +224,6 @@ function page() {
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
-      {/* <BannerWrapper2>
-        <Image
-          src={slogan_1}
-          alt="Slogan_1"
-          style={{ width: '100%', height: 'auto' }}
-          placeholder="blur" 
-        />          
-      </BannerWrapper2>
-      <Section3>
-        <ContentWrapper.center>
-          <Content.Title>
-            <Image
-              src = {small_logo}
-              alt="Small Logo"
-              style = {{width:'auto',height:'auto'}}
-              // placeholder ="blur"
-            />
-            <Content.TitleText>
-              Service Point
-            </Content.TitleText>
-          </Content.Title>
-          <Content.Sub>
-          팔리지 않은 옷들은 판매자 님의 이름으로 기부 됩니다.
-          </Content.Sub>
-          <Content.Description_Center>
-          제휴 업체를 통해 기부가 이루어지며 판매자 님의 이름으로 영수증이 발급돼요.<br></br>옷 돌려받기 또한 신청하실 수 있어요!
-          </Content.Description_Center>
-        </ContentWrapper.center>
-        <ContentWrapper.basic>
-          <Image
-            src = {character_3}
-            alt="character_3"
-            style = {{width:'320px',height:'auto'}}
-            // placeholder ="blur"
-          />
-          <Image
-            src = {guide_second}
-            alt="guide_second"
-            style = {{width:'auto',height:'auto',position:'relative',top:'-70px'}}
-            // placeholder ="blur"
-          />
-        </ContentWrapper.basic>
-      </Section3> */}
       <Section4>
         <SubCard.Img>
           <Image
