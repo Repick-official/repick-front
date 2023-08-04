@@ -117,7 +117,6 @@ function page() {
         setText2('리픽 멤버십을 구독하시겠어요?');
         setBtn(3);
       } else if (response == 'BASIC') {
-        console.log(selectedProducts.length);
         if (selectedProducts.length > 3) {
           setCartProducts([]);
           setShowAlert(!showAlert);

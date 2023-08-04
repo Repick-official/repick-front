@@ -80,7 +80,6 @@ function page() {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await inquiryHomeFitting(accessToken);
-      console.log('response', response);
       response.forEach((product: any) => {
         if (product.homeFittingState === 'DELIVERED') {
           if (response.length > 0) {
