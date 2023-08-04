@@ -117,7 +117,9 @@ function page() {
         setText2('리픽 멤버십을 구독하시겠어요?');
         setBtn(3);
       } else if (response == 'BASIC') {
+        console.log(selectedProducts.length);
         if (selectedProducts.length > 3) {
+          setCartProducts([]);
           setShowAlert(!showAlert);
           setText1('베이직 멤버십 회원은 3벌까지만 입어볼 수 있어요!');
           setText2('프로 플랜 멤버십으로 바꾸시겠어요?');
@@ -140,11 +142,14 @@ function page() {
             );
             if (userConfirmation) {
               router.push('/mypage');
+            } else {
+              setCartProducts([]);
             }
           }
         }
       } else {
         if (selectedProducts.length > 5) {
+          setCartProducts([]);
           setShowAlert(!showAlert);
           setText1('홈피팅은 한 번에 최대 5벌까지만 가능해요.');
           setText2('5벌 홈피팅 완료 후 다시 신청해주세요.');
@@ -168,6 +173,8 @@ function page() {
             if (userConfirmation) {
               setSelectedNaviPage('');
               router.push('/mypage');
+            } else {
+              setCartProducts([]);
             }
           }
         }
@@ -203,6 +210,8 @@ function page() {
       if (confirm) {
         setSelectedNaviPage('');
         router.push('/mypage');
+      } else {
+        setCartProducts([]);
       }
     }
   };
