@@ -13,8 +13,16 @@ function Footer() {
             </Content.Help>
             <Content.InfoWrapper>
               <Content.InfoWrap>
-                <Content.Info>{'자주 하는 질문'}</Content.Info>
-                <Content.Info>{'1:1 문의'}</Content.Info>
+                <Content.Info>
+                  <Content.InfoA href="https://ripick.notion.site/FAQ-69a52fb9241b4301866c7d0704841738?pvs=4">
+                    자주 묻는 질문
+                  </Content.InfoA>
+                </Content.Info>
+                <Content.Info>
+                  <Content.InfoA href="http://pf.kakao.com/_xfxfxohG">
+                    1:1 문의
+                  </Content.InfoA>
+                </Content.Info>
               </Content.InfoWrap>
               <Content.InfoWrap>
                 <Content.Info>{'개인정보 처리 방침'}</Content.Info>
@@ -83,6 +91,10 @@ const Content = {
     font-size: 16px;
     color: rgba(95, 95, 95, 1);
     line-height: 140%;
+  `,
+  InfoA: styled.a`
+    color: inherit;
+    text-decoration: none;
   `,
 };
 
