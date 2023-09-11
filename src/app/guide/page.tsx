@@ -76,15 +76,15 @@ function page() {
   };
   return (
     <Contents>
-      <BannerWrapper>
+      {/* <BannerWrapper>
         <Image
           src={logo_guide}
           alt="Picture of me"
           style={{ width: '100vw', height: 'auto' }}
           placeholder="blur"
         />
-      </BannerWrapper>
-      <Section1>
+      </BannerWrapper> */}
+      {/* <Section1>
         <ContentWrapper.left>
           <Content.Title>
             <Image
@@ -167,7 +167,7 @@ function page() {
             </Content.IntroItem>
           </Content.IntroWrapper>
         </ContentWrapper.center>
-      </Section1>
+      </Section1> */}
       <Section2>
         <ContentWrapper.SpaceBetween>
           <LogoWrapper>
@@ -249,7 +249,7 @@ function page() {
           />
         </ContentWrapper.basic>
       </Section3> */}
-      <Section4>
+      {/* <Section4>
         <SubCard.Img>
           <Image
             src={SubBackground}
@@ -348,7 +348,7 @@ function page() {
             />
           </SubCard.Card>
         </SubCard.Wrapper>
-      </Section4>
+      </Section4> */}
       <Section5>
         <ContentWrapper.center>
           <Content.Title>
@@ -627,7 +627,7 @@ const Content = {
 };
 
 const Section2 = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 653px;
   background: #fff9f2;
   flex-shrink: 0;
