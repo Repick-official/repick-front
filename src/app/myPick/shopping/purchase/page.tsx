@@ -107,7 +107,7 @@ function page() {
       router.push('/myPick/home');
       return;
     }
-  
+
     if (finalProducts.length > 0) {
       // finalProducts 배열이 비어있지 않은 경우에만 setTotal 호출
       const clothes = finalProducts.map((item: any) => {
@@ -132,7 +132,7 @@ function page() {
 
   const clearProducts = () => {
     setFinalProducts([]);
-    return ;
+    return;
   };
 
   const handleClick = () => {

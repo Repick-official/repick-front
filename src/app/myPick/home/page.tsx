@@ -333,9 +333,9 @@ function page() {
           <Container.Button>
             {products.length > 0 ? (
               <>
-                <div onClick={() => handleApply()}>
+                {/* <div onClick={() => handleApply()}>
                   <Button content="홈피팅 신청하기" num="5" />
-                </div>
+                </div> */}
                 {showAlert && (
                   <Alert
                     text1={text1}
@@ -407,8 +407,10 @@ const Container = {
   `,
   Button: styled.div`
     display: flex;
+    align-items: center;
     width: 744px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
     margin-bottom: 148px;
   `,
 };
