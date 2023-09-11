@@ -84,6 +84,7 @@ function page() {
   };
   return (
     <Contents>
+      {/* <BannerWrapper>
       <BannerWrapper>
         {/* <AliceCarousel
           mouseTracking
@@ -95,14 +96,14 @@ function page() {
           autoPlay
           items={bannerItems}
         /> */}
-        <Image
+      {/* <Image
           src={banner2}
           alt="Picture of me"
           style={{ width: '100vw', height: 'auto' }}
           placeholder="blur"
         />
-      </BannerWrapper>
-      <Section1>
+      </BannerWrapper> */}
+      {/* <Section1>
         <ContentWrapper.left>
           <Content.Title>
             <Image
@@ -185,7 +186,7 @@ function page() {
             </Content.IntroItem>
           </Content.IntroWrapper>
         </ContentWrapper.center>
-      </Section1>
+      </Section1> */}
       <Section2>
         <ContentWrapper.SpaceBetween>
           <LogoWrapper>
@@ -224,7 +225,7 @@ function page() {
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
-      <Section4>
+      {/* <Section4>
         <SubCard.Img>
           <Image
             src={SubBackground}
@@ -307,7 +308,6 @@ function page() {
               </SubCard.Description>
             </AnimatedSection8>
 
-            {/* <AnimatedSection6 ref={ref} inview={inView.toString()}> */}
             <Image
               src={character_5}
               alt="character_5"
@@ -321,8 +321,7 @@ function page() {
               }}
               // placeholder ="blur"
             />
-            {/* </AnimatedSection6>
-            <AnimatedSection7 ref={ref} inview={inView.toString()}> */}
+
             <Image
               src={presents}
               alt="presents"
@@ -337,7 +336,7 @@ function page() {
             />
           </SubCard.Card>
         </SubCard.Wrapper>
-      </Section4>
+      </Section4> */}
       <Section5>
         <ContentWrapper.center>
           <Content.Title>
@@ -616,7 +615,7 @@ const Content = {
 };
 
 const Section2 = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 653px;
   background: #fff9f2;
   flex-shrink: 0;

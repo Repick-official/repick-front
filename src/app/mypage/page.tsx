@@ -311,7 +311,7 @@ function page() {
         </Info.EditButton>
       </form>
 
-      <Info.Line src={line.src} />
+      {/* <Info.Line src={line.src} />
       <Info.Market>{'마케팅 정보 수신'}</Info.Market>
 
       <Check.Wrapper>
@@ -321,9 +321,9 @@ function page() {
         <Check.Agree>마케팅 정보 수신에 동의합니다.</Check.Agree>
       </Check.Wrapper>
 
-      <Info.Line src={line.src} />
+      <Info.Line src={line.src} /> */}
 
-      <Subscribe.Category>
+      {/* <Subscribe.Category>
         <Subscribe.Menu $bold={'bold'} onClick={() => setSubscribeInfo(1)}>
           구독 내역
         </Subscribe.Menu>
@@ -345,9 +345,9 @@ function page() {
         >
           정산 내역
         </Subscribe.Menu>
-      </Subscribe.Category>
+      </Subscribe.Category> */}
 
-      <Subscribe.Nav>
+      {/* <Subscribe.Nav>
         <Subscribe.LineStraight src={lineStraight.src} />
         <Subscribe.Selected>
           <Subscribe.MenuWrapper>
@@ -371,9 +371,9 @@ function page() {
             )}
           </Subscribe.MenuWrapper>
         </Subscribe.Selected>
-      </Subscribe.Nav>
+      </Subscribe.Nav> */}
 
-      <Membership.Category>
+      {/* <Membership.Category>
         <Membership.Menu>상태</Membership.Menu>
         <Membership.Menu>멤버쉽 종류</Membership.Menu>
         <Membership.Menu>결제 날짜</Membership.Menu>
@@ -436,14 +436,16 @@ function page() {
         </>
       ) : (
         <Membership.NoneLine src={line.src} />
-      )}
+      )} */}
     </Container>
   );
 }
 
 export default page;
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: 100px;
+`;
 
 const Error = styled.div`
   color: rgba(255, 61, 0, 1);
