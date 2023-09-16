@@ -225,6 +225,50 @@ function page() {
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
+      {/* <BannerWrapper2>
+        <Image
+          src={slogan_1}
+          alt="Slogan_1"
+          style={{ width: '100%', height: 'auto' }}
+          placeholder="blur" 
+        />          
+      </BannerWrapper2>
+      <Section3>
+        <ContentWrapper.center>
+          <Content.Title>
+            <Image
+              src = {small_logo}
+              alt="Small Logo"
+              style = {{width:'auto',height:'auto'}}
+              // placeholder ="blur"
+            />
+            <Content.TitleText>
+              Service Point
+            </Content.TitleText>
+          </Content.Title>
+          <Content.Sub>
+          팔리지 않은 옷들은 판매자 님의 이름으로 기부 됩니다.
+          </Content.Sub>
+          <Content.Description_Center>
+          제휴 업체를 통해 기부가 이루어지며 판매자 님의 이름으로 영수증이 발급돼요.<br></br>옷 돌려받기 또한 신청하실 수 있어요!
+          </Content.Description_Center>
+        </ContentWrapper.center>
+        <ContentWrapper.basic>
+          <Image
+            src = {character_3}
+            alt="character_3"
+            style = {{width:'320px',height:'auto'}}
+            // placeholder ="blur"
+          />
+          <Image
+            src = {guide_second}
+            alt="guide_second"
+            style = {{width:'auto',height:'auto',position:'relative',top:'-70px'}}
+            // placeholder ="blur"
+          />
+        </ContentWrapper.basic>
+      </Section3> */}
+
       {/* <Section4>
         <SubCard.Img>
           <Image
