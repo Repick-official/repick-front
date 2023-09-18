@@ -712,6 +712,36 @@ export const showWardrobeAll = async (access: any) => {
     throw error;
   }
 };
+export const showWardrobePreparing = async (access: any) => {
+  try {
+    const response = await fetch(
+      process.env.API_URL + '/sell/history/preparing',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const clothes = data.map((item: any) => {
+        if (item.brand == null) {
+          item.brand = 'NO BRAND';
+          return item;
+        } else return item;
+      });
+      return clothes;
+    } else {
+      throw new Error('Error fetching poll types');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 export const showWardrobeSelling = async (access: any) => {
   try {
     const response = await fetch(
@@ -812,6 +842,38 @@ export const showWardrobeSettlement = async (access: any, ids: any[]) => {
       },
       body: JSON.stringify(data),
     });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+export const setProductPrice = async (
+  access: any,
+  id: number,
+  newPrice: number
+) => {
+  const data = {
+    productId: id,
+    price: newPrice,
+  };
+
+  try {
+    const response = await fetch(
+      process.env.API_URL +
+        `/products/submit-price?productId=${id}&price=${newPrice}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+        // body: JSON.stringify(data),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();

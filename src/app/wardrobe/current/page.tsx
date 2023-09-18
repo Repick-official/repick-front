@@ -1,7 +1,7 @@
 'use client';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import getAccessToken from '@/util/getAccessToken';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -11,6 +11,7 @@ import {
   showWardrobeSold,
   showWardrobeSettlement,
   showWardrobeSettled,
+  showWardrobePreparing,
 } from '@/api/requests';
 
 function page() {
@@ -33,6 +34,7 @@ function page() {
         }
         return item;
       });
+      console.log(clothes);
       setProducts(clothes);
     };
     get();
@@ -77,7 +79,9 @@ function page() {
   const ChangeSettled = async (newOrder: string) => {
     await handleChange(newOrder, showWardrobeSettled);
   };
-
+  const ChangePreparing = async (newOrder: string) => {
+    await handleChange(newOrder, showWardrobePreparing);
+  };
   return (
     <Container>
       <Current.Wrapper>
@@ -93,6 +97,12 @@ function page() {
             onClick={() => ChangeAll('all')}
           >
             전체보기
+          </Current.Filter>
+          <Current.Filter
+            $isselected={(order === 'preparing').toString()}
+            onClick={() => ChangePreparing('preparing')}
+          >
+            판매전
           </Current.Filter>
           <Current.Filter
             $isselected={(order === 'selling').toString()}
@@ -123,10 +133,15 @@ function page() {
               <Products.Option $option="selling">판매 진행중</Products.Option>
             ) : item.productState === 'SOLD_OUT' ? (
               <Products.Option $option="sold-out">판매완료</Products.Option>
+            ) : item.productState === 'PREPARING' ? (
+              <Products.Preparing>
+                <Products.Option $option="preparing">판매전</Products.Option>
+              </Products.Preparing>
             ) : (
               <Products.Option $option="settled">정산완료</Products.Option>
             )}
             <ContentBodyInfo
+              id={item.productId}
               src={item.mainImageFile.imagePath}
               tagName={item.brand}
               size={item.size}
@@ -158,7 +173,13 @@ function page() {
 }
 
 export default page;
-
+function blinkingEffect() {
+  return keyframes`
+    50% {
+      opacity: 0;
+    }
+  `;
+}
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -227,7 +248,16 @@ const Products = {
         ? 'var(--1, #111)'
         : props.$option === 'sold-out'
         ? 'var(--serve-color, #FF8A00)'
+        : props.$option === 'preparing'
+        ? 'var(--3, #ea0000);'
         : 'var(--3, #B4B4B4);'};
+    animation: ${(props) =>
+      props.$option === 'preparing'
+        ? `${blinkingEffect} 1s linear infinite`
+        : ''};
+  `,
+  Preparing: styled.div`
+    animation: ${blinkingEffect} 1s linear infinite;
   `,
 };
 
