@@ -6,7 +6,7 @@ import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { setProductPrice } from '@/api/requests';
 interface ContentBodyInfoProps {
-  id: number;
+  id?: number;
   src: string;
   tagName: string;
   size: string;
@@ -28,8 +28,8 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const setInputPrice = async () => {
-    console.log(id, newPrice);
     if (!newPrice) return;
+    if (!id) return;
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await setProductPrice(accessToken, id, newPrice);
     if (response.success) {
@@ -65,7 +65,7 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
                 type="text"
                 placeholder="숫자만 입력하세요"
                 value={newPrice !== null ? newPrice.toString() : ''}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   const inputValue = e.target.value;
                   if (/^[0-9]*$/.test(inputValue)) {
                     setNewPrice(
@@ -75,7 +75,7 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
                     setNewPrice(null);
                   }
                 }}
-                onKeyDown={(e) =>
+                onKeyDown={(e: any) =>
                   ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()
                 }
                 ref={inputRef}
