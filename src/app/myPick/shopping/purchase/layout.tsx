@@ -22,5 +22,5 @@ function MyPickLayout({ children }: Props) {
 export default MyPickLayout;
 
 const Nav = styled.div`
-  margin-top: 146px;
+  margin-top: 51px;
 `;

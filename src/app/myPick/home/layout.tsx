@@ -10,7 +10,7 @@ function MyPickLayout({ children }: Props) {
   return (
     <div>
       <div className="mypick_wrapper">
-        <Banner />
+        {/* <Banner /> */}
         <Nav>
           <MyPickNavigation />
         </Nav>

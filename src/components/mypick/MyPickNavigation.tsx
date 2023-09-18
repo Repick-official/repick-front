@@ -19,9 +19,9 @@ function MyPickNavigation() {
       case '':
         setSelectedPage('마이픽 현황');
         break;
-      case 'homefitting':
-        setSelectedPage('홈피팅');
-        break;
+      // case 'homefitting':
+      //   setSelectedPage('홈피팅');
+      //   break;
       case 'purchase':
         setSelectedPage('구매하기');
         break;
@@ -68,7 +68,7 @@ function MyPickNavigation() {
             </Option>
           </Section>
 
-          <Section>
+          {/* <Section>
             <Option
               onClick={() => checkUserHomeFitting()}
               $selected={selectedPage === '홈피팅' ? true : false}
@@ -76,7 +76,7 @@ function MyPickNavigation() {
               홈피팅
               {selectedPage === '홈피팅' ? <SelectedPage /> : <></>}
             </Option>
-          </Section>
+          </Section> */}
 
           <Section>
             <Option
