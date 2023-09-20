@@ -30,10 +30,19 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
   const setInputPrice = async () => {
     if (!newPrice) return;
     if (!id) return;
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await setProductPrice(accessToken, id, newPrice);
-    if (response.success) {
-      alert('가격을 설정하였습니다.');
+    if (newPrice % 1000 > 0) {
+      alert('1000원 단위로 설정해주세요');
+      return;
+    }
+    if (window.confirm('가격을 설정하시겠습니까?')) {
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await setProductPrice(accessToken, id, newPrice);
+      if (response) {
+        alert('가격을 설정하였습니다.');
+        location.reload();
+      }
+    } else {
+      return;
     }
   };
   return (
