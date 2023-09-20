@@ -52,7 +52,7 @@ function Success({
           </Wrapper.WelcomeMessage>
         </Wrapper.Welcome>
         <Wrapper.Button>
-          <div
+          {/* <div
             onClick={() => {
               setSelectedPage('마이픽 현황');
               setSelectedNavigationPage('마이픽');
@@ -60,7 +60,7 @@ function Success({
             }}
           >
             <Button content="마이픽 현황 보기" num="4" />
-          </div>
+          </div> */}
           {ishome ? (
             <div
               onClick={() => {
@@ -110,7 +110,8 @@ const Wrapper = {
   WelcomeMessage: styled.div``,
   Button: styled.div`
     display: flex;
-    gap: 25px;
+    justify-content: center;
+    // gap: 25px;
   `,
 };
 
