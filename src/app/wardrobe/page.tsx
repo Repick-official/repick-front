@@ -1,7 +1,7 @@
 'use client';
 import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
-import wardrobe_apply from '@/assets/images/wardrobe/wardrobe_apply.png';
+import wardrobe_apply from '@/assets/images/wardrobe/fix_wardrobe.png';
 import wardrobe_arrange from '@/assets/images/wardrobe/wardrobe_arrange.png';
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';

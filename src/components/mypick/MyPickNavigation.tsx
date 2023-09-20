@@ -42,13 +42,14 @@ function MyPickNavigation() {
   };
 
   const checkUserPurchaseHistory = async () => {
-    let accessToken = await getAccessToken(cookies, setCookie);
-    const response = await getIsSubscribe(accessToken);
-    if (response == 'NONE') {
-      alert('구독이 필요한 서비스입니다.');
-    } else {
-      alert('현재 이용 불가능한 서비스입니다.');
-    }
+    // let accessToken = await getAccessToken(cookies, setCookie);
+    // const response = await getIsSubscribe(accessToken);
+    // if (response == 'NONE') {
+    //   alert('구독이 필요한 서비스입니다.');
+    // } else {
+    //   alert('현재 이용 불가능한 서비스입니다.');
+    // }
+    alert('현재 이용 불가능한 서비스입니다.');
   };
 
   return (

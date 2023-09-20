@@ -82,6 +82,10 @@ function page() {
     setSelectedPage('제품 보기');
     router.push('/product');
   };
+  const goWardrobe = () => {
+    setSelectedPage('옷장 정리');
+    router.push('/wardrobe');
+  };
   return (
     <Contents>
       {/* <BannerWrapper>
@@ -200,7 +204,7 @@ function page() {
               <Image
                 src={character_2}
                 alt="character_2"
-                style={{ width: 'auto', height: 'auto' }}
+                style={{ width: '109px', height: '129px' }}
                 // placeholder ="blur"
               />
             </Character._2>
@@ -225,6 +229,9 @@ function page() {
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
+      <WardrobeBtn onClick={goWardrobe}>
+        <WardrobeP>옷장 정리하러 가기</WardrobeP>
+      </WardrobeBtn>
       {/* <BannerWrapper2>
         <Image
           src={slogan_1}
@@ -410,7 +417,7 @@ function page() {
             </ContentWaitingInfoWrapper>
           </ContentWaiting>
           <PurchaseButton onClick={goProduct}>
-            <PurchaseP>리픽 제품 구매하러가기</PurchaseP>
+            <PurchaseP>리픽 제품 구매하러 가기</PurchaseP>
           </PurchaseButton>
         </ContentWrapper.center>
       </Section5>
@@ -419,6 +426,34 @@ function page() {
 }
 
 export default page;
+
+const WardrobeBtn = styled.div`
+  display: flex;
+  width: 495.5px;
+  height: 20px;
+  overflow: hidden;
+  padding: 45.406px 75.677px;
+  border-radius: 28.379px;
+  background: var(--1, #111);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18.919px;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+const WardrobeP = styled.div`
+  color: var(--4, #e8e8e8);
+  font-family: Pretendard;
+  font-size: 30.271px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-align: center;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+`;
 const Contents = styled.div`
   display: flex;
   flex-direction: column;
@@ -661,7 +696,7 @@ const Content = {
 const Section2 = styled.div`
   width: 100vw;
   height: 653px;
-  background: #fff9f2;
+  // background: #fff9f2;
   flex-shrink: 0;
   display: flex;
   align-items: center;

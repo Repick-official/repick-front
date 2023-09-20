@@ -184,10 +184,10 @@ function page() {
   const handlePurchase = async () => {
     const selectedProducts = products.filter((item) => item.isClicked);
     if (selectedProducts.length > 0) {
-      const confirm = window.confirm('홈피팅 하지 않고 바로 구매하시겠습니까?');
-      if (confirm) {
-        selectedProducts.forEach((item) => goPurchase(selectedProducts));
-      }
+      // const confirm = window.confirm('홈피팅 하지 않고 바로 구매하시겠습니까?');
+      // if (confirm) {
+      selectedProducts.forEach((item) => goPurchase(selectedProducts));
+      //}
     } else {
       alert('구매할 제품을 선택해주세요.');
     }

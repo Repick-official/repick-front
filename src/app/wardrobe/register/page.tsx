@@ -293,8 +293,15 @@ function page() {
             </Address.Content>
             <Info.Wrapper>
               <Info.Info>
-                {'원하는 수거 날짜 시간'}
-                <div className="star">{'*'}</div>
+                <Date.Section>
+                  <Date.Main>
+                    {'원하는 수거 날짜'}
+                    <div className="star">{'*'}</div>
+                  </Date.Main>
+                  <div className="dateInfo">
+                    {'신청일로부터 3일 이후 선택 가능'}
+                  </div>
+                </Date.Section>
               </Info.Info>
               <Info.Content
                 required
@@ -350,6 +357,16 @@ function page() {
 
 export default page;
 
+const Date = {
+  Section: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
+  Main: styled.div`
+    display: flex;
+  `,
+};
+
 const Error = styled.div`
   color: rgba(255, 61, 0, 1);
   font-size: 20px;
@@ -364,6 +381,10 @@ const Container = styled.div`
   }
   .star {
     color: rgba(255, 61, 0, 1);
+  }
+  .dateInfo {
+    font-size: 14px;
+    margin-top: 3px;
   }
   .button {
     display: flex;

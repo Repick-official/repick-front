@@ -164,6 +164,15 @@ function Navigation() {
             </Menu.Wrapper>
             <Menu.Wrapper>
               <Menu.Option
+                onClick={() => checkUserWardrobe()}
+                $selected={selectedPage === '옷장 정리' ? true : false}
+              >
+                옷장 정리
+                {selectedPage === '옷장 정리' ? <Menu.SelectedPage /> : <></>}
+              </Menu.Option>
+            </Menu.Wrapper>
+            <Menu.Wrapper>
+              <Menu.Option
                 onClick={() => {
                   setSelectedPage('제품 보기');
                   router.push('/product');
@@ -180,18 +189,8 @@ function Navigation() {
                 onClick={() => checkUserMypick()}
                 $selected={selectedPage === '마이픽' ? true : false}
               >
-                마이픽
+                장바구니
                 {selectedPage === '마이픽' ? <Menu.SelectedPage /> : <></>}
-              </Menu.Option>
-            </Menu.Wrapper>
-
-            <Menu.Wrapper>
-              <Menu.Option
-                onClick={() => checkUserWardrobe()}
-                $selected={selectedPage === '옷장 정리' ? true : false}
-              >
-                옷장 정리
-                {selectedPage === '옷장 정리' ? <Menu.SelectedPage /> : <></>}
               </Menu.Option>
             </Menu.Wrapper>
           </Wrapper.Semi>
