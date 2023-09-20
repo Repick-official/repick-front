@@ -77,6 +77,8 @@ function page() {
       const response = await pickupWardrobe(accessToken, data);
       if (response.success) {
         router.push('/wardrobe/register/success');
+      } else {
+        alert('오잉');
       }
     }
   };
@@ -308,7 +310,7 @@ function page() {
                 placeholder="2023-06-23"
                 {...register('returnDate', {
                   pattern: {
-                    value: /^\d{4}-\d{2}-\d{2}$/,
+                    value: /^(\d{4}-\d{2}-\d{2}|\d{8})$/,
                     message: '*',
                   },
                 })}
