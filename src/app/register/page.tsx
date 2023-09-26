@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
+import { flexCenter, flexColumn } from '@/styles/theme';
 
 function page() {
   return (
@@ -83,10 +84,8 @@ export default page;
 
 const Container = styled.div`
   .button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
+    ${flexColumn}
     margin-top: 70px;
     margin-bottom: 148px;
   }
@@ -94,11 +93,11 @@ const Container = styled.div`
 const R = styled.div`
   margin-top: 120px;
   ::placeholder {
-    color: var(--3, #b4b4b4);
+    color: ${(props) => props.theme.colors.gray};
   }
 `;
 const Title = styled.div`
-  color: var(--1, #111);
+  color: ${(props) => props.theme.colors.black};
 `;
 const Register = styled.div`
   font-size: 36px;
@@ -114,7 +113,7 @@ const Info = styled.div`
   display: flex;
 
   .star {
-    color: rgba(255, 61, 0, 1);
+    color: ${(props) => props.theme.colors.pointred};
   }
 `;
 const User = styled.div`
@@ -126,12 +125,12 @@ const User = styled.div`
 const Content = styled.input`
   width: 436px;
   height: 56px;
-  background-color: rgba(232, 232, 232, 1);
+  background-color: ${(props) => props.theme.colors.lightgray};
   border-radius: 15px;
   border: none;
   font-size: 20px;
   font-weight: 400;
-  color: rgba(180, 180, 180, 1);
+  color: ${(props) => props.theme.colors.gray};
   padding: 0px 0px 0px 24px;
   outline: none;
 
@@ -151,7 +150,7 @@ const Wrapper = styled.div`
 `;
 const Confirm = styled.button`
   border-radius: 15px;
-  background: var(--3, #b4b4b4);
+  background: ${(props) => props.theme.colors.gray};
   width: 104px;
   height: 56px;
   border: none;
@@ -163,6 +162,5 @@ const Confirm = styled.button`
 //   margin-top: 60px;
 // `;
 const Address = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
 `;

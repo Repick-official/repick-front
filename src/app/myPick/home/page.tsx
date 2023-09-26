@@ -21,6 +21,7 @@ import {
   deleteProducts,
   getUserInfo,
 } from '@/api/requests';
+import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
 
 function page() {
   const router = useRouter();
@@ -371,24 +372,22 @@ const Not = {
     justify-content: center;
   `,
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    ${flexColumn}
+    ${flexCenter}
     margin-top: 20px;
   `,
   Icon: styled.img`
     margin-bottom: 22px;
   `,
   Title: styled.div`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     text-align: center;
     font-size: 36px;
     font-weight: 600;
     line-height: 140%;
   `,
   Content: styled.div`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     text-align: center;
     font-size: 16px;
     font-weight: 400;
@@ -398,34 +397,27 @@ const Not = {
 
 const Container = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
   `,
   Semi: styled.div`
     width: 1216px;
   `,
   Button: styled.div`
-    display: flex;
-    align-items: center;
+    ${flexCenter}
     width: 744px;
-    /* justify-content: space-between; */
-    justify-content: center;
     margin-bottom: 148px;
   `,
 };
 const Content = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
   `,
   Pick: styled.div`
+    ${flexBetween}
     width: 1216px;
     margin-top: 104px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-bottom: 40px;
   `,
   Title: styled.div`
@@ -435,7 +427,7 @@ const Content = {
   Filter: styled.div`
     font-size: 16px;
     font-weight: 400;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     display: flex;
   `,
   Delete: styled.div``,
@@ -453,8 +445,7 @@ const Products = {
     gap: 17px;
   `,
   Content: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
     margin-top: 20px;
   `,

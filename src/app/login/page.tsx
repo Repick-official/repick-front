@@ -7,6 +7,7 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { flexCenter, flexColumn } from '@/styles/theme';
 
 function page() {
   const router = useRouter();
@@ -83,49 +84,42 @@ function page() {
 export default page;
 
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   flex-direction: column;
   height: 100%;
 
   .button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    ${flexCenter}
     align-items: center;
   }
 `;
 
 const ContentWrapper = styled.div`
   ::placeholder {
-    color: var(--3, #b4b4b4);
+    color: ${(props) => props.theme.colors.gray};
   }
 `;
 
 const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 18px;
   margin-bottom: 24px;
 `;
 const Content = styled.input`
   width: 438px;
   height: 60px;
-  background-color: rgba(232, 232, 232, 1);
+  background-color: ${(props) => props.theme.colors.lightgray};
   border-radius: 15px;
   border: none;
   font-size: 16px;
   font-weight: 400;
-  color: rgba(180, 180, 180, 1);
+  color: ${(props) => props.theme.colors.gray};
   padding: 0px 0px 0px 24px;
   outline: none;
 `;
 
 const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   margin-bottom: 50px;
   margin-top: 167px;
 `;
@@ -153,16 +147,12 @@ const IdSaveText = styled.p`
 `;
 
 const LoginWrapper = styled.div`
+  ${flexCenter}
   margin-bottom: 39px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const MenuWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 `;
 
 const Menu = styled.p`
@@ -183,14 +173,12 @@ const MenuBar = styled.p`
   }
 `;
 const SnsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  ${flexCenter}
+  ${flexColumn}
 `;
 
 const SnsLoginText = styled.p`
-  color: var(--3, #b4b4b4);
+  color: ${(props) => props.theme.colors.gray};
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -210,7 +198,7 @@ const Icon = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 15px;
-  background: var(--4, #e8e8e8);
+  background: ${(props) => props.theme.colors.lightgray};
 `;
 
 const KaKao = styled.img`

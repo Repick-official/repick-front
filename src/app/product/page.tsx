@@ -1,5 +1,4 @@
 'use client';
-import '../reset.css';
 import React, { useEffect, useState } from 'react';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import cloth_1 from '@/assets/images/mypick/cloth_1.png';
@@ -15,6 +14,8 @@ import {
   getItemHighest,
   getItemSeen,
 } from '@/api/requests';
+import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
+
 interface Product {
   brand: string;
   detail: string;
@@ -250,15 +251,13 @@ function page() {
 export default page;
 
 const S = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 16px;
   margin-left: 108px;
 `;
 
 const Product = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
 `;
 const Check = styled.div`
@@ -283,15 +282,13 @@ const ContentWrapper = styled.div`
 `;
 
 const Header = styled.div`
+  ${flexBetween}
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   height: 56px;
 `;
 
 const Comment = styled.p`
-  color: var(--1, #111);
+  color: ${(props) => props.theme.colors.black};
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -299,14 +296,12 @@ const Comment = styled.p`
 `;
 
 const SelectOrder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   width: 459px;
   height: 56px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: var(--4, #e8e8e8);
+  background: ${(props) => props.theme.colors.lightgray};
 `;
 
 const WrapMenu = styled.div<{ $isselected: string }>`
@@ -317,13 +312,17 @@ const WrapMenu = styled.div<{ $isselected: string }>`
   gap: 10px;
   border-radius: 12px;
   background: ${(props) =>
-    props.$isselected === 'true' ? 'var(--1, #111)' : 'var(--4, #E8E8E8)'};
+    props.$isselected === 'true'
+      ? props.theme.colors.black
+      : props.theme.colors.lightgray};
   cursor: pointer;
 `;
 
 const OrderMenu = styled.div<{ $isselected: string }>`
   color: ${(props) =>
-    props.$isselected === 'true' ? 'var(--4, #E8E8E8)' : 'var(--1, #111)'};
+    props.$isselected === 'true'
+      ? props.theme.colors.lightgray
+      : props.theme.colors.black};
   text-align: center;
   font-size: 16px;
   font-style: normal;
@@ -350,7 +349,7 @@ const OptionList = styled.div`
   align-items: center;
 `;
 const OptionP = styled.p`
-  color: var(--1, #111);
+  color: ${(props) => props.theme.colors.black};
   text-align: center;
   font-size: 20px;
   font-style: normal;
@@ -365,13 +364,15 @@ const OptionDetail = styled.div`
 `;
 const Option = styled.p<{ $isselected: string }>`
   color: ${(props) =>
-    props.$isselected === 'true' ? 'var(--4, #FFF)' : 'var(--1, #111)'};
+    props.$isselected === 'true'
+      ? props.theme.colors.white
+      : props.theme.colors.black};
   cursor: pointer;
   text-align: center;
 
   border-radius: 12px;
   background: ${(props) =>
-    props.$isselected === 'true' ? 'var(--1, #111)' : ''};
+    props.$isselected === 'true' ? props.theme.colors.black : ''};
 
   padding: 10px;
   font-size: 16px;
@@ -384,7 +385,7 @@ const OptionReset = styled.p`
   text-align: end;
   cursor: pointer;
   margin-right: 73px;
-  color: var(--2, #5f5f5f);
+  color: ${(props) => props.theme.colors.darkgray};
   font-size: 16px;
 `;
 
@@ -394,27 +395,24 @@ const ProductWrapper = styled.div`
 `;
 
 const ProductsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 80px;
 `;
 
 const ShowMoreItems = styled.div`
-  display: flex;
+  ${flexCenter}
   height: 80px;
   width: 100%;
-  align-items: center;
-  justify-content: center;
   gap: 24px;
   border-radius: 15px;
   border: 1px solid #000;
-  background: var(--5, #fff);
+  background: ${(props) => props.theme.colors.white};
   margin-top: 80px;
   margin-bottom: 148px;
   cursor: pointer;
 `;
 const ShowP = styled.p`
-  color: var(--2, #5f5f5f);
+  color: ${(props) => props.theme.colors.darkgray};
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

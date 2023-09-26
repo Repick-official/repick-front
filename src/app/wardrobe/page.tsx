@@ -3,6 +3,7 @@ import check_off from '@/assets/images/check/off.svg';
 import check_on from '@/assets/images/check/on.svg';
 import wardrobe_apply from '@/assets/images/wardrobe/fix_wardrobe.png';
 import wardrobe_arrange from '@/assets/images/wardrobe/wardrobe_arrange.png';
+import { flexCenter, flexColumn } from '@/styles/theme';
 import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 
@@ -81,8 +82,7 @@ const Title = {
 
 const Content = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
     margin-top: 60px;
   `,
@@ -95,18 +95,15 @@ const Content = {
 
 const Choice = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
   `,
   Background: styled.div`
+    ${flexCenter}
     width: 540px;
     height: 400px;
-    background: var(--1, #111);
+    background: ${(props) => props.theme.colors.black};
     border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `,
   ApplyImage: styled.img`
     width: 376px;

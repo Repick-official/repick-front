@@ -17,6 +17,7 @@ import {
 import { inquiryHomeFitting } from '@/api/requests';
 import { useRecoilState } from 'recoil';
 import { useCookies } from 'react-cookie';
+import { flexCenter, flexColumn } from '@/styles/theme';
 
 interface Product {
   homeFittingId: number;
@@ -392,14 +393,13 @@ const Delivery = {
   Info: styled.div`
     width: 100%;
     border-radius: 29px;
-    background: rgb(232, 232, 232, 0.1);
+    background: ${(props) => props.theme.colors.lightgray};
   `,
 
   InfoContent: styled.div`
+    ${flexColumn}
     margin-top: 20px;
     padding: 24px 48px 21px 56px;
-    display: flex;
-    flex-direction: column;
     gap: 15px;
   `,
 
@@ -421,8 +421,7 @@ const Delivery = {
   InfoItemImg: styled.div``,
 
   InfoItemWrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 52px;
     width: 100%;
   `,
@@ -443,19 +442,16 @@ const Delivery = {
   `,
 
   InfoItemList: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 17px;
   `,
   InfoItemButton: styled.div`
+    ${flexCenter}
     width: 310px;
     height: 60px;
     margin-left: auto;
-    justify-content: center;
-    align-items: center;
     border-radius: 15px;
     background: #111;
-    display: flex;
     cursor: pointer;
   `,
 
@@ -489,7 +485,7 @@ const Delivered = {
   `,
 
   Success: styled.p`
-    color: var(--serve-color, #ff8a00);
+    color: ${(props) => props.theme.colors.main};
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -499,7 +495,7 @@ const Delivered = {
   OrderDate: styled.p`
     width: 100%;
     text-align: center;
-    color: var(--3, #b4b4b4);
+    color: ${(props) => props.theme.colors.gray};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -507,11 +503,10 @@ const Delivered = {
     margin-bottom: 25px;
   `,
   ItemWrapper: styled.div`
+    ${flexColumn}
     width: 100%;
-    display: flex;
-    flex-direction: column;
     border-radius: 15px;
-    background: var(--5, #fff);
+    background: ${(props) => props.theme.colors.white};
 
     /* shadow */
     box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.16);
@@ -521,16 +516,16 @@ const Delivered = {
     width: 100%;
     height: 74px;
     border-radius: 15px 15px 0px 0px;
-    background: rgb(255, 138, 0, 0.1);
+    background: ${(props) => props.theme.colors.main};
     align-items: center;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
   `,
 
   ItemPrice: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     text-align: center;
     font-size: 24px;
     font-style: normal;
@@ -539,7 +534,7 @@ const Delivered = {
   `,
 
   ItemReturnFee: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     text-align: center;
     margin-left: 150px;
     font-size: 20px;
@@ -548,8 +543,7 @@ const Delivered = {
     line-height: 140%;
   `,
   ItemList: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
 
   Item: styled.div`
@@ -560,15 +554,14 @@ const Delivered = {
   ItemInfo: styled.div`
     display: flex;
     align-items: center;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
   `,
   ItemP: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     justify-content: center;
     width: 330px;
     margin-left: 64px;
@@ -582,9 +575,7 @@ const Delivered = {
 
 const Option = {
   SelectAll: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     width: 110px;
     margin-left: 51px;
   `,
@@ -617,10 +608,8 @@ const Option = {
 
 const Check = {
   Wrapper: styled.div`
+    ${flexCenter}
     width: 183px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
   `,
   Button: styled.div`
@@ -642,25 +631,21 @@ const Order = {
     margin-bottom: 24px;
   `,
   Info: styled.div`
+    ${flexCenter}
     width: 549px;
     height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 15px;
-    background: rgba(180, 180, 180, 0.1);
+    background: ${(props) => props.theme.colors.gray};
   `,
 
   Count: styled.div`
+    ${flexCenter}
     flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 40px;
   `,
 
   P: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -668,7 +653,7 @@ const Order = {
   `,
 
   Num: styled.p`
-    color: var(--serve-color, #ff8a00);
+    color: ${(props) => props.theme.colors.main};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -678,18 +663,16 @@ const Order = {
 
 const Purchase = {
   Button: styled.div`
+    ${flexCenter}
     width: 360px;
     height: 60px;
     border-radius: 15px;
     margin: 90px auto 148px auto;
-    background: var(--1, #111);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: ${(props) => props.theme.colors.black};
     cursor: pointer;
   `,
   P: styled.p`
-    color: var(--4, #e8e8e8);
+    color: ${(props) => props.theme.colors.lightgray};
     text-align: center;
     font-size: 16px;
     font-style: normal;
@@ -700,22 +683,20 @@ const Purchase = {
 
 const Return = {
   Count: styled.div`
+    ${flexCenter}
     flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 40px;
   `,
 
   P: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
   `,
   Num: styled.p`
-    color: var(--serve-color, #ff8a00);
+    color: ${(props) => props.theme.colors.main};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -725,18 +706,16 @@ const Return = {
 
 const Price = {
   All: styled.div`
+    ${flexCenter}
     width: 493px;
     height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 15px;
-    background: rgba(180, 180, 180, 0.1);
+    background: ${(props) => props.theme.colors.gray};
     gap: 40px;
   `,
 
   P: styled.p`
-    color: var(--3, #b4b4b4);
+    color: ${(props) => props.theme.colors.gray};
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -744,7 +723,7 @@ const Price = {
   `,
 
   Num: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 36px;
     font-style: normal;
     font-weight: 600;
@@ -754,7 +733,7 @@ const Price = {
 
 const WarnInfo = styled.p`
   width: 100%;
-  color: var(--3, #b4b4b4);
+  color: ${(props) => props.theme.colors.gray};
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

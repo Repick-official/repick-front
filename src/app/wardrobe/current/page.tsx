@@ -13,6 +13,7 @@ import {
   showWardrobeSettled,
   showWardrobePreparing,
 } from '@/api/requests';
+import { flexCenter, flexColumn } from '@/styles/theme';
 
 function page() {
   const router = useRouter();
@@ -22,7 +23,6 @@ function page() {
   const [products, setProducts] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [sold, setSold] = useState<any[]>([]);
-
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -181,8 +181,7 @@ function blinkingEffect() {
   `;
 }
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
 
   .button {
@@ -198,8 +197,7 @@ const Current = {
     margin-top: 120px;
   `,
   Wrap: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   Title: styled.div`
     font-size: 36px;
@@ -219,7 +217,9 @@ const Current = {
     font-size: 20px;
     font-weight: ${(props) => (props.$isselected === 'true' ? '600' : '400')};
     color: ${(props) =>
-      props.$isselected === 'true' ? 'var(--1, #111)' : 'var(--2, #5F5F5F);'};
+      props.$isselected === 'true'
+        ? props.theme.colors.black
+        : props.theme.colors.darkgray};
   `,
 };
 
@@ -233,8 +233,7 @@ const Products = {
     gap: 15px;
   `,
   Content: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
     margin-bottom: 80px;
   `,
@@ -245,12 +244,12 @@ const Products = {
     font-weight: 600;
     color: ${(props) =>
       props.$option === 'selling'
-        ? 'var(--1, #111)'
+        ? props.theme.colors.black
         : props.$option === 'sold-out'
-        ? 'var(--serve-color, #FF8A00)'
+        ? props.theme.colors.main
         : props.$option === 'preparing'
-        ? 'var(--3, #ea0000);'
-        : 'var(--3, #B4B4B4);'};
+        ? props.theme.colors.orange
+        : props.theme.colors.gray};
     animation: ${(props) =>
       props.$option === 'preparing'
         ? `${blinkingEffect} 1s linear infinite`
@@ -263,15 +262,12 @@ const Products = {
 
 const Price = {
   Wrapper: styled.div`
+    ${flexCenter}
     width: 498px;
     height: 60px;
     border-radius: 13px;
-    background: var(--4, #e8e8e8);
-
+    background: ${(props) => props.theme.colors.lightgray};
     margin-bottom: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `,
   Total: styled.div`
     width: 370.56px;
@@ -288,12 +284,10 @@ const Price = {
     }
   `,
   Call: styled.div<{ $isblack: string }>`
+    ${flexCenter}
+    ${flexColumn}
     border: none;
-    display: flex;
     padding: 24px 40px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-radius: 15px;
     font-weight: 600;
     font-size: 16px;
@@ -302,7 +296,9 @@ const Price = {
     width: 280px;
     height: 16px;
     background: ${(props) =>
-      props.$isblack == 'black' ? 'var(--3, #B4B4B4)' : 'var(--1, #111)'};
-    color: var(--4, #e8e8e8);
+      props.$isblack == 'black'
+        ? props.theme.colors.gray
+        : props.theme.colors.black};
+    color: ${(props) => props.theme.colors.lightgray};
   `,
 };
