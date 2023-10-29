@@ -25,7 +25,6 @@ function Success({
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
   const [selectedNavigationPage, setSelectedNavigationPage] =
     useRecoilState(selectedNavPage);
-
   const router = useRouter();
   return (
     <Component>

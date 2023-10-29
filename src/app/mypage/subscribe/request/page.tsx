@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { subscribePlan, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
+import { flexColumn } from '@/styles/theme';
 
 function page() {
   const router = useRouter();
@@ -139,8 +140,7 @@ function page() {
 export default page;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   .button {
     display: flex;
@@ -178,7 +178,6 @@ const Off = styled.img`
 
 const Agree = styled.div`
   display: flex;
-
   margin-top: 102px;
   .agree {
     font-size: 24px;

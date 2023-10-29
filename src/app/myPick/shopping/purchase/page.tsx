@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 import { orderProducts, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
+import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
 
 interface HookFormTypes {
   access: any;
@@ -430,7 +431,7 @@ function page() {
 export default page;
 
 const Error = styled.div`
-  color: rgba(255, 61, 0, 1);
+  color: ${(props) => props.theme.colors.pointred};
   font-size: 20px;
   margin-left: 3px;
   margin-right: 0;
@@ -476,8 +477,7 @@ const Order = {
     width: 666px;
   `,
   Price: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 18px;
     margin-bottom: 40px;
   `,
@@ -503,8 +503,7 @@ const Wrapper = {
     display: flex;
   `,
   Sender: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 18px;
   `,
   Destination: styled.div`
@@ -534,7 +533,7 @@ const Info = {
     width: 207px;
     display: flex;
     .star {
-      color: rgba(255, 61, 0, 1);
+      color: ${(props) => props.theme.colors.pointred};
     }
   `,
   Wrapper: styled.div`
@@ -544,12 +543,12 @@ const Info = {
   Content: styled.input`
     width: 436px;
     height: 56px;
-    background-color: rgba(232, 232, 232, 1);
+    background-color: ${(props) => props.theme.colors.lightgray};
     border-radius: 15px;
     border: none;
     font-size: 20px;
     font-weight: 400;
-    color: rgba(180, 180, 180, 1);
+    color: ${(props) => props.theme.colors.gray};
     padding: 0px 0px 0px 24px;
     outline: none;
     &.address {
@@ -566,13 +565,13 @@ const Info = {
   `,
 
   CheckP: styled.div`
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
     .star {
-      color: rgba(255, 61, 0, 1);
+      color: ${(props) => props.theme.colors.pointred};
     }
   `,
   Off: styled.img``,
@@ -580,12 +579,10 @@ const Info = {
     width: 388px;
 
     .button {
+      ${flexCenter}
       height: 60px;
       border-radius: 15px;
-      background: var(--1, #111);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: ${(props) => props.theme.colors.black};
       cursor: pointer;
     }
   `,
@@ -594,7 +591,7 @@ const Info = {
     margin-bottom: 40px;
   `,
   P: styled.div`
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -607,7 +604,7 @@ const Money = {
   AllWrapper: styled.div`
     display: flex;
     justify-content: space-between;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -621,15 +618,14 @@ const Money = {
   `,
 
   Detail: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 24px;
   `,
 
   Wrapper: styled.div`
     display: flex;
     justify-content: space-between;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     height: 34px;
     font-size: 20px;
     font-style: normal;
@@ -641,7 +637,7 @@ const Money = {
 const MethodNotSelected = styled.div`
   margin-top: 18px;
   margin-bottom: 60px;
-  color: var(--2, #5f5f5f);
+  color: ${(props) => props.theme.colors.darkgray};
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -651,7 +647,7 @@ const MethodNotSelected = styled.div`
 const Accept = {
   Accept: styled.div`
     margin-bottom: 24px;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -685,17 +681,15 @@ const Button = {
   `,
 
   Input: styled.input`
-    display: flex;
+    ${flexColumn}
+    ${flexCenter}
     width: 310px;
     height: 60px;
     padding: 24px 40px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 10px;
     border-radius: 15px;
-    background: var(--1, #111);
-    color: var(--4, #e8e8e8);
+    background: ${(props) => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.lightgray};
     text-align: center;
     cursor: pointer;
     font-size: 16px;
@@ -705,15 +699,14 @@ const Button = {
   `,
 };
 const Address = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: end;
   gap: 18px;
 `;
 
 const Confirm = styled.button`
   border-radius: 15px;
-  background: var(--3, #b4b4b4);
+  background: ${(props) => props.theme.colors.gray};
   width: 104px;
   height: 56px;
   border: none;
@@ -723,9 +716,7 @@ const Confirm = styled.button`
 `;
 
 const Request = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${flexBetween}
   width: 100%;
 `;
 
@@ -740,14 +731,14 @@ const Method = styled.div`
   line-height: 150%;
 
   .star {
-    color: rgba(255, 61, 0, 1);
+    color: ${(props) => props.theme.colors.pointred};
   }
 `;
 
 const All = styled.div``;
 
 const AllPrice = styled.div`
-  color: var(--1, #111);
+  color: ${(props) => props.theme.colors.black};
   font-size: 20px;
   font-style: normal;
   font-weight: 600;

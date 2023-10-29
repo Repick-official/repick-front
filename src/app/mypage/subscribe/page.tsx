@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import getAccessToken from '@/util/getAccessToken';
 import { getIsSubscribe } from '@/api/requests';
 import { useCookies } from 'react-cookie';
+import { flexColumn } from '@/styles/theme';
 
 function page() {
   const router = useRouter();
@@ -88,8 +89,7 @@ const Wrapper = {
     margin-top: 60px;
   `,
   Choice: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: center;
     margin-left: 40px;
     margin-right: 40px;

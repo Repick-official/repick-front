@@ -19,6 +19,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { flexCenter, flexColumn } from '@/styles/theme';
+
 interface HookFormTypes {
   name: string;
   phoneNumber: string;
@@ -399,8 +401,7 @@ export default page;
 
 const Date = {
   Section: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   Main: styled.div`
     display: flex;
@@ -408,7 +409,7 @@ const Date = {
 };
 
 const Error = styled.div`
-  color: rgba(255, 61, 0, 1);
+  color: ${(props) => props.theme.colors.pointred};
   font-size: 20px;
   margin-left: 3px;
   margin-right: 0;
@@ -417,18 +418,17 @@ const Error = styled.div`
 const Container = styled.div`
   width: 1216px;
   ::placeholder {
-    color: var(--3, #b4b4b4);
+    color: ${(props) => props.theme.colors.gray};
   }
   .star {
-    color: rgba(255, 61, 0, 1);
+    color: ${(props) => props.theme.colors.pointred};
   }
   .dateInfo {
     font-size: 14px;
     margin-top: 3px;
   }
   .button {
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     justify-content: center;
     align-items: center;
     margin-top: 70px;
@@ -483,8 +483,7 @@ const Area = {
 
 const Address = {
   Content: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   Wrapper: styled.div`
     display: flex;
@@ -495,7 +494,7 @@ const Address = {
   `,
   Confirm: styled.button`
     border-radius: 15px;
-    background: var(--3, #b4b4b4);
+    background: ${(props) => props.theme.colors.gray};
     width: 104px;
     height: 56px;
     border: none;
@@ -508,8 +507,7 @@ const Address = {
 
 const Apply = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   CheckWrapper: styled.div`
     display: flex;
@@ -523,13 +521,13 @@ const Apply = {
     width: 28px;
     height: 28px;
     border-radius: 15px;
-    background: var(--4, #e8e8e8);
+    background: ${(props) => props.theme.colors.lightgray};
   `,
   Address: styled.div`
     font-size: 20px;
     font-weight: 600;
     margin-left: 10px;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
 
     &.am {
       margin-right: 12px;
@@ -565,12 +563,12 @@ const Info = {
   Content: styled.input`
     width: 436px;
     height: 56px;
-    background-color: rgba(232, 232, 232, 1);
+    background-color: ${(props) => props.theme.colors.lightgray};
     border-radius: 15px;
     border: none;
     font-size: 20px;
     font-weight: 400;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
 
     font-weight: 600;
     padding: 0px 0px 0px 24px;
@@ -635,7 +633,7 @@ const Bag = {
     width: 310px;
     height: 278px;
     border-radius: 16px;
-    background: var(--4, #e8e8e8);
+    background: ${(props) => props.theme.colors.lightgray};
     display: flex;
 
     position: relative;
@@ -660,9 +658,8 @@ const Bag = {
     margin-left: 31px;
   `,
   Width: styled.div`
+    ${flexColumn}
     margin-left: 78px;
-    display: flex;
-    flex-direction: column;
     align-items: center;
   `,
   CM7: styled.div`
@@ -674,9 +671,7 @@ const Bag = {
     font-weight: 400;
   `,
   Question: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
     width: 28px;
     height: 28px;
     font-size: 20px;
@@ -691,18 +686,16 @@ const Bag = {
 };
 
 const InputButton = styled.input`
-  display: flex;
+  ${flexColumn}
+  ${flexCenter}
   width: 360px;
   height: 60px;
   padding: 24px 40px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
   flex-shrink: 0;
   border-radius: 15px;
-  background: var(--1, #111);
-  color: var(--4, #e8e8e8);
+  background: ${(props) => props.theme.colors.black};
+  color: ${(props) => props.theme.colors.lightgray};
   text-align: center;
   cursor: pointer;
   font-size: 16px;

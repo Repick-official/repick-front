@@ -19,6 +19,7 @@ import {
   updateUserInfo,
   inquirySubscribeLatest,
 } from '@/api/requests';
+import { flexColumn, flexCenter } from '@/styles/theme';
 
 interface HookFormTypes {
   address: {
@@ -45,7 +46,6 @@ function page() {
   } = useForm<HookFormTypes>();
 
   const router = useRouter();
-
   const [imageSrc, setImageSrc] = useState(check_off.src);
   const [subscribeInfo, setSubscribeInfo] = useState(1);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -58,7 +58,6 @@ function page() {
     const checkUserInfo = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await getUserInfo(accessToken);
-
       if (response) {
         setValue('name', response.name || '');
         setValue('phoneNumber', response.phoneNumber || '');
@@ -448,7 +447,7 @@ const Container = styled.div`
 `;
 
 const Error = styled.div`
-  color: rgba(255, 61, 0, 1);
+  color: ${(props) => props.theme.colors.pointred};
   font-size: 20px;
   margin-left: 3px;
   margin-right: 0;
@@ -458,11 +457,11 @@ const Info = {
   Wrapper: styled.div`
     margin-top: 120px;
     ::placeholder {
-      color: var(--3, #b4b4b4);
+      color: ${(props) => props.theme.colors.gray};
     }
   `,
   Title: styled.div`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
   `,
   User: styled.div`
     font-size: 24px;
@@ -474,7 +473,7 @@ const Info = {
     margin-top: 60px;
   `,
   Market: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -492,16 +491,16 @@ const Info = {
     width: 207px;
     display: flex;
     .star {
-      color: rgba(255, 61, 0, 1);
+      color: ${(props) => props.theme.colors.pointred};
     }
   `,
   Right: styled.input`
     width: 436px;
     height: 56px;
-    background-color: rgba(232, 232, 232, 1);
+    background-color: ${(props) => props.theme.colors.lightgray};
     border-radius: 15px;
     border: none;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -526,17 +525,15 @@ const Info = {
     margin-bottom: 30px;
   `,
   InputButton: styled.input`
-    display: flex;
+    ${flexCenter}
+    ${flexColumn}
     width: 310px;
     height: 60px;
     padding: 24px 40px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 10px;
     border-radius: 15px;
-    background: var(--1, #111);
-    color: var(--4, #e8e8e8);
+    background: ${(props) => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.lightgray};
     text-align: center;
     cursor: pointer;
     font-size: 16px;
@@ -565,22 +562,18 @@ const Bank = {
     display: flex;
 
     .star {
-      color: rgba(255, 61, 0, 1);
+      color: ${(props) => props.theme.colors.pointred};
     }
   `,
   Input: styled.input`
     width: 120px;
     height: 56px;
-    background-color: rgba(232, 232, 232, 1);
+    background-color: ${(props) => props.theme.colors.lightgray};
     border-radius: 15px;
     border: none;
     font-size: 20px;
-
-    color: var(--2, #5f5f5f);
-
+    color: ${(props) => props.theme.colors.darkgray};
     font-weight: 600;
-
-    //color: rgba(180, 180, 180, 1);
     padding: 0px 0px 0px 24px;
     outline: none;
     &.address {
@@ -596,8 +589,7 @@ const Bank = {
 
 const Address = {
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   Content: styled.div`
     display: flex;
@@ -608,11 +600,9 @@ const Address = {
     align-items: center;
   `,
   Confirm: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     border-radius: 15px;
-    background: var(--3, #b4b4b4);
+    background: ${(props) => props.theme.colors.gray};
     width: 104px;
     height: 56px;
     border: none;
@@ -634,13 +624,13 @@ const Check = {
   `,
   Image: styled.img``,
   Agree: styled.p`
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
     .star {
-      color: rgba(255, 61, 0, 1);
+      color: ${(props) => props.theme.colors.pointred};
     }
   `,
 };
@@ -659,7 +649,10 @@ const Subscribe = {
     cursor: pointer;
     font-size: 16px;
     font-weight: ${(props) => (props.$bold == 'bold' ? '600' : '400')};
-    color: ${(props) => (props.$bold == 'bold' ? '#111' : '#5F5F5F')};
+    color: ${(props) =>
+      props.$bold == 'bold'
+        ? props.theme.colors.black
+        : props.theme.colors.drakgray};
   `,
   Nav: styled.div`
     margin-bottom: 20px;
@@ -693,13 +686,12 @@ const Membership = {
     font-weight: 600;
   `,
   Info: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
+    ${flexColumn}
     flex-direction: column;
     font-size: 16px;
     font-weight: 400;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     margin-top: 24px;
   `,
   InfoWrapper: styled.div`
@@ -723,7 +715,7 @@ const Membership = {
     text-align: end;
     margin-top: 24px;
     margin-bottom: 148px;
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -744,7 +736,7 @@ const Membership = {
     margin-bottom: 194px;
   `,
   No: styled.p`
-    color: var(--2, #5f5f5f);
+    color: ${(props) => props.theme.colors.darkgray};
     text-align: center;
     font-size: 16px;
     font-style: normal;

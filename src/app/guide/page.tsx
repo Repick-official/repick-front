@@ -21,12 +21,14 @@ import AliceCarousel from 'react-alice-carousel';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
+import { flexCenter, flexColumn } from '@/styles/theme';
 type SlideInDivProps = {
   inview: string;
 };
 function page() {
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
+  const hi = 'S';
 
   const responsive = {
     512: {
@@ -428,22 +430,20 @@ function page() {
 export default page;
 
 const WardrobeBtn = styled.div`
-  display: flex;
+  ${flexCenter}
   width: 495.5px;
   height: 20px;
   overflow: hidden;
   padding: 45.406px 75.677px;
   border-radius: 28.379px;
-  background: var(--1, #111);
+  background: ${(props) => props.theme.colors.black};
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 18.919px;
   cursor: pointer;
   margin-top: 20px;
 `;
 const WardrobeP = styled.div`
-  color: var(--4, #e8e8e8);
+  color: ${(props) => props.theme.colors.lightgray};
   font-family: Pretendard;
   font-size: 30.271px;
   font-style: normal;
@@ -455,8 +455,7 @@ const WardrobeP = styled.div`
     'liga' off;
 `;
 const Contents = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   text-align: center;
 `;
@@ -475,19 +474,15 @@ const BannerWrapper2 = styled.div`
 const ContentWrapper = {
   left: styled.div`
     width: 1216px;
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
   `,
   center: styled.div`
     width: 1216px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     flex-direction: column;
   `,
   right: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     align-items: end;
     margin-top: 40px;
   `,
@@ -498,9 +493,7 @@ const ContentWrapper = {
   `,
   basic: styled.div`
     width: 1216px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
   `,
 };
 const ContentWaiting = styled.div`
@@ -511,8 +504,7 @@ const ContentWaiting = styled.div`
 `;
 
 const ContentWaitingInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 60px;
 `;
 
@@ -526,18 +518,15 @@ const ContentWaitingInfoHeader = styled.div`
 `;
 
 const ContentWaitingInfoItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   gap: 24px;
 `;
 
 const Section1 = styled.div`
   height: 936px;
-  display: flex;
-  align-items: center;
+  ${flexColumn}
+  align-items : center;
   justify-content: center;
-  flex-direction: column;
   gap: 50px;
 `;
 
@@ -548,7 +537,7 @@ const Content = {
     margin-bottom: 16px;
   `,
   TitleText: styled.p`
-    color: var(--serve-color, #ff8a00);
+    color: ${(props) => props.theme.colors.main};
     font-feature-settings:
       'clig' off,
       'liga' off;
@@ -561,7 +550,7 @@ const Content = {
   `,
   Sub: styled.p`
     text-align: left;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
@@ -573,7 +562,7 @@ const Content = {
   `,
   Sub_White: styled.p`
     text-align: left;
-    color: var(--1, #fff);
+    color: ${(props) => props.theme.colors.white};
     font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
@@ -585,7 +574,7 @@ const Content = {
   `,
   SubRight: styled.p`
     text-align: right;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 48px;
     font-style: normal;
@@ -596,9 +585,7 @@ const Content = {
       'liga' off;
   `,
   NumberWrapper: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${flexCenter}
     gap: 48px;
   `,
   Number: styled.p`
@@ -614,8 +601,7 @@ const Content = {
     gap: 100px;
   `,
   IntroItem: styled.div`
-    display: flex;
-    flex-direction: column;
+    ${flexColumn}
     gap: 18px;
   `,
   IntroWrapP: styled.div`
@@ -627,7 +613,7 @@ const Content = {
   `,
   IntroP: styled.p`
     margin: 0 auto;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 17px;
     font-style: normal;
@@ -641,7 +627,7 @@ const Content = {
   Description: styled.p`
     margin-top: 18px;
     text-align: right;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -654,7 +640,7 @@ const Content = {
   Description_Center: styled.p`
     margin-top: 18px;
     text-align: center;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -667,7 +653,7 @@ const Content = {
   Description_Left: styled.p`
     margin-top: 18px;
     text-align: left;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -681,7 +667,7 @@ const Content = {
   Description_Left_White: styled.p`
     margin-top: 18px;
     text-align: left;
-    color: var(--1, #fff);
+    color: ${(props) => props.theme.colors.white};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -698,9 +684,7 @@ const Section2 = styled.div`
   height: 653px;
   // background: #fff9f2;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 `;
 
 const LogoWrapper = styled.div`
@@ -717,18 +701,14 @@ const Character = {
 
 const Section3 = styled.div`
   height: 1032px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  ${flexColumn};
+  ${flexCenter};
 `;
 
 const Section4 = styled.div`
   width: 100%;
   height: 1000px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   flex-direction: column;
   background: #111111;
   position: relative;
@@ -748,6 +728,7 @@ const SubCard = {
     left: 0;
   `,
   Card: styled.div`
+    ${flexColumn}
     width: 479px;
     height: 248px;
     border-radius: 15px;
@@ -756,8 +737,6 @@ const SubCard = {
     background: #fff;
     flex-shrink: 0;
     z-index: 999;
-    display: flex;
-    flex-direction: column;
     align-items: baseline;
     padding: 54px;
     justify-content: center;
@@ -765,7 +744,7 @@ const SubCard = {
     text-align: left;
   `,
   Title: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -776,21 +755,21 @@ const SubCard = {
       'liga' off;
   `,
   CostDiscounted: styled.span`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-family: Pretendard;
     font-size: 36px;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
     text-decoration: line-through;
-    text-decoration-color: #ff3d00;
+    text-decoration-color: ${(props) => props.theme.colors.pointred};
     font-feature-settings:
       'clig' off,
       'liga' off;
   `,
   Discount: styled.span`
     margin-left: 12px;
-    color: var(--unnamed, #ff3d00);
+    color: ${(props) => props.theme.colors.pointred};
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
@@ -801,11 +780,10 @@ const SubCard = {
       'liga' off;
   `,
   TotalCost: styled.span`
-    color: var(--1, #111);
+    color: ${(props) => props.theme};
     font-feature-settings:
       'clig' off,
       'liga' off;
-
     /* Header1 48pt sb */
     font-family: Pretendard;
     font-size: 48px;
@@ -815,7 +793,7 @@ const SubCard = {
   `,
   Vat: styled.span`
     margin-left: 12px;
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-feature-settings:
       'clig' off,
       'liga' off;
@@ -828,7 +806,7 @@ const SubCard = {
     line-height: 140%; /* 28px */
   `,
   Description: styled.p`
-    color: var(--1, #111);
+    color: ${(props) => props.theme.colors.black};
     font-feature-settings:
       'clig' off,
       'liga' off;
@@ -843,28 +821,24 @@ const SubCard = {
 };
 const Section5 = styled.div`
   height: 1141px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 `;
 
 const PurchaseButton = styled.div`
-  display: flex;
+  ${flexCenter}
   width: 495.5px;
   height: 20px;
   overflow: hidden;
   padding: 45.406px 75.677px;
   border-radius: 28.379px;
-  background: var(--1, #111);
+  background: ${(props) => props.theme.colors.black};
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 18.919px;
   cursor: pointer;
 `;
 
 const PurchaseP = styled.p`
-  color: var(--4, #e8e8e8);
+  color: ${(props) => props.theme.colors.lightgray};
   font-family: Pretendard;
   font-size: 30.271px;
   font-style: normal;
