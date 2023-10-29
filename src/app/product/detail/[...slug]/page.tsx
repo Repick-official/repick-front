@@ -17,7 +17,8 @@ import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
-import { selectedNavPage, requestProducts, Product } from '@/atom/states';
+import { selectedNavPage, requestProducts } from '@/atom/states';
+import { Product, HomeFitProduct } from '@/interface/interface';
 
 function page() {
   const [products, setProducts] = useState({
@@ -104,8 +105,8 @@ function page() {
   const purchase = () => {
     const confirm = window.confirm('해당 상품을 바로 구매하시겠습니까?');
     if (confirm) {
-      if (userInfo.uesrNickname) {
-        const newProduct: Product = {
+      if (userInfo.userNickname) {
+        const newProduct: HomeFitProduct = {
           homeFittingId: 0,
           product: {
             brand: products.brand,

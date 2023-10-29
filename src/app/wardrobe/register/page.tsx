@@ -59,7 +59,7 @@ function page() {
 
   const [selectedDate, setselectedDate] = useState('');
   const datePickerFormat = 'YYYY-MM-DD';
-  const selectedDateChange = (date) => {
+  const selectedDateChange = (date: any) => {
     const formattedDate = dayjs(date).format(datePickerFormat);
     setValue('returnDate', formattedDate);
   };
@@ -351,7 +351,7 @@ function page() {
                       },
                     }}
                     minDate={dayjs(formattedDate)}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       selectedDateChange(newValue);
                     }}
                   />

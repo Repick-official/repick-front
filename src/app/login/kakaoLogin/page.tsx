@@ -5,11 +5,12 @@ import { kakaoLogin } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
+import { UserInfoType } from '@/interface/interface';
 
 function page() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const router = useRouter();
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState<UserInfoType>(userInfoState);
 
   const checkKakaoLogin = async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +26,7 @@ function page() {
       setUserInfo({
         id: response.id,
         userEmail: response.email,
-        uesrNickname: response.nickname,
+        userNickname: response.nickname,
       });
       alert('환영합니다 ' + response.nickname + '님');
       router.push('/');

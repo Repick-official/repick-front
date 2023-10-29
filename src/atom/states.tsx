@@ -1,6 +1,8 @@
 'use client';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { HomeFitProduct, UserInfoType } from '@/interface/interface';
+
 const { persistAtom } = recoilPersist();
 
 export const keyword = atom<string>({
@@ -30,7 +32,7 @@ export const selectedSubscribePlan = atom<string>({
   default: 'BASIC',
 });
 
-export const userInfoState = atom({
+export const userInfoState = atom<UserInfoType>({
   key: 'userInfo',
   default: {
     id: 0,
@@ -40,23 +42,7 @@ export const userInfoState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export interface Product {
-  homeFittingId: number;
-  product: {
-    brand: string;
-    detail: string;
-    size: string;
-    price: number;
-    name: string;
-    mainImageFile: {
-      imagePath: string;
-    };
-    productId: number;
-  };
-  isChecked: boolean;
-}
-
-export const requestProducts = atom<Product[]>({
+export const requestProducts = atom<HomeFitProduct[]>({
   key: 'products',
   default: [],
   effects_UNSTABLE: [persistAtom],

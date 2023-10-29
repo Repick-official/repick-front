@@ -6,29 +6,19 @@ import small_logo from '@/assets/images/guide/small_logo.svg';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
 import { useRouter } from 'next/navigation';
 import { getMainPageProducts } from '@/api/requests';
-import guide_first from '@/assets/images/guide/guide_first.png';
-import guide_second from '@/assets/images/guide/guide_second.png';
-import guide_third from '@/assets/images/guide/guide_third.png';
 import guide_fourth from '@/assets/images/guide/guide_fourth.png';
 import character_2 from '@/assets/images/guide/character_2.png';
-import character_4 from '@/assets/images/guide/character_4.png';
-import character_5 from '@/assets/images/guide/character_5.png';
-import presents from '@/assets/images/guide/presents.png';
-import banner2 from '@/assets/images/banner/banner2.png';
-import SubBackground from '@/assets/images/guide/SubBackground.png';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
 import { selectedNavPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
 import { flexCenter, flexColumn } from '@/styles/theme';
-type SlideInDivProps = {
-  inview: string;
-};
+import { Product, SlideInDivProps } from '@/interface/interface';
+
 function page() {
   const router = useRouter();
-  const [products, setProducts] = useState<any[]>([]);
-  const hi = 'S';
+  const [products, setProducts] = useState<Product[]>([]);
 
   const responsive = {
     512: {
@@ -53,8 +43,8 @@ function page() {
   useEffect(() => {
     const get = async () => {
       const response = await getMainPageProducts();
-
-      const clothes = response.map((item: any) => {
+      console.log('response', response);
+      const clothes = response.map((item: Product) => {
         return item;
       });
       setProducts(clothes);
@@ -62,7 +52,7 @@ function page() {
 
     get();
   }, []);
-  const items = products.map((item) => {
+  const items = products.map((item: Product) => {
     return (
       <div
         onClick={() => router.push(`/product/detail/${item.productId}`)}
@@ -79,7 +69,8 @@ function page() {
       </div>
     );
   });
-  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+  const [selectedPage, setSelectedPage] =
+    useRecoilState<string>(selectedNavPage);
   const goProduct = () => {
     setSelectedPage('제품 보기');
     router.push('/product');

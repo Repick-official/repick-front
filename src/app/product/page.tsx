@@ -1,12 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import cloth_1 from '@/assets/images/mypick/cloth_1.png';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import logo_guide from '@/assets/images/guide/logo_guide.png';
-import Image from 'next/image';
-import Banner from '@/components/common/Banner';
 import {
   getCategory,
   getItemLatest,
@@ -15,22 +11,8 @@ import {
   getItemSeen,
 } from '@/api/requests';
 import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
+import { Product, CategoryType } from '@/interface/interface';
 
-interface Product {
-  brand: string;
-  detail: string;
-  discountRate: number;
-  mainImageFile: {
-    imagePath: string;
-    imageKey: string;
-    isMainImage: boolean;
-  };
-  name: string;
-  price: number;
-  productId: number;
-  productState: string;
-  size: string;
-}
 function page() {
   const router = useRouter();
   const [categoryData, setCategoryData] = useState<any>({});
@@ -74,9 +56,11 @@ function page() {
   };
   useEffect(() => {
     const fetchCategory = async () => {
-      const response: any = await getCategory();
-      const categoryMap = response.reduce((map: any, item: any) => {
+      const response: CategoryType[] = await getCategory();
+      console.log('category', response);
+      const categoryMap = response.reduce((map: any, item: CategoryType) => {
         if (item.parentId === null) {
+          //map type 정의해야 함
           return map;
         }
 
@@ -210,7 +194,7 @@ function page() {
                     .slice(index, index + 4)
                     .map((product, innerIndex) => (
                       <Products key={`${product.productId}_${innerIndex}`}>
-                        <Product
+                        <SoleProduct
                           onClick={() =>
                             router.push(`/product/detail/${product.productId}`)
                           }
@@ -222,7 +206,7 @@ function page() {
                             name={product.name}
                             price={product.price}
                           />
-                        </Product>
+                        </SoleProduct>
                       </Products>
                     ))}
                 </ProductWrapper>
@@ -256,7 +240,7 @@ const S = styled.div`
   margin-left: 108px;
 `;
 
-const Product = styled.div`
+const SoleProduct = styled.div`
   ${flexColumn}
   align-items: center;
 `;

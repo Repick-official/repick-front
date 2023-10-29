@@ -18,7 +18,7 @@ function page() {
   };
 
   const [imageSrc, setImageSrc] = useState<string>(check_off.src);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const handleClick = () => {
     if (isClicked) {

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { ButtonType } from '@/interface/interface';
 
-function Button({ content, num }: { content: string; num: string }) {
+function Button({ content, num }: ButtonType) {
   return <Show $num={num}>{content}</Show>;
 }
 
