@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { pickupWardrobe, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 interface HookFormTypes {
   name: string;
@@ -47,27 +48,22 @@ function page() {
 
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
+  const open = useDaumPostcodePopup();
   useEffect(() => {
     const check = async () => {
-      if (useRegisteredAddr) {
-        let accessToken = await getAccessToken(cookies, setCookie);
-        const response = await getUserInfo(accessToken);
-        if (response) {
-          setValue('address.zipCode', response.address?.zipCode || '');
-          setValue('address.mainAddress', response.address?.mainAddress || '');
-          setValue(
-            'address.detailAddress',
-            response.address?.detailAddress || ''
-          );
-        }
-      } else {
-        setValue('address.zipCode', '');
-        setValue('address.mainAddress', '');
-        setValue('address.detailAddress', '');
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await getUserInfo(accessToken);
+      if (response) {
+        setValue('address.zipCode', response.address?.zipCode || '');
+        setValue('address.mainAddress', response.address?.mainAddress || '');
+        setValue(
+          'address.detailAddress',
+          response.address?.detailAddress || ''
+        );
       }
     };
     check();
-  }, [useRegisteredAddr]);
+  }, []);
 
   const registerHandler = async (data: HookFormTypes) => {
     const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
@@ -85,7 +81,30 @@ function page() {
   const handleUseRegisteredAddrClick = async () => {
     setUseRegisteredAddr(!useRegisteredAddr);
   };
+  const handleComplete = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+    setValue('address.zipCode', data.zonecode);
+    setValue('address.mainAddress', fullAddress);
+    setValue('address.detailAddress', '');
+    //주소값을 상태값으로..
+    // setpSignForms((prev: Form) => ({ ...prev, address: fullAddress }));
+  };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    open({ onComplete: handleComplete });
+    e.preventDefault();
+  };
   return (
     <Container>
       <Title.Wrapper>
@@ -185,6 +204,7 @@ function page() {
               <Area.Count>
                 <Info.Content
                   required
+                  type="number"
                   className="cloth"
                   placeholder="예상 수량"
                   {...register('bagQuantity', {
@@ -204,6 +224,7 @@ function page() {
                 </Info.Info>
                 <Info.Content
                   required
+                  type="number"
                   className="cloth"
                   placeholder="예상 개수"
                   {...register('productQuantity', {
@@ -231,7 +252,7 @@ function page() {
                       src={useRegisteredAddr ? check_on.src : check_off.src}
                     />
                   </Apply.Check>
-                  <Apply.Address>등록 주소로 수거 신청하기</Apply.Address>
+                  <Apply.Address>해당 주소 기본 수거지로 등록</Apply.Address>
                 </Apply.CheckWrapper>
               </Apply.Wrapper>
             </Info.Wrapper>
@@ -240,40 +261,26 @@ function page() {
               <Address.Wrapper>
                 <Address.Wrap>
                   <Info.Content
-                    required
                     className="address"
-                    {...register('address.zipCode', {
-                      pattern: {
-                        value: /^[\d]*$/,
-                        message: '*',
-                      },
-                    })}
+                    placeholder="우편 번호"
+                    {...register('address.zipCode')}
+                    disabled
                   />
-                  {errors.address?.zipCode && (
-                    <Error>{errors.address?.zipCode.message}</Error>
-                  )}
                 </Address.Wrap>
-                <Address.Confirm>{'우편번호'}</Address.Confirm>
+                <Address.Confirm onClick={handleClick}>
+                  {'우편번호'}
+                </Address.Confirm>
               </Address.Wrapper>
               <Address.Wrap>
                 <Info.Content
-                  required
+                  disabled
                   className="detail-address"
-                  placeholder="상세 주소를 입력해주세요"
-                  {...register('address.mainAddress', {
-                    pattern: {
-                      value: /^[\d가-힣\s]*$/,
-                      message: '*',
-                    },
-                  })}
+                  placeholder="상세 주소"
+                  {...register('address.mainAddress')}
                 />
-                {errors.address?.mainAddress && (
-                  <Error>{errors.address?.mainAddress.message}</Error>
-                )}
               </Address.Wrap>
               <Address.Wrap>
                 <Info.Content
-                  required
                   className="detail-address"
                   placeholder="상세 주소를 입력해주세요"
                   {...register('address.detailAddress', {
@@ -283,9 +290,6 @@ function page() {
                     },
                   })}
                 />
-                {errors.address?.detailAddress && (
-                  <Error>{errors.address?.detailAddress.message}</Error>
-                )}
               </Address.Wrap>
             </Address.Content>
             <Info.Wrapper>
@@ -457,6 +461,7 @@ const Address = {
     font-weight: 600;
     font-size: 16px;
     margin-left: 24px;
+    cursor: pointer;
   `,
 };
 
