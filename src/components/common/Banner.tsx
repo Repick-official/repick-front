@@ -1,6 +1,7 @@
 'use client';
 import styled from 'styled-components';
 import sub from '@/assets/images/Banner/Banner.png';
+import { flexColumn } from '@/styles/theme';
 
 function Banner() {
   return (
@@ -17,7 +18,5 @@ const BannerWrapper = styled.img`
   border-radius: 15px;
 `;
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flexColumn}
 `;

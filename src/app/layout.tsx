@@ -1,9 +1,11 @@
 'use client';
-import './globals.css';
-import './reset.css';
+import '../styles/globals.css';
+import '../styles/reset.css';
 import Navigation from '@/components/common/Navigation';
 import Footer from '@/components/common/Footer';
 import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../styles/theme';
 
 export default function RootLayout({
   children,
@@ -18,9 +20,11 @@ export default function RootLayout({
       </head>
       <body>
         <RecoilRoot>
-          <Navigation />
-          <div className="content">{children}</div>
-          <Footer />
+          <ThemeProvider theme={theme}>
+            <Navigation />
+            <div className="content">{children}</div>
+            <Footer />
+          </ThemeProvider>
         </RecoilRoot>
       </body>
     </html>
