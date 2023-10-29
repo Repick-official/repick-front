@@ -45,7 +45,6 @@ function page() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [bag, setBag] = useState(false);
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
   useEffect(() => {
@@ -81,10 +80,6 @@ function page() {
         alert('오잉');
       }
     }
-  };
-
-  const showBag = () => {
-    setBag(!bag);
   };
 
   const handleUseRegisteredAddrClick = async () => {
@@ -325,28 +320,26 @@ function page() {
           <Area.Wrap>
             <Bag.Confirm>
               <Apply.Check>
-                <Bag.Question onClick={() => showBag()}>?</Bag.Question>
+                <Bag.Question>?</Bag.Question>
               </Apply.Check>
               <Bag.Text>리픽백 크기 확인하기</Bag.Text>
             </Bag.Confirm>
-            {bag && (
-              <Bag.Container>
-                <Bag.Wrapper>
-                  <Bag.Height>
-                    <Bag.CM7>70cm</Bag.CM7>
-                    <Bag.Arrow7 src={arrow7.src} />
-                    <Bag.Bag src={bagImage.src} />
-                  </Bag.Height>
-                  <Bag.Width>
-                    <Bag.Arrow6 src={arrow6.src} />
-                    <Bag.CM6>60cm</Bag.CM6>
-                    <Bag.More>
-                      리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
-                    </Bag.More>
-                  </Bag.Width>
-                </Bag.Wrapper>
-              </Bag.Container>
-            )}
+            <Bag.Container>
+              <Bag.Wrapper>
+                <Bag.Height>
+                  <Bag.CM7>70cm</Bag.CM7>
+                  <Bag.Arrow7 src={arrow7.src} />
+                  <Bag.Bag src={bagImage.src} />
+                </Bag.Height>
+                <Bag.Width>
+                  <Bag.Arrow6 src={arrow6.src} />
+                  <Bag.CM6>60cm</Bag.CM6>
+                  <Bag.More>
+                    리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
+                  </Bag.More>
+                </Bag.Width>
+              </Bag.Wrapper>
+            </Bag.Container>
           </Area.Wrap>
         </Area.Content>
         <div className="button">
@@ -628,7 +621,6 @@ const Bag = {
     width: 28px;
     height: 28px;
     font-size: 20px;
-    cursor: pointer;
   `,
   More: styled.div`
     font-size: 16px;
