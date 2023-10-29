@@ -12,6 +12,13 @@ import { useState, useEffect } from 'react';
 import { pickupWardrobe, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import { flexCenter, flexColumn } from '@/styles/theme';
 
 interface HookFormTypes {
@@ -46,30 +53,39 @@ function page() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [bag, setBag] = useState(false);
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
+  const open = useDaumPostcodePopup();
+
+  const [selectedDate, setselectedDate] = useState('');
+  const datePickerFormat = 'YYYY-MM-DD';
+  const selectedDateChange = (date) => {
+    const formattedDate = dayjs(date).format(datePickerFormat);
+    setValue('returnDate', formattedDate);
+  };
+  const dateObj = new window.Date();
+
+  dateObj.setDate(dateObj.getDate() + 3);
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
   useEffect(() => {
     const check = async () => {
-      if (useRegisteredAddr) {
-        let accessToken = await getAccessToken(cookies, setCookie);
-        const response = await getUserInfo(accessToken);
-        if (response) {
-          setValue('address.zipCode', response.address?.zipCode || '');
-          setValue('address.mainAddress', response.address?.mainAddress || '');
-          setValue(
-            'address.detailAddress',
-            response.address?.detailAddress || ''
-          );
-        }
-      } else {
-        setValue('address.zipCode', '');
-        setValue('address.mainAddress', '');
-        setValue('address.detailAddress', '');
+      let accessToken = await getAccessToken(cookies, setCookie);
+      const response = await getUserInfo(accessToken);
+      if (response) {
+        setValue('address.zipCode', response.address?.zipCode || '');
+        setValue('address.mainAddress', response.address?.mainAddress || '');
+        setValue(
+          'address.detailAddress',
+          response.address?.detailAddress || ''
+        );
       }
     };
     check();
-  }, [useRegisteredAddr]);
+  }, []);
 
   const registerHandler = async (data: HookFormTypes) => {
     const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
@@ -84,14 +100,33 @@ function page() {
     }
   };
 
-  const showBag = () => {
-    setBag(!bag);
-  };
-
   const handleUseRegisteredAddrClick = async () => {
     setUseRegisteredAddr(!useRegisteredAddr);
   };
+  const handleComplete = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+    setValue('address.zipCode', data.zonecode);
+    setValue('address.mainAddress', fullAddress);
+    setValue('address.detailAddress', '');
+    //주소값을 상태값으로..
+    // setpSignForms((prev: Form) => ({ ...prev, address: fullAddress }));
+  };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    open({ onComplete: handleComplete });
+    e.preventDefault();
+  };
   return (
     <Container>
       <Title.Wrapper>
@@ -191,6 +226,7 @@ function page() {
               <Area.Count>
                 <Info.Content
                   required
+                  type="number"
                   className="cloth"
                   placeholder="예상 수량"
                   {...register('bagQuantity', {
@@ -210,6 +246,7 @@ function page() {
                 </Info.Info>
                 <Info.Content
                   required
+                  type="number"
                   className="cloth"
                   placeholder="예상 개수"
                   {...register('productQuantity', {
@@ -237,7 +274,7 @@ function page() {
                       src={useRegisteredAddr ? check_on.src : check_off.src}
                     />
                   </Apply.Check>
-                  <Apply.Address>등록 주소로 수거 신청하기</Apply.Address>
+                  <Apply.Address>해당 주소 기본 수거지로 등록</Apply.Address>
                 </Apply.CheckWrapper>
               </Apply.Wrapper>
             </Info.Wrapper>
@@ -246,40 +283,26 @@ function page() {
               <Address.Wrapper>
                 <Address.Wrap>
                   <Info.Content
-                    required
                     className="address"
-                    {...register('address.zipCode', {
-                      pattern: {
-                        value: /^[\d]*$/,
-                        message: '*',
-                      },
-                    })}
+                    placeholder="우편 번호"
+                    {...register('address.zipCode')}
+                    disabled
                   />
-                  {errors.address?.zipCode && (
-                    <Error>{errors.address?.zipCode.message}</Error>
-                  )}
                 </Address.Wrap>
-                <Address.Confirm>{'우편번호'}</Address.Confirm>
+                <Address.Confirm onClick={handleClick}>
+                  {'우편번호'}
+                </Address.Confirm>
               </Address.Wrapper>
               <Address.Wrap>
                 <Info.Content
-                  required
+                  disabled
                   className="detail-address"
-                  placeholder="상세 주소를 입력해주세요"
-                  {...register('address.mainAddress', {
-                    pattern: {
-                      value: /^[\d가-힣\s]*$/,
-                      message: '*',
-                    },
-                  })}
+                  placeholder="상세 주소"
+                  {...register('address.mainAddress')}
                 />
-                {errors.address?.mainAddress && (
-                  <Error>{errors.address?.mainAddress.message}</Error>
-                )}
               </Address.Wrap>
               <Address.Wrap>
                 <Info.Content
-                  required
                   className="detail-address"
                   placeholder="상세 주소를 입력해주세요"
                   {...register('address.detailAddress', {
@@ -289,9 +312,6 @@ function page() {
                     },
                   })}
                 />
-                {errors.address?.detailAddress && (
-                  <Error>{errors.address?.detailAddress.message}</Error>
-                )}
               </Address.Wrap>
             </Address.Content>
             <Info.Wrapper>
@@ -306,16 +326,37 @@ function page() {
                   </div>
                 </Date.Section>
               </Info.Info>
-              <Info.Content
-                required
-                placeholder="2023-06-23"
-                {...register('returnDate', {
-                  pattern: {
-                    value: /^(\d{4}-\d{2}-\d{2}|\d{8})$/,
-                    message: '*',
-                  },
-                })}
-              />
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="ko"
+              >
+                <DemoContainer components={['DatePicker']}>
+                  <Info.Date
+                    format="YYYY / MM / DD"
+                    value={selectedDate}
+                    slotProps={{
+                      textField: {
+                        error: false,
+                        variant: 'standard',
+                        sx: {
+                          '& .MuiInputBase-root': {
+                            height: '100%',
+                            width: '100%',
+                          },
+                          '&.MuiFormControl-root': {
+                            paddingLeft: '12px',
+                            paddingRight: '12px',
+                          },
+                        },
+                      },
+                    }}
+                    minDate={dayjs(formattedDate)}
+                    onChange={(newValue) => {
+                      selectedDateChange(newValue);
+                    }}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
               {errors.returnDate && <Error>{errors.returnDate.message}</Error>}
             </Info.Wrapper>
             <Info.Wrapper>
@@ -326,28 +367,26 @@ function page() {
           <Area.Wrap>
             <Bag.Confirm>
               <Apply.Check>
-                <Bag.Question onClick={() => showBag()}>?</Bag.Question>
+                <Bag.Question>?</Bag.Question>
               </Apply.Check>
               <Bag.Text>리픽백 크기 확인하기</Bag.Text>
             </Bag.Confirm>
-            {bag && (
-              <Bag.Container>
-                <Bag.Wrapper>
-                  <Bag.Height>
-                    <Bag.CM7>70cm</Bag.CM7>
-                    <Bag.Arrow7 src={arrow7.src} />
-                    <Bag.Bag src={bagImage.src} />
-                  </Bag.Height>
-                  <Bag.Width>
-                    <Bag.Arrow6 src={arrow6.src} />
-                    <Bag.CM6>60cm</Bag.CM6>
-                    <Bag.More>
-                      리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
-                    </Bag.More>
-                  </Bag.Width>
-                </Bag.Wrapper>
-              </Bag.Container>
-            )}
+            <Bag.Container>
+              <Bag.Wrapper>
+                <Bag.Height>
+                  <Bag.CM7>70cm</Bag.CM7>
+                  <Bag.Arrow7 src={arrow7.src} />
+                  <Bag.Bag src={bagImage.src} />
+                </Bag.Height>
+                <Bag.Width>
+                  <Bag.Arrow6 src={arrow6.src} />
+                  <Bag.CM6>60cm</Bag.CM6>
+                  <Bag.More>
+                    리픽백 한 개에는 티셔츠 <br /> 30벌 정도를 담을 수 있어요
+                  </Bag.More>
+                </Bag.Width>
+              </Bag.Wrapper>
+            </Bag.Container>
           </Area.Wrap>
         </Area.Content>
         <div className="button">
@@ -462,6 +501,7 @@ const Address = {
     font-weight: 600;
     font-size: 16px;
     margin-left: 24px;
+    cursor: pointer;
   `,
 };
 
@@ -561,6 +601,19 @@ const Info = {
       height: 56px;
     }
   `,
+  Date: styled(DatePicker)`
+    width: 436px;
+    height: 56px;
+    background-color: rgba(232, 232, 232, 1);
+    border-radius: 15px;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--2, #5f5f5f);
+    padding: 0 12px 0 12px;
+    font-weight: 600;
+    outline: none;
+  `,
 };
 
 const Bag = {
@@ -622,7 +675,6 @@ const Bag = {
     width: 28px;
     height: 28px;
     font-size: 20px;
-    cursor: pointer;
   `,
   More: styled.div`
     font-size: 16px;
