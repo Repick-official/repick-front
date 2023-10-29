@@ -13,7 +13,12 @@ import { pickupWardrobe, getUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 interface HookFormTypes {
   name: string;
   phoneNumber: string;
@@ -49,6 +54,21 @@ function page() {
   const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
 
   const open = useDaumPostcodePopup();
+
+  const [selectedDate, setselectedDate] = useState('');
+  const datePickerFormat = 'YYYY-MM-DD';
+  const selectedDateChange = (date) => {
+    const formattedDate = dayjs(date).format(datePickerFormat);
+    setValue('returnDate', formattedDate);
+  };
+  const dateObj = new window.Date();
+
+  dateObj.setDate(dateObj.getDate() + 3);
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
   useEffect(() => {
     const check = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -304,16 +324,37 @@ function page() {
                   </div>
                 </Date.Section>
               </Info.Info>
-              <Info.Content
-                required
-                placeholder="2023-06-23"
-                {...register('returnDate', {
-                  pattern: {
-                    value: /^(\d{4}-\d{2}-\d{2}|\d{8})$/,
-                    message: '*',
-                  },
-                })}
-              />
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="ko"
+              >
+                <DemoContainer components={['DatePicker']}>
+                  <Info.Date
+                    format="YYYY / MM / DD"
+                    value={selectedDate}
+                    slotProps={{
+                      textField: {
+                        error: false,
+                        variant: 'standard',
+                        sx: {
+                          '& .MuiInputBase-root': {
+                            height: '100%',
+                            width: '100%',
+                          },
+                          '&.MuiFormControl-root': {
+                            paddingLeft: '12px',
+                            paddingRight: '12px',
+                          },
+                        },
+                      },
+                    }}
+                    minDate={dayjs(formattedDate)}
+                    onChange={(newValue) => {
+                      selectedDateChange(newValue);
+                    }}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
               {errors.returnDate && <Error>{errors.returnDate.message}</Error>}
             </Info.Wrapper>
             <Info.Wrapper>
@@ -561,6 +602,19 @@ const Info = {
       width: 94px;
       height: 56px;
     }
+  `,
+  Date: styled(DatePicker)`
+    width: 436px;
+    height: 56px;
+    background-color: rgba(232, 232, 232, 1);
+    border-radius: 15px;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--2, #5f5f5f);
+    padding: 0 12px 0 12px;
+    font-weight: 600;
+    outline: none;
   `,
 };
 
