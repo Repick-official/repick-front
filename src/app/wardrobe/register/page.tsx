@@ -9,7 +9,7 @@ import arrow7 from '@/assets/images/wardrobe/arrow7.svg';
 import arrow6 from '@/assets/images/wardrobe/arrow6.svg';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { pickupWardrobe, getUserInfo } from '@/api/requests';
+import { pickupWardrobe, getUserInfo, updateUserInfo } from '@/api/requests';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
@@ -63,14 +63,16 @@ function page() {
     const formattedDate = dayjs(date).format(datePickerFormat);
     setValue('returnDate', formattedDate);
   };
-  const dateObj = new window.Date();
+  const [formattedDate, setFormattedDate] = useState('');
+  useEffect(() => {
+    const dateObj = new window.Date();
+    dateObj.setDate(dateObj.getDate() + 3);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    setFormattedDate(`${year}-${month}-${day}`);
+  });
 
-  dateObj.setDate(dateObj.getDate() + 3);
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObj.getDate()).padStart(2, '0');
-
-  const formattedDate = `${year}-${month}-${day}`;
   useEffect(() => {
     const check = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -88,11 +90,19 @@ function page() {
   }, []);
 
   const registerHandler = async (data: HookFormTypes) => {
+    if (!data.returnDate) {
+      alert('날짜를 선택해주세요');
+      return;
+    }
     const confirm = window.confirm('입력하신 정보로 옷장 신청을 하시겠습니까?');
     if (confirm) {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await pickupWardrobe(accessToken, data);
       if (response.success) {
+        if (useRegisteredAddr) {
+          console.log(data.address);
+          const response = await updateUserInfo(accessToken, data);
+        }
         router.push('/wardrobe/register/success');
       } else {
         alert('오잉');
