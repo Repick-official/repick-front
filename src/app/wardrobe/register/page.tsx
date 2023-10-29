@@ -57,18 +57,20 @@ function page() {
 
   const [selectedDate, setselectedDate] = useState('');
   const datePickerFormat = 'YYYY-MM-DD';
-  const selectedDateChange = (date) => {
+  const selectedDateChange = (date: any) => {
     const formattedDate = dayjs(date).format(datePickerFormat);
     setValue('returnDate', formattedDate);
   };
-  const dateObj = new window.Date();
+  const [formattedDate, setFormattedDate] = useState('');
+  useEffect(() => {
+    const dateObj = new window.Date();
+    dateObj.setDate(dateObj.getDate() + 3);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    setFormattedDate(`${year}-${month}-${day}`);
+  });
 
-  dateObj.setDate(dateObj.getDate() + 3);
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObj.getDate()).padStart(2, '0');
-
-  const formattedDate = `${year}-${month}-${day}`;
   useEffect(() => {
     const check = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
@@ -349,7 +351,7 @@ function page() {
                       },
                     }}
                     minDate={dayjs(formattedDate)}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       selectedDateChange(newValue);
                     }}
                   />
