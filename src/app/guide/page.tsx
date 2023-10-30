@@ -38,8 +38,9 @@ function page() {
       items: 1,
     },
   };
-  const handleDragStart = (e: { preventDefault: () => any }) =>
-    e.preventDefault();
+  const handleDragStart = (
+    e: DragEvent // DragEvent : 내장 타입
+  ) => e.preventDefault();
   useEffect(() => {
     const get = async () => {
       const response = await getMainPageProducts();

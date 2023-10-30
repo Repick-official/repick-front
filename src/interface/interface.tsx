@@ -52,6 +52,55 @@ export interface CategoryType {
   parentName: string;
 }
 
+export interface CategoryMap {
+  [key: number]: CategoryType[];
+}
+
+export interface CategoryMap2 {
+  [key: number]: CategoryType;
+}
+
 export interface DetailProduct {
-  //detail/[...slug] 참고
+  productId: number;
+  name: string;
+  size: string;
+  detail: string;
+  brand: string;
+  price: number;
+  mainImageFile: {
+    imagePath: string;
+  };
+  detailImageFiles: [
+    {
+      imagePath: string;
+    },
+  ];
+  categoryInfoList: [
+    {
+      parentCategoryName: string;
+      categoryName: string;
+    },
+  ];
+}
+
+export interface SuccessType {
+  mainText: string;
+  subText1: string;
+  subText2: string;
+  ishome: boolean;
+  icon: string;
+}
+
+export interface ContentBodyInfoProps {
+  id?: number;
+  src: string;
+  tagName: string;
+  size: string;
+  name: string;
+  price: number | null;
+}
+
+export interface ItemHeartInfoType {
+  seeing: number;
+  heart: number;
 }

@@ -1,7 +1,9 @@
 import hearts from '@/assets/images/guide/heart.svg';
 import eye from '@/assets/images/guide/eye.svg';
 import { styled } from 'styled-components';
-function ItemHeartInfo({ seeing, heart }: { seeing: number; heart: number }) {
+import { ItemHeartInfoType } from '@/interface/interface';
+
+function ItemHeartInfo({ seeing, heart }: ItemHeartInfoType) {
   return (
     <HeartInfoWrapper>
       <SeeWrapper>

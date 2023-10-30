@@ -18,10 +18,10 @@ import { useCookies } from 'react-cookie';
 import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { selectedNavPage, requestProducts } from '@/atom/states';
-import { Product, HomeFitProduct } from '@/interface/interface';
+import { Product, HomeFitProduct, DetailProduct } from '@/interface/interface';
 
 function page() {
-  const [products, setProducts] = useState({
+  const [products, setProducts] = useState<DetailProduct>({
     productId: 0,
     name: '',
     size: '',
@@ -43,6 +43,7 @@ function page() {
       },
     ],
   });
+  console.log('detail page');
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -52,7 +53,7 @@ function page() {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
   const [finalProducts, setFinalProducts] = useRecoilState(requestProducts);
 
-  const [recommends, setRecommends] = useState<any[]>([]);
+  const [recommends, setRecommends] = useState<Product[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sliderImageCount = 3;
 
@@ -61,6 +62,7 @@ function page() {
       let location = window.location.pathname;
       let split = location.split('/');
       const response = await getDetailPageProducts(split[3]);
+      console.log('detail response', response);
       setProducts(response);
     };
     get();
@@ -70,7 +72,7 @@ function page() {
     const get = async () => {
       const response = await getMainPageProducts();
 
-      const clothes = response.map((item: any) => {
+      const clothes = response.map((item: Product) => {
         return item;
       });
       setRecommends(clothes);
@@ -78,6 +80,8 @@ function page() {
 
     get();
   }, []);
+
+  console.log('recommends', recommends);
 
   const putMypickCart = async () => {
     const confirm = window.confirm('해당 상품을 마이픽에 담으시겠습니까?');
@@ -234,7 +238,7 @@ function page() {
       <Container.Line src={line.src} />
       <Container.Recommend>이런 제품은 어떠세요?</Container.Recommend>
       <Container.Products>
-        {recommends.map((item) => (
+        {recommends.map((item: Product) => (
           <div
             key={item.productId}
             onClick={() => router.push(`/product/detail/${item.productId}`)}

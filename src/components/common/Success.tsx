@@ -8,20 +8,9 @@ import { selectedMypickPage } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import { selectedNavPage } from '@/atom/states';
+import { SuccessType } from '@/interface/interface';
 
-function Success({
-  mainText,
-  subText1,
-  subText2,
-  ishome,
-  icon,
-}: {
-  mainText: string;
-  subText1: string;
-  subText2: string;
-  ishome: boolean;
-  icon: string;
-}) {
+function Success({ mainText, subText1, subText2, ishome, icon }: SuccessType) {
   const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
   const [selectedNavigationPage, setSelectedNavigationPage] =
     useRecoilState(selectedNavPage);

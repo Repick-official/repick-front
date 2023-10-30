@@ -1,12 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import ContentBodyInfo from '@/components/guide/ContentBodyInfo';
-import cloth_1 from '@/assets/images/mypick/cloth_1.png';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import logo_guide from '@/assets/images/guide/logo_guide.png';
-import Image from 'next/image';
-import Banner from '@/components/common/Banner';
 import { useRecoilState } from 'recoil';
 import { keyword, searchedlastProductId } from '@/atom/states';
 import {
@@ -16,24 +12,11 @@ import {
   searchItem,
 } from '@/api/requests';
 import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
-interface Product {
-  brand: string;
-  detail: string;
-  discountRate: number;
-  mainImageFile: {
-    imagePath: string;
-    imageKey: string;
-    isMainImage: boolean;
-  };
-  name: string;
-  price: number;
-  productId: number;
-  productState: string;
-  size: string;
-}
+import { Product, CategoryType, CategoryMap } from '@/interface/interface';
+
 function page() {
   const router = useRouter();
-  const [categoryData, setCategoryData] = useState<any>({});
+  const [categoryData, setCategoryData] = useState<CategoryMap>({});
   const [cursorId, setCursorId] = useState<number>(0);
   const [cursorPrice, setCursorPrice] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -44,6 +27,8 @@ function page() {
 
   const [text, setText] = useRecoilState(keyword);
   const [productId, setProductId] = useRecoilState(searchedlastProductId);
+
+  console.log('searched page');
 
   const fetchItem = async () => {
     let response: Product[];
@@ -87,17 +72,22 @@ function page() {
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const response: any = await getCategory();
-      const categoryMap = response.reduce((map: any, item: any) => {
-        if (item.parentId === null) {
+      const response: CategoryType[] = await getCategory();
+      const categoryMap = response.reduce(
+        (map: CategoryMap, item: CategoryType) => {
+          if (item.parentId === null) {
+            console.log('map', map);
+            return map;
+          }
+          if (!map[item.parentId]) {
+            map[item.parentId] = [];
+          }
+          map[item.parentId].push(item);
+          console.log('map', map);
           return map;
-        }
-        if (!map[item.parentId]) {
-          map[item.parentId] = [];
-        }
-        map[item.parentId].push(item);
-        return map;
-      }, []);
+        },
+        []
+      );
       setCategoryData(categoryMap);
     };
     fetchCategory();
@@ -167,9 +157,11 @@ function page() {
           <S>
             {Object.keys(categoryData).map((parentId) => (
               <OptionList key={parentId}>
-                <OptionP>{categoryData[parentId][0]?.parentName}</OptionP>
+                <OptionP>
+                  {categoryData[Number(parentId)][0]?.parentName}
+                </OptionP>
                 <OptionDetail>
-                  {categoryData[parentId].map(
+                  {categoryData[Number(parentId)].map(
                     ({ id, name }: { id: number; name: string }) => (
                       <Option
                         $isselected={(id === categoryId).toString()}
@@ -205,7 +197,7 @@ function page() {
                     .slice(index, index + 4)
                     .map((product, innerIndex) => (
                       <Products key={`${product.productId}_${innerIndex}`}>
-                        <Product
+                        <SoleProduct
                           onClick={() =>
                             router.push(`/product/detail/${product.productId}`)
                           }
@@ -217,7 +209,7 @@ function page() {
                             name={product.name}
                             price={product.price}
                           />
-                        </Product>
+                        </SoleProduct>
                       </Products>
                     ))}
                 </ProductWrapper>
@@ -251,7 +243,7 @@ const S = styled.div`
   margin-left: 108px;
 `;
 
-const Product = styled.div`
+const SoleProduct = styled.div`
   ${flexColumn}
   align-items: center;
 `;

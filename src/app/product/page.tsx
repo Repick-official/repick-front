@@ -11,11 +11,11 @@ import {
   getItemSeen,
 } from '@/api/requests';
 import { flexBetween, flexCenter, flexColumn } from '@/styles/theme';
-import { Product, CategoryType } from '@/interface/interface';
+import { Product, CategoryType, CategoryMap } from '@/interface/interface';
 
 function page() {
   const router = useRouter();
-  const [categoryData, setCategoryData] = useState<any>({});
+  const [categoryData, setCategoryData] = useState<any>({}); // 아직 any type
   const [cursorId, setCursorId] = useState<number>(0);
   const [cursorPrice, setCursorPrice] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -76,6 +76,7 @@ function page() {
     setProducts([]);
     fetchItem();
   }, [categoryId, order]);
+  console.log('categoryData', categoryData);
 
   const loadMoreItems = () => {
     if (loadMoreTimer) {

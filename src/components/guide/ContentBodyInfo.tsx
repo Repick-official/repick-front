@@ -5,23 +5,16 @@ import { useRef, useState } from 'react';
 import getAccessToken from '@/util/getAccessToken';
 import { useCookies } from 'react-cookie';
 import { setProductPrice } from '@/api/requests';
-interface ContentBodyInfoProps {
-  id?: number;
-  src: string;
-  tagName: string;
-  size: string;
-  name: string;
-  price: number | null;
-}
+import { ContentBodyInfoProps } from '@/interface/interface';
 
-const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
+function ContentBodyInfo({
   id,
   src,
   tagName,
   size,
   name,
   price,
-}) => {
+}: ContentBodyInfoProps) {
   const [isSetPrice, setIsSetPrice] = useState<boolean>(false);
   const [newPrice, setNewPrice] = useState<number | null>(price);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -98,7 +91,7 @@ const ContentBodyInfo: React.FC<ContentBodyInfoProps> = ({
       </ImageBody>
     </ImageWrapper>
   );
-};
+}
 
 export default ContentBodyInfo;
 
