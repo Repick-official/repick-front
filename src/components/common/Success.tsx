@@ -11,9 +11,10 @@ import { selectedNavPage } from '@/atom/states';
 import { SuccessType } from '@/interface/interface';
 
 function Success({ mainText, subText1, subText2, ishome, icon }: SuccessType) {
-  const [selectedPage, setSelectedPage] = useRecoilState(selectedMypickPage);
+  const [selectedPage, setSelectedPage] =
+    useRecoilState<string>(selectedMypickPage);
   const [selectedNavigationPage, setSelectedNavigationPage] =
-    useRecoilState(selectedNavPage);
+    useRecoilState<string>(selectedNavPage);
   const router = useRouter();
   return (
     <Component>

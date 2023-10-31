@@ -10,23 +10,25 @@ import {
   userInfoState,
   selectedNavPage,
 } from '@/atom/states';
+import { UserInfoType } from '@/interface/interface';
 
 function Navigation() {
   const router = useRouter();
 
-  const [isLogin, setIslogin] = useState('');
-  const [isUser, setIsUser] = useState('');
-  const [bold, setBold] = useState('');
+  const [isLogin, setIslogin] = useState<string>('');
+  const [isUser, setIsUser] = useState<string>('');
+  const [bold, setBold] = useState<string>('');
 
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [selectedPage, setSelectedPage] = useRecoilState(selectedNavPage);
+  const [userInfo, setUserInfo] = useRecoilState<UserInfoType>(userInfoState);
+  const [selectedPage, setSelectedPage] =
+    useRecoilState<string>(selectedNavPage);
   const [selectedPickPage, setSelectedPickPage] =
-    useRecoilState(selectedMypickPage);
+    useRecoilState<string>(selectedMypickPage);
 
   useEffect(() => {
-    if (userInfo.uesrNickname) {
+    if (userInfo.userNickname) {
       setSelectedPage('서비스 가이드');
-      setIsUser(userInfo.uesrNickname);
+      setIsUser(userInfo.userNickname);
       setIslogin('로그아웃');
       setBold('bold');
     } else {
@@ -82,7 +84,7 @@ function Navigation() {
   };
 
   const checkUserMypick = () => {
-    if (userInfo.uesrNickname) {
+    if (userInfo.userNickname) {
       setSelectedPickPage('마이픽 현황');
       setSelectedPage('마이픽');
       router.push('/myPick/home');
@@ -94,7 +96,7 @@ function Navigation() {
   };
 
   const checkUserWardrobe = () => {
-    if (userInfo.uesrNickname) {
+    if (userInfo.userNickname) {
       setSelectedPage('옷장 정리');
       router.push('/wardrobe');
     } else {

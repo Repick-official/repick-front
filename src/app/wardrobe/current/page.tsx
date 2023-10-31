@@ -14,20 +14,21 @@ import {
   showWardrobePreparing,
 } from '@/api/requests';
 import { flexCenter, flexColumn } from '@/styles/theme';
+import { Product } from '@/interface/interface';
 
 function page() {
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const [order, setOrder] = useState<string>('all');
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [total, setTotal] = useState<number>(0);
-  const [sold, setSold] = useState<any[]>([]);
+  const [sold, setSold] = useState<number[]>([]);
   useEffect(() => {
     const get = async () => {
       let accessToken = await getAccessToken(cookies, setCookie);
       const response = await showWardrobeAll(accessToken);
-      const clothes = response.map((item: any) => {
+      const clothes = response.map((item: Product) => {
         if (item.productState === 'SOLD_OUT') {
           setTotal((prev) => prev + item.price);
           setSold((prevSold) => [...prevSold, item.productId]);
@@ -39,6 +40,8 @@ function page() {
     };
     get();
   }, []);
+
+  console.log('products', products);
 
   const clickSettlement = async () => {
     const confirm = window.confirm('정산 요청을 신청하시겠습니까?');

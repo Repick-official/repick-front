@@ -104,3 +104,45 @@ export interface ItemHeartInfoType {
   seeing: number;
   heart: number;
 }
+
+export interface WardrobeRegisterType {
+  name: string;
+  phoneNumber: string;
+  bank: {
+    accountNumber: string;
+    bankName: string;
+  };
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    zipCode: string;
+  };
+  bagQuantity: number;
+  productQuantity: number;
+  returnDate: string;
+  requestDetail: string;
+  id: number;
+  sellState: string;
+}
+
+export interface ReturnDateType {
+  M: {
+    $D?: number;
+    $H?: number;
+    $L?: string;
+    $M?: number;
+    $W?: number;
+    $d?: {};
+    $isDayjsObject?: boolean;
+    $m?: number;
+    $ms?: number;
+    $s?: number;
+    $u?: undefined;
+    $x?: {};
+    $y?: number;
+  };
+}
+
+export interface SearchModalProps {
+  clickModal: (event?: React.MouseEvent) => void;
+}

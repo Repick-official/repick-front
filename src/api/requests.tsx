@@ -1,3 +1,5 @@
+import { Product } from '@/interface/interface';
+
 export const getMainPageProducts = async () => {
   try {
     const response = await fetch(
@@ -12,7 +14,7 @@ export const getMainPageProducts = async () => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -27,7 +29,7 @@ export const getMainPageProducts = async () => {
   }
 };
 
-export const getDetailPageProducts = async (productId: any) => {
+export const getDetailPageProducts = async (productId: number) => {
   try {
     const response = await fetch(
       process.env.API_URL + `/products/detail/${productId}`,
@@ -89,7 +91,7 @@ export const refreshAccessToken = async (refresh: any) => {
   }
 };
 
-export const kakaoLogin = async (code: any) => {
+export const kakaoLogin = async (code: string) => {
   const response = await fetch(
     process.env.API_URL +
       `/oauth/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}/login/kakaoLogin`,
@@ -143,7 +145,7 @@ export const getCategories = async () => {
   }
 };
 
-export const putMypick = async (access: any, productId: any) => {
+export const putMypick = async (access: any, productId: number) => {
   try {
     const response = await fetch(
       process.env.API_URL + `/cart/my-pick/${productId}`,
@@ -346,7 +348,7 @@ export const getItemLatest = async (
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -390,7 +392,7 @@ export const getItemLowest = async (
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -433,7 +435,7 @@ export const getItemHighest = async (
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -535,7 +537,7 @@ export const searchItem = async (
     );
     if (response.ok) {
       const data = await response.json();
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -578,7 +580,7 @@ export const searchItemByPrice = async (
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -698,7 +700,7 @@ export const showWardrobeAll = async (access: any) => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -728,7 +730,7 @@ export const showWardrobePreparing = async (access: any) => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -758,7 +760,7 @@ export const showWardrobeSelling = async (access: any) => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -785,7 +787,7 @@ export const showWardrobeSold = async (access: any) => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;
@@ -815,7 +817,7 @@ export const showWardrobeSettled = async (access: any) => {
     if (response.ok) {
       const data = await response.json();
 
-      const clothes = data.map((item: any) => {
+      const clothes = data.map((item: Product) => {
         if (item.brand == null) {
           item.brand = 'NO BRAND';
           return item;

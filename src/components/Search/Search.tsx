@@ -6,10 +6,11 @@ import { searchItem } from '@/api/requests';
 import { useRouter } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 import { keyword, searchedlastProductId } from '@/atom/states';
+import { SearchModalProps } from '@/interface/interface';
 
-function SearchModal({ clickModal }: any) {
+function SearchModal({ clickModal }: SearchModalProps) {
   const router = useRouter();
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState<string>('');
   const [cursorId, setCursorId] = useState<number>(0);
 
   const pageSize = 16;
@@ -49,7 +50,9 @@ function SearchModal({ clickModal }: any) {
   return (
     <Container>
       <Wrapper.ModalBox onClick={clickModal}>
-        <Wrapper.ModalContent onClick={(e: any) => e.stopPropagation()}>
+        <Wrapper.ModalContent
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+        >
           <Remove onClick={clickModal} src={X.src}></Remove>
           <Content.Wrapper>
             <Content.Search>

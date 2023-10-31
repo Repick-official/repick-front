@@ -6,15 +6,15 @@ import { useRecoilState } from 'recoil';
 import { keyword } from '@/atom/states';
 
 function SearchModal() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const clickModal = () => setShowModal(!showModal);
-  const [text, setText] = useRecoilState(keyword);
-  const [placeholderText, setPlaceholderText] = useState('어떤 의류를 찾고 계신가요?');
+  const [text, setText] = useRecoilState<string>(keyword);
+  const [placeholderText, setPlaceholderText] =
+    useState<string>('어떤 의류를 찾고 계신가요?');
 
   useEffect(() => {
-    if(text.length > 0)
-      setPlaceholderText(text);
-    else{
+    if (text.length > 0) setPlaceholderText(text);
+    else {
       setPlaceholderText('어떤 의류를 찾고 계신가요?');
     }
   }, [text]);

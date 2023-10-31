@@ -20,26 +20,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { flexCenter, flexColumn } from '@/styles/theme';
-
-interface HookFormTypes {
-  name: string;
-  phoneNumber: string;
-  bank: {
-    accountNumber: string;
-    bankName: string;
-  };
-  address: {
-    detailAddress: string;
-    mainAddress: string;
-    zipCode: string;
-  };
-  bagQuantity: number;
-  productQuantity: number;
-  returnDate: string;
-  requestDetail: string;
-  id: number;
-  sellState: string;
-}
+import { WardrobeRegisterType, ReturnDateType } from '@/interface/interface';
 
 function page() {
   const {
@@ -47,23 +28,25 @@ function page() {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<HookFormTypes>();
+  } = useForm<WardrobeRegisterType>();
 
   const router = useRouter();
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [useRegisteredAddr, setUseRegisteredAddr] = useState(false);
+  const [useRegisteredAddr, setUseRegisteredAddr] = useState<boolean>(false);
 
   const open = useDaumPostcodePopup();
 
-  const [selectedDate, setselectedDate] = useState('');
+  const [selectedDate, setselectedDate] = useState<string>('');
   const datePickerFormat = 'YYYY-MM-DD';
   const selectedDateChange = (date: any) => {
+    //date만 타입 지정하기
     const formattedDate = dayjs(date).format(datePickerFormat);
     setValue('returnDate', formattedDate);
+    console.log('date', date);
   };
-  const [formattedDate, setFormattedDate] = useState('');
+  const [formattedDate, setFormattedDate] = useState<string>('');
   useEffect(() => {
     const dateObj = new window.Date();
     dateObj.setDate(dateObj.getDate() + 3);
@@ -89,7 +72,7 @@ function page() {
     check();
   }, []);
 
-  const registerHandler = async (data: HookFormTypes) => {
+  const registerHandler = async (data: WardrobeRegisterType) => {
     if (!data.returnDate) {
       alert('날짜를 선택해주세요');
       return;
