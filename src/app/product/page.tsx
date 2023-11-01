@@ -15,7 +15,7 @@ import { Product, CategoryType, CategoryMap } from '@/interface/interface';
 
 function page() {
   const router = useRouter();
-  const [categoryData, setCategoryData] = useState<any>({}); // 아직 any type
+  const [categoryData, setCategoryData] = useState<CategoryMap>({}); // 아직 any type
   const [cursorId, setCursorId] = useState<number>(0);
   const [cursorPrice, setCursorPrice] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -58,18 +58,21 @@ function page() {
     const fetchCategory = async () => {
       const response: CategoryType[] = await getCategory();
       console.log('category', response);
-      const categoryMap = response.reduce((map: any, item: CategoryType) => {
-        if (item.parentId === null) {
-          //map type 정의해야 함
-          return map;
-        }
+      const categoryMap: CategoryMap = response.reduce(
+        (map: CategoryMap, item: CategoryType) => {
+          if (item.parentId === null) {
+            //map type 정의해야 함
+            return map;
+          }
 
-        if (!map[item.parentId]) {
-          map[item.parentId] = [];
-        }
-        map[item.parentId].push(item);
-        return map;
-      }, {});
+          if (!map[item.parentId]) {
+            map[item.parentId] = [];
+          }
+          map[item.parentId].push(item);
+          return map;
+        },
+        {}
+      );
       setCategoryData(categoryMap);
     };
     fetchCategory();
@@ -155,9 +158,11 @@ function page() {
           <S>
             {Object.keys(categoryData).map((parentId) => (
               <OptionList key={parentId}>
-                <OptionP>{categoryData[parentId][0]?.parentName}</OptionP>
+                <OptionP>
+                  {categoryData[Number(parentId)][0]?.parentName}
+                </OptionP>
                 <OptionDetail>
-                  {categoryData[parentId].map(
+                  {categoryData[Number(parentId)].map(
                     ({ id, name }: { id: number; name: string }) => (
                       <Option
                         $isselected={(id === categoryId).toString()}

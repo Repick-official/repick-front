@@ -61,7 +61,7 @@ function page() {
     const get = async () => {
       let location = window.location.pathname;
       let split = location.split('/');
-      const response = await getDetailPageProducts(split[3]);
+      const response = await getDetailPageProducts(Number(split[3]));
       console.log('detail response', response);
       setProducts(response);
     };
@@ -90,7 +90,7 @@ function page() {
         let location = window.location.pathname;
         let split = location.split('/');
         let accessToken = await getAccessToken(cookies, setCookie);
-        const response = await putMypick(accessToken, split[3]);
+        const response = await putMypick(accessToken, Number(split[3]));
         if (response.success) {
           alert('이미 마이픽 또는 홈피팅에 있는 제품입니다.');
           return;
