@@ -146,3 +146,15 @@ export interface ReturnDateType {
 export interface SearchModalProps {
   clickModal: (event?: React.MouseEvent) => void;
 }
+
+export interface AddressType {
+  address: string;
+  addressType: string;
+  bname: string;
+  buildingName: string;
+  zonecode: string;
+}
+
+export interface AsyncFunction {
+  (access: string): Promise<Product[]>;
+}

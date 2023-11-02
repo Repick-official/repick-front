@@ -14,7 +14,7 @@ import {
   showWardrobePreparing,
 } from '@/api/requests';
 import { flexCenter, flexColumn } from '@/styles/theme';
-import { Product } from '@/interface/interface';
+import { Product, AsyncFunction } from '@/interface/interface';
 
 function page() {
   const router = useRouter();
@@ -60,7 +60,7 @@ function page() {
     }
   };
 
-  const handleChange = async (newOrder: string, apiFunction: any) => {
+  const handleChange = async (newOrder: string, apiFunction: AsyncFunction) => {
     setOrder(newOrder);
     let accessToken = await getAccessToken(cookies, setCookie);
     const response = await apiFunction(accessToken);

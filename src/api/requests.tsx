@@ -1,4 +1,4 @@
-import { Product } from '@/interface/interface';
+import { Product, AsyncFunction } from '@/interface/interface';
 
 export const getMainPageProducts = async () => {
   try {
@@ -55,7 +55,7 @@ export const getDetailPageProducts = async (productId: number) => {
   }
 };
 
-export const subscribePlan = async (access: any, plan: string) => {
+export const subscribePlan = async (access: string, plan: string) => {
   const data = {
     subscribeType: plan,
   };
@@ -108,7 +108,7 @@ export const kakaoLogin = async (code: string) => {
   }
 };
 
-export const pickupWardrobe = async (access: any, datas: any) => {
+export const pickupWardrobe = async (access: string, datas: any) => {
   const data = datas;
 
   const response = await fetch(process.env.API_URL + '/sell', {
@@ -145,7 +145,7 @@ export const getCategories = async () => {
   }
 };
 
-export const putMypick = async (access: any, productId: number) => {
+export const putMypick = async (access: string, productId: number) => {
   try {
     const response = await fetch(
       process.env.API_URL + `/cart/my-pick/${productId}`,
@@ -168,7 +168,7 @@ export const putMypick = async (access: any, productId: number) => {
   }
 };
 
-export const inquiryMypick = async (access: any) => {
+export const inquiryMypick = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + `/cart/my-pick`, {
       method: 'GET',
@@ -195,7 +195,7 @@ export const inquiryMypick = async (access: any) => {
   }
 };
 
-export const applyHomeFitting = async (access: any, ids: any[]) => {
+export const applyHomeFitting = async (access: string, ids: any[]) => {
   const data = {
     cartProductIds: ids,
   };
@@ -219,7 +219,7 @@ export const applyHomeFitting = async (access: any, ids: any[]) => {
   }
 };
 
-export const checkSubscribe = async (access: any) => {
+export const checkSubscribe = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + '/subscribe/check', {
       method: 'GET',
@@ -238,7 +238,7 @@ export const checkSubscribe = async (access: any) => {
     throw error;
   }
 };
-export const getUserInfo = async (access: any) => {
+export const getUserInfo = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + '/sign/userInfo', {
       method: 'GET',
@@ -257,7 +257,7 @@ export const getUserInfo = async (access: any) => {
     throw error;
   }
 };
-export const getIsSubscribe = async (access: any) => {
+export const getIsSubscribe = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + '/subscribe/check', {
       method: 'GET',
@@ -277,7 +277,7 @@ export const getIsSubscribe = async (access: any) => {
   }
 };
 
-export const updateUserInfo = async (access: any, datas: any) => {
+export const updateUserInfo = async (access: string, datas: any) => {
   const data = {
     email: datas.email,
     name: datas.name,
@@ -485,7 +485,7 @@ export const getItemSeen = async (
   }
 };
 
-export const inquiryHomeFitting = async (access: any) => {
+export const inquiryHomeFitting = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + '/home-fitting', {
       method: 'GET',
@@ -595,7 +595,7 @@ export const searchItemByPrice = async (
   }
 };
 
-export const inquirySubscribe = async (access: any, state: string) => {
+export const inquirySubscribe = async (access: string, state: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + `/subscribe/history/${state}`,
@@ -616,7 +616,7 @@ export const inquirySubscribe = async (access: any, state: string) => {
     throw error;
   }
 };
-export const inquirySubscribeLatest = async (access: any) => {
+export const inquirySubscribeLatest = async (access: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + '/subscribe/history/all',
@@ -638,7 +638,7 @@ export const inquirySubscribeLatest = async (access: any) => {
   }
 };
 
-export const orderProducts = async (access: any, datas: any) => {
+export const orderProducts = async (access: string, datas: any) => {
   const data = {
     address: datas.address,
     personName: datas.name,
@@ -662,7 +662,7 @@ export const orderProducts = async (access: any, datas: any) => {
   }
 };
 
-export const deleteProducts = async (access: any, cartProductId: any) => {
+export const deleteProducts = async (access: string, cartProductId: any) => {
   try {
     const response = await fetch(
       process.env.API_URL + `/cart/my-pick/${cartProductId}`,
@@ -685,7 +685,7 @@ export const deleteProducts = async (access: any, cartProductId: any) => {
   }
 };
 
-export const showWardrobeAll = async (access: any) => {
+export const showWardrobeAll: AsyncFunction = async (access: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + '/sell/history/published',
@@ -714,7 +714,7 @@ export const showWardrobeAll = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobePreparing = async (access: any) => {
+export const showWardrobePreparing: AsyncFunction = async (access: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + '/sell/history/preparing',
@@ -744,7 +744,7 @@ export const showWardrobePreparing = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobeSelling = async (access: any) => {
+export const showWardrobeSelling: AsyncFunction = async (access: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + '/sell/history/selling',
@@ -774,7 +774,7 @@ export const showWardrobeSelling = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobeSold = async (access: any) => {
+export const showWardrobeSold: AsyncFunction = async (access: string) => {
   try {
     const response = await fetch(process.env.API_URL + '/sell/history/sold', {
       method: 'GET',
@@ -801,7 +801,7 @@ export const showWardrobeSold = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobeSettled = async (access: any) => {
+export const showWardrobeSettled: AsyncFunction = async (access: string) => {
   try {
     const response = await fetch(
       process.env.API_URL + '/sell/history/settled',
@@ -831,7 +831,7 @@ export const showWardrobeSettled = async (access: any) => {
     throw error;
   }
 };
-export const showWardrobeSettlement = async (access: any, ids: any[]) => {
+export const showWardrobeSettlement = async (access: string, ids: number[]) => {
   const data = {
     productIds: ids,
   };
@@ -854,7 +854,7 @@ export const showWardrobeSettlement = async (access: any, ids: any[]) => {
   }
 };
 export const setProductPrice = async (
-  access: any,
+  access: string,
   id: number,
   newPrice: number
 ) => {

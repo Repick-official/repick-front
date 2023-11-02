@@ -20,7 +20,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { flexCenter, flexColumn } from '@/styles/theme';
-import { WardrobeRegisterType, ReturnDateType } from '@/interface/interface';
+import {
+  WardrobeRegisterType,
+  ReturnDateType,
+  AddressType,
+} from '@/interface/interface';
 
 function page() {
   const {
@@ -43,9 +47,11 @@ function page() {
   const selectedDateChange = (date: any) => {
     //date만 타입 지정하기
     const formattedDate = dayjs(date).format(datePickerFormat);
+    console.log('formattedDate', formattedDate);
     setValue('returnDate', formattedDate);
     console.log('date', date);
   };
+
   const [formattedDate, setFormattedDate] = useState<string>('');
   useEffect(() => {
     const dateObj = new window.Date();
@@ -96,7 +102,8 @@ function page() {
   const handleUseRegisteredAddrClick = async () => {
     setUseRegisteredAddr(!useRegisteredAddr);
   };
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: AddressType) => {
+    console.log('data', data);
     let fullAddress = data.address;
     let extraAddress = '';
     if (data.addressType === 'R') {
