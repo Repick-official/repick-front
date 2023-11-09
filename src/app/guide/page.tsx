@@ -15,6 +15,8 @@ import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
 import { flexCenter, flexColumn } from '@/styles/theme';
 import { Product, SlideInDivProps } from '@/interface/interface';
+import GoPage from '@/components/guide/goPage';
+import ServiceContent from '@/components/guide/ServiceContent';
 
 function page() {
   const router = useRouter();
@@ -70,16 +72,7 @@ function page() {
       </div>
     );
   });
-  const [selectedPage, setSelectedPage] =
-    useRecoilState<string>(selectedNavPage);
-  const goProduct = () => {
-    setSelectedPage('제품 보기');
-    router.push('/product');
-  };
-  const goWardrobe = () => {
-    setSelectedPage('옷장 정리');
-    router.push('/wardrobe');
-  };
+
   return (
     <Contents>
       {/* <BannerWrapper>
@@ -204,28 +197,22 @@ function page() {
             </Character._2>
           </LogoWrapper>
           <ContentWrapper.right>
-            <Content.Title>
-              <Image
-                src={small_logo}
-                alt="Small Logo"
-                style={{ width: '31px', height: '31px' }}
-                // placeholder ="blur"
-              />
-              <Content.TitleText>Repick Service</Content.TitleText>
-            </Content.Title>
-            <Content.SubRight>
-              빠르고 편리하게<br></br>나의 옷들을 판매해보세요!
-            </Content.SubRight>
-            <Content.Description>
-              정리하고싶은 옷들을 문 밖에 두기만 하면<br></br>
-              수거, 촬영, 살균 후 판매까지 리픽이 모두 알아서 처리해요!
-            </Content.Description>
+            <ServiceContent
+              titleText="Repick Service"
+              contentPosition="right"
+              content="빠르고 편리하게<br/>나의 옷들을 판매해보세요!"
+              description="정리하고싶은 옷들을 문 밖에 두기만 하면<br/>수거, 촬영, 살균 후 판매까지 리픽이 모두 알아서 처리해요!"
+            />
           </ContentWrapper.right>
         </ContentWrapper.SpaceBetween>
       </Section2>
-      <WardrobeBtn onClick={goWardrobe}>
-        <WardrobeP>옷장 정리하러 가기</WardrobeP>
-      </WardrobeBtn>
+
+      <GoPage
+        page="옷장 정리"
+        routerPath="/wardrobe"
+        content="옷장 정리하러 가기"
+      />
+
       {/* <BannerWrapper2>
         <Image
           src={slogan_1}
@@ -384,16 +371,12 @@ function page() {
       </Section4> */}
       <Section5>
         <ContentWrapper.center>
-          <Content.Title>
-            <Image
-              src={small_logo}
-              alt="Small Logo"
-              style={{ width: '31px', height: '31px' }}
-              // placeholder ="blur"
-            />
-            <Content.TitleText>Shopping</Content.TitleText>
-          </Content.Title>
-          <Content.Sub>리픽에 다양한 제품들이 기다리고 있어요!</Content.Sub>
+          <ServiceContent
+            titleText="Shopping"
+            contentPosition="left"
+            content="리픽에 다양한 제품들이 기다리고 있어요!"
+            description=""
+          />
           <ContentWaiting>
             <ContentWaitingInfoWrapper>
               <ContentWaitingInfoItemWrapper>
@@ -410,9 +393,12 @@ function page() {
               </ContentWaitingInfoItemWrapper>
             </ContentWaitingInfoWrapper>
           </ContentWaiting>
-          <PurchaseButton onClick={goProduct}>
-            <PurchaseP>리픽 제품 구매하러 가기</PurchaseP>
-          </PurchaseButton>
+
+          <GoPage
+            page="제품 보기"
+            routerPath="/product"
+            content="리픽 제품 구매하러 가기"
+          />
         </ContentWrapper.center>
       </Section5>
     </Contents>
@@ -421,31 +407,6 @@ function page() {
 
 export default page;
 
-const WardrobeBtn = styled.div`
-  ${flexCenter}
-  width: 495.5px;
-  height: 20px;
-  overflow: hidden;
-  padding: 45.406px 75.677px;
-  border-radius: 28.379px;
-  background: ${(props) => props.theme.colors.black};
-  flex-direction: column;
-  gap: 18.919px;
-  cursor: pointer;
-  margin-top: 20px;
-`;
-const WardrobeP = styled.div`
-  color: ${(props) => props.theme.colors.lightgray};
-  font-family: Pretendard;
-  font-size: 30.271px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  text-align: center;
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
-`;
 const Contents = styled.div`
   ${flexColumn}
   align-items: center;
@@ -523,35 +484,6 @@ const Section1 = styled.div`
 `;
 
 const Content = {
-  Title: styled.div`
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-  `,
-  TitleText: styled.p`
-    color: ${(props) => props.theme.colors.main};
-    font-feature-settings:
-      'clig' off,
-      'liga' off;
-    /* Header3 24pt sb */
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 150%; /* 36px */
-  `,
-  Sub: styled.p`
-    text-align: left;
-    color: ${(props) => props.theme.colors.black};
-    font-family: Pretendard;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
-    font-feature-settings:
-      'clig' off,
-      'liga' off;
-  `,
   Sub_White: styled.p`
     text-align: left;
     color: ${(props) => props.theme.colors.white};
@@ -564,22 +496,11 @@ const Content = {
       'clig' off,
       'liga' off;
   `,
-  SubRight: styled.p`
-    text-align: right;
-    color: ${(props) => props.theme.colors.black};
-    font-family: Pretendard;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
-    font-feature-settings:
-      'clig' off,
-      'liga' off;
-  `,
-  NumberWrapper: styled.div`
-    ${flexCenter}
-    gap: 48px;
-  `,
+
+  // NumberWrapper: styled.div`
+  //   ${flexCenter}
+  //   gap: 48px;
+  // `,
   Number: styled.p`
     color: #000;
     font-family: Pretendard;
@@ -616,19 +537,7 @@ const Content = {
       'clig' off,
       'liga' off;
   `,
-  Description: styled.p`
-    margin-top: 18px;
-    text-align: right;
-    color: ${(props) => props.theme.colors.black};
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 155.5%;
-    font-feature-settings:
-      'clig' off,
-      'liga' off;
-  `,
+
   Description_Center: styled.p`
     margin-top: 18px;
     text-align: center;
@@ -814,32 +723,6 @@ const SubCard = {
 const Section5 = styled.div`
   height: 1141px;
   ${flexCenter}
-`;
-
-const PurchaseButton = styled.div`
-  ${flexCenter}
-  width: 495.5px;
-  height: 20px;
-  overflow: hidden;
-  padding: 45.406px 75.677px;
-  border-radius: 28.379px;
-  background: ${(props) => props.theme.colors.black};
-  flex-direction: column;
-  gap: 18.919px;
-  cursor: pointer;
-`;
-
-const PurchaseP = styled.p`
-  color: ${(props) => props.theme.colors.lightgray};
-  font-family: Pretendard;
-  font-size: 30.271px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  text-align: center;
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
 `;
 
 const slideFromLeftToRight = keyframes`
