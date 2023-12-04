@@ -15,7 +15,7 @@ import { useRecoilState } from 'recoil';
 import { useInView } from 'react-intersection-observer';
 import { flexCenter, flexColumn } from '@/styles/theme';
 import { Product, SlideInDivProps } from '@/interface/interface';
-import GoPage from '@/components/guide/goPage';
+import GoPage from '@/components/guide/GoPage';
 import ServiceContent from '@/components/guide/ServiceContent';
 
 function page() {

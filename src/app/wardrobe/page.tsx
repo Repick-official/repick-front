@@ -1,60 +1,44 @@
 'use client';
-import check_off from '@/assets/images/check/off.svg';
-import check_on from '@/assets/images/check/on.svg';
 import wardrobe_apply from '@/assets/images/wardrobe/fix_wardrobe.png';
 import wardrobe_arrange from '@/assets/images/wardrobe/wardrobe_arrange.png';
 import { flexCenter, flexColumn } from '@/styles/theme';
-import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
+import WardrobeOption from '@/components/wardrobe/WardrobeOption';
+import type { StaticImageData } from 'next/image';
+import WardrobeTitle from '@/components/wardrobe/WardrobeTitle';
 
 function page() {
-  const router = useRouter();
+  const wardrobeApplyImage: StaticImageData = wardrobe_apply;
+  const wardrobeArrangeImage: StaticImageData = wardrobe_arrange;
 
   return (
     <Container>
-      <Title.Wrapper>
+      {/* <Title.Wrapper>
         <Title.Name>옷장 정리</Title.Name>
         <Title.Semi>
           리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?
         </Title.Semi>
-      </Title.Wrapper>
+      </Title.Wrapper> */}
+      <WardrobeTitle
+        title="옷장 정리"
+        contents="리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?"
+      />
       <Content.Wrapper>
         <Content.Wrap>
-          <Choice.Wrapper>
-            <Check>
-              <Off src={check_off.src} />
-              <On
-                src={check_on.src}
-                onClick={() => router.push('/wardrobe/register')}
-              />
-            </Check>
-            <Choice.Background>
-              <Choice.ApplyImage src={wardrobe_apply.src} />
-            </Choice.Background>
-            <Choice.InfoTitle>옷장 정리 신청하기</Choice.InfoTitle>
-            <Choice.InfoContent>
-              신청한 리픽백에 옷을 담아 문 앞에 놓으면 리픽이 직접 <br /> 옷을
-              수거한 후 자체 검수와 위탁을 통해 새로운 주인에게 <br /> 판매될 수
-              있도록 해요.
-            </Choice.InfoContent>
-          </Choice.Wrapper>
-          <Choice.Wrapper>
-            <Check>
-              <Off src={check_off.src} />
-              <On
-                src={check_on.src}
-                onClick={() => router.push('/wardrobe/current')}
-              />
-            </Check>
-            <Choice.Background>
-              <Choice.ArrangeImage src={wardrobe_arrange.src} />
-            </Choice.Background>
-            <Choice.InfoTitle>나의 옷장 정리 현황보기</Choice.InfoTitle>
-            <Choice.InfoContent>
-              내가 지금까지 리픽에 올린 판매 품목 및 <br /> 정산 내역을 확인하고
-              현재 리픽에 올라간 내 옷들이 <br /> 거래되었는지 확인할 수 있어요
-            </Choice.InfoContent>
-          </Choice.Wrapper>
+          <WardrobeOption
+            routerPath="/wardrobe/register"
+            title="옷장 정리 신청하기"
+            contents="신청한 리픽백에 옷을 담아 문 앞에 놓으면 리픽이 직접 <br /> 옷을 수거한 후 자체 검수와 위탁을 통해 새로운 주인에게 <br /> 판매될 수 있도록 해요."
+            imgSrc={wardrobeApplyImage}
+          />
+
+          <WardrobeOption
+            routerPath="/wardrobe/current"
+            title="나의 옷장 정리 현황보기"
+            contents="내가 지금까지 리픽에 올린 판매 품목 및 <br /> 정산 내역을 확인하고
+            현재 리픽에 올라간 내 옷들이 <br /> 거래되었는지 확인할 수 있어요"
+            imgSrc={wardrobeArrangeImage}
+          />
         </Content.Wrap>
       </Content.Wrapper>
     </Container>
@@ -64,21 +48,6 @@ function page() {
 export default page;
 
 const Container = styled.div``;
-
-const Title = {
-  Wrapper: styled.div`
-    margin-top: 120px;
-  `,
-  Name: styled.div`
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 140%;
-  `,
-  Semi: styled.div`
-    font-size: 20px;
-    font-weight: 400;
-  `,
-};
 
 const Content = {
   Wrapper: styled.div`

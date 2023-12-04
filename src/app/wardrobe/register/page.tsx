@@ -25,6 +25,7 @@ import {
   ReturnDateType,
   AddressType,
 } from '@/interface/interface';
+import WardrobeTitle from '@/components/wardrobe/WardrobeTitle';
 
 function page() {
   const {
@@ -129,12 +130,10 @@ function page() {
   };
   return (
     <Container>
-      <Title.Wrapper>
-        <Title.Name>옷장 정리 신청</Title.Name>
-        <Title.Semi>
-          리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?
-        </Title.Semi>
-      </Title.Wrapper>
+      <WardrobeTitle
+        title="옷장 정리 신청"
+        contents="리픽이 직접 옷을 수거해드려요! 어디로 가면 될까요?"
+      />
       <Info.Line src={line.src} />
       <form onSubmit={handleSubmit(registerHandler)}>
         <Info.User>{'회원 정보'}</Info.User>

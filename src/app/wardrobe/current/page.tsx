@@ -15,6 +15,7 @@ import {
 } from '@/api/requests';
 import { flexCenter, flexColumn } from '@/styles/theme';
 import { Product, AsyncFunction } from '@/interface/interface';
+import WardrobeTitle from '@/components/wardrobe/WardrobeTitle';
 
 function page() {
   const router = useRouter();
@@ -88,12 +89,10 @@ function page() {
   return (
     <Container>
       <Current.Wrapper>
-        <Current.Wrap>
-          <Current.Title>나의 옷장 정리 현황</Current.Title>
-          <Current.SemiTitle>
-            내가 판매 중인 제품들을 볼 수 있어요
-          </Current.SemiTitle>
-        </Current.Wrap>
+        <WardrobeTitle
+          title="나의 옷장 정리 현황"
+          contents="내가 판매 중인 제품들을 볼 수 있어요"
+        />
         <Current.Category>
           <Current.Filter
             $isselected={(order === 'all').toString()}
