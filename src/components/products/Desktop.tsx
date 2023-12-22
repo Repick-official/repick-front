@@ -19,14 +19,8 @@ import { userInfoState } from '@/atom/states';
 import { useRecoilState } from 'recoil';
 import { selectedNavPage, requestProducts } from '@/atom/states';
 import { Product, HomeFitProduct, DetailProduct } from '@/interface/interface';
-import { useMediaQuery } from 'react-responsive';
-import Desktop from '@/components/products/Desktop';
-import Mobile from '@/components/products/Mobile';
 
-function page() {
-  const isDesktop = useMediaQuery({ minWidth: 390 });
-  const isMobile = useMediaQuery({ maxWidth: 390 });
-
+function Desktop() {
   const [products, setProducts] = useState<DetailProduct>({
     productId: 0,
     name: '',
@@ -156,127 +150,112 @@ function page() {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
-
   return (
-    <div>
-      {isDesktop && (
-        <Container.Container>
-          <Container.Content>
-            <Cloth.Cloth>
-              <Cloth.MainImage>
-                <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
-                  {products.mainImageFile.imagePath && (
-                    <Image
-                      alt="detail"
-                      src={products.mainImageFile.imagePath}
-                      width={592}
-                      height={542}
-                    />
-                  )}
-                </div>
-              </Cloth.MainImage>
+    <Container.Container>
+      <Container.Content>
+        <Cloth.Cloth>
+          <Cloth.MainImage>
+            <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+              {products.mainImageFile.imagePath && (
+                <Image
+                  alt="detail"
+                  src={products.mainImageFile.imagePath}
+                  width={592}
+                  height={542}
+                />
+              )}
+            </div>
+          </Cloth.MainImage>
 
-              <Cloth.Cut>
-                <Cloth.LeftArrow
-                  src={leftArrow.src}
-                  onClick={handleLeftArrowClick}
-                />
+          <Cloth.Cut>
+            <Cloth.LeftArrow
+              src={leftArrow.src}
+              onClick={handleLeftArrowClick}
+            />
 
-                <Cloth.Product>
-                  {products.detailImageFiles
-                    .slice(
-                      currentImageIndex,
-                      currentImageIndex + sliderImageCount
-                    )
-                    .map((item, idx) => (
-                      <Cloth.DetailImage key={idx}>
-                        <div
-                          style={{ borderRadius: '15px', overflow: 'hidden' }}
-                        >
-                          {item.imagePath && (
-                            <Image
-                              alt="image"
-                              key={idx}
-                              src={item.imagePath}
-                              width={164.81}
-                              height={164.81}
-                            />
-                          )}
-                        </div>
-                      </Cloth.DetailImage>
-                    ))}
-                </Cloth.Product>
-                <Cloth.RightArrow
-                  src={rightArrow.src}
-                  onClick={handleRightArrowClick}
-                />
-              </Cloth.Cut>
-            </Cloth.Cloth>
-            <Container.DetailContent>
-              <Container.Category>{`제품 카테고리 > ${products.categoryInfoList[0].parentCategoryName} > ${products.categoryInfoList[0].categoryName}`}</Container.Category>
-              <Products.Content>
-                <Products.Info>
-                  <Products.Tag>브랜드</Products.Tag>
-                  <Products.Brand>{products.brand}</Products.Brand>
-                </Products.Info>
-                <Products.Info>
-                  <Products.Tag>제품명</Products.Tag>
-                  <Products.Sub $bold={'bold'}>{products.name}</Products.Sub>
-                </Products.Info>
-                <Products.Info>
-                  <Products.Tag>사이즈</Products.Tag>
-                  <Products.Sub $bold={'notBold'}>{products.size}</Products.Sub>
-                </Products.Info>
-                <Products.Info>
-                  <Products.Tag>제품 성격</Products.Tag>
-                  <Products.Sub $bold={'notBold'}>
-                    {products.detail}
-                  </Products.Sub>
-                </Products.Info>
-                <Products.Info>
-                  <Products.Tag>가격</Products.Tag>
-                  <Products.Sub $bold={'bold'}>
-                    {products.price.toLocaleString('en-US')}원
-                  </Products.Sub>
-                </Products.Info>
-              </Products.Content>
-              <div className="button">
-                <div className="btn" onClick={() => putMypickCart()}>
-                  <Button content="마이픽에 담기" num="1" />
-                </div>
-                <div className="btn" onClick={() => purchase()}>
-                  <Button content="구매하기" num="2" />
-                </div>
-              </div>
-            </Container.DetailContent>
-          </Container.Content>
-          <Container.Line src={line.src} />
-          <Container.Recommend>이런 제품은 어떠세요?</Container.Recommend>
-          <Container.Products>
-            {recommends.map((item: Product) => (
-              <div
-                key={item.productId}
-                onClick={() => router.push(`/product/detail/${item.productId}`)}
-              >
-                <ContentBodyInfo
-                  key={item.productId}
-                  src={item.mainImageFile.imagePath}
-                  tagName={item.brand}
-                  size={item.size}
-                  name={item.name}
-                  price={item.price}
-                />
-              </div>
-            ))}
-          </Container.Products>
-        </Container.Container>
-      )}
-      {isMobile && <Mobile />}
-    </div>
+            <Cloth.Product>
+              {products.detailImageFiles
+                .slice(currentImageIndex, currentImageIndex + sliderImageCount)
+                .map((item, idx) => (
+                  <Cloth.DetailImage key={idx}>
+                    <div style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                      {item.imagePath && (
+                        <Image
+                          alt="image"
+                          key={idx}
+                          src={item.imagePath}
+                          width={164.81}
+                          height={164.81}
+                        />
+                      )}
+                    </div>
+                  </Cloth.DetailImage>
+                ))}
+            </Cloth.Product>
+            <Cloth.RightArrow
+              src={rightArrow.src}
+              onClick={handleRightArrowClick}
+            />
+          </Cloth.Cut>
+        </Cloth.Cloth>
+        <Container.DetailContent>
+          <Container.Category>{`제품 카테고리 > ${products.categoryInfoList[0].parentCategoryName} > ${products.categoryInfoList[0].categoryName}`}</Container.Category>
+          <Products.Content>
+            <Products.Info>
+              <Products.Tag>브랜드</Products.Tag>
+              <Products.Brand>{products.brand}</Products.Brand>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>제품명</Products.Tag>
+              <Products.Sub $bold={'bold'}>{products.name}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>사이즈</Products.Tag>
+              <Products.Sub $bold={'notBold'}>{products.size}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>제품 성격</Products.Tag>
+              <Products.Sub $bold={'notBold'}>{products.detail}</Products.Sub>
+            </Products.Info>
+            <Products.Info>
+              <Products.Tag>가격</Products.Tag>
+              <Products.Sub $bold={'bold'}>
+                {products.price.toLocaleString('en-US')}원
+              </Products.Sub>
+            </Products.Info>
+          </Products.Content>
+          <div className="button">
+            <div className="btn" onClick={() => putMypickCart()}>
+              <Button content="마이픽에 담기" num="1" />
+            </div>
+            <div className="btn" onClick={() => purchase()}>
+              <Button content="구매하기" num="2" />
+            </div>
+          </div>
+        </Container.DetailContent>
+      </Container.Content>
+      <Container.Line src={line.src} />
+      <Container.Recommend>이런 제품은 어떠세요?</Container.Recommend>
+      <Container.Products>
+        {recommends.map((item: Product) => (
+          <div
+            key={item.productId}
+            onClick={() => router.push(`/product/detail/${item.productId}`)}
+          >
+            <ContentBodyInfo
+              key={item.productId}
+              src={item.mainImageFile.imagePath}
+              tagName={item.brand}
+              size={item.size}
+              name={item.name}
+              price={item.price}
+            />
+          </div>
+        ))}
+      </Container.Products>
+    </Container.Container>
   );
 }
-
-export default page;
 
 const Container = {
   Container: styled.div`
@@ -372,3 +351,5 @@ const Products = {
     padding: 2px 24px;
   `,
 };
+
+export default Desktop;

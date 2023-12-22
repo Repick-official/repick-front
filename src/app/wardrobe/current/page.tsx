@@ -196,7 +196,7 @@ const Current = {
     display: flex;
     width: 1216px;
     justify-content: space-between;
-    margin-top: 120px;
+    //margin-top: 120px;
   `,
   Wrap: styled.div`
     ${flexColumn}
@@ -217,6 +217,7 @@ const Current = {
     margin-left: 24px;
     margin-top: 50px;
     font-size: 20px;
+    cursor: pointer;
     font-weight: ${(props) => (props.$isselected === 'true' ? '600' : '400')};
     color: ${(props) =>
       props.$isselected === 'true'
